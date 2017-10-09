@@ -1,0 +1,7 @@
+- name: Install AiiDA-core from pip in a virtualenv
+  pip:
+    name: "{{item}}"
+    virtualenv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
+#    virtualenv_command: virtualenv-2.7
+  with_items:
+    - "aiida_core==0.9.1"

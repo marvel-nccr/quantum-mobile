@@ -1,0 +1,61 @@
+- name: Create folder for generic MARVEL data
+  file:
+      path: "{{ ansible_env.HOME }}/.local/share/marvelnccr"
+      state: directory
+
+- name: Copy the background image
+  copy:
+      src: marvel-bg.png
+      dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+      mode: 0755
+
+- name: Create folder for generic MARVEL data in global machine
+  become: true
+  file:
+      path: "/usr/share/marvelnccr"
+      state: directory
+      mode: 0755
+
+- name: Copy the background image
+  become: true
+  copy:
+      src: marvel-bg.png
+      dest: "/usr/share/marvelnccr/marvel-bg.png"
+      mode: 0755
+
+
+# This seems not to work - it does not fail, but it says failed to commit changes to #dconf: Cannot autolaunch D-Bus without X11 $DISPLAY
+- name: set the background image
+  #  environment: 
+  #      DISPLAY: ":0"
+  command: "dbus-launch gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+
+- name: set lightdm (login page) not to draw the user background
+  become: true
+  ini_file: 
+    path: /usr/share/glib-2.0/schemas/10_unity-settings-daemon.gschema.override
+    section: "com.canonical.unity-greeter"
+    option: "draw-user-backgrounds"
+    value: "false"
+  register: lightdm_draw_user_backgrounds
+
+- name: set lightdm (login page) background
+  become: true
+  ini_file: 
+    path: /usr/share/glib-2.0/schemas/10_unity-settings-daemon.gschema.override
+    section: "com.canonical.unity-greeter"
+    option: "background"
+    value: "'/usr/share/marvelnccr/marvel-bg.png'"
+  register: lightdm_background
+
+- name: recreate schemas to apply modifications
+  become: true
+  command: glib-compile-schemas /usr/share/glib-2.0/schemas
+  when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
+
+- name: Restart lightdm to update the wallpaper
+  become: true
+  service:
+    name: lightdm
+    state: restarted
+  when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)

@@ -1,0 +1,15 @@
+- name: Install main dependencies (like compilers etc.)
+  become: true
+  apt:
+      name: "{{ item }}"
+      state: installed
+  with_items:
+    - gfortran
+    - libopenmpi-dev
+    - openmpi-bin
+    - libfftw3-dev 
+    - libfftw3-bin 
+    - libfftw3-mpi-dev
+    - liblapack-dev
+    - libblas-dev
+

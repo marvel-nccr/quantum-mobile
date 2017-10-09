@@ -1,0 +1,8 @@
+- hosts: default
+  name: playbook for the {{machine_full_name}}
+  roles: 
+    - common
+    - customizations
+    - editors
+    - simulationtools
+

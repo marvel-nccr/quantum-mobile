@@ -1,0 +1,10 @@
+- name: Install some common editors
+  become: true
+  apt:
+      name: "{{item}}"
+      state: installed
+  with_items:
+      - emacs24
+      - vim
+      - nano
+

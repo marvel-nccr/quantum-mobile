@@ -1,0 +1,2 @@
+qe_src: qe-6.1
+qe_url: "http://www.qe-forge.org/gf/download/frsrelease/240/1075/{{qe_src}}.tar.gz"
