@@ -1,0 +1,21 @@
+{
+  "variables": {
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant", 
+    "ovf_path": "/NoBackup/data/VagrantBoxes/ubuntu-VAGRANTSLASH-trusty64/20170920.0.0/virtualbox/box.ovf"
+  },
+  "builders": [{
+    "type": "virtualbox-ovf",
+    "source_path": "{{user `ovf_path`}}", 
+    "headless": true, 
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_password": "{{user `ssh_password`}}",
+    "boot_wait": "2m", 
+    "ssh_wait_timeout": "6h", 
+    "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now"
+  }],
+  "provisioners": [{
+    "type": "ansible",
+    "playbook_file": "./playbook.yml"
+    }]
+}

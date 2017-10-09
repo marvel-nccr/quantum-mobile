@@ -1,0 +1,4 @@
+Vagrant vs. packer:
+- vagrant works well locally, to e.g. run in Virtualbox
+- packer works well to create images also as ova, ovf, AMI, ...
+  packer seems not to be able to start from a vagrant box. Better locally to start from existing ova with the virtualbox-ova builder (the virtualbox-iso is very complex to setup)

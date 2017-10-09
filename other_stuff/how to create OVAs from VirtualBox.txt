@@ -1,0 +1,2 @@
+vboxmanage list vms
+vboxmanage export UBUNTUSERVER164 -o ubuntu_server_new.ova
