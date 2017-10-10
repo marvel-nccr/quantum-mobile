@@ -1,0 +1,40 @@
+- name: Update repositories cache
+  become: true
+  apt:
+      update_cache: yes
+
+- name: Install needed packages
+  become: true
+  apt:
+      name: "{{item}}"
+      state: installed
+  with_items:
+      - ubuntu-desktop
+      - python-pip
+      - python-dev
+
+- name: upgrade pip
+  become: true
+  pip: 
+    name: pip
+    extra_args: --upgrade
+
+- name: add some needed packages
+  become: true
+  pip: 
+    name: "{{item}}"
+  with_items:
+    - virtualenv
+    - virtualenvwrapper
+    # Needed to set the wallpaper (maybe?)
+    - psutil
+
+- name: "Run virtualenvwrapper once to create folders"
+  shell: "source /usr/local/bin/virtualenvwrapper.sh"
+  args:
+    creates: "{{ ansible_env.HOME }}/.virtualenvs/initialize"
+
+- name: "Activate the virtualenvwrapper for the user"
+  lineinfile: 
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "source /usr/local/bin/virtualenvwrapper.sh"

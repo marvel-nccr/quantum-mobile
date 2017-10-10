@@ -6,4 +6,6 @@
     - editors
     - scheduler
     - simulationtools
+  vars:
+    - hostname: marvelvm
 

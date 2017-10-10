@@ -79,6 +79,8 @@
        --repo {{ ansible_env.HOME }}/.aiida/repository-aiida/
   when: aiida_config_file.stat.exists == False
 
+# TODO: change this 'when' condition: this might create problems
+# if there's an error between the previous task and this one
 - name: "Set the default AiiDA profile"
   shell: |
         {{ aiida_venv }}/bin/verdi profile setdefault verdi default
@@ -91,26 +93,13 @@
     dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
     mode: 0755
 
-- name: "Copy the script to setup the AiiDA computer"
-  template:
-    src: create_aiida_qe_code.sh
-    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_code.sh"
-    mode: 0755
-
 - name: check if the AiiDA computer is already present
   shell: "{{ aiida_venv }}/bin/verdi computer show {{ aiida_computer_name }}"
   ignore_errors: True
   register: aiida_check_computer
+  changed_when: False
 
 - name: "Setup the localhost computer for AiiDA"
   shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
   when: aiida_check_computer.rc != 0
 
-- name: check if the AiiDA code is already present
-  shell: "{{ aiida_venv }}/bin/verdi code show {{ aiida_qe_code_name}}@{{ aiida_computer_name }}"
-  ignore_errors: True
-  register: aiida_check_code
-
-- name: "Setup the pw-6.1 code for AiiDA"
-  shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_code.sh"
-  when: aiida_check_code.rc != 0

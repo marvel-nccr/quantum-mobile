@@ -1,4 +1,5 @@
-qe_src: qe-6.1
+qe_version: "6.1"
+qe_src: qe-{{ qe_version }}
 qe_url: "http://www.qe-forge.org/gf/download/frsrelease/240/1075/{{qe_src}}.tar.gz"
 qe_topdir: "{{ ansible_env.HOME }}/codes/{{qe_src}}"
 postgres_pw: "ne9N_LDK-*JSS"
@@ -7,5 +8,4 @@ postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 aiida_version: "0.9.1"
 aiida_computer_name: "localhost"
-aiida_qe_code_name: "{{ qe_src }}"
 aiida_run_folder: "{{ ansible_env.HOME }}/.aiida_run"

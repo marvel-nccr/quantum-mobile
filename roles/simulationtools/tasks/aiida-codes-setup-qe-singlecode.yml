@@ -1,0 +1,19 @@
+- name: check if the AiiDA code is already present
+  shell: "{{ aiida_venv }}/bin/verdi code show {{ codeinfo.code_name}}@{{ aiida_computer_name }}"
+  ignore_errors: True
+  register: aiida_check_code
+  changed_when: False
+
+- name: "Copy the script to setup the AiiDA computer"
+  template:
+    src: create_aiida_qe_code.sh
+    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_{{ codeinfo.name }}_code.sh"
+    mode: 0755
+  vars:
+    - aiida_qe_code_name: "{{ codeinfo.code_name }}"
+    - qe_exec_name: "{{ codeinfo.name }}"
+  when: aiida_check_code.rc != 0
+
+- name: "Setup the {{ codeinfo.name }}-{{ qe_version }} code for AiiDA"
+  shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_{{ codeinfo.name }}_code.sh"
+  when: aiida_check_code.rc != 0

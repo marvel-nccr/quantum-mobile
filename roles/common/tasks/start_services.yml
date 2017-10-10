@@ -1,0 +1,5 @@
+- name: Start the service to get a graphical login
+  become: true
+  service:
+    name: lightdm
+    state: started
