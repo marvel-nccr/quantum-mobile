@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
 
-     #vb.name = "MARVEL Virtual Machine #{version}"
+     vb.name = "MARVEL Virtual Machine #{version}"
 
      vb.memory = 1024
      vb.cpus = 2

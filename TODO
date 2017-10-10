@@ -1,0 +1,3 @@
+- Check various TODOs 
+- Move RAM and numCPUs in globalconfig?
+- have the script that sets '/etc/hosts/' run at every login (because the IP might/will change?)
