@@ -7,6 +7,7 @@
     - torque-mom 
     - torque-client 
 
+# TODO: move the following hostname-related commands to 'common'
 - name: "get the machine hostname"
   become: true
   shell: "hostname"
@@ -61,7 +62,7 @@
   lineinfile: 
     path: "/etc/hosts"
     regexp: '^127\.0\.1\.1'
-    line: "127.0.1.1 locahost"
+    line: "127.0.1.1 localhost"
     owner: root
     group: root
     mode: 0644
@@ -76,25 +77,28 @@
     group: root
     mode: 0644
 
-- name: Start the torque services
+# Note: we need to restart because the services are already started
+# when installed, and we change the hostname only afterwards
+- name: (Re)start the torque services
   become: true
   service:
     name: "{{ item }}"
-    state: started
+    state: restarted
   with_items:
     - torque-server
     - torque-mom
     - torque-scheduler
-  register: started_torque
-
-- name: waiting 10 seconds for torque to start...
-  shell: sleep 10
-  when: started_torque.changed
 
 - name: "Checking if torque is already configured"
   become: true
   shell: qmgr -c "print server"
   register: qmgr_check_command
+
+- name: waiting 10 seconds for torque to start...
+  shell: sleep 10
+  when: 
+    "'batch' not in qmgr_check_command.stdout"
+
   
 - name: executing torque configuration
   shell: "{{ item }}"
