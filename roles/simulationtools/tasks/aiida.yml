@@ -1,7 +1,116 @@
+- name: Install DB
+  become: true
+  apt:
+      name: "{{ item }}"
+      state: installed
+  with_items:
+    # Compilation
+    - postgresql-9.5
+    - postgresql-contrib
+    - python-psycopg2
+    - libpq-dev
+
+- name: Setup postgres db
+  become: True
+  become_user: postgres
+  postgresql_db:
+    name: "{{ postgres_db }}"
+
+- name: Setup postgres user
+  become: True
+  become_user: postgres
+  postgresql_user:
+    db: "{{ postgres_db }}"
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_pw }}"
+
 - name: Install AiiDA-core from pip in a virtualenv
   pip:
-    name: "{{item}}"
+    name: "aiida_core[{{ item }}]=={{ aiida_version }}"
     virtualenv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 #    virtualenv_command: virtualenv-2.7
   with_items:
-    - "aiida_core==0.9.1"
+    - REST
+    - docs
+    - atomic_tools
+    - testing
+    - notebook
+
+# note: aiida specifies simply ipython, which defaults to ipython6
+# however, python27 needs ipython <= 5.
+- name: install ipython5 (fix for aiida installation)
+  pip:
+      name: ipython
+      virtualenv: "{{ aiida_venv }}"
+      version: 5
+      
+- name: Additional pip dependencies
+  pip:
+      name: "{{ item }}"
+      virtualenv: "{{ aiida_venv }}"
+  with_items:
+    - seekpath
+
+# get anyway the GIT code, it is often useful; checkout the same version
+- name: Get the most recent code
+  git:
+    repo: 'https://github.com/aiidateam/aiida_core.git'
+    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
+    version: "v{{ aiida_version }}"
+
+- name: "Activate TAB completion in virtualenv"
+  lineinfile: 
+    path: "{{ aiida_venv }}/bin/activate"
+    line: 'eval "$(verdi completioncommand)"'
+
+- name: "Check if AiiDA has already been configured"
+  stat: path="{{ ansible_env.HOME }}/.aiida/config.json"
+  register: aiida_config_file
+
+- name: "Configure AiiDA"
+  # Need to use the full path because it's in a virtualenv
+  shell: |
+       {{ aiida_venv }}/bin/verdi setup default --non-interactive \
+       --email aiida@localhost \
+       --backend django \
+       --db_host localhost --db_port 5432 \
+       --db_name {{ postgres_db }} \
+       --db_user {{ postgres_user }} --db_pass '{{ postgres_pw }}' \
+       --repo {{ ansible_env.HOME }}/.aiida/repository-aiida/
+  when: aiida_config_file.stat.exists == False
+
+- name: "Set the default AiiDA profile"
+  shell: |
+        {{ aiida_venv }}/bin/verdi profile setdefault verdi default
+        {{ aiida_venv }}/bin/verdi profile setdefault daemon default
+  when: aiida_config_file.stat.exists == False
+
+- name: "Copy the script to setup the AiiDA computer"
+  template:
+    src: create_aiida_computer.sh
+    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
+    mode: 0755
+
+- name: "Copy the script to setup the AiiDA computer"
+  template:
+    src: create_aiida_qe_code.sh
+    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_code.sh"
+    mode: 0755
+
+- name: check if the AiiDA computer is already present
+  shell: "{{ aiida_venv }}/bin/verdi computer show {{ aiida_computer_name }}"
+  ignore_errors: True
+  register: aiida_check_computer
+
+- name: "Setup the localhost computer for AiiDA"
+  shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
+  when: aiida_check_computer.rc != 0
+
+- name: check if the AiiDA code is already present
+  shell: "{{ aiida_venv }}/bin/verdi code show {{ aiida_qe_code_name}}@{{ aiida_computer_name }}"
+  ignore_errors: True
+  register: aiida_check_code
+
+- name: "Setup the pw-6.1 code for AiiDA"
+  shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_code.sh"
+  when: aiida_check_code.rc != 0

@@ -1,9 +1,13 @@
-- name: Install main dependencies (like compilers etc.)
+- name: Install main dependencies (like compilers, plotting tools, etc.)
   become: true
   apt:
       name: "{{ item }}"
       state: installed
   with_items:
+    # Compilation
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential
+    - python-passlib    
     - gfortran
     - libopenmpi-dev
     - openmpi-bin
@@ -12,4 +16,17 @@
     - libfftw3-mpi-dev
     - liblapack-dev
     - libblas-dev
+    # For AiiDA, for plotting, ...
+    - libffi-dev
+    - libssl-dev
+    - graphviz
+    - grace
+    - gnuplot
+    - python-tk 
+    
+- name: Create folder for codes
+  file:
+      path: "{{ ansible_env.HOME }}/codes"
+      state: directory
+
 

@@ -36,8 +36,6 @@
       state: installed
   with_items:
       - ubuntu-desktop
-#      # graphical login UI (maybe not needed with the command above)      
-#      - lightdm
       - python-pip
       - python-dev
 
@@ -45,15 +43,28 @@
   become: true
   pip: 
     name: pip
+    extra_args: --upgrade
 
-- name: upgrade pip
+- name: add some needed packages
   become: true
   pip: 
     name: "{{item}}"
   with_items:
+    - virtualenv
+    - virtualenvwrapper
     # Needed to set the wallpaper (maybe?)
     - psutil
-    - virtualenv
+
+- name: "Run virtualenvwrapper once to create folders"
+  shell: "source /usr/local/bin/virtualenvwrapper.sh"
+  args:
+    creates: "{{ ansible_env.HOME }}/.virtualenvs/initialize"
+
+- name: "Activate the virtualenvwrapper for the user"
+  lineinfile: 
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "source /usr/local/bin/virtualenvwrapper.sh"
+
 
 - name: Start the service to get a graphical login
   become: true

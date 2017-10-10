@@ -1,1 +1,2 @@
 - include_tasks: wallpaper.yml tags=wallpaper
+- include_tasks: launcher.yml tags=launcher

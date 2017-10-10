@@ -1,22 +1,3 @@
-#- name: Update repositories cache and install "quantum-espresso" package
-#  become: true
-#  apt:
-#      name: quantum-espresso
-#      present: false
-
-- name: Install Nagios prerequisites for Debian
-  apt: pkg={{ item }} state=present
-  become: true
-  with_items:
-   - linux-headers-{{ ansible_kernel }}
-   - build-essential
-   - python-passlib
-
-- name: Create folder for codes
-  file:
-      path: "{{ ansible_env.HOME }}/codes"
-      state: directory
-
 # Will only download once  
 - name: Get Quantum ESPRESSO
   get_url: url={{ qe_url }} dest={{ ansible_env.HOME }}/codes/{{ qe_src }}.tar.gz
@@ -24,17 +5,17 @@
 - name: Unpack Quantum ESPRESSO source files
   shell: "cd {{ ansible_env.HOME }}/codes && tar -xzvf {{ qe_src }}.tar.gz"
   args:
-    creates: "{{ ansible_env.HOME }}/codes/{{ qe_src }}"
+    creates: "{{ qe_topdir }}"
 
 - name: Configure QE
-  shell: cd {{ ansible_env.HOME }}/codes/{{ qe_src }} && ./configure --enable-parallel
+  shell: cd {{ qe_topdir }} && ./configure --enable-parallel
   args:
-    creates: "{{ ansible_env.HOME }}/codes/{{ qe_src }}/make.inc"
+    creates: "{{ qe_topdir }}/make.inc"
 
 - name: Make QE executables
-  shell: "cd {{ ansible_env.HOME }}/codes/{{ qe_src }} && make {{ item }}"
+  shell: "cd {{ qe_topdir }} && make {{ item }}"
   args:
-    creates: "{{ ansible_env.HOME }}/codes/{{ qe_src }}/bin/{{ item }}.x"
+    creates: "{{ qe_topdir }}/bin/{{ item }}.x"
   with_items:
     - pw
     - cp
@@ -44,5 +25,4 @@
 - name: "Put a line in ~/.bashrc to add QE to the path"
   lineinfile: 
     path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "export PATH=${PATH}:{{ ansible_env.HOME }}/codes/{{ qe_src }}/bin/"
-
+    line: "export PATH=${PATH}:{{ qe_topdir }}/bin/"
