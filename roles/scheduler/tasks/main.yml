@@ -103,3 +103,9 @@
   when: 
     "'batch' not in qmgr_check_command.stdout"
 
+- name: Add scheduler info to Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "Job Scheduler"
+    option: "installed"
+    value: "This virtual machine contains the TORQUE scheduler. You can submit jobs using 'qsub' and get the status using 'qstat' (or you can use AiiDA)."

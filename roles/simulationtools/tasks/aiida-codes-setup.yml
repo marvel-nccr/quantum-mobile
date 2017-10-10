@@ -18,4 +18,6 @@
       code_name: "qe-neb-{{ qe_version }}"    
     - name: projwfc
       code_name: "qe-projwfc-{{ qe_version }}"    
+    - name: neb
+      code_name: "qe-neb-{{ qe_version }}"    
   

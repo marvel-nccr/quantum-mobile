@@ -1,9 +1,0 @@
-- install pygtk to have ase visualizer
-- install xcrysden, jmol, vmd, ...
-- add license to this repository
-- give version number, store it somewhere
-
-- add EULA when exporting OVA
-- create a RELEASE file that is created by ansible and contains information on the available software, their versions, ...
-- create a MOTD or something similar to tell a subset of the above (available codes, to use 'workon aiida' to run with aiida, etc)
-

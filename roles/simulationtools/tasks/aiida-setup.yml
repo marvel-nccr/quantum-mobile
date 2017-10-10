@@ -9,6 +9,8 @@
     - postgresql-contrib
     - python-psycopg2
     - libpq-dev
+    # Needed for the ASE visualizer
+    - python-gtk2
 
 - name: Setup postgres db
   become: True
@@ -51,8 +53,29 @@
   with_items:
     - seekpath
 
+## PyGTK cannot be installed with pip... we need to use 
+## a workaround, see https://stackoverflow.com/questions/12830662/
+- name: workaround to install pygtk 2 inside the virtualenv [making dir]
+  file:
+    path: "{{ aiida_venv }}/lib/python2.7/dist-packages/"
+    state: "directory"
+    mode: 0755
+
+- name: workaround to install pygtk 2 inside the virtualenv [creating symlinks]
+  file:
+    src: "/usr/lib/python2.7/dist-packages/{{ item }}"
+    dest: "{{ aiida_venv }}/lib/python2.7/dist-packages/{{ item }}"
+    state: link
+  with_items:
+    - glib
+    - gobject
+    - gtk-2.0
+    - pygtk.pth
+    - pygtk.py
+    - cairo
+
 # get anyway the GIT code, it is often useful; checkout the same version
-- name: Get the most recent code
+- name: Get the AiiDA code from GIT
   git:
     repo: 'https://github.com/aiidateam/aiida_core.git'
     dest: "{{ ansible_env.HOME }}/codes/aiida_core"
@@ -103,3 +126,30 @@
   shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
   when: aiida_check_computer.rc != 0
 
+- name: Add AiiDA info (version) to Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "AiiDA"
+    option: "version"
+    value: "{{ aiida_version }}"
+
+- name: Add AiiDA info (general) to Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "AiiDA"
+    option: "usage"
+    value: "AiiDA is installed in a virtual environment. Before using it (and the 'verdi' command), type 'workon aiida'."
+
+- name: Add AiiDA info (codes) to Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "AiiDA"
+    option: "configured computer"
+    value: "The local computer is already configured and is named 'localhost'"
+
+- name: Add AiiDA info (codes) to Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "AiiDA"
+    option: "configured codes"
+    value: "A number of codes are already installed and preconfigured. You can get the full list using 'verdi code list'"

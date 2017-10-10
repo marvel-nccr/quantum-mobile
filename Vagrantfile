@@ -22,9 +22,18 @@
 # to upgrade instead of disabling the requirement below.
 Vagrant.require_version ">= 1.7.0"
 
+# From https://stackoverflow.com/questions/16708917/how-do-i-include-variables-in-my-vagrantfile
+# to read variables from externale file
+require 'yaml'
+current_dir    = File.dirname(File.expand_path(__FILE__))
+configs        = YAML.load_file("#{current_dir}/globalconfig.yml")
+version = configs['vm_version']
+
 Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
+
+     #vb.name = "MARVEL Virtual Machine #{version}"
 
      vb.memory = 1024
      vb.cpus = 2

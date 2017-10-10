@@ -1,5 +1,10 @@
 - hosts: default
   name: playbook for the {{machine_full_name}}
+  pre_tasks:
+    - name: import global variables
+      include_vars:
+        file: globalconfig.yml
+        name: globalconfig
   roles: 
     - common
     - customizations
@@ -8,4 +13,5 @@
     - simulationtools
   vars:
     - hostname: marvelvm
+
 
