@@ -1,8 +1,0 @@
-vboxmanage list vms
-
-vboxmanage export UBUNTUSERVER164 -o ubuntu_server_new.ova
-  where UBUNTUSERVER164 is the name of the VM
-
-NOTE: this will create an OVA where the name is the same.
-To investigate how to change this. There are some cmdline options, but 
-mainly for EULA, description etc.
