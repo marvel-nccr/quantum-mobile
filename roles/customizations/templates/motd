@@ -1,0 +1,6 @@
+#####################################################################
+# Welcome to the {{ globalconfig.vm_name }} version {{ globalconfig.vm_version }} 
+# distributed by the {{ globalconfig.author }}.
+#
+# For using AiiDA, type 'workon aiida' to enable the 'verdi' commands
+#####################################################################

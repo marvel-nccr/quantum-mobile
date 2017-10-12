@@ -1,0 +1,14 @@
+- name: start creating the Release Notes file
+  ini_file:
+    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    section: "MARVEL Virtual Machine"
+    option: "version"
+    value: "{{ globalconfig.vm_version }}"
+    create: true
+
+- name: set the Message Of The Day (MOTD)
+  become: true
+  template:
+    src: motd
+    dest: "/etc/motd"
+    mode: 0644

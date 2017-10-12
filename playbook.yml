@@ -1,5 +1,5 @@
 - hosts: default
-  name: playbook for the {{machine_full_name}}
+  name: playbook for the {{ globalconfig.vm_name }}
   pre_tasks:
     - name: import global variables
       include_vars:

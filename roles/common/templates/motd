@@ -1,5 +1,0 @@
-#####################################################################
-# Welcome to the MARVEL Virtual Machine (version {{ globalconfig.vm_version }})
-# If you want to use AiiDA, type first 'workon aiida';
-# after that, you can use the 'verdi' commands normally.
-#####################################################################
