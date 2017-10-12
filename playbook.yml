@@ -1,5 +1,5 @@
-- hosts: default
-  name: playbook for the {{ globalconfig.vm_name }}
+- name: playbook for the MARVEL VM
+  hosts: default
   pre_tasks:
     - name: import global variables
       include_vars:
@@ -11,7 +11,3 @@
     - editors
     - scheduler
     - simulationtools
-  vars:
-    - hostname: marvelvm
-
-

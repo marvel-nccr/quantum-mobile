@@ -5,6 +5,7 @@ require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
 configs        = YAML.load_file("#{current_dir}/globalconfig.yml")
 version = configs['vm_version']
+name = configs['vm_name']
 
 Vagrant.configure(2) do |config|
 
@@ -12,7 +13,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
 
      ## Machine name inside VirtualBox
-     vb.name = "MARVEL Virtual Machine #{version}"
+     vb.name = "#{name} #{version}"
 
      ## Resource details
      vb.memory = 1024
