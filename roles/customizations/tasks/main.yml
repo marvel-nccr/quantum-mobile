@@ -1,3 +1,4 @@
 - include_tasks: release_notes.yml tags=release-notes
 - include_tasks: wallpaper.yml tags=wallpaper
 - include_tasks: launcher.yml tags=launcher
+- include_tasks: disable_autolock.yml tags=launcher
