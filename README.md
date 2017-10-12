@@ -27,6 +27,10 @@ bash create_image.sh
  * `vagrant provision --provision-with ansible`: re-run ansible scripts
  * `vagrant reload`: restart machine
  * `vagrant halt`: stop machine
+ * ```
+   vagrant ssh-config > vagrant-ssh  # inform ansible about ssh config
+   ansible-playbook playbook.yml     # run ansible directly, add tags,...
+   ```
 
 ## Virtualbox optimisations
 
