@@ -6,6 +6,6 @@ local
 torque
 {{aiida_run_folder}}
 mpirun -np {tot_num_mpiprocs}
-2
+{{ globalconfig.vm_cpus }}
 
 

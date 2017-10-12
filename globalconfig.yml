@@ -8,3 +8,5 @@ author: "MARVEL National Centre for Competency in Research"
 
 vm_hostname: "marvelvm"
 vm_password: "tutorial"
+vm_memory: 1024
+vm_cpus: 2

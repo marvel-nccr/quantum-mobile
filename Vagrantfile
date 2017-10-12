@@ -3,9 +3,7 @@ Vagrant.require_version ">= 1.7.0"
 ## Read global configuration file from YAML
 require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
-configs        = YAML.load_file("#{current_dir}/globalconfig.yml")
-version = configs['vm_version']
-name = configs['vm_name']
+gconfig        = YAML.load_file("#{current_dir}/globalconfig.yml")
 
 Vagrant.configure(2) do |config|
 
@@ -13,11 +11,11 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
 
      ## Machine name inside VirtualBox
-     vb.name = "#{name} #{version}"
+     vb.name = gconfig['vm_name'] + ' ' + gconfig['vm_version']
 
      ## Resource details
-     vb.memory = 1024
-     vb.cpus = 2
+     vb.memory = gconfig['vm_memory']
+     vb.cpus = gconfig['vm_cpus']
 
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
@@ -38,7 +36,7 @@ Vagrant.configure(2) do |config|
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
-  #config.ssh.password = "xyz"
+  #config.ssh.password = gconfig['vm_password']
 
   ## First provisioner: python needed to have ansible work
   ## as a second provisioner
