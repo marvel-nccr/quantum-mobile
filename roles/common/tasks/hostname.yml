@@ -4,26 +4,11 @@
   register: cur_hostname_command
   changed_when: False
 
-- name: "set the machine hostname"
+  # This updates both the current hostname and /etc/hostname
+- name: "update machine hostname, if necessary"
   become: true
-  shell: "hostname {{ hostname }}"
-  when: cur_hostname_command.stdout != hostname
-
-- name: "get the hostname from file"
-  become: true
-  shell: "cat /etc/hostname"
-  register: cur_hostnamefile_command
-  changed_when: False
-
-- name: "set the hostname in /etc/hostname"
-  become: true
-  shell: "echo '{{ hostname }}' > /etc/hostname"
-  when: cur_hostnamefile_command.stdout != hostname
-
-- name: Create variable from command
-  shell: "ip -4 addr show | grep -Po 'inet \\K[\\d.]+' | grep -v 127.0.0.1 | head -n1"
-  register: ip_address_command
-  changed_when: False
+  shell: "hostnamectl set-hostname {{ globalconfig.vm_hostname }}"
+  when: cur_hostname_command.stdout != globalconfig.vm_hostname
 
 - name: "I first clean up the lines with 127.0.0.1"
   become: true
@@ -45,12 +30,12 @@
     group: root
     mode: 0644
 
-- name: "set the hostname in /etc/hosts"
+- name: "set hostname for dynamic ip address in /etc/hosts (needed for PBS Torque)"
   become: true
   lineinfile: 
     path: "/etc/hosts"
-    regexp: "{{ hostname }}$"
-    line: "{{ ip_address_command.stdout }} {{ hostname }}"
+    regexp: "{{ globalconfig.vm_hostname }}$"
+    line: "{{ ansible_default_ipv4.address }} {{ globalconfig.vm_hostname }}"
     owner: root
     group: root
     mode: 0644
