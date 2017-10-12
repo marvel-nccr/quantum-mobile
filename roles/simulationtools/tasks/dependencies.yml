@@ -28,14 +28,14 @@
 
 - name: Add plotting tools info to release notes
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "MPI libraries"
     option: "usage"
     value: "The OpenMPI version of the MPI libraries is installed. You can your codes using 'mpirun -np NUMPROCS EXECNAME'"
 
 - name: Add plotting tools info to release notes
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "Plotting Tools"
     option: "available tools"
     value: "A number of plotting tools are included. These include xmgrace, gnuplot, xcrysden, jmol."

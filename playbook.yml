@@ -6,8 +6,13 @@
         file: globalconfig.yml
         name: globalconfig
   roles: 
-    - common
-    - customizations
-    - editors
-    - scheduler
-    - simulationtools
+    - role: common
+      tags: common
+    - role: customizations
+      tags: customizations
+    - role: editors
+      tags: customizations
+    - role: scheduler
+      tags: scheduler
+    - role: simulationtools
+      tags: simulationtools

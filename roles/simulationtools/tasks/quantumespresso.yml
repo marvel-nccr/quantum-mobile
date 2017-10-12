@@ -30,14 +30,14 @@
 
 - name: Add Quantum ESPRESSO info (version) to Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "Quantum ESPRESSO"
     option: "version"
     value: "{{ qe_version }}"
 
 - name: Add Quantum ESPRESSO info (location) to Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "Quantum ESPRESSO"
     option: "usage"
     value: "Quantum ESPRESSO is compiled and installed in {{ qe_topdir }}. Note that the bin folder is added to the path, so you can just run 'pw.x' (and the same for the other executables) without the need to specify the path"

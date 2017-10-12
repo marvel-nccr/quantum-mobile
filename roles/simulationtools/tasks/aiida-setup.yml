@@ -110,46 +110,39 @@
         {{ aiida_venv }}/bin/verdi profile setdefault daemon default
   when: aiida_config_file.stat.exists == False
 
-- name: "Copy the script to setup the AiiDA computer"
-  template:
-    src: create_aiida_computer.sh
-    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
-    mode: 0755
 
-- name: check if the AiiDA computer is already present
-  shell: "{{ aiida_venv }}/bin/verdi computer show {{ aiida_computer_name }}"
-  ignore_errors: True
-  register: aiida_check_computer
-  changed_when: False
+- name: set up aiida computers
+  include_tasks: aiida-computer-setup.yml aiida_computer_name={{ item }}
+  with_items:
+    - "{{ aiida_localhost_name }}"
+    - fidis
 
-- name: "Setup the localhost computer for AiiDA"
-  shell: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_computer.sh"
-  when: aiida_check_computer.rc != 0
+- name: Add AiiDA info (computers) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "AiiDA"
+    option: "computers available"
+    value: >
+        localhost has already been set up and configured.
+        List all available computers with 'verdi computer list -a'
 
 - name: Add AiiDA info (version) to Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "AiiDA"
     option: "version"
     value: "{{ aiida_version }}"
 
 - name: Add AiiDA info (general) to Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "AiiDA"
     option: "usage"
     value: "AiiDA is installed in a virtual environment. Before using it (and the 'verdi' command), type 'workon aiida'."
 
 - name: Add AiiDA info (codes) to Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
-    section: "AiiDA"
-    option: "configured computer"
-    value: "The local computer is already configured and is named 'localhost'"
-
-- name: Add AiiDA info (codes) to Release Notes file
-  ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+    path: "{{ release_notes_file }}"
     section: "AiiDA"
     option: "configured codes"
     value: "A number of codes are already installed and preconfigured. You can get the full list using 'verdi code list'"

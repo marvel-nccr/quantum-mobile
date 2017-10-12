@@ -7,5 +7,7 @@ postgres_db: aiidadb
 postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 aiida_version: "0.9.1"
-aiida_computer_name: "localhost"
 aiida_run_folder: "{{ ansible_env.HOME }}/.aiida_run"
+aiida_localhost_name: localhost
+
+release_notes_file: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
