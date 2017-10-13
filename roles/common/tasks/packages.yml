@@ -41,3 +41,5 @@
   lineinfile: 
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "source /usr/local/bin/virtualenvwrapper.sh"
+    # Do this also non-interactively
+    insertbefore: "{{ reference_point_bashrc_string }}"

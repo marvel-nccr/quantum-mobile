@@ -1,0 +1,16 @@
+---
+- name: disable guest account
+  become: true
+  ini_file: 
+    path: /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+    section: "Seat:*"
+    option: "allow-guest"
+    value: "false"
+  register: disable_guest_account
+
+- name: Restart lightdm to apply changes
+  become: true
+  service:
+    name: lightdm
+    state: restarted
+  when: disable_guest_account.changed
