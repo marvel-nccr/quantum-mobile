@@ -2,6 +2,7 @@
   hosts: default
   pre_tasks:
     - name: import global variables
+      tags: always
       include_vars:
         file: globalconfig.yml
         name: globalconfig

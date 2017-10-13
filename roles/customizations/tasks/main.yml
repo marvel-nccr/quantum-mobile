@@ -4,4 +4,3 @@
 - include_tasks: launcher.yml tags=launcher
 - include_tasks: disable_autolock.yml tags=disable-autolock
 - include_tasks: disable_guestuser.yml tags=disable-guestuser
-

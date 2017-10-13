@@ -6,11 +6,5 @@
     section: "Seat:*"
     option: "allow-guest"
     value: "false"
+  notify: restart lightdm 
   register: disable_guest_account
-
-- name: Restart lightdm to apply changes
-  become: true
-  service:
-    name: lightdm
-    state: restarted
-  when: disable_guest_account.changed

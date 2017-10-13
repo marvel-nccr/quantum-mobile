@@ -37,6 +37,7 @@
     section: "com.canonical.unity-greeter"
     option: "draw-user-backgrounds"
     value: "false"
+  notify: restart lightdm
   register: lightdm_draw_user_backgrounds
 
 - name: set lightdm (login page) background
@@ -46,16 +47,10 @@
     section: "com.canonical.unity-greeter"
     option: "background"
     value: "'/usr/share/marvelnccr/marvel-bg.png'"
+  notify: restart lightdm
   register: lightdm_background
 
 - name: recreate schemas to apply modifications
   become: true
   command: glib-compile-schemas /usr/share/glib-2.0/schemas
-  when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
-
-- name: Restart lightdm to update the wallpaper
-  become: true
-  service:
-    name: lightdm
-    state: restarted
   when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)

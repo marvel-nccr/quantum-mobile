@@ -11,7 +11,14 @@
   - apt clean
   file:
     state: absent
-    path: ~/.cache
+    path: "{{ ansible_env.HOME }}/.cache"
+
+- name: apt autoremove
+  become: True
+  listen:
+  - apt clean
+  apt:
+      autoremove: True
 
 - name: apt autoremove
   become: True

@@ -1,3 +1,11 @@
+---
+- name: check icons/applications in the launcher
+  command: dbus-launch gsettings get com.canonical.Unity.Launcher favorites
+  register: current_launcher_favorites
+  changed_when: False
+
 - name: set the icons/applications that should be in the launcher
-  command: dbus-launch gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://gnome-terminal.desktop', 'application://gedit.desktop', 'application://libreoffice-writer.desktop', 'application://libreoffice-calc.desktop', 'unity://running-apps', 'unity://expo-icon']"
+  command: dbus-launch gsettings set com.canonical.Unity.Launcher favorites {{ launcher_favorites }}
+  notify: restart lightdm
+  when: current_launcher_favorites.stdout != launcher_favorites
 
