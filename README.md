@@ -6,7 +6,7 @@ This repository contains the vagrant and ansible scripts to set up the "standard
 
 - [vagrant](https://www.vagrantup.com/downloads.html)
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
-- ansible >= 2.4 (`pip install ansible`)
+- `pip install -r requirements.txt`
 
 Note: So far tested only on Unix, but should work on Windows as well.
 
