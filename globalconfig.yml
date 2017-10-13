@@ -5,6 +5,8 @@ vm_name: "MARVEL Virtual Machine"
 vm_description: "A VM for computational materials science distributed by the MARVEL NCCR"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
 author: "MARVEL National Centre for Competency in Research"
+author_url: "http://nccr-marvel.ch"
+
 
 vm_hostname: "marvelvm"
 vm_password: "tutorial"

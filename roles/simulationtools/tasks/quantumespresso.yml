@@ -27,6 +27,8 @@
   lineinfile: 
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export PATH=${PATH}:{{ qe_topdir }}/bin/"
+    # Do this also non-interactively
+    insertbefore: "{{ reference_point_bashrc_string }}"
 
 - name: Add Quantum ESPRESSO info (version) to Release Notes file
   ini_file:
