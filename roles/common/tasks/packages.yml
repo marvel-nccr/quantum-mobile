@@ -3,25 +3,177 @@
   apt:
       update_cache: yes
 
-- name: Install needed packages
+- name: Install further needed packages
   become: true
   apt:
       name: "{{item}}"
       state: installed
   with_items:
-      - ubuntu-desktop
       - python-pip
       - python-dev
   notify: apt clean
+
+- name: Install ubuntu-desktop (required packages only)
+  become: true
+  apt:
+      name: ubuntu-desktop
+      state: installed
+      install_recommends: False
+  notify: apt clean
+
+  ## See full list on https://packages.ubuntu.com/xenial/ubuntu-desktop
+  ## The packages I have removed:
+  # bluez
+  # bluez-cups
+  # cups
+  # cups-bsd
+  # cups-client
+  # cups-filters
+  # fonts-guru
+  # fonts-kacst-one
+  # fonts-khmeros-core
+  # fonts-lao
+  # fonts-liberation
+  # fonts-lklug-sinhala
+  # fonts-nanum
+  # fonts-noto-cjk
+  # fonts-sil-abyssinica
+  # fonts-sil-padauk
+  # fonts-takao-pgothic
+  # fonts-thai-tlwg
+  # fonts-tibetan-machine
+  # gnome-bluetooth
+  # gnome-calendar
+  # gnome-mahjongg
+  # gnome-mines
+  # gnome-sudoku
+  # libqt4-sql-sqlite
+  # libreoffice-calc
+  # libreoffice-gnome
+  # libreoffice-impress
+  # libreoffice-math
+  # libreoffice-ogltrans
+  # libreoffice-pdfimport
+  # libreoffice-style-breeze
+  # libreoffice-writer
+  # libwmf0.2-7-gtk
+  # printer-driver-brlaser
+  # printer-driver-c2esp
+  # printer-driver-foo2zjs
+  # printer-driver-min12xxw
+  # printer-driver-ptouch
+  # printer-driver-pxljr
+  # printer-driver-sag-gdi
+  # printer-driver-splix
+  # pulseaudio-module-bluetooth
+  # pulseaudio-module-x11
+  # thunderbird
+  # thunderbird-gnome-support
+  # ttf-ancient-fonts-symbola
+  # ubuntu-docs
+- name: add some, but not all recommended packages of ubuntu-desktop
+  become: True
+  apt:
+      name: "{{ item }}"
+      state: installed
+  with_items:
+  - a11y-profile-manager-indicator
+  - acpi-support
+  - activity-log-manager
+  - aisleriot
+  - app-install-data-partner
+  - apport-gtk
+  - avahi-autoipd
+  - avahi-daemon
+  - baobab
+  - branding-ubuntu
+  - brltty
+  - cheese
+  - deja-dup
+  - eog
+  - evince
+  - example-content
+  - file-roller
+  - firefox
+  - fwupd
+  - fwupdate
+  - fwupdate-signed
+  - gedit
+  - gnome-accessibility-themes
+  - gnome-calculator
+  - gnome-disk-utility
+  - gnome-font-viewer
+  - gnome-keyring
+  - gnome-orca
+  - gnome-power-manager
+  - gnome-screensaver
+  - gnome-screenshot
+  - gnome-system-log
+  - gnome-system-monitor
+  - gnome-terminal
+  - gnupg-agent
+  - gucharmap
+  - gvfs-fuse
+  - hplip
+  - ibus
+  - ibus-gtk
+  - ibus-gtk3
+  - ibus-table
+  - im-config
+  - kerneloops-daemon
+  - laptop-detect
+  - libgail-common
+  - libnss-mdns
+  - libpam-gnome-keyring
+  - libproxy1-plugin-gsettings
+  - libproxy1-plugin-networkmanager
+  - mousetweaks
+  - nautilus-sendto
+  - nautilus-share
+  - network-manager-gnome
+  - network-manager-pptp-gnome
+  - onboard
+  - overlay-scrollbar-gtk2
+  - pcmciautils
+  - plymouth-theme-ubuntu-logo
+  - policykit-desktop-privileges
+  - ppp
+  - pppconfig
+  - pppoeconf
+  - python3-aptdaemon.pkcompat
+  - qt-at-spi
+  - remmina
+  - rhythmbox
+  - seahorse
+  - shotwell
+  - simple-scan
+  - snapd
+  - sni-qt
+  - speech-dispatcher
+  - system-config-printer-gnome
+  - totem
+  - transmission-gtk
+  - ttf-ubuntu-font-family
+  - ubuntu-software
+  - unity-accessibility-profiles
+  - unity-webapps-common
+  - usb-creator-gtk
+  - vino
+  - whoopsie
+  - xcursor-themes
+  - xdg-utils
+  - xterm
+  - xul-ext-ubufox
+  - zeitgeist-core
+  - zeitgeist-datahub
 
 - name: upgrade pip
   become: true
   pip: 
     name: pip
     extra_args: --upgrade
-  notify: apt clean
 
-- name: add some needed packages
+- name: add necessary python packages
   become: true
   pip: 
     name: "{{item}}"
@@ -30,7 +182,6 @@
     - virtualenvwrapper
     # Needed to set the wallpaper (maybe?)
     - psutil
-  notify: apt clean
 
 - name: "Run virtualenvwrapper once to create folders"
   shell: "source /usr/local/bin/virtualenvwrapper.sh"

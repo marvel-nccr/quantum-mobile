@@ -13,3 +13,10 @@
     state: absent
     path: ~/.cache
 
+- name: apt autoremove
+  become: True
+  listen:
+  - apt clean
+  apt:
+      autoremove: True
+
