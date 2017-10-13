@@ -12,12 +12,14 @@
       - ubuntu-desktop
       - python-pip
       - python-dev
+  notify: apt clean
 
 - name: upgrade pip
   become: true
   pip: 
     name: pip
     extra_args: --upgrade
+  notify: apt clean
 
 - name: add some needed packages
   become: true
@@ -28,6 +30,7 @@
     - virtualenvwrapper
     # Needed to set the wallpaper (maybe?)
     - psutil
+  notify: apt clean
 
 - name: "Run virtualenvwrapper once to create folders"
   shell: "source /usr/local/bin/virtualenvwrapper.sh"

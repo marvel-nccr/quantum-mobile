@@ -1,0 +1,15 @@
+---
+- name: apt clean
+  become: True
+  listen:
+  - apt clean
+  apt:
+      autoclean: True
+
+- name: remove ~/.cache
+  listen: 
+  - apt clean
+  file:
+    state: absent
+    path: ~/.cache
+
