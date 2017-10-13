@@ -20,6 +20,8 @@ Vagrant.configure(2) do |config|
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
      vb.gui = true
+
+     vb.customize ["modifyvm", :id, "--vram", gconfig['vm_vram']]
    end
 
   ## To automatically update/upgrade the Guest Additions at every 
@@ -37,6 +39,9 @@ Vagrant.configure(2) do |config|
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
   #config.ssh.password = gconfig['vm_password']
+
+  ## Shared folder
+  config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
 
   ## First provisioner: python needed to have ansible work
   ## as a second provisioner

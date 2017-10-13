@@ -5,7 +5,7 @@
   changed_when: False
 
 - name: set the icons/applications that should be in the launcher
-  command: dbus-launch gsettings set com.canonical.Unity.Launcher favorites {{ launcher_favorites }}
+  command: dbus-launch gsettings set com.canonical.Unity.Launcher favorites "{{ launcher_favorites }}"
   notify: restart lightdm
   when: current_launcher_favorites.stdout != launcher_favorites
 
