@@ -4,7 +4,7 @@
   register: aiida_check_code
   changed_when: False
 
-- name: "Copy the script to setup the AiiDA computer"
+- name: "Copy the script to setup the AiiDA code"
   template:
     src: create_aiida_qe_code.sh
     dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/create_aiida_qe_{{ codeinfo.name }}_code.sh"

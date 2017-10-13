@@ -4,7 +4,7 @@ cat <<EOF | {{ aiida_venv }}/bin/verdi code setup
 {{ qe_exec_name }}.x from Quantum ESPRESSO {{ qe_version }} compiled
 False
 quantumespresso.{{ qe_exec_name }}
-{{ aiida_computer_name }}
+{{ aiida_localhost_name }}
 {{ qe_topdir }}/bin/{{ qe_exec_name }}.x
 
 

@@ -5,14 +5,14 @@
   register: aiida_check_computer
   changed_when: False
 
-- name: "Copy the script to setup the AiiDA computer"
+- name: Copy the script to setup the {{ aiida_computer_name }} AiiDA computer
   template:
     src: "{{ aiida_computer_name }}.computer"
     dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/"
     mode: 0755
   when: aiida_check_computer.rc != 0
 
-- name: "Setup the computer for AiiDA"
+- name: "Setup {{ aiida_computer_setup }} computer for AiiDA"
   shell: "cat {{ ansible_env.HOME }}/.local/share/marvelnccr/{{ aiida_computer_name }}.computer | {{ aiida_venv }}/bin/verdi computer setup" 
   when: aiida_check_computer.rc != 0
 
