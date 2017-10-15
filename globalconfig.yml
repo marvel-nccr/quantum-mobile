@@ -8,6 +8,7 @@ author: "MARVEL National Centre for Competency in Research"
 author_url: "http://nccr-marvel.ch"
 
 
+# VM configuration
 vm_hostname: "marvelvm"
 vm_user: "ubuntu"
 vm_password: "tutorial"
