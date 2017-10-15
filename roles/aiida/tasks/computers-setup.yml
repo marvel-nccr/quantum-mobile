@@ -1,0 +1,14 @@
+- name: set up aiida computers
+  include_tasks: computer-setup.yml aiida_computer_name={{ item }}
+  with_items:
+    - "{{ aiida_localhost_name }}"
+    - fidis
+
+- name: Add AiiDA info (computers) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "AiiDA"
+    option: "computers available"
+    value: >
+        localhost has already been set up and configured.
+        List all available computers with 'verdi computer list -a'

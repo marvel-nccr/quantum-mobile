@@ -1,4 +1,4 @@
-# Will only download once  
+# Will only download once
 - name: Get Quantum ESPRESSO
   get_url: url={{ qe_url }} dest={{ ansible_env.HOME }}/codes/{{ qe_src }}.tar.gz
 
@@ -16,15 +16,10 @@
   shell: "cd {{ qe_topdir }} && make {{ item }}"
   args:
     creates: "{{ qe_topdir }}/bin/{{ item }}.x"
-  with_items:
-    - pw
-    - cp
-    - pp
-    - ph
-    - neb
+  with_items: "{{ qe_executables }}"
 
 - name: "Put a line in ~/.bashrc to add QE to the path"
-  lineinfile: 
+  lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export PATH=${PATH}:{{ qe_topdir }}/bin/"
     # Do this also non-interactively

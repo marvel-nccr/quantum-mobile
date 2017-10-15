@@ -1,0 +1,8 @@
+{{ aiida_code_name }}
+{{ code }}.x from Quantum ESPRESSO {{ qe_version }} compiled
+False
+quantumespresso.{{ code }}
+{{ aiida_localhost_name }}
+{{ qe_topdir }}/bin/{{ code }}.x
+
+

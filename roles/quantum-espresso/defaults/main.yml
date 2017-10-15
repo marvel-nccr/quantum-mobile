@@ -1,0 +1,11 @@
+qe_version: "6.1"
+qe_src: qe-{{ qe_version }}
+qe_url: "http://www.qe-forge.org/gf/download/frsrelease/240/1075/{{qe_src}}.tar.gz"
+qe_topdir: "{{ ansible_env.HOME }}/codes/{{qe_src}}"
+qe_executables:
+  - pw
+  - cp
+  - pp
+  - ph
+  - neb
+release_notes_file: "{{ globalconfig.release_notes_file }}"

@@ -1,0 +1,22 @@
+- name: Install plotting tools, etc.
+  become: true
+  apt:
+      name: "{{ item }}"
+      state: installed
+  with_items:
+    # For AiiDA, for plotting, ...
+    - libffi-dev
+    - libssl-dev
+    - graphviz
+    - grace
+    - gnuplot
+    - python-tk 
+    - xcrysden
+    - jmol
+
+- name: Add plotting tools info to release notes
+  ini_file:
+    path: "{{ globalconfig.release_notes_file }}"
+    section: "Plotting Tools"
+    option: "available tools"
+    value: "A number of plotting tools are included. These include xmgrace, gnuplot, xcrysden, jmol."

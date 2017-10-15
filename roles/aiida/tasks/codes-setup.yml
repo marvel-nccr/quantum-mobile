@@ -1,0 +1,15 @@
+- name: set up QE codes for localhost
+  include_tasks: code-setup.yml code={{ item }}
+  with_items: "{{qe_executables}}"
+  vars:
+   - aiida_code_name:  "qe-{{code}}-{{qe_version}}"
+   - aiida_code_template:  qe.code
+   - aiida_computer_name:  "{{ aiida_localhost_name }}"
+  when: qe_executables is defined
+     
+- name: Add AiiDA info (codes) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "AiiDA"
+    option: "configured codes"
+    value: "A number of codes are already installed and preconfigured. You can get the full list using 'verdi code list'"

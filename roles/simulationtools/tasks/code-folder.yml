@@ -1,0 +1,5 @@
+- name: Create folder for codes
+  file:
+      path: "{{ ansible_env.HOME }}/codes"
+      state: directory
+

@@ -1,0 +1,26 @@
+- name: Install libraries
+  become: true
+  apt:
+      name: "{{ item }}"
+      state: installed
+  with_items:
+    # Compilation
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential
+    - python-passlib    
+    - gfortran
+    - libopenmpi-dev
+    - openmpi-bin
+    - libfftw3-dev 
+    - libfftw3-bin 
+    - libfftw3-mpi-dev
+    - liblapack-dev
+    - libblas-dev
+
+- name: Add mpi info to release notes
+  ini_file:
+    path: "{{ globalconfig.release_notes_file }}"
+    section: "MPI libraries"
+    option: "usage"
+    value: "The OpenMPI version of the MPI libraries is installed. You can your codes using 'mpirun -np NUMPROCS EXECNAME'"
+
