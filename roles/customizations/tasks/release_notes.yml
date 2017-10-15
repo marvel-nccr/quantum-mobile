@@ -1,14 +1,16 @@
 - name: start creating the Release Notes file
   ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
-    section: "MARVEL Virtual Machine"
+    path: "{{ globalconfig.release_notes_file }}"
+    section: "{{ globalconfig.vm_name }}"
     option: "version"
     value: "{{ globalconfig.vm_version }}"
     create: true
 
-- name: set the Message Of The Day (MOTD)
-  become: true
-  template:
-    src: motd
-    dest: "/etc/motd"
-    mode: 0644
+- name: add hint for shared folder
+  ini_file:
+    path: "{{ globalconfig.release_notes_file }}"
+    section: "Customizations"
+    option: "shared folder"
+    value: "Use {{ globalconfig.vm_shared_folder }} to share files with your host operating system"
+    create: true
+
