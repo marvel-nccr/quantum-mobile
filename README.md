@@ -31,13 +31,3 @@ bash create_image.sh
    vagrant ssh-config > vagrant-ssh  # inform ansible about ssh config
    ansible-playbook playbook.yml     # run ansible directly, add tags,...
    ```
-
-## Virtualbox optimisations
-
- * Make mouse/typing more responsive: 
-   * Shut down machine
-   * Machine => Settings => Display => 'Enable 3D acceleration' 
-   * Start machine
- * Enable clipboard sharing
-   * Devices => Shared clipboard => bidirectional
-
