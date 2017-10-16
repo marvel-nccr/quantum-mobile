@@ -17,7 +17,7 @@ vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
 
-# Create image
+## Create image
 ```
 bash create_image.sh
 ```
