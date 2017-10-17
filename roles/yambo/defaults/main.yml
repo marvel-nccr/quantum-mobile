@@ -1,0 +1,9 @@
+yambo_version: "4.2.0"
+yambo_src: yambo-{{ yambo_version }}
+yambo_url: "https://github.com/yambo-code/yambo/archive/{{ yambo_version }}.tar.gz"
+yambo_topdir: "{{ ansible_env.HOME }}/codes/{{yambo_src}}"
+yambo_executables:
+  - yambo
+  - p2y
+  - ypp
+release_notes_file: "{{ globalconfig.release_notes_file }}"

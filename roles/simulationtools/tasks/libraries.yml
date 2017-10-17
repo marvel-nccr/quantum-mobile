@@ -16,6 +16,7 @@
     - libfftw3-mpi-dev
     - liblapack-dev
     - libblas-dev
+    - m4
 
 - name: Add mpi info to release notes
   ini_file:
