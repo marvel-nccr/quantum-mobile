@@ -1,6 +1,7 @@
-.vagrant
 *~
 .DS_Store
-playbook.retry
+*.retry
 *.log
+*.ova
 vagrant-ssh
+.vagrant

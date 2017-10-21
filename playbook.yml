@@ -12,7 +12,7 @@
     - role: customizations
       tags: customizations
     - role: editors
-      tags: customizations
+      tags: editors
     - role: scheduler
       tags: scheduler
     - role: simulationtools

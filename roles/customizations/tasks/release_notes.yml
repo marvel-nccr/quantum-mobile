@@ -6,11 +6,11 @@
     value: "{{ globalconfig.vm_version }}"
     create: true
 
-- name: add hint for shared folder
-  ini_file:
-    path: "{{ globalconfig.release_notes_file }}"
-    section: "Customizations"
-    option: "shared folder"
-    value: "Use {{ globalconfig.vm_shared_folder }} to share files with your host operating system"
-    create: true
+#- name: add hint for shared folder
+#  ini_file:
+#    path: "{{ globalconfig.release_notes_file }}"
+#    section: "Customizations"
+#    option: "shared folder"
+#    value: "Use {{ globalconfig.vm_shared_folder }} to share files with your host operating system"
+#    create: true
 

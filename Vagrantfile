@@ -21,27 +21,36 @@ Vagrant.configure(2) do |config|
      ## (called 'show in the VirtualBox GUI')
      vb.gui = true
 
+     # More customizations
+     # See https://www.virtualbox.org/manual/ch08.html
      vb.customize ["modifyvm", :id, "--vram", gconfig['vm_vram']]
+     vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      
    end
 
-  ## To automatically update/upgrade the Guest Additions at every 
-  ## login. Note this requires 'vagrant plugin install vbguest'
-  ##
-  ## Uncomment the following if you don't want to check/update the
-  ## Guest Additions at every reboot, but just once
+  # Vagrant automatically updates/upgrades the Guest Additions at every 
+  # login (this requires 'vagrant plugin install vbguest')
+  # Uncomment the following if you don't want to check/update the
+  # Guest Additions at every reboot, but just once
   #config.vbguest.auto_update = false
-  ## Uncomment to avoid remote downloads of ISO
+   
+  # Uncomment to avoid remote downloads of ISO
   #config.vbguest.no_remote = true
 
-  ## Starting Box
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "bento/ubuntu-16.04"
+  #config.vm.box = "ubuntu/xenial64"
+  config.vm.boot_timeout = 60
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
   #config.ssh.password = gconfig['vm_password']
-
-  ## Shared folder
-  config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
+   
+  # Shared folder
+  # Unfortunately, VirtualBox only allows to share absolute paths, which cannot
+  # work across all host OS. Until this changes, let's add the shared folder
+  # https://www.virtualbox.org/ticket/15305
+  #config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
 
   ## First provisioner: python needed to have ansible work
   ## as a second provisioner

@@ -1,0 +1,8 @@
+* ovf_path: can also put URL to .ova file
+* packer suffers from exactly the same issues with the ubuntu xenial images
+  requiring a serial port (since packer doesn't provide one, the machine
+  will not even start)
+  with the bento image it should work.
+* use headless=false to run with ui
+* for headless=true connect via
+  rdesktop -N 127.0.0.1:5945

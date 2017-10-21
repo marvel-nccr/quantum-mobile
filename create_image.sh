@@ -28,7 +28,11 @@ vagrant halt # shut down machine
 #vboxmanage list vms
 
 echo "### Exporting '$vm_name $vm_version'"
+
 fname=marvel_vm_${vm_version}.ova
+
+[ -e $fname ] && rm $fname
+
 vboxmanage export "${vm_name} ${vm_version}"  \
   -o $fname \
   --vsys 0 \

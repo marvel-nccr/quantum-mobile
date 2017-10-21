@@ -10,7 +10,7 @@ author_url: "http://nccr-marvel.ch"
 
 # VM configuration
 vm_hostname: "marvelvm"
-vm_user: "ubuntu"
+vm_user: "vagrant"
 vm_password: "tutorial"
 vm_shared_folder: "/shared"
 vm_memory: 1024
