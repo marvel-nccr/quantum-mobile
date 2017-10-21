@@ -1,0 +1,5 @@
+---
+- name: set timezone to Europe/Zurich
+  become: true
+  timezone:
+    name: Europe/Zurich
