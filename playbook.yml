@@ -1,5 +1,9 @@
 - name: playbook for the MARVEL VM
   hosts: default
+  vars:
+    # Note: don't use characters that are special for regexps here!
+    - reference_point_bashrc_string: "## Add commands before this line if you want them to run also non-interactively"
+    - run_tests: True
   pre_tasks:
     - name: import global variables
       tags: always
@@ -25,6 +29,3 @@
       tags: fleur
     - role: aiida
       tags: aiida
-  vars:
-    # Note: don't use characters that are special for regexps here!
-    - reference_point_bashrc_string: "## Add commands before this line if you want them to run also non-interactively"

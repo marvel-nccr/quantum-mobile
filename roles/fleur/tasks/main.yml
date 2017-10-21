@@ -36,6 +36,10 @@
   args:
     chdir: "{{ fleur_topdir }}/build"
     creates: "{{ fleur_topdir }}/build/fleur"
+  register: fleur_make
+
+- include_tasks: tests.yml
+  when: fleur_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add fleur to the path"
   lineinfile:

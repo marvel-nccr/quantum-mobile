@@ -1,0 +1,9 @@
+---
+- name: run fleur tests
+  shell: "ctest"
+  args:
+    chdir: "{{ fleur_topdir }}/build"
+
+  # fails (return code != 0), if "Test Failed." is found
+- name: check fleur test results
+  command: grep -vFxq "Test Failed." "{{ fleur_topdir }}/build/Testing/Temporary/LastTest.log"
