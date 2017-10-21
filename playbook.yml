@@ -27,5 +27,7 @@
       tags: yambo
     - role: fleur
       tags: fleur
+    - role: siesta
+      tags: siesta
     - role: aiida
       tags: aiida
