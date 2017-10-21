@@ -1,0 +1,13 @@
+---
+fleur_version: "0.27"
+fleur_release: "MaXR2"
+fleur_src: fleur{{ fleur_release }}
+fleur_url: "http://www.flapw.de/pm/uploads/FLEUR/{{fleur_src}}.tgz"
+fleur_topdir: "{{ globalconfig.vm_codes_folder }}/fleur"
+#fleur_executables:
+#  - pw
+#  - cp
+#  - pp
+#  - ph
+#  - neb
+release_notes_file: "{{ globalconfig.release_notes_file }}"

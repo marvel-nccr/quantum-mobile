@@ -1,21 +1,21 @@
 # Will only download once
-- name: Get Quantum ESPRESSO
-  get_url: url={{ qe_url }} dest={{ ansible_env.HOME }}/codes/{{ qe_src }}.tar.gz
-
-- name: Unpack Quantum ESPRESSO source files
-  shell: "cd {{ ansible_env.HOME }}/codes && tar -xzvf {{ qe_src }}.tar.gz"
-  args:
-    creates: "{{ qe_topdir }}"
+- name: Get Quantum ESPRESSO source
+  unarchive:
+    src: "{{ qe_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}"
+    remote_src: yes
 
 - name: Configure QE
-  shell: cd {{ qe_topdir }} && ./configure --enable-parallel
+  shell: ./configure --enable-parallel
   args:
     creates: "{{ qe_topdir }}/make.inc"
+    chdir: "{{ qe_topdir }}"
 
 - name: Make QE executables
-  shell: "cd {{ qe_topdir }} && make {{ item }}"
+  shell: "make {{ item }}"
   args:
     creates: "{{ qe_topdir }}/bin/{{ item }}.x"
+    chdir: "{{ qe_topdir }}"
   with_items: "{{ qe_executables }}"
 
 - name: "Put a line in ~/.bashrc to add QE to the path"

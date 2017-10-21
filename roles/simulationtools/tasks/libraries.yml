@@ -1,8 +1,16 @@
+---
+- name: add toolchain repository for recent compiler versions
+  become: True
+  apt_repository:
+    repo: ppa:ubuntu-toolchain-r/test
+    state: present
+
 - name: Install libraries
   become: true
   apt:
       name: "{{ item }}"
-      state: installed
+      state: latest
+      update_cache: True
   with_items:
     # Compilation
     - linux-headers-{{ ansible_kernel }}

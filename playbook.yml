@@ -21,6 +21,8 @@
       tags: quantum-espresso
     - role: yambo
       tags: yambo
+    - role: fleur
+      tags: fleur
     - role: aiida
       tags: aiida
   vars:
