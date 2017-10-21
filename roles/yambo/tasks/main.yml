@@ -1,0 +1,40 @@
+# Will only download once
+- name: Get Yambo
+  get_url: url={{ yambo_url }} dest={{ ansible_env.HOME }}/codes/{{ yambo_src }}.tar.gz
+
+- name: Unpack Yambo source files
+  shell: "cd {{ ansible_env.HOME }}/codes && tar -xzvf {{ yambo_src }}.tar.gz"
+  args:
+    creates: "{{ yambo_topdir }}"
+
+- name: Configure Yambo
+  shell: cd {{ yambo_topdir }} && ./configure
+  args:
+    creates: "{{ yambo_topdir }}/Makefile"
+
+- name: Make Yambo executables
+  shell: "cd {{ yambo_topdir }} && make {{ item }}"
+  args:
+    creates: "{{ yambo_topdir }}/bin/{{ item }}"
+  with_items: "{{ yambo_executables }}"
+
+- name: "Put a line in ~/.bashrc to add Yambo to the path"
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "export PATH=${PATH}:{{ yambo_topdir }}/bin/"
+    # Do this also non-interactively
+    insertbefore: "{{ reference_point_bashrc_string }}"
+
+- name: Add Yambo info (version) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "Yambo"
+    option: "version"
+    value: "{{ yambo_version }}"
+
+- name: Add Yambo info (location) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "Yambo"
+    option: "usage"
+    value: "Yambo is compiled and installed in {{ yambo_topdir }}. Note that the bin folder is added to the path, so you can just run 'yambo' (and the same for the other executables) without the need to specify the path"

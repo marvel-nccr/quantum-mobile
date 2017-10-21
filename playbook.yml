@@ -19,6 +19,8 @@
       tags: simulationtools
     - role: quantum-espresso
       tags: quantum-espresso
+    - role: yambo
+      tags: yambo
     - role: aiida
       tags: aiida
   vars:

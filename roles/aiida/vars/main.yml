@@ -1,7 +1,3 @@
-#qe_version: "6.1"
-#qe_src: qe-{{ qe_version }}
-#qe_url: "http://www.qe-forge.org/gf/download/frsrelease/240/1075/{{qe_src}}.tar.gz"
-#qe_topdir: "{{ ansible_env.HOME }}/codes/{{qe_src}}"
 postgres_pw: "ne9N_LDK-*JSS"
 postgres_db: aiidadb
 postgres_user: aiida

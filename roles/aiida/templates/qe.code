@@ -2,7 +2,7 @@
 {{ code }}.x from Quantum ESPRESSO {{ qe_version }} compiled
 False
 quantumespresso.{{ code }}
-{{ aiida_localhost_name }}
+{{ aiida_computer_name }}
 {{ qe_topdir }}/bin/{{ code }}.x
 
 

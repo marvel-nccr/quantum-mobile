@@ -1,0 +1,8 @@
+{{ aiida_code_name }}
+{{ code }} from YAMBO {{ yambo_version }} compiled
+False
+yambo.yambo
+{{ aiida_computer_name }}
+{{ yambo_topdir }}/bin/{{ code }}
+
+
