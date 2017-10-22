@@ -7,12 +7,3 @@
  3. Import virtual machine image into Virtualbox
     File => Import Appliance
  4. Log in using credentials ${vm_user} / ${vm_password}
-
-# Virtualbox optimisations
-
- * Make mouse/typing more responsive: 
-   * Shut down machine
-   * Machine => Settings => Display => 'Enable 3D acceleration' 
-   * Start machine
- * Enable clipboard sharing
-   * Devices => Shared clipboard => bidirectional
