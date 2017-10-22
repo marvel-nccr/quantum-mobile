@@ -29,6 +29,8 @@ vagrant halt # shut down machine
 
 echo "### Exporting '$vm_name $vm_version'"
 
+rc=-rc0
+vm_version=${vm_version}${rc}
 fname=marvel_vm_${vm_version}.ova
 
 [ -e $fname ] && rm $fname
@@ -42,9 +44,9 @@ vboxmanage export "${vm_name} ${vm_version}"  \
   --vendor "$author" \
   --vendorurl "$author_url" \
   --description "$vm_description"
-#  --eulafile 
+  --eulafile 
 echo "### Find image in $fname"
 
 export fname vm_version vm_user vm_password
-envsubst < INSTALL.md > INSTALL.txt
-echo "### Instructions in INSTALL.txt"
+envsubst < INSTALL.md > INSTALL_${vm_version}.txt
+echo "### Instructions in INSTALL_${vm_version}.txt"

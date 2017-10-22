@@ -6,4 +6,4 @@
 *.ova
 vagrant-ssh
 .vagrant
-INSTALL.txt
+INSTALL*.txt
