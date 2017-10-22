@@ -1,0 +1,14 @@
+---
+## Not tested yet; to activate when the Yambo plugin becomes public
+## (Note that we have to install the aiida-yambo plugin as well)  
+#- name: set up Yambo codes for localhost
+#  include_tasks: code-setup.yml code={{ item }} 
+#  with_items: 
+#   - yambo
+#   - p2y
+#  vars:
+#   - aiida_code_name:  "yambo-{{code}}-{{qe_version}}"
+#   - aiida_code_template:  yambo.code
+#   - aiida_computer_name:  "{{ aiida_localhost_name }}"
+#  # I don't use the yambo_executables directly because not all of them
+#  # have an AiiDA plugin

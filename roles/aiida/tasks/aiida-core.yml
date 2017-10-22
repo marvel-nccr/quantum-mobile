@@ -29,7 +29,7 @@
 - name: Install AiiDA-core from pip in a virtualenv
   pip:
     name: "aiida_core[{{ item }}]=={{ aiida_version }}"
-    virtualenv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
+    virtualenv: "{{ aiida_venv }}"
 #    virtualenv_command: virtualenv-2.7
   with_items:
     - REST

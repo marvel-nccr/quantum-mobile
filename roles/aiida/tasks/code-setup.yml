@@ -1,10 +1,10 @@
-- name: check if the AiiDA code is already present
+- name: "Check if {{ aiida_code_name }} is already present"
   shell: "{{ aiida_venv }}/bin/verdi code show {{ aiida_code_name }}@{{ aiida_computer_name }}"
   ignore_errors: True
   register: aiida_check_code
   changed_when: False
 
-- name: "Copy the script to setup the AiiDA code"
+- name: "Copy {{ aiida_code_template }} to setup the AiiDA code"
   template:
     src: "{{ aiida_code_template }}"
     dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/"

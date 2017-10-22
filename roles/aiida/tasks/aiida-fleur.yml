@@ -1,0 +1,26 @@
+---
+- name: "install aiida-fleur-{{ aiida_fleur_version }} from PyPI"
+  pip:
+    name: aiida-fleur
+    version: "{{ aiida_fleur_version }}"
+    virtualenv: "{{ aiida_venv }}"
+
+- name: run reentry scan
+  shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
+
+- name: set up fleur codes for localhost
+  include_tasks: code-setup.yml code={{ item }}
+  with_items: "{{fleur_executables}}"
+  vars:
+   - aiida_code_name:  "fleur-{{fleur_version}}"
+   - aiida_code_template:  fleur.code
+   - aiida_computer_name:  "{{ aiida_localhost_name }}"
+
+- name: Add AiiDA info (codes) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: AiiDA
+    option: aiida-fleur
+    value: >
+      aiida-fleur {{ aiida_fleur_version }} is installed.
+      See 'verdi code list' for available codes.

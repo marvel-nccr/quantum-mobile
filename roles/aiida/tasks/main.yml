@@ -1,3 +1,16 @@
-- include_tasks: aiida-setup.yml
+---
+- include_tasks: aiida-core.yml
+  tags: aiida-core
+
 - include_tasks: computers-setup.yml
-- include_tasks: codes-setup.yml
+
+# codes need to come after computers
+- include_tasks: aiida-quantumespresso.yml
+  tags: aiida-quantumespresso
+  when: qe_executables is defined
+- include_tasks: aiida-yambo.yml
+  tags: aiida-yambo
+  when: yambo_executables is defined
+- include_tasks: aiida-fleur.yml
+  tags: aiida-fleur
+  when: fleur_executables is defined

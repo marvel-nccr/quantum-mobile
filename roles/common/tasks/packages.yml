@@ -1,13 +1,15 @@
-- name: Update repositories cache
+- name: Update repositories cache & upgrade packages
   become: true
   apt:
       update_cache: yes
+      upgrade: yes
+      cache_valid_time: 86400 #One day
 
 - name: Install needed packages
   become: true
   apt:
       name: "{{item}}"
-      state: installed
+      state: latest
   with_items:
       - ubuntu-desktop
       - python-pip
