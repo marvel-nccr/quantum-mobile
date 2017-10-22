@@ -1,11 +1,8 @@
 ---
-- name: check icons/applications in the launcher
-  command: dbus-launch gsettings get com.canonical.Unity.Launcher favorites
-  register: current_launcher_favorites
-  changed_when: False
-
-- name: set the icons/applications that should be in the launcher
-  command: dbus-launch gsettings set com.canonical.Unity.Launcher favorites "{{ launcher_favorites }}"
+ # see https://askubuntu.com/questions/846704/changing-gsettings-for-another-user-from-an-ansible-script-started-by-vagrant/967632
+- name: set icons/applications
+  dconf:
+    key: /com/canonical/unity/launcher/favorites
+    value: "{{ launcher_favorites }}"
+    state: present
   notify: restart lightdm
-  when: current_launcher_favorites.stdout != launcher_favorites
-
