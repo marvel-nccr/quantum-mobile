@@ -1,8 +1,8 @@
 ---
-- name: "install aiida-fleur-{{ aiida_fleur_version }} from PyPI"
+- name: "install aiida-siesta-{{ aiida_siesta_version }} from PyPI"
   pip:
-    name: aiida-fleur
-    version: "{{ aiida_fleur_version }}"
+    name: aiida-siesta
+    version: "{{ aiida_siesta_version }}"
     virtualenv: "{{ aiida_venv }}"
   register: pip_install
 
@@ -10,19 +10,19 @@
   shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
   when: pip_install.changed
 
-- name: set up fleur codes for localhost
+- name: set up siesta codes for localhost
   include_tasks: code-setup.yml code={{ item }}
-  with_items: "{{fleur_executables}}"
+  with_items: "{{siesta_executables}}"
   vars:
-   - aiida_code_name:  "fleur-{{fleur_version}}"
-   - aiida_code_template:  fleur.code
+   - aiida_code_name:  "siesta-{{siesta_version}}"
+   - aiida_code_template:  siesta.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 
 - name: Add AiiDA info (codes) to Release Notes file
   ini_file:
     path: "{{ release_notes_file }}"
     section: AiiDA
-    option: aiida-fleur
+    option: aiida-siesta
     value: >
-      aiida-fleur {{ aiida_fleur_version }} is installed.
+      aiida-siesta {{ aiida_siesta_version }} is installed.
       See 'verdi code list' for available codes.

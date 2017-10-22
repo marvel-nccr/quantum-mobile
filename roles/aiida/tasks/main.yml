@@ -14,3 +14,6 @@
 - include_tasks: aiida-fleur.yml
   tags: aiida-fleur
   when: fleur_executables is defined
+- include_tasks: aiida-siesta.yml
+  tags: aiida-siesta
+  when: siesta_executables is defined
