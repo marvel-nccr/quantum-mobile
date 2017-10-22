@@ -52,6 +52,9 @@ Vagrant.configure(2) do |config|
   # work across all host OS. Until this changes, let's add the shared folder
   # https://www.virtualbox.org/ticket/15305
   #config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
+  
+  # Disable the default shared folder of vagrant
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   ## First provisioner: python needed to have ansible work
   ## as a second provisioner
