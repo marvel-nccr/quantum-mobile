@@ -10,15 +10,15 @@
   shell: "hostnamectl set-hostname {{ globalconfig.vm_hostname }}"
   when: cur_hostname_command.stdout != globalconfig.vm_hostname
 
-- name: "clean up the lines with 127.0.1.1"
+- name: "remove any lines with 127.0.1.1"
   become: true
   lineinfile: 
     path: "/etc/hosts"
     regexp: '^127\.0\.1\.1'
+    state: absent
     owner: root
     group: root
     mode: 0644
-    state: absent
 
 - name: "set 127.0.1.1 to localhost (if it's set to the hostname, pbs server complains)"
   become: true

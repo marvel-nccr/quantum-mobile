@@ -3,7 +3,7 @@
   # there is currently a bug that results in the test failing
   # https://bugs.launchpad.net/siesta/+bug/1725813
 - name: run siesta tests
-  shell: "make test={{ item }} check"
+  shell: "make tests={{ item }} check"
   args:
     chdir: "{{ siesta_topdir }}/Obj/Tests"
   with_items: "{{ siesta_tests }}"

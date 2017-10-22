@@ -8,14 +8,14 @@ This repository contains the vagrant and ansible scripts to set up the "standard
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - `pip install -r requirements.txt`
 
-Note: So far tested only on Unix, but should work on Windows as well.
-
 ## Create Virtual Machine
 
 ```
 vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
+
+Note: So far tested only on Unix, but should work on Windows as well.
 
 ## Create image
 ```
@@ -29,5 +29,5 @@ bash create_image.sh
  * `vagrant halt`: stop machine
  * ```
    vagrant ssh-config > vagrant-ssh  # inform ansible about ssh config
-   ansible-playbook playbook.yml     # run ansible directly, add tags,...
+   ansible-playbook playbook.yml     # run ansible directly, add tags, ...
    ```
