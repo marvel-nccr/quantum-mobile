@@ -23,6 +23,6 @@
     path: "{{ release_notes_file }}"
     section: AiiDA
     option: aiida-fleur
-    value: >
+    value: >-
       aiida-fleur {{ aiida_fleur_version }} is installed.
       See 'verdi code list' for available codes.

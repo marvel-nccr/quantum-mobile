@@ -60,6 +60,6 @@
     path: "{{ release_notes_file }}"
     section: "fleur"
     option: "usage"
-    value: >
+    value: >-
       fleur is compiled and installed in {{ fleur_topdir }}. 
       The folder with executables is added to the path, so simply run 'fleur'

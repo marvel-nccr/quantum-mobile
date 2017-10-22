@@ -11,6 +11,6 @@
     path: "{{ release_notes_file }}"
     section: "AiiDA"
     option: "aiida-quantumespresso"
-    value: >
+    value: >-
       A number of codes are already installed and preconfigured. 
       See 'verdi code list'

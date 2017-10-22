@@ -8,7 +8,7 @@
   ini_file:
     path: "{{ release_notes_file }}"
     section: "AiiDA"
-    option: "computers available"
-    value: >
+    option: "computers"
+    value: >-
         localhost has already been set up and configured.
         List all available computers with 'verdi computer list -a'

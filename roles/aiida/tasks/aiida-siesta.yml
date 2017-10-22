@@ -23,6 +23,6 @@
     path: "{{ release_notes_file }}"
     section: AiiDA
     option: aiida-siesta
-    value: >
+    value: >-
       aiida-siesta {{ aiida_siesta_version }} is installed.
       See 'verdi code list' for available codes.
