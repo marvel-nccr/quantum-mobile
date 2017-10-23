@@ -9,6 +9,7 @@
 - name: remove ~/.cache
   listen: 
   - apt clean
+  - clean cache
   file:
     state: absent
     path: "{{ ansible_env.HOME }}/.cache"

@@ -1,0 +1,8 @@
+---
+# this currently fails because of 1 test
+# http://qe-forge.org/gf/project/q-e/tracker/?action=TrackerItemEdit&tracker_item_id=291&start=0
+- name: run QE test suite
+  shell: "make test-suite"
+  args:
+    creates: "{{ qe_topdir }}/bin/.x"
+    chdir: "{{ qe_topdir }}"

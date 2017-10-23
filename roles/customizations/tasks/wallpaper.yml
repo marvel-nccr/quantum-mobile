@@ -23,6 +23,13 @@
       dest: "/usr/share/marvelnccr/marvel-bg.png"
       mode: 0755
 
+- name: add packages (pip)
+  become: true
+  pip:
+    name: "{{item}}"
+  with_items:
+    # Needed to set the wallpaper (maybe?)
+    - psutil
 
 # This seems not to work - it does not fail, but it says failed to commit changes to #dconf: Cannot autolaunch D-Bus without X11 $DISPLAY
 - name: set the background image

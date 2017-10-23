@@ -17,6 +17,10 @@
     creates: "{{ qe_topdir }}/bin/{{ item }}.x"
     chdir: "{{ qe_topdir }}"
   with_items: "{{ qe_executables }}"
+  register: qe_make
+
+- include_tasks: tests.yml
+  when: qe_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add QE to the path"
   lineinfile:

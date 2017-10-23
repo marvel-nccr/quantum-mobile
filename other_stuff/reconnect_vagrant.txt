@@ -1,0 +1,10 @@
+If you play around with different VMs, vagrant can loose connection to the one
+you are interested in. This is how you tell vagrant to connect again:
+
+1. Get uuid of machine from: vboxmanage list vms
+2. echo "<the-uuid>" > .vagrant/machines/default/virtualbox/id
+3. cp ~/.vagrant.d/insecure_private_key .vagrant/machines/default/virtualbox/
+4. potentially, also add the correct public key inside the VM ~/.ssh/authorized_keys
+   ssh-keygen -y -f  ~/.vagrant.d/insecure_private_key
+
+See also https://github.com/hashicorp/vagrant/issues/1755

@@ -5,7 +5,7 @@
       upgrade: yes
       cache_valid_time: 86400 #One day
 
-- name: Install needed packages
+- name: Install ubuntu-desktop (apt)
   become: true
   apt:
       name: "{{item}}"
@@ -21,18 +21,15 @@
   pip: 
     name: pip
     extra_args: --upgrade
-  notify: apt clean
+  notify: clean cache
 
-- name: add some needed packages
+- name: add packages (pip)
   become: true
   pip: 
     name: "{{item}}"
   with_items:
     - virtualenv
     - virtualenvwrapper
-    # Needed to set the wallpaper (maybe?)
-    - psutil
-  notify: apt clean
 
 - name: "Run virtualenvwrapper once to create folders"
   shell: "source /usr/local/bin/virtualenvwrapper.sh"
