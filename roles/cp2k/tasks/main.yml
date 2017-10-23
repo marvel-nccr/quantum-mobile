@@ -1,0 +1,79 @@
+---
+- name: add repo with backport containing recent cp2k version
+  become: True
+  apt_repository:
+    repo: ppa:leopold-talirz/xenial-science-backports
+    state: present
+
+- name: install cp2k {{ cp2k_version }}
+  become: True
+  apt:
+    name: cp2k={{ cp2k_version }}
+    state: installed
+    update_cache: True
+
+### Alternative 1: download binaries
+#- name: make cp2k topdir
+#  file:
+#    dest: "{{ cp2k_topdir }}"
+#    state: directory
+#
+#- name: download cp2k binary
+#  get_url:
+#    url: "{{ cp2k_binary_url }}"
+#    dest: "{{ globalconfig.vm_codes_folder }}/{{ cp2k_src }}"
+#     
+#chmod +x cp2k-4.1-Linux-x86_64.sopt
+#CP2K_DATA_DIR=/home/krack/rt/released/cp2k/data
+#wget -O BASIS_MOLOPT https://sourceforge.net/p/cp2k/code/HEAD/tree/branches/cp2k-4_1-branch/cp2k/data/BASIS_MOLOPT?format=raw
+#wget -O POTENTIAL https://sourceforge.net/p/cp2k/code/HEAD/tree/branches/cp2k-4_1-branch/cp2k/data/POTENTIAL?format=raw
+#sudo mkdir -p ${CP2K_DATA_DIR}
+#sudo mv BASIS_MOLOPT POTENTIAL ${CP2K_DATA_DIR}
+
+### Alternative 2: build from source (quite a few dependencies)
+## Will only download once
+#- name: Get cp2k source
+#  get_url:
+#    url: "{{ cp2k_url }}"
+#    dest: "{{ globalconfig.vm_codes_folder }}/{{ cp2k_src_archive }}"
+#  register: cp2k_download
+#
+#- name: Extract cp2k source
+#  unarchive:
+#    src: "{{ cp2k_download.dest }}"
+#    dest: "{{ globalconfig.vm_codes_folder }}"
+#    remote_src: yes
+#
+#- name: Make cp2k executables
+#  shell: "make -j{{ globalconfig.vm_cpus}} ARCH={{ cp2k_make_arch }} VERSION={{ item }}"
+#  args:
+#    chdir: "{{ cp2k_topdir }}/makefiles"
+#    creates: "{{ cp2k_topdir }}/exe/{{ cp2k_make_arch }}/cp2k.{{ item }}"
+#  with_items: "{{ cp2k_make_versions }}"
+#  register: cp2k_make
+#
+#- include_tasks: tests.yml
+#  when: cp2k_make.changed and run_tests is defined and run_tests
+
+#- name: "Put a line in ~/.bashrc to add cp2k to the path"
+#  lineinfile:
+#    path: "{{ ansible_env.HOME }}/.bashrc"
+#    line: "export PATH=${PATH}:{{ cp2k_topdir }}/bin/"
+#    # Do this also non-interactively
+#    insertbefore: "{{ reference_point_bashrc_string }}"
+
+- name: Add cp2k info (version) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "cp2k"
+    option: "version"
+    value: "{{ cp2k_version }}"
+
+- name: Add cp2k info (location) to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "cp2k"
+    option: "usage"
+    value: >-
+      cp2k was installed via apt-get.
+      simply run cp2k.popt

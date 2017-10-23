@@ -29,5 +29,7 @@
       tags: fleur
     - role: siesta
       tags: siesta
+    - role: cp2k
+      tags: cp2k
     - role: aiida
       tags: aiida
