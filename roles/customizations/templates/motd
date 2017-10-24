@@ -1,10 +1,9 @@
-#########################################################################
+##########################################################################
 # Welcome to the {{ globalconfig.vm_name }} version {{ globalconfig.vm_version }} 
 # distributed by the {{ globalconfig.author }}
-# ({{ globalconfig.author_url }})
+# {{ globalconfig.author_url }}
 #
 # Instructions:
-# - Read the RELEASENOTES.txt file on the Desktop for more information
-#   on installed packages
-# - To use AiiDA, type 'workon aiida' to enable the 'verdi' commands
-#########################################################################
+# - See RELEASENOTES.txt on the Desktop for installed packages
+# - type 'workon aiida' to enable the AiiDA 'verdi' commands
+##########################################################################
