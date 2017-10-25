@@ -1,0 +1,8 @@
+{{ aiida_code_name }}
+cp2k v{{ cp2k_version }} from source forge
+False
+cp2k
+{{ aiida_computer_name }}
+{{ cp2k_topdir }}/exe/{{ code }}
+
+

@@ -17,3 +17,6 @@
 - include_tasks: aiida-siesta.yml
   tags: aiida-siesta
   when: siesta_executables is defined
+- include_tasks: aiida-cp2k.yml
+  tags: aiida-cp2k
+  when: cp2k_executables is defined
