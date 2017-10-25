@@ -30,6 +30,6 @@
   ini_file:
     path: "{{ globalconfig.release_notes_file }}"
     section: "MPI libraries"
-    option: "usage"
-    value: "The OpenMPI version of the MPI libraries is installed. You can your codes using 'mpirun -np NUMPROCS EXECNAME'"
+    option: "openmpi"
+    value: "Run using 'mpirun <NUMPROCS> <EXECNAME>'"
 
