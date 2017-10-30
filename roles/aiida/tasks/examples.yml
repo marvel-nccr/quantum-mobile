@@ -1,0 +1,14 @@
+---
+- name: make example directories
+  file:
+    path: "{{ globalconfig.vm_examples_folder }}/{{ item }}"
+    state: directory
+  with_items: "{{ aiida_examples }}"
+
+- name: copy examples
+  copy:
+    src: "{{ item }}/"
+    dest: "{{ globalconfig.vm_examples_folder }}/{{ item }}"
+    directory_mode: True
+  with_items: "{{ aiida_examples }}"
+
