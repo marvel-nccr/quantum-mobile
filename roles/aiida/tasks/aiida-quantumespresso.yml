@@ -1,3 +1,6 @@
+---
+# aiida-quantumespresso plugin installed via 'aiida' metapackage
+
 - name: set up QE codes for localhost
   include_tasks: code-setup.yml code={{ item }}
   with_items: "{{qe_executables}}"

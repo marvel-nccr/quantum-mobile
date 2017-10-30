@@ -1,5 +1,0 @@
-- name: Create folder for codes
-  file:
-      path: "{{ globalconfig.vm_codes_folder }}"
-      state: directory
-

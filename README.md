@@ -31,3 +31,4 @@ bash create_image.sh
    vagrant ssh-config > vagrant-ssh  # inform ansible about ssh config
    ansible-playbook playbook.yml     # run ansible directly, add tags, ...
    ```
+ * ```scp -F vagrant-ssh default:/path/on/vm  my/path```

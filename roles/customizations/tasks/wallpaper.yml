@@ -31,11 +31,11 @@
     # Needed to set the wallpaper (maybe?)
     - psutil
 
-# This seems not to work - it does not fail, but it says failed to commit changes to #dconf: Cannot autolaunch D-Bus without X11 $DISPLAY
+# To work around error:
+# Cannot autolaunch D-Bus without X11 $DISPLAY
 - name: set the background image
-  #  environment: 
-  #      DISPLAY: ":0"
-  command: "dbus-launch gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+  shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+  notify: restart lightdm
 
 - name: set lightdm (login page) not to draw the user background
   become: true
@@ -57,7 +57,8 @@
   notify: restart lightdm
   register: lightdm_background
 
-- name: recreate schemas to apply modifications
-  become: true
-  command: glib-compile-schemas /usr/share/glib-2.0/schemas
-  when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
+# Not sure this is actually needed...
+#- name: recreate schemas to apply modifications
+#  become: true
+#  command: glib-compile-schemas /usr/share/glib-2.0/schemas
+#  #when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)

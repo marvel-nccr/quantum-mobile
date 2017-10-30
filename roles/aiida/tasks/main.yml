@@ -1,6 +1,6 @@
 ---
 - include_tasks: aiida-core.yml
-  tags: aiida-core
+  tags: aiida,aiida-core
 
 - include_tasks: computers-setup.yml
 

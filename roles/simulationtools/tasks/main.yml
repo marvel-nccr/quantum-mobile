@@ -1,4 +1,4 @@
 - include_tasks: libraries.yml
 - include_tasks: plotting.yml
-- include_tasks: code-folder.yml
+- include_tasks: folders.yml
 - include_tasks: stacksize.yml

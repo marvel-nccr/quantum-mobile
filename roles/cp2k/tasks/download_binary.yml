@@ -41,5 +41,4 @@
     option: "usage"
     value: >-
       cp2k binary was downloaded from source forge.
-      simply run cp2k.popt
-
+      simply run 'cp2k.ssmp'

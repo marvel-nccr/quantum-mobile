@@ -63,6 +63,6 @@
     path: "{{ release_notes_file }}"
     section: "siesta"
     option: "usage"
-    value: >
+    value: >-
       siesta is compiled and installed in {{ siesta_topdir }}. 
-      The folder with executables is added to the path, so simply run 'siesta'
+      simply run 'siesta'

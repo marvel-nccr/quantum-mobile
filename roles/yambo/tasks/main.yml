@@ -45,4 +45,6 @@
     path: "{{ release_notes_file }}"
     section: "Yambo"
     option: "usage"
-    value: "Yambo is compiled and installed in {{ yambo_topdir }}. Note that the bin folder is added to the path, so you can just run 'yambo' (and the same for the other executables) without the need to specify the path"
+    value: >-
+       Yambo is compiled and installed in {{ yambo_topdir }}.
+       Simply run 'yambo'.

@@ -1,9 +1,14 @@
 # Will only download once
 - name: Get Quantum ESPRESSO source
+  get_url:
+    url: "{{ qe_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{  qe_src_archive }}"
+  register: qe_download
+
+- name: Extract QE source
   unarchive:
-    src: "{{ qe_url }}"
+    src: "{{ qe_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: yes
 
 - name: Configure QE
   shell: ./configure --enable-parallel
@@ -41,4 +46,6 @@
     path: "{{ release_notes_file }}"
     section: "Quantum ESPRESSO"
     option: "usage"
-    value: "Quantum ESPRESSO is compiled and installed in {{ qe_topdir }}. Note that the bin folder is added to the path, so you can just run 'pw.x' (and the same for the other executables) without the need to specify the path"
+    value: >-
+        Quantum ESPRESSO is installed in {{ qe_topdir }}. 
+        'pw.x', 'cp.x', ... have been added to the PATH

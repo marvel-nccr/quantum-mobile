@@ -26,26 +26,17 @@
     name: "{{ postgres_user }}"
     password: "{{ postgres_pw }}"
 
-- name: Install AiiDA-core from pip in a virtualenv
+- name: Install the aiida meta package
   pip:
-    name: "aiida_core[{{ item }}]=={{ aiida_version }}"
+    name: "aiida=={{ aiida_version }}"
     virtualenv: "{{ aiida_venv }}"
-#    virtualenv_command: virtualenv-2.7
-  with_items:
-    - REST
-    - docs
-    - atomic_tools
-    - testing
-    - notebook
 
-# note: aiida specifies simply ipython, which defaults to ipython6
-# however, python27 needs ipython <= 5.
-- name: install ipython5 (fix for aiida installation)
+- name: Install extras of aiida-core
   pip:
-      name: ipython
-      virtualenv: "{{ aiida_venv }}"
-      version: 5
-      
+    name: "aiida-core[{{ item }}]=={{ aiida_version }}"
+    virtualenv: "{{ aiida_venv }}"
+  with_items: "{{ aiida_extras }}"
+
 - name: Additional pip dependencies
   pip:
       name: "{{ item }}"
@@ -122,5 +113,6 @@
     path: "{{ release_notes_file }}"
     section: "AiiDA"
     option: "usage"
-    value: "AiiDA is installed in a virtual environment. Before using it (and the 'verdi' command), type 'workon aiida'."
-
+    value: >-
+        AiiDA is installed in a virtual environment. 
+        Type 'workon aiida' to get access to the 'verdi' commands.
