@@ -22,6 +22,13 @@ Note: So far tested only on Unix, but should work on Windows as well.
 bash create_image.sh
 ```
 
+## Upload image
+```
+openstack object create marvel-vms marvel_vm_<version>.ova
+openstack object create marvel-vms INSTALL_<version>.txt
+```
+
+
 ## Useful commands
 
  * `vagrant provision --provision-with ansible`: re-run ansible scripts

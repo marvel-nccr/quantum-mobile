@@ -1,14 +1,36 @@
 ---
-## Not tested yet; to activate when the Yambo plugin becomes public
-## (Note that we have to install the aiida-yambo plugin as well)  
-#- name: set up Yambo codes for localhost
-#  include_tasks: code-setup.yml code={{ item }} 
-#  with_items: 
-#   - yambo
-#   - p2y
-#  vars:
-#   - aiida_code_name:  "yambo-{{code}}-{{qe_version}}"
-#   - aiida_code_template:  yambo.code
-#   - aiida_computer_name:  "{{ aiida_localhost_name }}"
-#  # I don't use the yambo_executables directly because not all of them
-#  # have an AiiDA plugin
+- name: Get aiida-yambo
+  get_url:
+    url: "https://github.com/yambo-code/yambo-aiida/archive/{{ aiida_yambo_version }}.tar.gz"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{ aiida_yambo_version }}.tar.gz"
+    mode: "u+r"
+  register: aiida_yambo_download
+
+- name: Unpack aiida-yambo source
+  unarchive:
+    src: "{{ aiida_yambo_download.dest }}"
+    dest: "{{ globalconfig.vm_codes_folder }}"
+    remote_src: True
+
+- name: Install aiida-yambo
+  pip:
+    name: "yambo-aiida-{{ aiida_yambo_version }}/"
+    virtualenv: "{{ aiida_venv }}"
+    chdir: "{{ globalconfig.vm_codes_folder}}"
+  register: pip_install
+
+- name: run reentry scan
+  shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
+  when: pip_install.changed
+
+# Do not use the yambo_executables directly because not all of them
+# have an AiiDA plugin
+- name: set up Yambo codes for localhost
+  include_tasks: code-setup.yml code={{ item }} 
+  with_items: 
+   - yambo
+   - p2y
+  vars:
+   - aiida_code_name:  "{{code}}-{{yambo_version}}"
+   - aiida_code_template:  yambo.code
+   - aiida_computer_name:  "{{ aiida_localhost_name }}"

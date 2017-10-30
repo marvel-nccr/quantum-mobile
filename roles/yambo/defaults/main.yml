@@ -1,5 +1,6 @@
 yambo_version: "4.2.0"
 yambo_src: yambo-{{ yambo_version }}
+yambo_src_archive: "{{ yambo_src }}.tar.gz"
 yambo_url: "https://github.com/yambo-code/yambo/archive/{{ yambo_version }}.tar.gz"
 yambo_topdir: "{{ globalconfig.vm_codes_folder }}/{{yambo_src}}"
 yambo_executables:

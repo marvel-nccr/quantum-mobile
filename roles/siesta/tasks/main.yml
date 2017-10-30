@@ -18,10 +18,16 @@
     - liblapack-dev
 
 - name: Get siesta source
+  get_url:
+    url: "{{ siesta_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{ siesta_src_archive }}"
+  register: siesta_download
+
+- name: Extract siesta source
   unarchive:
-    src: "{{ siesta_url }}"
+    src: "{{ siesta_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: yes
+    remote_src: True
 
 - name: create Makefile
   shell: ../Src/obj_setup.sh

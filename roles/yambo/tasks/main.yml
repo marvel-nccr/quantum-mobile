@@ -1,17 +1,17 @@
 # Will only download once
-- name: Get yambo source
-  unarchive:
-    src: "{{ yambo_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: yes
+- name: Get Yambo
+  get_url: url={{ yambo_url }} dest={{ ansible_env.HOME }}/codes/{{ yambo_src }}.tar.gz
 
-#- name: Get Yambo
-#  get_url: url={{ yambo_url }} dest={{ ansible_env.HOME }}/codes/{{ yambo_src }}.tar.gz
-#
-#- name: Unpack Yambo source files
-#  shell: "cd {{ ansible_env.HOME }}/codes && tar -xzvf {{ yambo_src }}.tar.gz"
-#  args:
-#    creates: "{{ yambo_topdir }}"
+- name: Get Yambo Source
+  get_url:
+    url: "{{ yambo_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{  yambo_src_archive }}"
+  register: yambo_download
+
+- name: Extract yambo source
+  unarchive:
+    src: "{{ yambo_download.dest }}"
+    dest: "{{ globalconfig.vm_codes_folder }}"
 
 - name: Configure Yambo
   shell: ./configure
