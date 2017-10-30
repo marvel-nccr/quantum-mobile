@@ -1,0 +1,26 @@
+# add SSSP pseudos
+- name: Download "{{ pp.file }}"
+  get_url:
+    url: "http://materialscloud.org/sssp/pseudos/{{ pp.file }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{ pp.file }}"
+    mode: "u+r"
+  register: aiida_sssp_download
+
+- name: Unpack SSSP
+  unarchive:
+    src: "{{ aiida_sssp_download.dest }}"
+    dest: "{{ globalconfig.vm_codes_folder }}"
+    remote_src: True
+  register: aiida_sssp_extract
+
+- name: Add upf family
+  shell: "{{ aiida_venv }}/bin/verdi data upf uploadfamily {{globalconfig.vm_codes_folder}}/{{ pp.folder }} {{ pp.name }} '{{ pp.description }}'"
+# when: aiida_sssp_extract.changed
+
+- name: Add info to Release Notes file
+  ini_file:
+    path: "{{ release_notes_file }}"
+    section: "AiiDA"
+    option: "{{ pp.name }}"
+    value: >-
+        Added pseudopotential family {{ pp.name }}
