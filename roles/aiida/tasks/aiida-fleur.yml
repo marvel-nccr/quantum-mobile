@@ -14,7 +14,7 @@
   include_tasks: code-setup.yml code={{ item }}
   with_items: "{{fleur_executables}}"
   vars:
-   - aiida_code_name:  "fleur-{{fleur_version}}"
+   - aiida_code_name:  "fleur-{{fleur_version}}-{{code}}"
    - aiida_code_template:  fleur.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 
