@@ -1,4 +1,5 @@
 - include_tasks: release_notes.yml tags=release-notes
+- include_tasks: shared_folder.yml tags=shared-folder
 - include_tasks: global_bashrc.yml tags=global-bashrc
 - include_tasks: wallpaper.yml tags=wallpaper
 - include_tasks: launcher.yml tags=launcher

@@ -1,0 +1,19 @@
+- name: create mountpoint for shared folder
+  become: True
+  file:
+    path: "{{ globalconfig.vm_shared_folder }}"
+    owner: "{{ globalconfig.vm_user }}"
+    group: "{{ globalconfig.vm_user }}"
+    state: directory
+
+- name: add hint for shared folder
+  ini_file:
+    path: "{{ globalconfig.release_notes_file }}"
+    section: "Customizations"
+    option: "shared folder"
+    value: >-
+      In order to share a folder on the host system, first add the folder 'myfolder' in 
+      VirtualBox Settings => Shared Folders and then mount it via
+      'sudo mount -t vboxsf -o uid=1000,gid=1000 myfolder /shared'
+    create: true
+
