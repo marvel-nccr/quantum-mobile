@@ -1,0 +1,13 @@
+Approximate timings for different parts of the setup
+* vagrant up                    3 min
+* ansible common:              10 min
+* ansible customizations        2 min
+* ansible simulationtools       1 min
+* ansible QE                   10 min (+ > 30 min tests)
+* ansible yambo                 5 min
+* ansible fleur                 3 min (+3 min for tests)
+* ansible siesta                3 min
+* ansible cp2k                  1 min
+* ansible aiida-core            4 min
+* ansible aiida-core            4 min
+* ansible aiida-*** (rest)      3 min

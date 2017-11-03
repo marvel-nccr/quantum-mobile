@@ -1,6 +1,6 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
-vm_version: "2017.10"
+vm_version: "2017.11"
 vm_name: "MARVEL Virtual Machine"
 vm_description: "A VM for computational materials science distributed by the MARVEL NCCR"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"

@@ -9,7 +9,8 @@
   unarchive:
     src: "{{ qe_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: True
+    remote_src: yes
+
 
 - name: Configure QE
   shell: ./configure --enable-parallel

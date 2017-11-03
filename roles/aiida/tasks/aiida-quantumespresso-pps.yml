@@ -11,11 +11,12 @@
     src: "{{ aiida_sssp_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: True
+  when: aiida_sssp_download.changed
   register: aiida_sssp_extract
 
 - name: Add upf family
   shell: "{{ aiida_venv }}/bin/verdi data upf uploadfamily {{globalconfig.vm_codes_folder}}/{{ pp.folder }} {{ pp.name }} '{{ pp.description }}'"
-# when: aiida_sssp_extract.changed
+  when: aiida_sssp_extract.changed
 
 - name: Add info to Release Notes file
   ini_file:

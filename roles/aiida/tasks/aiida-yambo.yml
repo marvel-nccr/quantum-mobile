@@ -2,7 +2,7 @@
 - name: Get aiida-yambo
   get_url:
     url: "https://github.com/yambo-code/yambo-aiida/archive/{{ aiida_yambo_version }}.tar.gz"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{ aiida_yambo_version }}.tar.gz"
+    dest: "{{ globalconfig.vm_codes_folder }}/yambo-aiida-{{ aiida_yambo_version }}.tar.gz"
     mode: "u+r"
   register: aiida_yambo_download
 
