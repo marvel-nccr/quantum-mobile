@@ -24,13 +24,15 @@ if [ "$ADDRFAM" != inet ] && [ "$ADDRFAM" != inet6 ]; then
 	exit 0
 fi
 
-#echo interface: $IFACE
-THE_IP=`ip -4 address show enp0s3  | grep inet | awk '{print $2;}' | cut -f1 -d/
-`
+THE_IP=`ip -4 address show "$IFACE" | grep inet | awk '{print $2;}' | cut -f1 -d/`
 THE_HOSTNAME=`hostname`
-#echo ip: $THE_IP
 
-date
+if [ "$THE_IP" == "" ]
+then
+    echo "No IP found for interface $IFACE, not continuing with the if-up script for torque"
+    exit 0
+fi
+
 echo "if-up script for torque - setting /etc/hosts for $THE_IP $THE_HOSTNAME"
 
 #REWRITE /etc/hosts as torque wants
