@@ -17,5 +17,6 @@ vm_cpus: 2
 vm_vram: 128
 vm_shared_folder: "/shared"
 vm_codes_folder: "{{ ansible_env.HOME }}/codes"
-vm_examples_folder: "{{ ansible_env.HOME }}/examples"
 release_notes_file: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+vm_examples_folder: "{{ ansible_env.HOME }}/examples"
+vm_examples_readme: "{{ ansible_env.HOME }}/examples/README.txt"
