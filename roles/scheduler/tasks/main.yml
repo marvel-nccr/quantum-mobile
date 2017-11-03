@@ -108,3 +108,30 @@
     section: "Job Scheduler"
     option: "torque"
     value: "Use 'qsub' to submit jobs and 'qstat' to get the status."
+
+# I need to setup a couple of things for the next reboots, as "workarounds"
+# for weird torque/PBS behaviours
+
+# First: I put a script that both restarts the torque-scheduler when it's down
+# (typically: crashed) and the server is up
+- name: Copy the torque script for if-up (when the interface goes up)
+  become: true
+  copy:
+      src: torque
+      dest: "/etc/network/if-up.d"
+      mode: 0755
+
+# Second: I fix a problem in the default script provided by Ubuntu that does 
+# not put the right dependency of the torque-scheduler service on the network
+# (it is started before the DHCP address is assigned - the torque-server is ok,
+# instead)
+- name: Fix the dependency of the torque-scheduler init script
+  become: true
+  lineinfile: 
+    path: "/etc/init.d/torque-scheduler"
+    regexp: '^# Required-Start:'
+    line: "# Required-Start:    $all $remote_fs $local_fs $named $network $time"
+    owner: root
+    group: root
+    mode: 0755
+

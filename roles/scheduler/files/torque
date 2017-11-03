@@ -1,0 +1,87 @@
+#! /bin/bash
+# Written by G. Pizzi in Nov 2017 adapting the openssh if-up script
+# See also
+# https://github.com/marvel-nccr/marvel-virtualmachine/issues/20
+#
+# Reload the torque-scheduler service if a new interface goes up,
+# when needed (if the network takes some time to go up, the scheduler
+# might not find the IP yet and die)
+
+set -e
+
+# Don't bother to restart when lo is configured.
+if [ "$IFACE" = lo ]; then
+	exit 0
+fi
+
+# Only run from ifup.
+if [ "$MODE" != start ]; then
+	exit 0
+fi
+
+# We only cares about inet and inet6 (there are other states like META etc.)
+if [ "$ADDRFAM" != inet ] && [ "$ADDRFAM" != inet6 ]; then
+	exit 0
+fi
+
+#echo interface: $IFACE
+THE_IP=`ip -4 address show enp0s3  | grep inet | awk '{print $2;}' | cut -f1 -d/
+`
+THE_HOSTNAME=`hostname`
+#echo ip: $THE_IP
+
+date
+echo "if-up script for torque - setting /etc/hosts for $THE_IP $THE_HOSTNAME"
+
+#REWRITE /etc/hosts as torque wants
+cat > /etc/hosts <<EOF
+# Rewritten by the torque if-up script
+127.0.0.1	localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+$THE_IP $THE_HOSTNAME
+127.0.1.1 localhost
+EOF
+
+## The next part is just in the worst case, but it should not be run in general
+
+# Exit if the scheduler is already running. I only want to start
+# it back if it is down (e.g. because it tried to start before
+# the interface was up)
+if [ -f /var/spool/torque/sched_priv/sched.lock ] && \
+       [ "$(ps -p "$(cat /var/spool/torque/sched_priv/sched.lock)" -o comm=)" == "pbs_sched" ]; then
+    echo "if-up Torque - DEBUG: scheduler running"
+    exit 0
+fi
+
+# If also the pbs_server is down, stop - probably the user wants to keep it
+# down...
+if [ ! -f /var/spool/torque/server_priv/server.lock ] || \
+       [ "$(ps -p "$(cat /var/spool/torque/server_priv/server.lock)" -o comm=)" != pbs_server ]; then
+    echo "if-up Torque - DEBUG: server not running"
+	exit 0
+fi
+
+# 1 second sleep required otherwise the server crashes...
+REQUIRED_SLEEP=1
+# If we are here, it means a new interface went up,
+# and torque-scheduler is down. Let's start it again (but I first stop
+# the mom and the server)
+invoke-rc.d torque-mom stop >/dev/null 2>&1 || true
+invoke-rc.d torque-server stop >/dev/null 2>&1 || true
+
+echo restarting torque-scheduler at `date`
+invoke-rc.d torque-scheduler restart >/dev/null 2>&1 || true
+echo continuing after restarting torque-scheduler at `date`
+
+
+# We also want to restart the server (and, to be sure, the mom)
+# so that it knows that the scheduler is up again
+sleep $REQUIRED_SLEEP && invoke-rc.d torque-mom start >/dev/null 2>&1 || true
+echo right before torque-server restart at `date`
+sleep $REQUIRED_SLEEP && invoke-rc.d torque-server start >/dev/null 2>&1 || true
+
+exit 0
