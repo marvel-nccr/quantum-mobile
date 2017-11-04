@@ -57,8 +57,7 @@
   notify: restart lightdm
   register: lightdm_background
 
-# Not sure this is actually needed...
-#- name: recreate schemas to apply modifications
-#  become: true
-#  command: glib-compile-schemas /usr/share/glib-2.0/schemas
-#  #when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
+- name: recreate schemas to apply modifications
+  become: true
+  command: glib-compile-schemas /usr/share/glib-2.0/schemas
+  when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
