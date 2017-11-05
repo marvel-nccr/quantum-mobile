@@ -4,5 +4,5 @@ False
 fleur.{{ code }}
 {{ aiida_computer_name }}
 {{ fleur_topdir }}/build/{{ code }}
-
+ulimit -s unlimited
 
