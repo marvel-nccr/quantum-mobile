@@ -1,0 +1,12 @@
+---
+- name: make example directories
+  file:
+    path: "{{ globalconfig.vm_examples_folder }}/{{ item }}"
+    state: directory
+  with_items: "{{ aiida_examples }}"
+
+- name: get AiiDA MaX examples
+  git:
+    repo: https://github.com/aiidateam/aiida-max-examples.git
+    dest: "{{ globalconfig.vm_examples_folder }}/aiida-max-examples"
+    version: master
