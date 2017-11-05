@@ -36,6 +36,14 @@
   args:
     creates: "{{ ansible_env.HOME }}/.virtualenvs/initialize"
 
+# This fixes https://github.com/marvel-nccr/marvel-virtualmachine/issues/21
+- name: "Fix virtualenvwrapper python executable"
+  lineinfile: 
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python"
+    # Do this also non-interactively
+    insertbefore: "{{ reference_point_bashrc_string }}"
+
 - name: "Activate the virtualenvwrapper for the user"
   lineinfile: 
     path: "{{ ansible_env.HOME }}/.bashrc"
