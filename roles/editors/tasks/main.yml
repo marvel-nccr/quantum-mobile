@@ -8,3 +8,7 @@
       - vim
       - nano
 
+- name: install basic .vimrc
+  copy:
+    src: .vimrc
+    dest: "{{ ansible_env.HOME }}"
