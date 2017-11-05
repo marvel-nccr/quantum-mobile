@@ -1,5 +1,15 @@
-If you play around with different VMs, vagrant can loose connection to the one
-you are interested in. This is how you tell vagrant to connect again:
+In order to connect vagrant to a new VM in Virtualbox:
+
+1. Get uuid of machine from: vboxmanage list vms
+2. echo "<the-uuid>" > .vagrant/machines/default/virtualbox/id
+3. Now 'vagrant ssh' should connect to the new machine
+   (assuming that keys are the same)
+
+If you already tried 'vagrant ssh' before, vagrant may have already deleted the
+.vagrant/machines/default/virtualbox folder (which contains, amongst other
+things, the private key).
+
+This is how you can back into your machine again:
 
 1. Get uuid of machine from: vboxmanage list vms
 2. echo "<the-uuid>" > .vagrant/machines/default/virtualbox/id
