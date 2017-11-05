@@ -18,10 +18,6 @@ aiida_siesta_version: "0.9.7.1"
 aiida_cp2k_version: "0.2.2"
 aiida_yambo_version: "0.2-beta"
 
-# examples
-aiida_examples:
-- TiO2
-
 # pseudos
 aiida_sssp:
 # Problem: sssp efficiency has 2 pseudos for Be.

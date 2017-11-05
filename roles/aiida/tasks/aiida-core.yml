@@ -107,8 +107,8 @@
   changed_when: False
    
 - name: Start the AiiDA daemon
-  shell: "{{ aiida_venv }}/bin/verdi daemon start"
-  when: "'Daemon not running' in aiida_daemon_status.stdout"
+  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
+  when: "'RUNNING' not in aiida_daemon_status.stdout"
 
 - name: Add AiiDA info (version) to Release Notes file
   ini_file:
