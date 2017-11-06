@@ -106,9 +106,11 @@
   register: aiida_daemon_status
   changed_when: False
    
-- name: Start the AiiDA daemon
-  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
-  when: "'RUNNING' not in aiida_daemon_status.stdout"
+  # Disabled for the moment as discussed in
+  # https://github.com/marvel-nccr/marvel-virtualmachine/issues/27
+  #- name: Start the AiiDA daemon
+  #  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
+  #  when: "'RUNNING' not in aiida_daemon_status.stdout"
 
 - name: Add AiiDA info (version) to Release Notes file
   ini_file:
