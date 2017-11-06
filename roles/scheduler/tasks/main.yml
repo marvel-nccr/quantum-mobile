@@ -15,14 +15,14 @@
 
 - name: "set the torque hostname (1)"
   become: true
-  shell: "echo '{{ hostname }}' > /etc/torque/server_name"
-  when: hostnamecontent_command.stdout != hostname
+  shell: "echo '{{ globalconfig.vm_hostname }}' > /etc/torque/server_name"
+  when: hostnamecontent_command.stdout != globalconfig.vm_hostname
 
 - name: "set the torque hostname (2)"
   become: true
   lineinfile: 
     path: "/var/spool/torque/mom_priv/config"
-    line: "$pbsserver {{ hostname }}"
+    line: "$pbsserver {{ globalconfig.vm_hostname }}"
     create: true
   register: torque_hostname_2
 
@@ -30,7 +30,7 @@
   become: true
   lineinfile: 
     path: "/var/spool/torque/server_priv/nodes"
-    line: "{{ hostname }} np={{ globalconfig.vm_cpus }}"
+    line: "{{ globalconfig.vm_hostname }} np={{ globalconfig.vm_cpus }}"
     create: true
   register: torque_hostname_3
 
@@ -51,11 +51,11 @@
 - name: Restart the torque server
   become: true
   shell: /etc/init.d/torque-server restart
-  when: hostnamecontent_command.stdout != hostname or torque_hostname_2.changed or torque_hostname_3.changed
+  when: hostnamecontent_command.stdout != globalconfig.vm_hostname or torque_hostname_2.changed or torque_hostname_3.changed
   
 - name: waiting 5 seconds for torque to start...
   shell: sleep 5
-  when: hostnamecontent_command.stdout != hostname or torque_hostname_2.changed or torque_hostname_3.changed
+  when: hostnamecontent_command.stdout != globalconfig.vm_hostname or torque_hostname_2.changed or torque_hostname_3.changed
   changed_when: False
 
 - name: "Checking if torque is already configured"
@@ -83,7 +83,7 @@
     - qmgr -c "set server scheduling=True"
     # Torque scheduling started
     - qmgr -c "unset server acl_hosts"
-    - qmgr -c "set server acl_hosts={{ hostname }}"
+    - qmgr -c "set server acl_hosts={{ globalconfig.vm_hostname }}"
     # Torque server ACL hosts set
   register: qmgr_command_result
   failed_when: "'Unauthorized' in qmgr_command_result.stderr"
