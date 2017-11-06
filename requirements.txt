@@ -1,2 +1,3 @@
 ansible>=2.4
 passlib
+sphinx>=1.5
