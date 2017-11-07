@@ -6,4 +6,5 @@
 # Instructions:
 # - See RELEASENOTES.txt on the Desktop for installed packages
 # - type 'workon aiida' to enable the AiiDA 'verdi' commands
+# - run 'verdi daemon start' to start the AiiDA daemon
 ##########################################################################
