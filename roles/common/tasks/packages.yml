@@ -11,7 +11,10 @@
       name: "{{item}}"
       state: latest
   with_items:
+      - aptitude
       - ubuntu-desktop
+      #- lxde
+      #- lxde-common
       - python-pip
       - python-dev
   notify: apt clean
@@ -32,7 +35,7 @@
     - virtualenvwrapper
 
 - name: "Run virtualenvwrapper once to create folders"
-  shell: "source /usr/local/bin/virtualenvwrapper.sh"
+  shell: "bash /usr/local/bin/virtualenvwrapper.sh"
   args:
     creates: "{{ ansible_env.HOME }}/.virtualenvs/initialize"
 

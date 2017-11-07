@@ -1,14 +1,21 @@
-- name: playbook for the MARVEL VM
+---
+# playbook for the VM
+ 
+- name: import global variables
   hosts: default
-  vars:
-    - run_tests: True
-    - copy_examples: True
   pre_tasks:
     - name: import global variables
       tags: always
       include_vars:
         file: globalconfig.yml
         name: globalconfig
+
+- name: playbook for the MARVEL VM
+  hosts: default
+  remote_user: "{{ globalconfig.vm_user }}"
+  vars:
+    - run_tests: True
+    - copy_examples: True
   roles: 
     - role: common
       tags: common

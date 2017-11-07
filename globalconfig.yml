@@ -1,17 +1,17 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
 vm_version: "2017.11"
-vm_name: "MARVEL Virtual Machine"
-vm_description: "A VM for computational materials science distributed by the MARVEL NCCR"
+vm_name: "Quantum Mobile"
+vm_description: "A Virtual Machine for computational materials science distributed by MARVEL and MaX"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
-author: "MARVEL National Centre for Competency in Research"
+author: "MARVEL National Centre for Competency in Research and \
+         MaX European centre of excellence"
 author_url: "http://nccr-marvel.ch"
 
-
 # VM configuration
-vm_hostname: "marvelvm"
-vm_user: "vagrant"
-vm_password: "tutorial"
+vm_hostname: "quantum-mobile"
+vm_user: "scientist"
+vm_password: "quantum-mobile"
 vm_memory: 1024
 vm_cpus: 2
 vm_vram: 128

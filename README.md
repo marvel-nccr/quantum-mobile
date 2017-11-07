@@ -1,6 +1,8 @@
-# MARVEL Virtual Machine
+# Quantum Mobile Virtual Machine
 
-This repository contains the vagrant and ansible scripts to set up the "standard" MARVEL virtual machine.
+*Quantum Mobile* is a Virtual Machine for computational materials science.
+
+This repository contains the vagrant and ansible scripts to set up the VM.
 
 ## Prerequisites
 
@@ -35,7 +37,15 @@ openstack object create marvel-vms INSTALL_<version>.txt
  * `vagrant reload`: restart machine
  * `vagrant halt`: stop machine
  * ```
-   vagrant ssh-config > vagrant-ssh  # inform ansible about ssh config
-   ansible-playbook playbook.yml     # run ansible directly, add tags, ...
+   ./setup-ansible.sh             # inform ansible about ssh config
+   ansible-playbook playbook.yml  # run ansible directly, add tags, ...
    ```
  * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
+
+# Acknowledgements
+
+This work is supported by the ["MARVEL National Centre for Competency in
+Research](http://nccr-marvel.ch) and the [MaX European centre of
+excellence](http://www.max-centre.eu/)
+
+

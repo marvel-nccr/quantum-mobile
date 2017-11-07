@@ -58,20 +58,33 @@ Vagrant.configure(2) do |config|
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  ## First provisioner: python needed to have ansible work
-  ## as a second provisioner
+  # provisioner: python needed to have ansible work as a second provisioner
   config.vm.provision "bootstrap", type: "shell" do |s|
     s.inline = "apt-get update && apt-get install -y python2.7 python3"
   end
 
-  ## Second provisioner: ansible script that actually sets up
-  ## the hole machine. To (re)run only this, run
-  ##   vagrant provision --provision-with ansible
-  ##
+  # provisioner: add custom user for ansible
+  user = gconfig['vm_user']
+  password = gconfig['vm_password']
+  commands = <<-EOF
+if [ ! -d /home/#{user} ] ; then
+  useradd -m -s /bin/bash --groups sudo,adm #{user} && \
+  cp -pr /home/vagrant/.ssh /home/#{user}/ && \
+  chown -R #{user}:#{user} /home/#{user} \
+#  echo #{user}:#{password} | chpasswd 
+fi
+EOF
+  config.vm.provision "adduser", type: "shell" do |s|
+    s.inline = commands
+  end
+
+  # provisioner: set up VM via ansible. To (re-)run this step:
+  #   vagrant provision --provision-with ansible
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
     ansible.extra_vars = {
-       ansible_python_interpreter: "/usr/bin/python2.7"
+       ansible_python_interpreter: "/usr/bin/python2.7",
+       ansible_user: user
     }
     ansible.playbook = "playbook.yml"
   end
