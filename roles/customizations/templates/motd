@@ -1,5 +1,5 @@
 ##########################################################################
-# Welcome to the {{ globalconfig.vm_name }} version {{ globalconfig.vm_version }} 
+# Welcome to {{ globalconfig.vm_name }} version {{ globalconfig.vm_version }} 
 # distributed by the {{ globalconfig.author }}
 # {{ globalconfig.author_url }}
 #

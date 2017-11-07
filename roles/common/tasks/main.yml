@@ -1,6 +1,5 @@
 - include_tasks: debug.yml
-# This is now handled by vagrant
-#- include_tasks: password.yml
+- include_tasks: password.yml
 - include_tasks: bashrc_refpoint.yml
 - include_tasks: swap.yml
 - include_tasks: packages.yml
