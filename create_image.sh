@@ -29,10 +29,8 @@ vagrant halt # shut down machine
 
 echo "### Exporting '$vm_name $vm_version'"
 
-rc=-rc2
-vm_version=${vm_version}
-fname=marvel_vm_${vm_version}${rc}.ova
-#fname=marvel_vm_${vm_version}-common.ova
+vm_release=`git describe --abbrev=0`
+fname=marvel_vm_${vm_release}.ova
 
 [ -e $fname ] && rm $fname
 
@@ -44,10 +42,10 @@ vboxmanage export "${vm_name} ${vm_version}"  \
   --producturl "https://github.com/marvel-nccr/marvel-virtualmachine" \
   --vendor "$author" \
   --vendorurl "$author_url" \
-  --description "$vm_description"
-#  --eulafile 
+  --description "$vm_description" \
+  --eulafile "LICENSE.txt"
 echo "### Find image in $fname"
 
 export fname vm_version vm_user vm_password
-envsubst < INSTALL.md > INSTALL_${vm_version}${rc}.txt
+envsubst < INSTALL.md > INSTALL_${vm_release}.txt
 echo "### Instructions in INSTALL_${vm_version}${rc}.txt"
