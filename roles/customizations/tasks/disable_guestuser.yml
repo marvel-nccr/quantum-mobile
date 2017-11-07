@@ -8,3 +8,12 @@
     value: "false"
   notify: restart lightdm 
   register: disable_guest_account
+
+- name: hide vagrant user on login screen
+  become: true
+  ini_file: 
+    path: /var/lib/AccountsService/users/vagrant
+    section: "User"
+    option: "SystemAccount"
+    value: "true"
+  notify: restart lightdm 

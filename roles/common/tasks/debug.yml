@@ -5,6 +5,3 @@
 - name: test variable
   debug:
     msg: "RUNNING SCRIPT FOR VM VERSION {{ globalconfig.vm_version }}"
-
-- name: test variable
-  shell: id

@@ -2,10 +2,9 @@
 # Caution: This file is read by vagrant, ansible and bash
 vm_version: "2017.11"
 vm_name: "Quantum Mobile"
-vm_description: "A Virtual Machine for computational materials science distributed by MARVEL and MaX"
+vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
-author: "MARVEL National Centre for Competency in Research and \
-         MaX European centre of excellence"
+author: "MARVEL National Centre for Competency in Research and MaX European Centre of Excellence"
 author_url: "http://nccr-marvel.ch"
 
 # VM configuration
