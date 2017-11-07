@@ -22,5 +22,12 @@ function parse_yaml {
 echo "### Parsing globalconfig.yml"
 eval $(parse_yaml globalconfig.yml)
 
+# set up ssh config for ansible
 vagrant ssh-config > vagrant-ssh
 sed -i "" "s/User vagrant/User ${vm_user}/g" vagrant-ssh
+
+# set up inventory file for ansible
+cat > hosts <<EOF
+[vms]
+default ansible_user=${vm_user}
+EOF
