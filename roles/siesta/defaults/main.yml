@@ -7,7 +7,6 @@ siesta_url: "https://launchpad.net/siesta/{{ siesta_minor_version }}/{{ siesta_v
 siesta_topdir: "{{ globalconfig.vm_codes_folder }}/siesta-{{ siesta_version }}"
 siesta_executables:
   - siesta
-release_notes_file: "{{ globalconfig.release_notes_file }}"
 
 siesta_tests:
 - h2o

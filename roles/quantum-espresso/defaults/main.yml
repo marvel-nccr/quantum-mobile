@@ -11,4 +11,3 @@ qe_executables:
   - pp
   - ph
   - neb
-release_notes_file: "{{ globalconfig.release_notes_file }}"

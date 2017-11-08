@@ -15,9 +15,9 @@
     name: cp2k={{ cp2k_version }}
     state: installed
 
-- name: Add cp2k info (location) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "cp2k"
     option: "usage"
     value: >-

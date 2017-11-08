@@ -57,16 +57,16 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- name: Add siesta info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "siesta"
     option: "version"
     value: "{{ siesta_version }}"
 
-- name: Add siesta info (location) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "siesta"
     option: "usage"
     value: >-

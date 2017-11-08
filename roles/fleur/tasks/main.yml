@@ -48,16 +48,16 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- name: Add fleur info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "fleur"
     option: "version"
     value: "{{ fleur_version }} {{ fleur_release }}"
 
-- name: Add fleur info (location) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "fleur"
     option: "usage"
     value: >-

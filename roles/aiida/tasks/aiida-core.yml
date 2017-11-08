@@ -112,16 +112,16 @@
   #  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
   #  when: "'RUNNING' not in aiida_daemon_status.stdout"
 
-- name: Add AiiDA info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "AiiDA"
     option: "version"
     value: "{{ aiida_version }}"
 
-- name: Add AiiDA info (general) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "AiiDA"
     option: "usage"
     value: >-

@@ -7,4 +7,3 @@ fleur_topdir: "{{ globalconfig.vm_codes_folder }}/fleur"
 fleur_executables:
   - fleur
   - inpgen
-release_notes_file: "{{ globalconfig.release_notes_file }}"

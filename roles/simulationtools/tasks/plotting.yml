@@ -17,8 +17,7 @@
     - jmol
     - default-jre
 
-- name: Add plotting tools info to release notes
-  include_role: 
+- include_role: 
     name: release_notes
   vars:
     section: "Plotting Tools"

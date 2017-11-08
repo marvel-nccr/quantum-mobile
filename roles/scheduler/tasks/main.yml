@@ -102,13 +102,6 @@
   when: 
     "'batch' not in qmgr_check_command.stdout"
 
-- name: Add scheduler info to Release Notes file
-  ini_file:
-    path: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
-    section: "Job Scheduler"
-    option: "torque"
-    value: "Use 'qsub' to submit jobs and 'qstat' to get the status."
-
 # I need to setup a couple of things for the next reboots, as "workarounds"
 # for weird torque/PBS behaviours
 
@@ -134,4 +127,12 @@
     owner: root
     group: root
     mode: 0755
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "Job Scheduler"
+    option: "torque"
+    value: "Use 'qsub' to submit jobs and 'qstat' to get the status."
+
 

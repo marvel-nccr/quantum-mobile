@@ -3,9 +3,9 @@
 #- include_tasks: install_via_make.yml
 - include_tasks: download_binary.yml
 
-- name: Add cp2k info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "cp2k"
     option: "version"
     value: "{{ cp2k_version }}"

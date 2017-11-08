@@ -4,9 +4,9 @@
     - "{{ aiida_localhost_name }}"
     - fidis
 
-- name: Add AiiDA info (computers) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "AiiDA"
     option: "computers"
     value: >-

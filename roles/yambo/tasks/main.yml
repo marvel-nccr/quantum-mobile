@@ -31,16 +31,16 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- name: Add Yambo info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "Yambo"
     option: "version"
     value: "{{ yambo_version }}"
 
-- name: Add Yambo info (location) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "Yambo"
     option: "usage"
     value: >-

@@ -36,16 +36,16 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- name: Add Quantum ESPRESSO info (version) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "Quantum ESPRESSO"
     option: "version"
     value: "{{ qe_version }}"
 
-- name: Add Quantum ESPRESSO info (location) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "Quantum ESPRESSO"
     option: "usage"
     value: >-

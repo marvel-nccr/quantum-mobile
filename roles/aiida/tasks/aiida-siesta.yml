@@ -21,9 +21,9 @@
    - aiida_code_template:  siesta.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 
-- name: Add AiiDA info (codes) to Release Notes file
-  ini_file:
-    path: "{{ release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: AiiDA
     option: aiida-siesta
     value: >-

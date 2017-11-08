@@ -1,7 +1,6 @@
-- name: start creating the Release Notes file
-  ini_file:
-    path: "{{ globalconfig.release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "{{ globalconfig.vm_name }}"
     option: "version"
     value: "{{ globalconfig.vm_version }}"
-    create: true
