@@ -4,15 +4,18 @@
       name: "{{ item }}"
       state: installed
   with_items:
-    # For AiiDA, for plotting, ...
+    # For AiiDA
     - libffi-dev
     - libssl-dev
     - graphviz
+    # For plotting
     - grace
     - gnuplot
     - python-tk 
     - xcrysden
+    # note: jmol+java = 110MB
     - jmol
+    - default-jre
 
 - name: Add plotting tools info to release notes
   ini_file:
