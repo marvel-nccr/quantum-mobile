@@ -1,0 +1,2 @@
+release_notes_vm: "{{ globalconfig.release_notes_file }}"
+release_notes_localhost: "{{ playbook_dir }}/RELEASENOTES.txt"

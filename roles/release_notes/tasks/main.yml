@@ -1,0 +1,15 @@
+- name: Add to release notes on VM
+  ini_file:
+    path: "{{ release_notes_vm }}"
+    section: "{{ section }}"
+    option: "{{ option }}"
+    value: "{{ value }}"
+
+- name: Add to release notes on localhost
+  delegate_to: localhost
+  ini_file:
+    path: "{{ release_notes_localhost }}"
+    section: "{{ section }}"
+    option: "{{ option }}"
+    value: "{{ value }}"
+    create: True

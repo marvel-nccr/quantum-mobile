@@ -8,3 +8,4 @@ vagrant-ssh
 .vagrant
 hosts
 INSTALL*.txt
+RELEASENOTES.txt

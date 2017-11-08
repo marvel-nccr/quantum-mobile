@@ -18,8 +18,9 @@
     - default-jre
 
 - name: Add plotting tools info to release notes
-  ini_file:
-    path: "{{ globalconfig.release_notes_file }}"
+  include_role: 
+    name: release_notes
+  vars:
     section: "Plotting Tools"
     option: "available tools"
-    value: "A number of plotting tools are included. These include xmgrace, gnuplot, xcrysden, jmol."
+    value: "xmgrace, gnuplot, xcrysden, jmol"
