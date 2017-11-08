@@ -1,0 +1,14 @@
+Role for creating release notes
+-------------------------------
+
+Internally uses the "ini_file" module for the moment.
+Files are written both files both on VM and on the localhost
+
+# Role variables
+
+ * section: section of ini file
+ * option:  option in section
+ * value: value of option
+
+ * release_notes_vm: path to release notes on guest VM
+ * release_notes_localhost: path to release notes on host machine
