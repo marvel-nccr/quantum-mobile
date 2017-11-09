@@ -17,7 +17,3 @@
     value: >-
       A number of codes are already installed and preconfigured. 
       See 'verdi code list'
-
-- name: set up PP families
-  include_tasks: aiida-quantumespresso-pps.yml pp={{ item }}
-  with_items: "{{ aiida_sssp }}"

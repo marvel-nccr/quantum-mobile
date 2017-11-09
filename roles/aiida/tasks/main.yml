@@ -21,6 +21,10 @@
   tags: aiida-cp2k
   when: cp2k_executables is defined
 
+- include_tasks: aiida-pps.yml pp={{ item }}
+  tags: aiida-pps
+  with_items: "{{ aiida_pseudopotentials }}"
+
 - include_tasks: aiida-examples.yml
   tags: aiida-examples
   when: copy_examples is defined and copy_examples
