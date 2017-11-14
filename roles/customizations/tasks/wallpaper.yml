@@ -35,6 +35,8 @@
 # Cannot autolaunch D-Bus without X11 $DISPLAY
 - name: set the background image
   shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+  args:
+    executable: /bin/bash
   notify: restart lightdm
 
 - name: set lightdm (login page) not to draw the user background
