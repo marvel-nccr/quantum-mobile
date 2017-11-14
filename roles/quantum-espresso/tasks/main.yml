@@ -11,12 +11,20 @@
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: yes
 
-
 - name: Configure QE
   shell: ./configure --enable-parallel
   args:
     creates: "{{ qe_topdir }}/make.inc"
     chdir: "{{ qe_topdir }}"
+     
+# this is needed because aiida isn't yet able to parse
+# the new XML format
+- name: "Force to use old XML format"
+  lineinfile:
+    path: "{{ qe_topdir }}/make.inc"
+    insertafter: "DFLAGS         =  -D__FFTW3 -D__MPI"
+    line: "DFLAGS        +=  -D__OLDXML"
+
 
 - name: Make QE executables
   shell: "make {{ item }}"
