@@ -18,14 +18,20 @@
 
 - name: download cp2k data files
   get_url:
-    url: "{{ cp2k_data_url }}/{{ item }}?format=raw"
+    url: "{{ cp2k_svn_url }}/data/{{ item }}?format=raw"
     dest: "{{ cp2k_topdir }}"
-    mode: "u+x"
   with_items:
   - BASIS_MOLOPT
   - POTENTIAL
   - ALL_BASIS_SETS
   - ALL_POTENTIALS
+
+- name: download copyright notice
+  get_url:
+    url: "{{ cp2k_svn_url }}/{{ item }}?format=raw"
+    dest: "{{ cp2k_topdir }}"
+  with_items:
+  - COPYRIGHT
      
 - name: "Put a line in ~/.bashrc to add cp2k to the path"
   lineinfile:
