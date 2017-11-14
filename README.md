@@ -1,6 +1,6 @@
-# Quantum Mobile Virtual Machine
+# Quantum Eden
 
-*Quantum Mobile* is a Virtual Machine for computational materials science.
+*Quantum Eden* is a Virtual Machine for computational materials science.
 
 This repository contains the vagrant and ansible scripts to set up the VM.
 
@@ -29,7 +29,6 @@ bash create_image.sh
 openstack object create marvel-vms marvel_vm_<version>.ova
 openstack object create marvel-vms INSTALL_<version>.txt
 ```
-
 
 ## Useful commands
 

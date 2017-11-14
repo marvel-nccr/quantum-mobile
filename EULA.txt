@@ -1,10 +1,9 @@
-The Marvel Virtual Machine is distriuted by ECOLE POLYTECHNIQUE FEDERALE DE
-LAUSANNE (Theory and Simulation of Materials (THEOS) and National Centre for
-Computational Design and Discovery of Novel Materials (NCCR MARVEL)),
-Switzerland.
+The the Quantum Eden Virtual Machine is distributed by the Swiss National
+Centre for Computational Design and Discovery of Novel Materials (NCCR MARVEL)
+and European Centre of Excellence for Materials Design at the Exascale (MaX ECE).
 
-The virtual machine contains software from various sources, which are subject
-to their respective licenses.
+The software packages installed on the virtual machine are subject to their
+respective licenses.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -13,4 +12,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
