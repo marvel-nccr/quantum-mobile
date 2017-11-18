@@ -1,6 +1,6 @@
-# Quantum Eden
+# Quantum Mobile
 
-*Quantum Eden* is a Virtual Machine for computational materials science.
+*Quantum Mobile* is a Virtual Machine for computational materials science.
 
 This repository contains the vagrant and ansible scripts to set up the VM.
 
