@@ -13,7 +13,7 @@ postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 
 # plugins
-aiida_fleur_version: "0.5.0"
+aiida_fleur_version: "0.6.0"
 aiida_siesta_version: "0.9.7.1"
 aiida_cp2k_version: "0.2.2"
 aiida_yambo_version: "0.2-beta"
