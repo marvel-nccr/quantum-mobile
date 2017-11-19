@@ -4,3 +4,15 @@
     section: "{{ globalconfig.vm_name }}"
     option: "version"
     value: "{{ globalconfig.vm_version }}"
+
+- name: store Ubuntu version number
+  command: lsb_release -sd
+  changed_when: false
+  register: lsb_release
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "{{ globalconfig.vm_name }}"
+    option: "Operating System"
+    value: "{{ lsb_release.stdout }}"

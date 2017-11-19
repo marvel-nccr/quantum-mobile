@@ -9,11 +9,11 @@
 - include_role:
     name: release_notes
   vars:
-    section: "Customizations"
+    section: "{{ globalconfig.vm_name }}"
     option: "shared folder"
     value: >-
-      In order to share a folder on the host system, first add the folder 'myfolder' in 
-      VirtualBox Settings => Shared Folders and then mount it via
-      'sudo mount -t vboxsf -o uid=1000,gid=1000 myfolder /shared'
+      Sharing a folder "/my/folder" with the VM: add folder in VirtualBox
+      Settings => Shared Folders as "vbox-folder", then mount it via
+      'sudo mount -t vboxsf -o uid=1000,gid=1000 vbox-folder /shared'
     create: true
 
