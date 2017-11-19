@@ -6,9 +6,9 @@
     group: "{{ globalconfig.vm_user }}"
     state: directory
 
-- name: add hint for shared folder
-  ini_file:
-    path: "{{ globalconfig.release_notes_file }}"
+- include_role:
+    name: release_notes
+  vars:
     section: "Customizations"
     option: "shared folder"
     value: >-

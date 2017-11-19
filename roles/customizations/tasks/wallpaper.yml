@@ -5,8 +5,8 @@
 
 - name: Copy the background image
   copy:
-      src: marvel-bg.png
-      dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+      src: quantum-mobile-bg.png
+      dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/quantum-mobile-bg.png"
       mode: 0755
 
 - name: Create folder for generic MARVEL data in global machine
@@ -19,8 +19,8 @@
 - name: Copy the background image
   become: true
   copy:
-      src: marvel-bg.png
-      dest: "/usr/share/marvelnccr/marvel-bg.png"
+      src: quantum-mobile-bg.png
+      dest: "/usr/share/marvelnccr/quantum-mobile-bg.png"
       mode: 0755
 
 - name: add packages (pip)
@@ -34,7 +34,7 @@
 # To work around error:
 # Cannot autolaunch D-Bus without X11 $DISPLAY
 - name: set the background image
-  shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/marvel-bg.png"
+  shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/quantum-mobile-bg.png"
   args:
     executable: /bin/bash
   notify: restart lightdm
@@ -55,7 +55,7 @@
     path: /usr/share/glib-2.0/schemas/10_unity-settings-daemon.gschema.override
     section: "com.canonical.unity-greeter"
     option: "background"
-    value: "'/usr/share/marvelnccr/marvel-bg.png'"
+    value: "'/usr/share/marvelnccr/quantum-mobile-bg.png'"
   notify: restart lightdm
   register: lightdm_background
 
