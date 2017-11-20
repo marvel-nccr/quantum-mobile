@@ -1,4 +1,4 @@
-aiida_version: "0.10.0rc2"
+aiida_version: "0.10.0"
 aiida_extras:
   - REST
   - docs
