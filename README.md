@@ -11,9 +11,9 @@ mechanical calculations, including
  * [Siesta](https://launchpad.net/siesta)
  * [CP2K](https://www.cp2k.org)
 
-all of which are set up and ready can be used through the
-[AiiDA](http://www.aiida.net) python framework for automated workflows and provenance
-tracking.
+all of which are set up and ready to be used through the
+[AiiDA](http://www.aiida.net) python framework for automated workflows and
+provenance tracking.
 
 Please see [releases](https://github.com/marvel-nccr/quantum-mobile/releases) for the latest VM image and installation instructions.
 
