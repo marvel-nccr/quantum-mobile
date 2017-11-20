@@ -4,7 +4,7 @@
       state: directory
 
 - name: clean archives of codes
-  shell: rm *.tar *.tar.gz *.zip
+  shell: rm -f *.tar *.tar.gz *.zip
   ignore_errors: True
   args:
     chdir: "{{ globalconfig.vm_codes_folder }}"
@@ -16,7 +16,7 @@
       state: directory
 
 - name: clean compiled python files
-  shell: find . -name "*.pyc" | xargs rm
+  shell: find . -name "*.pyc" | xargs rm -f
   ignore_errors: True
   args:
     chdir: "{{ globalconfig.vm_examples_folder }}"
