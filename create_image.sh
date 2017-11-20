@@ -29,7 +29,7 @@ vagrant halt # shut down machine
 
 echo "### Exporting '$vm_name $vm_version'"
 vm_release=`git describe --abbrev=0`
-if [ vm_release != vm_version ]; then
+if [ "$vm_release" != "$vm_version" ]; then
     echo "latest git tag $vm_release and version number $vm_version do not agree"
 fi
 
