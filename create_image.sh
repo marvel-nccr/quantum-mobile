@@ -33,7 +33,7 @@ if [ vm_release != vm_version ]; then
     echo "latest git tag $vm_release and version number $vm_version do not agree"
 fi
 
-fname=marvel_vm_${vm_release}.ova
+fname=quantum_mobile_${vm_release}.ova
 [ -e $fname ] && rm $fname
 
 vboxmanage export "${vm_name} ${vm_version}"  \

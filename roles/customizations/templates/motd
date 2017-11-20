@@ -1,7 +1,6 @@
 ##########################################################################
 # Welcome to {{ globalconfig.vm_name }} version {{ globalconfig.vm_version }} 
 # distributed by the {{ globalconfig.author }}
-# {{ globalconfig.author_url }}
 #
 # Instructions:
 # - See RELEASENOTES.txt on the Desktop for installed packages
