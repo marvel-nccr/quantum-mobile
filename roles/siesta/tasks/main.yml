@@ -53,7 +53,7 @@
 - name: "Put a line in ~/.bashrc to add siesta to the path"
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "export PATH=${PATH}:{{ siesta_topdir }}/Obj/"
+    line: "export PATH=${PATH}:{{ siesta_topdir }}/Obj"
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 

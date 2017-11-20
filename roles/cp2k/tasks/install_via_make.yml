@@ -27,7 +27,7 @@
 - name: "Put a line in ~/.bashrc to add cp2k to the path"
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "export PATH=${PATH}:{{ cp2k_topdir }}/bin/"
+    line: "export PATH=${PATH}:{{ cp2k_topdir }}/bin"
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
