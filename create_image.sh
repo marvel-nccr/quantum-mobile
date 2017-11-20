@@ -44,7 +44,7 @@ vboxmanage export "${vm_name} ${vm_version}"  \
   --producturl "https://github.com/marvel-nccr/marvel-virtualmachine" \
   --vendor "$author" \
   --vendorurl "$author_url" \
-  --description "$vm_description"
+  --description "$vm_description" \
   --eulafile "EULA.txt"
 echo "### Find image in $fname"
 
