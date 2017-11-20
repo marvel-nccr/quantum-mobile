@@ -2,6 +2,21 @@
 
 *Quantum Mobile* is a Virtual Machine for computational materials science.
 
+It comes with a collection of software packages for quantum
+mechanical calculations, including
+
+ * [Quantum ESPRESSO](http://www.quantum-espresso.org/)
+ * [Yambo](http://www.yambo-code.org/)
+ * [fleur](http://www.flapw.de/)
+ * [Siesta](https://launchpad.net/siesta)
+ * [CP2K](www.cp2k.org)
+
+all of which are set up and ready can be used through the
+[AiiDA](www.aiida.net) python framework for automated workflows and provenance
+tracking.
+
+Please see [releases](releases) for the latest VM image and installation instructions.
+
 This repository contains the vagrant and ansible scripts to set up the VM.
 
 ## Prerequisites

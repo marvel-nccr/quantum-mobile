@@ -1,4 +1,4 @@
-# Installation instructions for MARVEL VM
+# Installation instructions
 
  1. Download virtual machine image
     https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/marvel-vms/${fname}
