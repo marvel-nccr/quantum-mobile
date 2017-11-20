@@ -3,10 +3,24 @@
       path: "{{ globalconfig.vm_codes_folder }}"
       state: directory
 
+- name: clean archives of codes
+  shell: rm *.tar *.tar.gz *.zip
+  ignore_errors: True
+  args:
+    chdir: "{{ globalconfig.vm_codes_folder }}"
+  when: clean is defined and clean
+
 - name: Create folder for examples
   file:
       path: "{{ globalconfig.vm_examples_folder }}"
       state: directory
+
+- name: clean compiled python files
+  shell: find . -name "*.pyc" | xargs rm
+  ignore_errors: True
+  args:
+    chdir: "{{ globalconfig.vm_examples_folder }}"
+  when: clean is defined and clean
 
 - name: Add readme for examples
   ini_file:

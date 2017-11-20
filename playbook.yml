@@ -1,8 +1,9 @@
-- name: playbook for the MARVEL VM
+- name: set up the VM
   hosts: default
   vars:
     - run_tests: True
     - copy_examples: True
+    - clean: False
   pre_tasks:
     - name: import global variables
       tags: always

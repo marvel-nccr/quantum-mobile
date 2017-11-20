@@ -21,6 +21,8 @@ Note: So far tested only on Unix, but should work on Windows as well.
 
 ## Create image
 ```
+# optional: reduce size of VM
+#ansible-playbook playbook.yml --extra-vars "clean=true"
 bash create_image.sh
 ```
 

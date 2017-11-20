@@ -7,7 +7,7 @@
       autoclean: True
 
 - name: remove ~/.cache
-  listen: 
+  listen:
   - apt clean
   - clean cache
   file:
@@ -20,4 +20,3 @@
   - apt clean
   apt:
       autoremove: True
-
