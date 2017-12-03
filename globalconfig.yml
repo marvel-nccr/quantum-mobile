@@ -4,7 +4,7 @@ vm_version: "17.11.0"
 vm_name: "Quantum Mobile"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
-author: "MARVEL NCCR and MaX ECE"
+author: "MARVEL NCCR and MaX CoE"
 author_url: "http://nccr-marvel.ch"
 
 # VM configuration

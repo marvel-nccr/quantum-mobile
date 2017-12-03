@@ -1,6 +1,6 @@
 The Quantum Mobile Virtual Machine is distributed by the Swiss National Centre
 for Computational Design and Discovery of Novel Materials (NCCR MARVEL) and the
-European Centre of Excellence for Materials Design at the Exascale (MaX).
+European Centre of Excellence for Materials Design at the Exascale (MaX CoE).
 
 The software packages installed on the virtual machine are subject to their
 respective licenses.
