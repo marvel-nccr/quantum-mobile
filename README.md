@@ -21,7 +21,7 @@ This repository contains the vagrant and ansible scripts to set up the VM.
 
 ## Prerequisites
 
-- [vagrant](https://www.vagrantup.com/downloads.html)
+- [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - `pip install -r requirements.txt`
 
