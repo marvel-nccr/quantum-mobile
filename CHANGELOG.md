@@ -6,7 +6,6 @@
 
 - Add Quantum Mobile Logo
 - Add AiiDA Demos
-- VM image built using Virtualbox 5.2.4
 
 ### Software updates
 
@@ -15,9 +14,14 @@
 - aiida 0.10.1
 - aiida-cp2k 0.7
 
+### Build process
+
+- VM image built using Virtualbox 5.2.4
+- Size of VM image and virtual disk added to install instructions
+
 ## Quantum Mobile v17.11.0
 
-Initial release
+### Initial release
 
 - Operating System: Ubuntu 16.04.3 LTS
 - Tools:
