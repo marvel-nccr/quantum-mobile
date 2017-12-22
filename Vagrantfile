@@ -27,6 +27,8 @@ Vagrant.configure(2) do |config|
      # makes mouse/typing more responsive
      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+     # turn off remote display (requires Virtualbox Extension pack)
+     vb.customize ["modifyvm", :id, "--vrde", "off"]
 
      # prevent VM time slipping out of sync by more than 10s (default: 20 min)
      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]

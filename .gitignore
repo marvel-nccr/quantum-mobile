@@ -9,3 +9,5 @@ vagrant-ssh
 hosts
 INSTALL*.txt
 RELEASENOTES.txt
+doc/_build
+other_stuff/*/*.png

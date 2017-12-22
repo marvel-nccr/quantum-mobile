@@ -27,7 +27,9 @@ vagrant halt # shut down machine
 
 #vboxmanage list vms
 
-echo "### Exporting '$vm_name $vm_version'"
+vm_id='$vm_name $vm_version'
+
+echo "### Exporting '$vm_id'"
 vm_release=`git describe --abbrev=0`
 if [ "$vm_release" != "$vm_version" ]; then
     echo "latest git tag $vm_release and version number $vm_version do not agree"
@@ -36,7 +38,7 @@ fi
 fname=quantum_mobile_${vm_release}.ova
 [ -e $fname ] && rm $fname
 
-vboxmanage export "${vm_name} ${vm_version}"  \
+vboxmanage export "$vm_id"  \
   -o $fname \
   --vsys 0 \
   --product "$vm_name" \
@@ -47,6 +49,13 @@ vboxmanage export "${vm_name} ${vm_version}"  \
   --description "$vm_description" \
   --eulafile "EULA.txt"
 echo "### Find image in $fname"
+
+echo "### Computing disk and vm size"
+image_size=`du -sh $fname  | awk '{print $1}'`
+vdisk_path_set=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
+tmp=(${vdisk_path_set//=/ })
+vdisk_path=${tmp[2]}
+
 
 export fname vm_version vm_user vm_password
 envsubst < INSTALL.md > INSTALL_${vm_release}.txt
