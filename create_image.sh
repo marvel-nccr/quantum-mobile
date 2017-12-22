@@ -24,18 +24,18 @@ eval $(parse_yaml globalconfig.yml)
 
 echo "### Halting any running machines"
 vagrant halt # shut down machine
-
 #vboxmanage list vms
 
-vm_id='$vm_name $vm_version'
+vm_id="$vm_name $vm_version"
 
 echo "### Exporting '$vm_id'"
-vm_release=`git describe --abbrev=0`
-if [ "$vm_release" != "$vm_version" ]; then
-    echo "latest git tag $vm_release and version number $vm_version do not agree"
+git_tag=`git describe --abbrev=0`
+if [ "$git_tag" != "$vm_version" ]; then
+    echo "latest git tag $git_tag and version number $vm_version do not agree"
+    exit
 fi
 
-fname=quantum_mobile_${vm_release}.ova
+fname=quantum_mobile_${vm_version}.ova
 [ -e $fname ] && rm $fname
 
 vboxmanage export "$vm_id"  \
@@ -50,13 +50,14 @@ vboxmanage export "$vm_id"  \
   --eulafile "EULA.txt"
 echo "### Find image in $fname"
 
-echo "### Computing disk and vm size"
-image_size=`du -sh $fname  | awk '{print $1}'`
-vdisk_path_set=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
-tmp=(${vdisk_path_set//=/ })
-vdisk_path=${tmp[2]}
+echo "### Computing size of vm image and vm disk"
+vm_image_size=`du -sh $fname  | awk '{print $1}'`
+vdisk_path_grep=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
+[[ $vdisk_path_grep =~ ^.*=\"(.*)\"$ ]]
+vdisk_path=${BASH_REMATCH[1]}
+vm_vdisk_size=`du -sh "$vdisk_path" | awk '{print $1}' `
 
-
-export fname vm_version vm_user vm_password
-envsubst < INSTALL.md > INSTALL_${vm_release}.txt
+export fname vm_version vm_user vm_password 
+export vm_image_size vm_vdisk_size
+envsubst < INSTALL.md > INSTALL_${vm_version}.txt
 echo "### Instructions in INSTALL_${vm_version}${rc}.txt"
