@@ -5,8 +5,8 @@
 ### Improvements
 
 - Add Quantum Mobile Logo
-- Add
-
+- Add AiiDA Demos
+- VM image built using Virtualbox 5.2.4
 
 ### Software updates
 
@@ -14,7 +14,6 @@
 - fleur 0.27 MaXR2.1
 - aiida 0.10.1
 - aiida-cp2k 0.7
-
 
 ## Quantum Mobile v17.11.0
 
