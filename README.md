@@ -33,6 +33,7 @@ required to set up the VM from scratch.
 - [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [python](https://www.python.org/)
+- Host OS: So far tested only on unix systems (MacOS, Ubuntu). Might work under Windows with a few modifications.
 
 ### Create Virtual Machine
 
@@ -43,9 +44,6 @@ pip install -r requirements.txt
 vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
-
-Note: Tested on Unix systems only so far (MacOS, Ubuntu), but in principle one should be able
-to get this to work on Windows as well.
 
 ### Create image
 ```
