@@ -15,33 +15,46 @@ all of which are set up and ready to be used through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
 provenance tracking.
 
+## Download the VM
+
 Please see [releases](https://github.com/marvel-nccr/quantum-mobile/releases) for the latest VM image and installation instructions.
 
-This repository contains the vagrant and ansible scripts to set up the VM.
+## Build it from scratch
 
-## Prerequisites
+You would like to add/remove some components of the VM
+and produce your own modified VM image?
+Then, the first step is to familiarize yourself with how the VM is set up.
+
+This git repository contains all the vagrant and ansible scripts 
+required to set up the VM from scratch.
+
+### Prerequisites
 
 - [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
-- `pip install -r requirements.txt`
+- [python](https://www.python.org/)
 
-## Create Virtual Machine
+### Create Virtual Machine
 
 ```
+git checkout git@github.com:marvel-nccr/quantum-mobile.git
+cd quantum-mobile
+pip install -r requirements.txt
 vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
 
-Note: So far tested only on Unix, but should work on Windows as well.
+Note: Tested on Unix systems only so far (MacOS, Ubuntu), but in principle one should be able
+to get this to work on Windows as well.
 
-## Create image
+### Create image
 ```
 # optional: reduce size of VM
 #ansible-playbook playbook.yml --extra-vars "clean=true"
 bash create_image.sh
 ```
 
-## Useful commands
+### Useful commands
 
  * `vagrant provision --provision-with ansible`: re-run ansible scripts
  * `vagrant reload`: restart machine
@@ -52,7 +65,18 @@ bash create_image.sh
    ```
  * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
 
-# Acknowledgements
+## Publishing customized VMs
+
+If you would like to publish a customized version of Quantum Mobile, we recommend that you
+
+ 1. Fork this repository
+ 1. Choose a new name (to avoid confusion)
+ 1. Adapt `globalconfig.yml`, `EULA.txt` and `README.md` appropriately
+ 1. Pull the latest changes from time to time to keep things up to date
+
+Last, but not least, let us know! We'd 
+
+## Acknowledgements
 
 This work is supported by the [MARVEL National Centre for Competency in
 Research](http://nccr-marvel.ch) and the [MaX European centre of
