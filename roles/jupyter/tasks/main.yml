@@ -1,0 +1,7 @@
+---
+- include_tasks: prerequisites.yml
+  tags: jupyter-prerequisites
+- include_tasks: setup.yml
+  tags: jupyter-setup
+- include_tasks: apps.yml
+  tags: jupyter-apps

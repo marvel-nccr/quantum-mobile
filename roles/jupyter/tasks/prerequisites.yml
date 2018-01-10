@@ -1,0 +1,68 @@
+---
+## below: stuff needed for jupyterhub
+#- name: Install pip for python3
+#  become: True
+#  apt:
+#    name: python3-pip
+#    state: latest
+#
+#- name: upgrade pip for python3
+#  become: True
+#  pip:
+#    name: pip
+#    executable: pip3
+#    state: latest
+#
+## note: python2 does not have jupyterhub 0.8.0
+#- name: Install jupyter prerequisites (python3)
+#  become: True
+#  pip:
+#    name: "{{ item }}"
+#    executable: pip3
+#  with_items:
+#      - jupyterhub==0.8.0
+#      - notebook==5.1.0
+#      - appmode==0.2.0
+
+#- name: activate ipython kernels
+#  become: True
+#  shell: |
+#      python3 -m ipykernel install
+
+- name: Install jupyter prerequisites (python2)
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ aiida_venv }}"
+  with_items:
+      - widgetsnbextension==3.0.8
+      - pythreejs==0.4.1
+      - nglview==1.0
+      - bqplot==0.10.1
+      - ipympl==0.1.0
+      - fileupload==0.1.5
+      - appmode==0.2.0
+
+- name: activate ipython kernel
+  become: True
+  shell: "{{ aiida_venv }}/bin/python -m ipykernel install"
+
+- name: install jupyter extensions
+  shell: "{{ aiida_venv }}/bin/jupyter nbextension install --sys-prefix --py {{item}}"
+  with_items:
+      - fileupload
+
+- name: enable jupyter notebook extensions
+  shell: "{{ aiida_venv }}/bin/jupyter nbextension enable --sys-prefix --py {{item}}"
+  with_items:
+      - widgetsnbextension
+      - pythreejs
+      - nglview
+      - bqplot
+      - ipympl
+      - fileupload
+      - appmode
+
+- name: enable jupyter server extensions
+  shell: "{{ aiida_venv }}/bin/jupyter serverextension enable --sys-prefix --py {{item}}"
+  with_items:
+      - appmode

@@ -1,0 +1,6 @@
+---
+- name: install default apps
+  git:
+    repo: 'https://github.com/{{ item.repo }}'
+    dest: "{{ jupyter_apps_folder }}/{{ item.name }}"
+  with_items: "{{ jupyter_apps }}"

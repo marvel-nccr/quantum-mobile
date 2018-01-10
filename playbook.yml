@@ -33,3 +33,5 @@
       tags: cp2k
     - role: aiida
       tags: aiida
+    - role: jupyter
+      tags: jupyter

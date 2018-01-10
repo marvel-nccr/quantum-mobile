@@ -1,0 +1,42 @@
+---
+- name: create ipython config folder
+  file:
+    path: "{{ ansible_env.HOME }}/.ipython/profile_default"
+    state: directory
+
+- name: setup AiiDA jupyter extension
+  copy:
+    src: ipython_config.py
+    dest: "{{ ansible_env.HOME }}/.ipython/profile_default"
+
+- name: create jupyter folders
+  become: True
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+  with_items:
+    - "{{ jupyter_base_folder }}"
+    - "{{ jupyter_apps_folder }}"
+
+- name: create jupyter apps symlink
+  file:
+    src: "{{ jupyter_apps_folder }}"
+    dest: "{{ jupyter_apps_symlink }}"
+    state: link
+
+# below: stuff needed for jupyterhub
+#- name: copy singleuser script
+#  copy:
+#    src: mc-jupyter-singleuser
+#    dest: "{{ aiida_venv }}/bin"
+#    mode: u+x
+
+#- name: start jupyter notebook server
+#  shell: |
+#    {{ aiida_venv }}/bin/mc-jupyterhub-singleuser \
+#    --ip=0.0.0.0  \
+#    --port=8888   \
+#    --notebook-dir="{{ jupyter_apps_folder }}" \
+#    --NotebookApp.iopub_data_rate_limit=1000000000 \
+#    --NotebookApp.default_url="/apps/home/start.ipynb"
