@@ -68,11 +68,11 @@ bash create_image.sh
 If you would like to publish a customized version of Quantum Mobile, we recommend that you
 
  1. Fork this repository
- 1. Choose a new name (to avoid confusion)
+ 1. Give your VM a different name to avoid confusion
  1. Adapt `globalconfig.yml`, `EULA.txt` and `README.md` appropriately
  1. Pull the latest changes from time to time to keep things up to date
 
-Last, but not least, let us know! We'd 
+Last, but not least, [let us know](mailto:leopold.talirz@gmail.com)!
 
 ## Acknowledgements
 
