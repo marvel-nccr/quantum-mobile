@@ -1,22 +1,9 @@
 ---
-- name: Get aiida-yambo
-  get_url:
-    url: "https://github.com/yambo-code/yambo-aiida/archive/{{ aiida_yambo_version }}.tar.gz"
-    dest: "{{ globalconfig.vm_codes_folder }}/yambo-aiida-{{ aiida_yambo_version }}.tar.gz"
-    mode: "u+r"
-  register: aiida_yambo_download
-
-- name: Unpack aiida-yambo source
-  unarchive:
-    src: "{{ aiida_yambo_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: True
-
-- name: Install aiida-yambo
+- name: "install aiida-yambo-{{ aiida_yambo_version }} from PyPI"
   pip:
-    name: "yambo-aiida-{{ aiida_yambo_version }}/"
+    name: aiida-yambo
+    version: "{{ aiida_yambo_version }}"
     virtualenv: "{{ aiida_venv }}"
-    chdir: "{{ globalconfig.vm_codes_folder}}"
   register: pip_install
 
 - name: run reentry scan

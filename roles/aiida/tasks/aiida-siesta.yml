@@ -1,12 +1,9 @@
 ---
-# remove --no-dependencies after dependency bug is fixed
-# https://github.com/albgar/aiida_siesta_plugin/issues/10
 - name: "install aiida-siesta-{{ aiida_siesta_version }} from PyPI"
   pip:
     name: aiida-siesta
     version: "{{ aiida_siesta_version }}"
     virtualenv: "{{ aiida_venv }}"
-    extra_args: --no-dependencies
   register: pip_install
 
 - name: run reentry scan
