@@ -16,7 +16,7 @@ aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 aiida_fleur_version: "0.6.0"
 aiida_siesta_version: "0.9.8"
 aiida_cp2k_version: "0.7"
-aiida_yambo_version: "0.2-beta"
+aiida_yambo_version: "0.2"
 
 # pseudos
 aiida_pseudopotentials:
