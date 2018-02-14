@@ -23,22 +23,6 @@
       dest: "/usr/share/marvelnccr/quantum-mobile-bg.png"
       mode: 0755
 
-- name: add packages (pip)
-  become: true
-  pip:
-    name: "{{item}}"
-  with_items:
-    # Needed to set the wallpaper (maybe?)
-    - psutil
-
-# To work around error:
-# Cannot autolaunch D-Bus without X11 $DISPLAY
-- name: set the background image
-  shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/quantum-mobile-bg.png"
-  args:
-    executable: /bin/bash
-  notify: restart lightdm
-
 - name: set lightdm (login page) not to draw the user background
   become: true
   ini_file: 
@@ -63,3 +47,21 @@
   become: true
   command: glib-compile-schemas /usr/share/glib-2.0/schemas
   when: (lightdm_background.changed) or (lightdm_draw_user_backgrounds.changed)
+
+- name: add packages (pip)
+  become: true
+  pip:
+    name: "{{item}}"
+  with_items:
+    # Needed to set the wallpaper (maybe?)
+    - psutil
+
+# To work around error:
+# Cannot autolaunch D-Bus without X11 $DISPLAY
+- name: set the background image
+  shell: "DISPLAY=:0.0 dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file://{{ ansible_env.HOME }}/.local/share/marvelnccr/quantum-mobile-bg.png"
+  args:
+    executable: /bin/bash
+  notify: restart lightdm
+
+
