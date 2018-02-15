@@ -41,6 +41,7 @@
       - ipympl==0.1.0
       - fileupload==0.1.5
       - appmode==0.2.0
+      - markdown
 
 - name: activate ipython kernel
   become: True

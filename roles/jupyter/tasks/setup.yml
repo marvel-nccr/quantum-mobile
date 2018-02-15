@@ -19,11 +19,34 @@
     - "{{ jupyter_base_folder }}"
     - "{{ jupyter_apps_folder }}"
 
+- name: touch __init__.py for import
+  become: True
+  file:
+    path: "{{ jupyter_apps_folder }}/__init__.py"
+    state: touch
+
+- name: add launcher script
+  template:
+    src: start.sh
+    dest: "{{ jupyter_apps_folder }}"
+    mode: 0753
+
+- name: update PYTHONPATH
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PYTHONPATH=$PYTHONPATH:{{ jupyter_base_folder }}'
+
 - name: create jupyter apps symlink
   file:
     src: "{{ jupyter_apps_folder }}"
     dest: "{{ jupyter_apps_symlink }}"
     state: link
+
+- name: create desktop shortcut
+  template:
+    src: apps.desktop
+    dest: "{{ ansible_env.HOME }}/Desktop"
+    mode: 0753
 
 # below: stuff needed for jupyterhub
 #- name: copy singleuser script

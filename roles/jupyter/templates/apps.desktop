@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Jupyter Apps
+Comment=Launch AiiDA Jupyter Apps
+Exec=source {{ jupyter_apps_folder }}/start.sh
+Icon=utilities-terminal
+Type=Application

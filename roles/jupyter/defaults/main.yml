@@ -1,7 +1,7 @@
 # note: this folder is currently hardcoded in many apps
 # Would have to make this a variable
 jupyter_base_folder: "/project"
-jupyter_apps_folder: "/apps"
+jupyter_apps_folder: "{{ jupyter_base_folder}}/apps"
 jupyter_apps_symlink: "{{ ansible_env.HOME }}/jupyter_apps"
 jupyter_apps:
 - name: home
