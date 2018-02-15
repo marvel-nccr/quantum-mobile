@@ -1,7 +1,7 @@
+- name: test global config
+  debug:
+    msg: RUNNING PLAYBOOK FOR '{{ globalconfig.vm_name }}' VERSION '{{ globalconfig.vm_version }}'
+
 - name: testing ansible environment
   debug:
-    msg: Connecting to host {{ inventory_hostname }} as user {{ ansible_user }}
-
-- name: test variable
-  debug:
-    msg: "RUNNING SCRIPT FOR VM VERSION {{ globalconfig.vm_version }}"
+    msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'

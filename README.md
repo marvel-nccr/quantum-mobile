@@ -48,7 +48,7 @@ vagrant up  # build vm from scratch (takes some tens of minutes)
 ### Create image
 ```
 # optional: reduce size of VM
-#ansible-playbook playbook.yml --extra-vars "clean=true"
+ansible-playbook playbook.yml --extra-vars "clean=true"
 bash create_image.sh
 ```
 
@@ -61,6 +61,7 @@ bash create_image.sh
    ./setup-ansible.sh             # inform ansible about ssh config
    ansible-playbook playbook.yml  # run ansible directly, add tags, ...
    ```
+ * ```ssh -F vagrant-ssh default```
  * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
 
 ## Publishing customized VMs

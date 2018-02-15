@@ -4,6 +4,7 @@ localhost
 True
 local
 torque
+#!/bin/bash
 {{aiida_run_folder}}
 mpirun -np {tot_num_mpiprocs}
 {{ globalconfig.vm_cpus }}

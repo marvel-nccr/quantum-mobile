@@ -4,6 +4,7 @@ Intel Broadwell Cluster at EPFL http://scitas.epfl.ch/hardware/fidis
 True
 ssh
 slurm
+#!/bin/bash
 /scratch/{username}/aiida_run/
 mpirun -np {tot_num_mpiprocs}
 28

@@ -1,6 +1,6 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
-vm_version: "17.12.0"
+vm_version: "18.02.0"
 vm_name: "Quantum Mobile"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
