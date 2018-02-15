@@ -30,6 +30,12 @@
   pip:
     name: "aiida=={{ aiida_version }}"
     virtualenv: "{{ aiida_venv }}"
+  register: pip_install
+
+# this is necessary, since the meta package installs plugins
+- name: run reentry scan
+  shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
+  when: pip_install.changed
 
 - name: Install extras of aiida-core
   pip:
@@ -106,8 +112,7 @@
   register: aiida_daemon_status
   changed_when: False
    
-  # Disabled for the moment as discussed in
-  # https://github.com/marvel-nccr/marvel-virtualmachine/issues/27
+  # Disabled for the moment as discussed in #27
   #- name: Start the AiiDA daemon
   #  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
   #  when: "'RUNNING' not in aiida_daemon_status.stdout"
