@@ -1,4 +1,4 @@
-aiida_version: "0.11.0"
+aiida_version: "0.10.1"
 aiida_extras:
   - REST
   - docs
@@ -16,24 +16,22 @@ aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 aiida_fleur_version: "0.6.0"
 aiida_siesta_version: "0.9.8"
 aiida_cp2k_version: "0.7"
-aiida_yambo_version: "0.2"
+aiida_yambo_version: "0.2.4"
 
 # pseudos
 aiida_pseudopotentials:
-# Problem: sssp efficiency has 2 pseudos for Be.
-# Nicolas Mounet is informed.
-#  - name: sssp-pbe-efficiency
-#    file: SSSP_eff_PBE.tar.gz
-#    url: http://materialscloud.org/sssp/pseudos
-#    folder: SSSP_eff_PBE
-#    home_page: http://materialscloud.org/sssp/
-#    description: >-
-#     Standard Solid State Pseudopotentials (efficiency) 
-#     for the PBE functional
+  - name: sssp-pbe-efficiency
+    file: SSSP_efficiency_pseudos.tar.gz
+    url: http://www.materialscloud.org/data/discover/sssp/downloads
+    folder: SSSP_efficiency_pseudos
+    home_page: http://materialscloud.org/sssp/
+    description: >-
+     Standard Solid State Pseudopotentials (efficiency) 
+     for the PBE functional
   - name: sssp-pbe-accuracy
-    file: SSSP_acc_PBE.tar.gz
-    url: http://materialscloud.org/sssp/pseudos
-    folder: SSSP_acc_PBE
+    file: SSSP_accuracy_pseudos.tar.gz
+    url: http://www.materialscloud.org/data/discover/sssp/downloads
+    folder: SSSP_accuracy_pseudos
     home_page: http://materialscloud.org/sssp/
     description: >-
      Standard Solid State Pseudopotentials (accuracy) 
