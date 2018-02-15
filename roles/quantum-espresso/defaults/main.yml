@@ -1,9 +1,11 @@
 qe_version: "6.2.1"
+qe_git_tag: "fda42b8045f604ef8cc8400dac1b2a06cb3f6e91"
 qe_src_archive: "qe-{{ qe_version }}.tar.gz"
 #qe_url: "http://www.qe-forge.org/gf/download/frsrelease/240/1075/{{qe_src_archive }}"
-qe_url: "https://github.com/QEF/q-e/archive/{{ qe_src_archive }}"
+#qe_url: "https://github.com/QEF/q-e/archive/{{ qe_src_archive }}"
+qe_url: "https://gitlab.com/QEF/q-e/repository/qe-{{ qe_version }}/archive.tar.gz"
 
-qe_src: "q-e-qe-{{ qe_version }}"
+qe_src: "q-e-qe-{{ qe_version }}-{{ qe_git_tag }}"
 qe_topdir: "{{ globalconfig.vm_codes_folder }}/{{qe_src}}"
 qe_executables:
   - pw

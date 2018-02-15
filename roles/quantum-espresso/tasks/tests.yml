@@ -1,6 +1,11 @@
 ---
-# this currently fails because of 1 test
-# http://qe-forge.org/gf/project/q-e/tracker/?action=TrackerItemEdit&tracker_item_id=291&start=0
+# QE 6.2.1: test-suite fails to create temporary directory
+# Should be fixed in next release. See https://gitlab.com/QEF/q-e/issues/15
+- name: make temporary directory
+  file:
+    path: /tmp/save
+    state: directory
+
 - name: run QE test suite
   shell: "make test-suite"
   args:
