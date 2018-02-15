@@ -39,6 +39,11 @@ Vagrant.configure(2) do |config|
   # Uncomment the following if you don't want to check/update the
   # Guest Additions at every reboot, but just once
   #config.vbguest.auto_update = false
+  #
+  # VirtualBox 5.2.6 ships broken GuestAdditions, see
+  # https://www.virtualbox.org/wiki/Downloads
+  # Do: vagrant vbguest --do install
+  config.vbguest.iso_path = "https://www.virtualbox.org/download/testcase/VBoxGuestAdditions_5.2.7-120528.iso"
    
   # Uncomment to avoid remote downloads of ISO
   #config.vbguest.no_remote = true
