@@ -75,6 +75,10 @@ If you would like to publish a customized version of Quantum Mobile, we recommen
 
 Last, but not least, [let us know](mailto:leopold.talirz@gmail.com)!
 
+## Contact
+
+Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+
 ## Acknowledgements
 
 This work is supported by the [MARVEL National Centre for Competency in
