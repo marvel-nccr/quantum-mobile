@@ -1,4 +1,4 @@
-aiida_version: "0.10.1"
+aiida_version: "0.11.0"
 aiida_extras:
   - REST
   - docs
@@ -14,7 +14,7 @@ aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 
 # plugins
 aiida_fleur_version: "0.6.0"
-aiida_siesta_version: "0.9.8"
+aiida_siesta_version: "0.11.5"
 aiida_cp2k_version: "0.7"
 aiida_yambo_version: "0.2.4"
 
@@ -22,7 +22,7 @@ aiida_yambo_version: "0.2.4"
 aiida_pseudopotentials:
   - name: sssp-pbe-efficiency
     file: SSSP_efficiency_pseudos.tar.gz
-    url: http://www.materialscloud.org/data/discover/sssp/downloads
+    url: http://archive.materialscloud.org/file/2018.0001/v1
     folder: SSSP_efficiency_pseudos
     home_page: http://materialscloud.org/sssp/
     description: >-
@@ -30,7 +30,7 @@ aiida_pseudopotentials:
      for the PBE functional
   - name: sssp-pbe-accuracy
     file: SSSP_accuracy_pseudos.tar.gz
-    url: http://www.materialscloud.org/data/discover/sssp/downloads
+    url: http://archive.materialscloud.org/file/2018.0001/v1
     folder: SSSP_accuracy_pseudos
     home_page: http://materialscloud.org/sssp/
     description: >-

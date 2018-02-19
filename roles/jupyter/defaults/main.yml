@@ -5,7 +5,7 @@ jupyter_apps_folder: "{{ jupyter_base_folder}}/apps"
 jupyter_apps_symlink: "{{ ansible_env.HOME }}/jupyter_apps"
 jupyter_apps:
 - name: home
-  repo: ltalirz/mc-home
+  repo: materialscloud-org/mc-home
 - name: aiida
   repo: ltalirz/mc-aiida
 - name: cscs
