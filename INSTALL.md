@@ -6,4 +6,8 @@
     www.virtualbox.org
  3. Import virtual machine image into Virtualbox (${vm_vdisk_size})
     File => Import Appliance
- 4. Log in using credentials ${vm_user} / ${vm_password}
+ 4. Log in using username / password: ${vm_user} / ${vm_password}
+
+## Contact
+
+Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
