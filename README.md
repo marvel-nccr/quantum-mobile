@@ -19,6 +19,8 @@ provenance tracking.
 
 Please see [releases](https://github.com/marvel-nccr/quantum-mobile/releases) for the latest VM image and installation instructions.
 
+For issues encountered during installation of the VM, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
+
 ## Build it from scratch
 
 You would like to add/remove some components of the VM
@@ -78,6 +80,8 @@ Last, but not least, [let us know](mailto:leopold.talirz@gmail.com)!
 ## Contact
 
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+
+For issues encountered during installation of the VM, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
 
 ## Acknowledgements
 
