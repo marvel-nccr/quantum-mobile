@@ -51,7 +51,9 @@ vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
 # optional: reduce size of VM
 ansible-playbook playbook.yml --extra-vars "clean=true"
-bash create_image.sh
+./compact_hd.sh
+
+./create_image.sh
 ```
 
 ### Useful commands
