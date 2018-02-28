@@ -35,7 +35,7 @@ required to set up the VM from scratch.
 - [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [python](https://www.python.org/)
-- Host OS: So far tested only on unix systems (MacOS, Ubuntu). Might work under Windows with a few modifications.
+- Host OS: Building VM tested only on Unix systems so far (MacOS, Ubuntu). Might work under Windows with a few modifications.
 
 ### Create Virtual Machine
 

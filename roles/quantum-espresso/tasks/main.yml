@@ -34,11 +34,6 @@
   with_items: "{{ qe_executables }}"
   register: qe_make
 
-- name: Clean object files
-  shell: "rm {{ qe_topdir }}/*/src/*.o"
-  register: qe_make
-  when: clean is defined and clean
-
 - include_tasks: tests.yml
   when: qe_make.changed and run_tests is defined and run_tests
 
@@ -64,3 +59,8 @@
     value: >-
         Quantum ESPRESSO is installed in {{ qe_topdir }}. 
         'pw.x', 'cp.x', ... have been added to the PATH
+
+- name: Clean object files
+  shell: "rm {{ qe_topdir }}/*/src/*.o"
+  register: qe_make
+  when: clean is defined and clean
