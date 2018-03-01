@@ -10,6 +10,7 @@ mechanical calculations, including
  * [fleur](http://www.flapw.de/)
  * [Siesta](https://launchpad.net/siesta)
  * [CP2K](https://www.cp2k.org)
+ * [Wannier90](http://www.wannier.org)
 
 all of which are set up and ready to be used through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
@@ -59,12 +60,13 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
 ### Useful commands
 
  * `vagrant provision --provision-with ansible`: re-run ansible scripts
- * `ANSIBLE_ARGS="-twannier90" vagrant provision --provision-with=ansible`: re-run ansible scripts only for the `wannier90` tag
  * `vagrant reload`: restart machine
  * `vagrant halt`: stop machine
+ * `ANSIBLE_ARGS="-twannier90" vagrant provision --provision-with=ansible`: run ansible scripts for the `wannier90` tag
  * ```
    ./setup-ansible.sh             # inform ansible about ssh config
    ansible-playbook playbook.yml  # run ansible directly, add tags, ...
+   ansible-playbook playbook.yml  --tags wannier90
    ```
  * ```ssh -F vagrant-ssh default```
  * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
