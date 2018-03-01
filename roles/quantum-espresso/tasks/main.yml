@@ -36,7 +36,6 @@
 
 - name: Clean object files
   shell: "rm {{ qe_topdir }}/*/src/*.o"
-  register: qe_make
   when: clean is defined and clean
 
 - include_tasks: tests.yml

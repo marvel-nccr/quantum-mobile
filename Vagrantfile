@@ -93,6 +93,7 @@ EOF
        ansible_python_interpreter: "/usr/bin/python2.7",
        ansible_user: user
     }
+  ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
     ansible.playbook = "playbook.yml"
   end
 end

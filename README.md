@@ -59,6 +59,7 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
 ### Useful commands
 
  * `vagrant provision --provision-with ansible`: re-run ansible scripts
+ * `ANSIBLE_ARGS="-twannier90" vagrant provision --provision-with=ansible`: re-run ansible scripts only for the `wannier90` tag
  * `vagrant reload`: restart machine
  * `vagrant halt`: stop machine
  * ```

@@ -31,6 +31,8 @@
       tags: siesta
     - role: cp2k
       tags: cp2k
+    - role: wannier90
+      tags: wannier90
     - role: aiida
       tags: aiida
     - role: jupyter

@@ -20,6 +20,9 @@
 - include_tasks: aiida-cp2k.yml
   tags: aiida-cp2k
   when: cp2k_executables is defined
+- include_tasks: aiida-wannier90.yml
+  tags: aiida-wannier90
+  when: w90_executables is defined
 
 - include_tasks: aiida-pps.yml pp={{ item }}
   tags: aiida-pps

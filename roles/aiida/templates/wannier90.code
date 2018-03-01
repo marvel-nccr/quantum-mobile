@@ -1,0 +1,8 @@
+{{ aiida_code_name }}
+Wannier90 v{{ w90_version }}
+False
+wannier90.wannier90
+{{ aiida_computer_name }}
+{{ w90_topdir }}/{{ code }}
+
+

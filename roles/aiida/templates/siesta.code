@@ -1,5 +1,5 @@
 {{ aiida_code_name }}
-siesta v{{ fleur_version }}
+siesta v{{ siesta_version }}
 False
 siesta.{{ code }}
 {{ aiida_computer_name }}

@@ -1,0 +1,30 @@
+---
+- name: "install aiida-wannier90-{{ aiida_wannier90_version }} from PyPI"
+  pip:
+    name: aiida-wannier90
+    version: "{{ aiida_wannier90_version }}"
+    virtualenv: "{{ aiida_venv }}"
+  register: pip_install
+
+- name: run reentry scan
+  shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
+  when: pip_install.changed
+
+- name: set up Wannier90 codes for localhost
+  include_tasks: code-setup.yml code={{ item.execname }}
+  with_items: "{{ w90_executables }}"
+  # Only Wannier90.x has a plugin for AiiDA yet
+  when: items.execname == "wannier90.x" 
+  vars:
+   - aiida_code_name:  "wannier90-{{w90_version}}"
+   - aiida_code_template:  wannier90.code
+   - aiida_computer_name:  "{{ aiida_localhost_name }}"
+
+- include_role:
+    name: release_notes
+  vars:
+    section: AiiDA
+    option: aiida-wannier90
+    value: >-
+      aiida-wannier90 {{ aiida_wannier90_version }} is installed.
+      See 'verdi code list' for available codes.
