@@ -11,7 +11,7 @@
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: True
 
-# Note: --with-p2y-version=qexsd is needed for QE 6.2
+# Note: use ./configure --with-p2y-version=qexsd for QE 6.2 or higher with new xml schema
 # See https://github.com/marvel-nccr/marvel-virtualmachine/issues/34
 - name: Configure Yambo
   shell: ./configure 
