@@ -27,6 +27,7 @@ Vagrant.configure(2) do |config|
      # makes mouse/typing more responsive
      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+     vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
      # turn off remote display (requires Virtualbox Extension pack)
      vb.customize ["modifyvm", :id, "--vrde", "off"]
 
