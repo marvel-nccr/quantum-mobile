@@ -12,4 +12,6 @@
   tags: disable-autolock
 - include_tasks: disable_guestuser.yml 
   tags: disable-guestuser
+- include_tasks: autologin.yml 
+  tags: autologin
 - meta: flush_handlers

@@ -16,3 +16,11 @@
     section: "{{ globalconfig.vm_name }}"
     option: "Operating System"
     value: "{{ lsb_release.stdout }}"
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "{{ globalconfig.vm_name }}"
+    option: "Login credentials"
+    value: "{{ globalconfig.vm_user }} / {{ globalconfig.vm_password }}"
+
