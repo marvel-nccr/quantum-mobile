@@ -1,5 +1,39 @@
 # Changelog
 
+## Quantum Mobile v18.03.0
+
+### Improvements
+
+- Add Wannier90 v2.1 + aiida-wannier90 v1.0.0
+
+### Build process
+
+- VM image built using Virtualbox 5.2.8
+
+## Quantum Mobile v18.02.2
+
+### Software updates
+* aiida-core v0.11.0
+* aiida-siesta v0.11.5
+
+## Quantum Mobile v18.02.0
+
+### Improvements
+
+- Add jupyter apps (just like on [jupyter.materialslcoud.org](jupyter.materialscloud.org))
+
+### Software updates
+* aiida-yambo v0.2.4
+* aiida-siesta v0.9.8
+* QE 6.2.1
+* SSSP (PBE) accuracy 1.0
+* SSSP (PBE) efficiency 1.0
+
+## Build process
+
+- VM image built using Virtualbox 5.2.6 + Guest Additions 5.2.7
+
+
 ## Quantum Mobile v17.12.0
 
 ### Improvements

@@ -26,10 +26,9 @@ For issues encountered during installation of the VM, see the [FAQ](https://gith
 
 You would like to add/remove some components of the VM
 and produce your own modified VM image?
-Then, the first step is to familiarize yourself with how the VM is set up.
 
 This git repository contains all the vagrant and ansible scripts 
-required to set up the VM from scratch.
+required to set up the VM from scratch (note: [plan >1h](other_stuff/timings.txt) for this).
 
 ### Prerequisites
 

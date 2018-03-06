@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "### WARNING - THIS HAS ONLY BEEN TESTED ONCE"
-
 echo "### Parsing globalconfig.yml"
 source other_stuff/yaml_parser.sh
 eval $(parse_yaml globalconfig.yml)
