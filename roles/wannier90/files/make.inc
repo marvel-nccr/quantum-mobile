@@ -4,7 +4,7 @@ F90 = gfortran
 COMMS  = mpi 
 MPIF90 = mpif90.openmpi
 
-FCOPTS = -O3 
+FCOPTS = -O3 -ffpe-summary=none
 LDOPTS =
 
 #=======================

@@ -11,8 +11,10 @@
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: yes
 
+# --fpe-summary=none removes all floating-point exceptions
+# see https://github.com/marvel-nccr/quantum-mobile/issues/52
 - name: Configure QE
-  shell: ./configure --enable-parallel
+  shell: "FFLAGS='-O3 -g -ffpe-summary=none' ./configure --enable-parallel"
   args:
     creates: "{{ qe_topdir }}/make.inc"
     chdir: "{{ qe_topdir }}"
