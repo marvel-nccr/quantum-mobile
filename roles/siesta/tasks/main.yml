@@ -63,6 +63,7 @@
     section: "siesta"
     option: "version"
     value: "{{ siesta_version }}"
+  when: release_notes
 
 - include_role:
     name: release_notes
@@ -72,3 +73,4 @@
     value: >-
       siesta is compiled and installed in {{ siesta_topdir }}. 
       simply run 'siesta'
+  when: release_notes

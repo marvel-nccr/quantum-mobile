@@ -5,16 +5,13 @@
       upgrade: yes
       cache_valid_time: 86400 #One day
 
-- name: Install ubuntu-desktop (apt)
+- name: Install apt & pip
   become: true
   apt:
       name: "{{item}}"
       state: latest
   with_items:
       - aptitude
-      - ubuntu-desktop
-      #- lxde
-      #- lxde-common
       - python-pip
       - python-dev
   notify: apt clean

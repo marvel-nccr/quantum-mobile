@@ -17,3 +17,4 @@
     value: >-
       A number of codes are already installed and preconfigured. 
       See 'verdi code list'
+  when: release_notes

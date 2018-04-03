@@ -4,6 +4,7 @@
     - run_tests: True
     - copy_examples: True
     - clean: False
+    - release_notes: True
   pre_tasks:
     - name: import global variables
       tags: always

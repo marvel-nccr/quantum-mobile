@@ -1,17 +1,22 @@
 - include_tasks: release_notes.yml 
   tags: release-notes
+  when: release_notes
 - include_tasks: shared_folder.yml 
   tags: shared-folder
 - include_tasks: global_bashrc.yml 
   tags: global-bashrc
-- include_tasks: wallpaper.yml 
-  tags: wallpaper
-- include_tasks: launcher.yml 
-  tags: launcher
-- include_tasks: disable_autolock.yml 
-  tags: disable-autolock
-- include_tasks: disable_guestuser.yml 
-  tags: disable-guestuser
-- include_tasks: autologin.yml 
-  tags: autologin
-- meta: flush_handlers
+
+- name: lightdm-related
+  block:
+    - include_tasks: disable_guestuser.yml 
+      tags: disable-guestuser
+    - include_tasks: wallpaper.yml 
+      tags: wallpaper
+    - include_tasks: launcher.yml 
+      tags: launcher
+    - include_tasks: disable_autolock.yml 
+      tags: disable-autolock
+    - include_tasks: autologin.yml 
+      tags: autologin
+    - meta: flush_handlers
+  when: not headless

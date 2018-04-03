@@ -1,6 +1,6 @@
-aiida_version: "0.11.0"
+aiida_version: "0.11.3"
 aiida_extras:
-  - REST
+  - rest
   - docs
   - atomic_tools
   - testing
@@ -15,8 +15,8 @@ aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 # plugins
 aiida_fleur_version: "0.6.0"
 aiida_siesta_version: "0.11.5"
-aiida_cp2k_version: "0.7"
-aiida_yambo_version: "0.2.4"
+aiida_cp2k_version: "0.8.1"
+aiida_yambo_version: "0.2.5"
 aiida_wannier90_version: "1.0.0"
 
 # pseudos

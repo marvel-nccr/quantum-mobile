@@ -1,5 +1,12 @@
 # Changelog
 
+## Quantum Mobile v18.04.0
+
+### Software updates
+* aiida-core v0.11.3
+* aiida-cp2k v0.8.1
+* aiida-yambo v0.2.5
+
 ## Quantum Mobile v18.03.0
 
 ### Improvements
@@ -73,5 +80,5 @@
   - aiida-siesta v0.9.7.1
   - aiida-cp2k v0.2.2
 - pseudopotentials: 
-  - sssp-pbe-accuracy
+  - sssp-pbe-accuracy v0.7
   - sg15-oncv-1.1

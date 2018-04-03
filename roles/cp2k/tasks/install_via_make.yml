@@ -39,3 +39,4 @@
     value: >-
       cp2k was built in {{ cp2k_topdir }}.
       simply run cp2k.popt
+  when: release_notes

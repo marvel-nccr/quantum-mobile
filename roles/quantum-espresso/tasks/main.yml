@@ -52,6 +52,7 @@
     section: "Quantum ESPRESSO"
     option: "version"
     value: "{{ qe_version }}"
+  when: release_notes
 
 - include_role:
     name: release_notes
@@ -61,6 +62,7 @@
     value: >-
         Quantum ESPRESSO is installed in {{ qe_topdir }}. 
         'pw.x', 'cp.x', ... have been added to the PATH
+  when: release_notes
 
 - name: Clean object files
   shell: "rm {{ qe_topdir }}/*/src/*.o"

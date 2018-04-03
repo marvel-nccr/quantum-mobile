@@ -12,3 +12,16 @@ Files are written both files both on VM and on the localhost
 
  * release_notes_vm: path to release notes on guest VM
  * release_notes_localhost: path to release notes on host machine
+
+# usage
+
+```
+- include_role:
+    name: release_notes
+  vars:
+    section: "Yambo"
+    option: "usage"
+    value: >-
+       Yambo is compiled and installed in {{ yambo_topdir }}.
+       Simply run 'yambo'.
+```

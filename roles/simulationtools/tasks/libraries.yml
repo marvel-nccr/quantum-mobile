@@ -32,4 +32,5 @@
     section: "MPI libraries"
     option: "openmpi"
     value: "Run using 'mpirun <NUMPROCS> <EXECNAME>'"
+  when: release_notes
 

@@ -48,3 +48,4 @@
     value: >-
       aiida-fleur {{ aiida_fleur_version }} is installed.
       See 'verdi code list' for available codes.
+  when: release_notes

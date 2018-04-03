@@ -1,2 +1,3 @@
 # Note: don't use characters that are special for regexps here!
 reference_point_bashrc_string: "## Add commands before this line if you want them to run also non-interactively"
+headless: False

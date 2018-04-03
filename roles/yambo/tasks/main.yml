@@ -39,6 +39,7 @@
     section: "Yambo"
     option: "version"
     value: "{{ yambo_version }}"
+  when: release_notes
 
 - include_role:
     name: release_notes
@@ -48,3 +49,4 @@
     value: >-
        Yambo is compiled and installed in {{ yambo_topdir }}.
        Simply run 'yambo'.
+  when: release_notes

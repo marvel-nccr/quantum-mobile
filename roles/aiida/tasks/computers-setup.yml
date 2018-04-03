@@ -2,7 +2,6 @@
   include_tasks: computer-setup.yml aiida_computer_name={{ item }}
   with_items:
     - "{{ aiida_localhost_name }}"
-    - fidis
 
 - include_role:
     name: release_notes
@@ -12,3 +11,5 @@
     value: >-
         localhost has already been set up and configured.
         List all available computers with 'verdi computer list -a'
+  when: release_notes
+

@@ -123,6 +123,7 @@
     section: "AiiDA"
     option: "version"
     value: "{{ aiida_version }}"
+  when: release_notes
 
 - include_role:
     name: release_notes
@@ -132,3 +133,4 @@
     value: >-
         AiiDA is installed in a virtual environment. 
         Type 'workon aiida' to get access to the 'verdi' commands.
+  when: release_notes

@@ -24,4 +24,4 @@
     value: >-
         pseudopotential family {{ pp.name }}: {{ pp.description }}
         homepage: {{ pp.home_page }}
-  when: aiida_pp_download.changed
+  when: release_notes

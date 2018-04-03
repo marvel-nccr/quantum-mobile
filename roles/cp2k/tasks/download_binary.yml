@@ -48,3 +48,5 @@
     value: >-
       cp2k binary was downloaded from source forge.
       simply run 'cp2k.ssmp'
+  when: release_notes
+
