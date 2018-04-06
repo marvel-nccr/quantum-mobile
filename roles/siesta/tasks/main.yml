@@ -47,7 +47,7 @@
     creates: "{{ siesta_topdir }}/Obj/siesta"
   register: siesta_make
 
-- include_tasks: tests.yml
+- import_tasks: tests.yml
   when: siesta_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add siesta to the path"
@@ -57,7 +57,7 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "siesta"
@@ -65,7 +65,7 @@
     value: "{{ siesta_version }}"
   when: release_notes
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "siesta"

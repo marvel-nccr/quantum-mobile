@@ -6,17 +6,17 @@
     mode: "u+r"
   register: aiida_pp_download
 
-- include_tasks: aiida-pps-sssp.yml
+- import_tasks: aiida-pps-sssp.yml
   when: "'sssp' in pp.name and aiida_pp_download.changed"
 
-- include_tasks: aiida-pps-oncv.yml
+- import_tasks: aiida-pps-oncv.yml
   when: "'oncv' in pp.name and aiida_pp_download.changed"
 
 - name: Add upf family
   shell: "{{ aiida_venv }}/bin/verdi data upf uploadfamily {{globalconfig.vm_codes_folder}}/{{ pp.folder }} {{ pp.name }} '{{ pp.description }}'"
   when: aiida_pp_download.changed
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "AiiDA"

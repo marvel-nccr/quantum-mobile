@@ -3,7 +3,7 @@
   with_items:
     - "{{ aiida_localhost_name }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "AiiDA"

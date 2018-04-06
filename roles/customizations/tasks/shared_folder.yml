@@ -6,7 +6,7 @@
     group: "{{ globalconfig.vm_user }}"
     state: directory
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "{{ globalconfig.vm_name }}"

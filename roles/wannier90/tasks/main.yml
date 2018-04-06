@@ -29,7 +29,7 @@
   when: clean is defined and clean
 
 - name: Wannier90 tests
-  include_tasks: tests.yml
+  import_tasks: tests.yml
   when: w90_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add W90 to the path"
@@ -39,7 +39,7 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "Wannier90"
@@ -47,7 +47,7 @@
     value: "{{ w90_version }}"
   when: release_notes
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "Wannier90"

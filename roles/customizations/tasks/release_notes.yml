@@ -1,4 +1,4 @@
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "{{ globalconfig.vm_name }}"
@@ -10,14 +10,14 @@
   changed_when: false
   register: lsb_release
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "{{ globalconfig.vm_name }}"
     option: "Operating System"
     value: "{{ lsb_release.stdout }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "{{ globalconfig.vm_name }}"

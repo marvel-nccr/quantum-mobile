@@ -43,7 +43,7 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "cp2k"

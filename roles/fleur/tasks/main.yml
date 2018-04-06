@@ -38,7 +38,7 @@
     creates: "{{ fleur_topdir }}/build/fleur"
   register: fleur_make
 
-- include_tasks: tests.yml
+- import_tasks: tests.yml
   when: fleur_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add fleur to the path"
@@ -48,7 +48,7 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "fleur"
@@ -56,7 +56,7 @@
     value: "{{ fleur_version }} {{ fleur_release }}"
   when: release_notes
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "fleur"

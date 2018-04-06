@@ -15,7 +15,7 @@
     name: cp2k={{ cp2k_version }}
     state: installed
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "cp2k"

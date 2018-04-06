@@ -1,9 +1,9 @@
 ---
-#- include_tasks: install_via_apt.yml
-#- include_tasks: install_via_make.yml
-- include_tasks: download_binary.yml
+#- import_tasks: install_via_apt.yml
+#- import_tasks: install_via_make.yml
+- import_tasks: download_binary.yml
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "cp2k"

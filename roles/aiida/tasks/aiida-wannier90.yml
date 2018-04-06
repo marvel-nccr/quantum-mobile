@@ -20,7 +20,7 @@
    - aiida_code_template:  wannier90.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: AiiDA

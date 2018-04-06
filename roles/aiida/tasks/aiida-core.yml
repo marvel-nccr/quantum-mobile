@@ -2,7 +2,7 @@
   become: true
   apt:
       name: "{{ item }}"
-      state: installed
+      state: present
   with_items:
     # Compilation
     - postgresql-9.5
@@ -121,7 +121,7 @@
   #  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
   #  when: "'RUNNING' not in aiida_daemon_status.stdout"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "AiiDA"
@@ -129,7 +129,7 @@
     value: "{{ aiida_version }}"
   when: release_notes
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "AiiDA"

@@ -36,7 +36,7 @@
   with_items: "{{ qe_executables }}"
   register: qe_make
 
-- include_tasks: tests.yml
+- import_tasks: tests.yml
   when: qe_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add QE to the path"
@@ -46,7 +46,7 @@
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "Quantum ESPRESSO"
@@ -54,7 +54,7 @@
     value: "{{ qe_version }}"
   when: release_notes
 
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "Quantum ESPRESSO"

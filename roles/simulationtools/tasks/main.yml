@@ -1,4 +1,4 @@
-- include_tasks: libraries.yml
-- include_tasks: plotting.yml
-- include_tasks: folders.yml
-- include_tasks: stacksize.yml
+- import_tasks: libraries.yml
+- import_tasks: plotting.yml
+- import_tasks: folders.yml
+- import_tasks: stacksize.yml

@@ -16,7 +16,7 @@ Files are written both files both on VM and on the localhost
 # usage
 
 ```
-- include_role:
+- import_role:
     name: release_notes
   vars:
     section: "Yambo"
