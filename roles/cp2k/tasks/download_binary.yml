@@ -20,6 +20,9 @@
   get_url:
     url: "{{ cp2k_svn_url }}/data/{{ item }}?format=raw"
     dest: "{{ cp2k_topdir }}"
+    # for some reason, the first item used to time out
+    # with the default timeout of 10s
+    timeout: 30
   with_items:
   - BASIS_MOLOPT
   - POTENTIAL
