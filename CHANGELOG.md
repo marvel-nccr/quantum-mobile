@@ -8,6 +8,10 @@
 * aiida-cp2k v0.8.1
 * aiida-yambo v0.2.5
 
+### Improvements
+
+- Switch to Chromium browser as Firefox struggles with WebGL
+
 ## Quantum Mobile v18.03.0
 
 ### Improvements

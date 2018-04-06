@@ -18,5 +18,7 @@
       tags: disable-autolock
     - include_tasks: autologin.yml 
       tags: autologin
+    - include_tasks: chromium_keyring.yml 
+      tags: chromium_keyring
     - meta: flush_handlers
   when: not headless
