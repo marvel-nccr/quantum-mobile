@@ -3,7 +3,8 @@
 ## Quantum Mobile v18.04.0
 
 ### Software updates
-* aiida-core v0.11.3
+* aiida-core v0.11.4
+* aiida-quantumespresso v2.0.0
 * aiida-cp2k v0.8.1
 * aiida-yambo v0.2.5
 

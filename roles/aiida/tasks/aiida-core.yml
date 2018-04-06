@@ -26,6 +26,10 @@
     name: "{{ postgres_user }}"
     password: "{{ postgres_pw }}"
 
+# Note: this installs also a number of plugins. However at the moment,
+# for the case of the quantum espresso plugin, we later force a specific
+# version (for the others, e.g. aiida-ase etc., not yet - note that the
+# dependency int he meta package is >= for these plugins).
 - name: Install the aiida meta package
   pip:
     name: "aiida=={{ aiida_version }}"

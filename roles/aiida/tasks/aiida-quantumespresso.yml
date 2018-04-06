@@ -1,5 +1,14 @@
 ---
-# aiida-quantumespresso plugin installed via 'aiida' metapackage
+- name: "install aiida-quantumespresso-{{ aiida_quantumespresso_version }} from PyPI"
+  pip:
+    name: aiida-quantumespresso
+    version: "{{ aiida_quantumespresso_version }}"
+    virtualenv: "{{ aiida_venv }}"
+  register: pip_install
+
+- name: run reentry scan
+  shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
+  when: pip_install.changed
 
 - name: set up QE codes for localhost
   include_tasks: code-setup.yml code={{ item }}
@@ -15,6 +24,7 @@
     section: "AiiDA"
     option: "aiida-quantumespresso"
     value: >-
+      aiida-quantumespresso {{ aiida_quantumespresso_version }} is installed.
       A number of codes are already installed and preconfigured. 
       See 'verdi code list'
   when: release_notes
