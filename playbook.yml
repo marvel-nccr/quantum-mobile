@@ -5,6 +5,7 @@
     - copy_examples: True
     - clean: False
     - release_notes: True
+    - use_chromium_browser: True
   pre_tasks:
     - name: import global variables
       tags: always

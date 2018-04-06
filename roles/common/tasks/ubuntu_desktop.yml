@@ -15,3 +15,17 @@
     name: lightdm
     state: started
 
+- name: install chromium-browser
+  become: true
+  apt:
+      name: "chromium-browser"
+      state: latest
+  notify: apt clean
+  when: use_chromium_browser
+
+- name: 
+  import_role: 
+    name: gantsign.default-web-browser
+  vars:
+    default_web_browser: chromium-browser
+  when: use_chromium_browser
