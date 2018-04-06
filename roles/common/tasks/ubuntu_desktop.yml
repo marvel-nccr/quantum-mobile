@@ -1,0 +1,17 @@
+- name: Install ubuntu-desktop (apt)
+  become: true
+  apt:
+      name: "{{item}}"
+      state: latest
+  with_items:
+      - ubuntu-desktop
+      #- lxde
+      #- lxde-common
+  notify: apt clean
+
+- name: Start lightdm service to get a graphical login
+  become: true
+  service:
+    name: lightdm
+    state: started
+
