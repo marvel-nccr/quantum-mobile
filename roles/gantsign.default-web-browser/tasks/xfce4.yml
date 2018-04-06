@@ -1,0 +1,120 @@
+---
+- name: create custom Xfce4 config directory
+  become: yes
+  file:
+    path: "{{ default_web_browser_custom_xfce4_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,go=rx'
+
+- name: write helpers.rc
+  become: yes
+  template:
+    src: helpers.rc.j2
+    dest: '{{ default_web_browser_custom_xfce4_dir }}/helpers.rc'
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'
+
+- name: create tmp directory
+  file:
+    path: "{{ remote_tmp }}"
+    state: directory
+    mode: 'u=rwx,go='
+
+# Because lineinfile module doesn't have a insert_after_first param we're going
+# to split the file in two and append to the first part before recombining.
+
+- name: copy first part of browser desktop file
+  shell: |
+    sed -e '/^Exec[=[]/,$d' "{{ default_web_browser_desktop_file }}" > "{{ default_web_browser_tmp_desktop_file_part1 }}"
+  args:
+    # No ansible module for splitting files
+    warn: false
+  check_mode: no
+  changed_when: no
+
+- name: copy second part of browser desktop file
+  shell: |
+    sed -n -e '/^Exec[=[]/,$p' "{{ default_web_browser_desktop_file }}" > "{{ default_web_browser_tmp_desktop_file_part2 }}"
+  args:
+    # No ansible module for splitting files
+    warn: false
+  check_mode: no
+  changed_when: no
+
+- name: set xfce4 type
+  lineinfile:
+    dest: "{{ item }}"
+    regexp: '^Type='
+    line: Type=X-XFCE-Helper
+    state: present
+  with_items:
+    - "{{ default_web_browser_tmp_desktop_file_part1 }}"
+    - "{{ default_web_browser_tmp_desktop_file_part2 }}"
+  changed_when: no
+
+- name: set xfce4 category
+  lineinfile:
+    dest: "{{ default_web_browser_tmp_desktop_file_part1 }}"
+    regexp: '^X-XFCE-Category='
+    line: X-XFCE-Category=WebBrowser
+    state: present
+  changed_when: no
+
+- name: query command with param from desktop file
+  shell: |
+    grep -E "^Exec(\[[^]=]*])?=" "{{ default_web_browser_desktop_file }}" | head -n 1 | cut -d= -f 2- | sed -e 's/%[FfUu]/"%s"/g'
+  register: browser_command_with_param
+  check_mode: no
+  changed_when: no
+
+- name: query command command_with_param
+  shell: 'echo "{{ browser_command_with_param.stdout }}" | { read first rest; echo "$first"; }'
+  register: browser_command
+  check_mode: no
+  changed_when: no
+
+- name: set xfce4 commands
+  lineinfile:
+    dest: "{{ default_web_browser_tmp_desktop_file_part1 }}"
+    regexp: '^X-XFCE-Commands='
+    line: 'X-XFCE-Commands={{ browser_command.stdout }}'
+    state: present
+  changed_when: no
+
+- name: set xfce4 commands with param
+  lineinfile:
+    dest: "{{ default_web_browser_tmp_desktop_file_part1 }}"
+    regexp: '^X-XFCE-CommandsWithParameter='
+    line: 'X-XFCE-CommandsWithParameter={{ browser_command_with_param.stdout }}'
+    state: present
+  changed_when: no
+
+- name: concatinate parts
+  shell: |
+    cat "{{ default_web_browser_tmp_desktop_file_part1 }}" \
+        "{{ default_web_browser_tmp_desktop_file_part2 }}" \
+        > "{{ default_web_browser_tmp_desktop_file }}"
+  check_mode: no
+  changed_when: no
+
+- name: create custom Xfce4 helpers directory
+  become: yes
+  file:
+    path: "{{ default_web_browser_custom_xfce4_helpers_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,go=rx'
+
+- name: copy browser desktop file
+  become: yes
+  copy:
+    src: "{{ default_web_browser_tmp_desktop_file }}"
+    remote_src: yes
+    dest: "{{ default_web_browser_custom_xfce4_helpers_dir }}/{{ default_web_browser }}.desktop"
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'

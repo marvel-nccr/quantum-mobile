@@ -1,0 +1,18 @@
+---
+- name: create XDG applications directory
+  become: yes
+  file:
+    path: "{{ default_web_browser_custom_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,go=rx'
+
+- name: write mimeapps.list config
+  become: yes
+  template:
+    src: mimeapps.list.j2
+    dest: '{{ default_web_browser_custom_config_dir }}/mimeapps.list'
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'
