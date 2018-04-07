@@ -26,16 +26,11 @@
     path: "/etc/hosts"
     regexp: '^127\.0\.1\.1'
     line: "127.0.1.1 localhost"
-    owner: root
-    group: root
-    mode: 0644
 
 - name: "set hostname for dynamic ip address in /etc/hosts (needed for PBS Torque)"
   become: true
   lineinfile: 
     path: "/etc/hosts"
+    # lines ending with hostname
     regexp: "{{ globalconfig.vm_hostname }}$"
     line: "{{ ansible_default_ipv4.address }} {{ globalconfig.vm_hostname }}"
-    owner: root
-    group: root
-    mode: 0644

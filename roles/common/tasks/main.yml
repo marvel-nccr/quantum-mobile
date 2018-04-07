@@ -1,9 +1,18 @@
 - import_tasks: debug.yml
+  tags: common-debug
 - import_tasks: password.yml
+  tags: common-password
 - import_tasks: bashrc_refpoint.yml
+  tags: common-bashrc
 - import_tasks: swap.yml
+  tags: common-swap
 - import_tasks: packages.yml
+  tags: common-packages
 - import_tasks: ubuntu_desktop.yml
+  tags: common-desktop
   when: not headless
 - import_tasks: hostname.yml
+  tags: common-hostname
 - import_tasks: timezone.yml
+  tags: common-timezone
+
