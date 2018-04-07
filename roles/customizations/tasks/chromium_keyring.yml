@@ -4,4 +4,4 @@
   lineinfile: 
     path: /etc/chromium-browser/default
     line: CHROMIUM_FLAGS="--password-store=basic"
-    regexp: CHROMIUM_FLAGS=""
+    regexp: "^CHROMIUM_FLAGS="
