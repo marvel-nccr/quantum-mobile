@@ -1,5 +1,5 @@
 - name: set up the VM
-  hosts: default
+  hosts: vms
   vars:
     - run_tests: True
     - copy_examples: True
