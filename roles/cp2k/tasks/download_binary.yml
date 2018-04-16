@@ -16,18 +16,34 @@
     dest: "{{ cp2k_topdir }}/exe/cp2k.ssmp"
     state: link
 
-- name: download cp2k data files
+
+    #- name: download cp2k data files
+    #  get_url:
+    #    url: "{{ cp2k_svn_url }}/data/{{ item }}?format=raw"
+    #    dest: "{{ cp2k_topdir }}"
+    #    # for some reason, the first item used to time out
+    #    # with the default timeout of 10s
+    #    timeout: 30
+    #  with_items:
+    #  - BASIS_MOLOPT
+    #  - POTENTIAL
+    #  - ALL_BASIS_SETS
+    #  - ALL_POTENTIALS
+
+- name: download cp2k source
   get_url:
-    url: "{{ cp2k_svn_url }}/data/{{ item }}?format=raw"
-    dest: "{{ cp2k_topdir }}"
+    url: "{{ cp2k_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}"
     # for some reason, the first item used to time out
     # with the default timeout of 10s
     timeout: 30
-  with_items:
-  - BASIS_MOLOPT
-  - POTENTIAL
-  - ALL_BASIS_SETS
-  - ALL_POTENTIALS
+
+- name: Extract cp2k data directory
+  shell: |
+      tar xf {{ cp2k_src_archive }} {{ cp2k_src }}/data
+  args:
+    chdir: "{{ globalconfig.vm_codes_folder }}"
+
 
 - name: download copyright notice
   get_url:
@@ -40,6 +56,13 @@
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/exe"
+    # Do this also non-interactively
+    insertbefore: "{{ reference_point_bashrc_string }}"
+
+- name: "Put a line in ~/.bashrc for cp2k data directory"
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: "export CP2K_DATA_DIR={{ cp2k_topdir }}/data"
     # Do this also non-interactively
     insertbefore: "{{ reference_point_bashrc_string }}"
 
