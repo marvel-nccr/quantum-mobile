@@ -2,12 +2,8 @@
   become: true
   apt:
       name: "{{ item }}"
-      state: installed
+      state: present
   with_items:
-    # For AiiDA
-    - libffi-dev
-    - libssl-dev
-    - graphviz
     # For plotting
     - grace
     - gnuplot

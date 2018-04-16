@@ -1,4 +1,4 @@
-- name: Install DB
+- name: Install DB and more
   become: true
   apt:
       name: "{{ item }}"
@@ -11,6 +11,10 @@
     - libpq-dev
     # Needed for the ASE visualizer
     - python-gtk2
+    # For AiiDA
+    - libffi-dev
+    - libssl-dev
+    - graphviz
 
 - name: Setup postgres db
   become: True
