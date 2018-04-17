@@ -26,9 +26,11 @@
   tags: aiida-wannier90
   when: w90_executables is defined
 
-- include_tasks: aiida-pps.yml pp={{ item }}
-  tags: aiida-pps
+- include_tasks: aiida-pps.yml
+  vars:
+      pp: "{{ item }}"
   with_items: "{{ aiida_pseudopotentials }}"
+  tags: aiida-pps
 
 - import_tasks: aiida-examples.yml
   tags: aiida-examples

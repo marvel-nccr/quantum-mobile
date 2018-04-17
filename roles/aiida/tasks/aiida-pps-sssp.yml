@@ -1,7 +1,4 @@
 ---
-# extract and prepare sssp
-- name: "Unpack {{ pp.file }}"
-  unarchive:
-    src: "{{ aiida_pp_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
-    remote_src: True
+- name: Import {{ pp.file }}
+  shell: "{{ aiida_venv }}/bin/verdi import {{globalconfig.vm_codes_folder}}/{{ pp.file }}"
+

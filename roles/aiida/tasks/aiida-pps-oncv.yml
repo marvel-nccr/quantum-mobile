@@ -20,3 +20,6 @@
   shell: bash oncv-select-pps.sh
   args:
     chdir: "{{ globalconfig.vm_codes_folder }}/{{ pp.folder }}"
+
+- name: Add upf family
+  shell: "{{ aiida_venv }}/bin/verdi data upf uploadfamily {{globalconfig.vm_codes_folder}}/{{ pp.folder }} {{ pp.name }} '{{ pp.description }}'"

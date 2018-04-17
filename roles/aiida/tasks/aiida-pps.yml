@@ -4,17 +4,16 @@
     url: "{{ pp.url }}/{{ pp.file }}"
     dest: "{{ globalconfig.vm_codes_folder }}/{{ pp.file }}"
     mode: "u+r"
+  tags: aiida-pps
   register: aiida_pp_download
 
 - import_tasks: aiida-pps-sssp.yml
+  tags: aiida-pps
   when: "'sssp' in pp.name and aiida_pp_download.changed"
 
 - import_tasks: aiida-pps-oncv.yml
+  tags: aiida-pps
   when: "'oncv' in pp.name and aiida_pp_download.changed"
-
-- name: Add upf family
-  shell: "{{ aiida_venv }}/bin/verdi data upf uploadfamily {{globalconfig.vm_codes_folder}}/{{ pp.folder }} {{ pp.name }} '{{ pp.description }}'"
-  when: aiida_pp_download.changed
 
 - import_role:
     name: release_notes
@@ -24,4 +23,5 @@
     value: >-
         pseudopotential family {{ pp.name }}: {{ pp.description }}
         homepage: {{ pp.home_page }}
+  tags: aiida-pps
   when: release_notes

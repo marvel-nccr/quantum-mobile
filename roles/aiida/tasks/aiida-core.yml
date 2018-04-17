@@ -115,16 +115,6 @@
         {{ aiida_venv }}/bin/verdi profile setdefault daemon default
   when: aiida_config_file.stat.exists == False
 
-- name: Check AiiDA daemon status
-  shell: "{{ aiida_venv }}/bin/verdi daemon status"
-  register: aiida_daemon_status
-  changed_when: False
-   
-  # Disabled for the moment as discussed in #27
-  #- name: Start the AiiDA daemon
-  #  shell: "{{ aiida_venv }}/bin/verdi daemon restart"
-  #  when: "'RUNNING' not in aiida_daemon_status.stdout"
-
 - import_role:
     name: release_notes
   vars:
