@@ -13,8 +13,8 @@ echo "### Use e.g.: ssh -F vagrant-ssh default'"
 
 # set up inventory file for ansible
 cat > hosts <<EOF
+[vms:vars]
+ansible_ssh_common_args= -F vagrant-ssh
 [vms]
 default ansible_user=${vm_user}
 EOF
-
-

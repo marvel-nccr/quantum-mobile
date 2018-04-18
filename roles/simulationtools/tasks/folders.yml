@@ -4,7 +4,7 @@
       state: directory
 
 - name: clean archives of codes
-  shell: rm -f *.tar *.tar.gz *.zip
+  shell: rm -f *.tar *.tar.gz *.zip *.bz2 *.aiida
   ignore_errors: True
   args:
     chdir: "{{ globalconfig.vm_codes_folder }}"

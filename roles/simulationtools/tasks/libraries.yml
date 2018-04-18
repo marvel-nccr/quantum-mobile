@@ -17,8 +17,9 @@
     - build-essential
     - python-passlib    
     - gfortran
-    - libopenmpi-dev
+    - openmpi-common
     - openmpi-bin
+    - libopenmpi-dev
     - libfftw3-dev 
     - libfftw3-bin 
     - libfftw3-mpi-dev

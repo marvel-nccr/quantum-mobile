@@ -14,7 +14,7 @@ This is how you can back into your machine again:
 1. Get uuid of machine from: vboxmanage list vms
 2. echo "<the-uuid>" > .vagrant/machines/default/virtualbox/id
 3. cp ~/.vagrant.d/insecure_private_key .vagrant/machines/default/virtualbox/
-4. potentially, also add the correct public key inside the VM ~/.ssh/authorized_keys
+4. add the correct public key inside the VM ~/.ssh/authorized_keys
    ssh-keygen -y -f  ~/.vagrant.d/insecure_private_key
 
 See also https://github.com/hashicorp/vagrant/issues/1755

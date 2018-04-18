@@ -2,7 +2,6 @@
   hosts: vms
   vars:
     - run_tests: True
-    - copy_examples: True
     - clean: False
     - release_notes: True
     - use_chromium_browser: True

@@ -34,4 +34,3 @@
 
 - import_tasks: aiida-examples.yml
   tags: aiida-examples
-  when: copy_examples is defined and copy_examples

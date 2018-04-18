@@ -1,7 +1,7 @@
-- name: Check AiiDA daemon status
-  shell: "{{ aiida_venv }}/bin/verdi daemon status"
-  register: aiida_daemon_status
-  changed_when: False
+#- name: Check AiiDA daemon status
+#  shell: "{{ aiida_venv }}/bin/verdi daemon status"
+#  register: aiida_daemon_status
+#  changed_when: False
    
 - name: Add AiiDA Daemon as system service
   become: True
