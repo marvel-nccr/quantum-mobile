@@ -7,7 +7,7 @@ eval $(parse_yaml globalconfig.yml)
 
 # set up ssh config for ansible
 vagrant ssh-config > vagrant-ssh
-sed -i="" "s/User vagrant/User ${vm_user}/g" vagrant-ssh
+sed -i"" "s/User vagrant/User ${vm_user}/g" vagrant-ssh
 echo "### SSH config written to 'vagrant-ssh'"
 echo "### Use e.g.: ssh -F vagrant-ssh default'"
 

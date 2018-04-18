@@ -11,6 +11,21 @@
 ### Improvements
 
 - Switch to Chromium browser as Firefox struggles with WebGL
+- Add complete cp2k data directory
+- AiiDA Daemon is now a system service - no need to start or shut down
+- import SSSP from AiiDA export files hosted on the Materials Cloud Archive
+
+### Build process
+
+- add variables that can be used to turn on/off features for
+  increased flexibility (e.g. to install Quantum Mobile as a
+  server):
+
+     * 'headless': if true, avoids GUI-related setup
+     * 'release_notes': if false, does not add release notes
+- Running the ansible roles on a different host is now as easy as
+  `ansible-playbook playbook.yml -i inventory_file`
+- Adjustments for ansible 2.5
 
 ## Quantum Mobile v18.03.0
 
