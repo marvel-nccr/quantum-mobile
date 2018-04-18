@@ -5,19 +5,19 @@
 ### Software updates
 * aiida-core v0.11.4
 * aiida-quantumespresso v2.0.0
-* aiida-cp2k v0.8.1
+* aiida-cp2k v0.9.0
 * aiida-yambo v0.2.5
 
 ### Improvements
 
 - Switch to Chromium browser as Firefox struggles with WebGL
-- Add complete cp2k data directory
-- AiiDA Daemon is now a system service - no need to start or shut down
-- import SSSP from AiiDA export files hosted on the Materials Cloud Archive
+- Add cp2k data directory
+- AiiDA Daemon is now a system service - no need to start it or shut it down
+- Import SSSP from AiiDA export files hosted on the Materials Cloud Archive
 
 ### Build process
 
-- add variables that can be used to turn on/off features for
+- Add variables that can be used to turn on/off features for
   increased flexibility (e.g. to install Quantum Mobile as a
   server):
 
