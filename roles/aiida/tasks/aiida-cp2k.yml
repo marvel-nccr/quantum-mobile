@@ -17,6 +17,7 @@
    - aiida_code_name:  "cp2k-{{cp2k_version}}"
    - aiida_code_template:  cp2k.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
+  when: cp2k_executables is defined
 
 - import_role:
     name: release_notes
@@ -25,5 +26,4 @@
     option: aiida-cp2k
     value: >-
       aiida-cp2k {{ aiida_cp2k_version }} is installed.
-      See 'verdi code list' for available codes.
   when: release_notes is defined and release_notes

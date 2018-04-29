@@ -9,22 +9,34 @@
 # codes need to come after computers
 - import_tasks: aiida-quantumespresso.yml
   tags: aiida_quantumespresso
-  when: quantum_espresso_executables is defined
+  vars:
+    aiida_quantumespresso_version: "{{ aiida_plugin_versions.aiida_quantumespresso }}"
+  when: "'aiida_quantumespresso' in aiida_plugins"
 - import_tasks: aiida-yambo.yml
   tags: aiida_yambo
-  when: yambo_executables is defined
+  vars:
+    aiida_yambo_version: "{{ aiida_plugin_versions.aiida_yambo }}"
+  when: "'aiida_yambo' in aiida_plugins"
 - import_tasks: aiida-fleur.yml
   tags: aiida_fleur
-  when: fleur_executables is defined
+  vars:
+    aiida_fleur_version: "{{ aiida_plugin_versions.aiida_fleur }}"
+  when: "'aiida_fleur' in aiida_plugins"
 - import_tasks: aiida-siesta.yml
   tags: aiida_siesta
-  when: siesta_executables is defined
+  vars:
+    aiida_siesta_version: "{{ aiida_plugin_versions.aiida_siesta }}"
+  when: "'aiida_siesta' in aiida_plugins"
 - import_tasks: aiida-cp2k.yml
   tags: aiida_cp2k
-  when: cp2k_executables is defined
+  vars:
+    aiida_cp2k_version: "{{ aiida_plugin_versions.aiida_cp2k }}"
+  when: "'aiida_cp2k' in aiida_plugins"
 - import_tasks: aiida-wannier90.yml
   tags: aiida_wannier90
-  when: wannier90_executables is defined
+  vars:
+    aiida_wannier90_version: "{{ aiida_plugin_versions.aiida_wannier90 }}"
+  when: "'aiida_wannier90' in aiida_plugins"
 
 - include_tasks: aiida-pps.yml
   vars:

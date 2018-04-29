@@ -17,6 +17,7 @@
    - aiida_code_name:  "qe-{{code}}-{{quantum_espresso_version}}"
    - aiida_code_template:  qe.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
+  when: quantum_espresso_executables is defined
 
 - import_role:
     name: release_notes
@@ -25,6 +26,4 @@
     option: "aiida-quantumespresso"
     value: >-
       aiida-quantumespresso {{ aiida_quantumespresso_version }} is installed.
-      A number of codes are already installed and preconfigured. 
-      See 'verdi code list'
   when: release_notes is defined and release_notes

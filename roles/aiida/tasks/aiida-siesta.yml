@@ -17,6 +17,7 @@
    - aiida_code_name:  "siesta-{{siesta_version}}"
    - aiida_code_template:  siesta.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
+  when: siesta_executables is defined
 
 - import_role:
     name: release_notes
@@ -25,5 +26,4 @@
     option: aiida-siesta
     value: >-
       aiida-siesta {{ aiida_siesta_version }} is installed.
-      See 'verdi code list' for available codes.
   when: release_notes is defined and release_notes

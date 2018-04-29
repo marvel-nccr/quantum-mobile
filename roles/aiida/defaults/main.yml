@@ -16,33 +16,36 @@ aiida_postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 
 # plugins
-aiida_quantumespresso_version: "2.0.0"
-aiida_fleur_version: "0.6.0"
-aiida_siesta_version: "0.11.5"
-aiida_cp2k_version: "0.9.0"
-aiida_yambo_version: "0.2.5"
-aiida_wannier90_version: "1.0.0"
+aiida_plugin_versions:
+  aiida_quantumespresso: "2.0.0"
+  aiida_fleur: "0.6.0"
+  aiida_siesta: "0.11.5"
+  aiida_cp2k: "0.9.0"
+  aiida_yambo: "0.2.5"
+  aiida_wannier90: "1.0.0"
+
+aiida_plugins: "{{ aiida_plugin_versions.keys() }}"
 
 # pseudos
 aiida_pseudopotentials:
-  - name: sssp-pbe-efficiency
-    file: SSSP_efficiency_pseudos.aiida
-    url: http://archive.materialscloud.org/file/2018.0001/v1
-    home_page: http://materialscloud.org/sssp/
-    description: >-
-     Standard Solid State Pseudopotentials (efficiency) 
-     for the PBE functional
-  - name: sssp-pbe-accuracy
-    file: SSSP_accuracy_pseudos.aiida
-    url: http://archive.materialscloud.org/file/2018.0001/v1
-    home_page: http://materialscloud.org/sssp/
-    description: >-
-     Standard Solid State Pseudopotentials (accuracy) 
-     for the PBE functional
-  - name: sg15-oncv-1.1
-    file: sg15_oncv_upf_2015-10-07.tar.gz
-    url: http://www.quantum-simulation.org/potentials/sg15_oncv
-    folder: sg15-oncv-1.1
-    home_page: http://www.quantum-simulation.org/potentials/sg15_oncv/
-    description: >-
-     SG15 Optimized Norm-Conserving Vanderbilt (ONCV) pseudopotentials
+- name: sssp-pbe-efficiency
+  file: SSSP_efficiency_pseudos.aiida
+  url: http://archive.materialscloud.org/file/2018.0001/v1
+  home_page: http://materialscloud.org/sssp/
+  description: >-
+   Standard Solid State Pseudopotentials (efficiency) 
+   for the PBE functional
+- name: sssp-pbe-accuracy
+  file: SSSP_accuracy_pseudos.aiida
+  url: http://archive.materialscloud.org/file/2018.0001/v1
+  home_page: http://materialscloud.org/sssp/
+  description: >-
+   Standard Solid State Pseudopotentials (accuracy) 
+   for the PBE functional
+- name: sg15-oncv-1.1
+  file: sg15_oncv_upf_2015-10-07.tar.gz
+  url: http://www.quantum-simulation.org/potentials/sg15_oncv
+  folder: sg15-oncv-1.1
+  home_page: http://www.quantum-simulation.org/potentials/sg15_oncv/
+  description: >-
+   SG15 Optimized Norm-Conserving Vanderbilt (ONCV) pseudopotentials
