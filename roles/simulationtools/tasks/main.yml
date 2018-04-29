@@ -1,4 +1,2 @@
 - import_tasks: libraries.yml
 - import_tasks: plotting.yml
-- import_tasks: folders.yml
-- import_tasks: stacksize.yml

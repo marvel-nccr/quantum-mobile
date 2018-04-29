@@ -1,3 +1,0 @@
-simulationtools_codes_folder: "{{ ansible_env.HOME }}"
-simulationtools_examples_folder: "{{ ansible_env.HOME }}"
-simulationtools_examples_readme: "{{ simulationtools_examples_folder }}/README.txt"

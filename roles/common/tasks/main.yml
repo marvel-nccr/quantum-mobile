@@ -13,4 +13,5 @@
   tags: common_hostname
 - import_tasks: timezone.yml
   tags: common_timezone
-
+- import_tasks: stacksize.yml
+  tags: common_stacksize

@@ -32,6 +32,8 @@
       customizations_vm_shared_folder: "{{ vm_shared_folder }}"
       customizations_vm_author: "{{ vm_author }}"
       customizations_headless: "{{ vm_headless }}"
+      customizations_codes_folder: "{{ vm_codes_folder }}"
+      customizations_examples_folder: "{{ vm_examples_folder }}"
       customizations_browser: "{{ vm_browser }}"
     - role: editors
       tags: editors
@@ -41,8 +43,6 @@
       scheduler_cpus: "{{ vm_cpus }}"
     - role: simulationtools
       tags: simulationtools
-      simulationtools_codes_folder: "{{ vm_codes_folder }}"
-      simulationtools_examples_folder: "{{ vm_examples_folder }}"
     - role: quantum_espresso
       tags: quantum_espresso
       quantum_espresso_code_folder: "{{ vm_codes_folder }}"
