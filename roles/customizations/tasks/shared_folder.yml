@@ -16,5 +16,5 @@
       Settings => Shared Folders as "vbox-folder", then mount it via
       'sudo mount -t vboxsf -o uid=1000,gid=1000 vbox-folder /shared'
     create: true
-  when: release_notes
+  when: release_notes is defined and release_notes
 

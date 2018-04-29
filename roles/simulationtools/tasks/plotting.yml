@@ -19,4 +19,4 @@
     section: "Plotting Tools"
     option: "available tools"
     value: "xmgrace, gnuplot, xcrysden, jmol"
-  when: release_notes
+  when: release_notes is defined and release_notes

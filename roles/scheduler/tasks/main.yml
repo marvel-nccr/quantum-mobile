@@ -134,6 +134,6 @@
     section: "Job Scheduler"
     option: "torque"
     value: "Use 'qsub' to submit jobs and 'qstat' to get the status."
-  when: release_notes
+  when: release_notes is defined and release_notes
 
 

@@ -14,4 +14,4 @@
     option: "{{ option }}"
     value: "{{ value }}"
     create: True
-  when: release_notes_locally
+  when: release_notes is defined and release_notes_locally

@@ -54,7 +54,7 @@
     section: "fleur"
     option: "version"
     value: "{{ fleur_version }} {{ fleur_release }}"
-  when: release_notes
+  when: release_notes is defined and release_notes
 
 - import_role:
     name: release_notes
@@ -64,4 +64,4 @@
     value: >-
       fleur is compiled and installed in {{ fleur_topdir }}. 
       The folder with executables is added to the path, so simply run 'fleur'
-  when: release_notes
+  when: release_notes is defined and release_notes

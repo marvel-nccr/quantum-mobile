@@ -45,7 +45,7 @@
     section: "Wannier90"
     option: "version"
     value: "{{ wannier90_version }}"
-  when: release_notes
+  when: release_notes is defined and release_notes
 
 - import_role:
     name: release_notes
@@ -55,4 +55,4 @@
     value: >-
         Wannier90 is installed in {{ wannier90_topdir }}. 
         'wannier90.x', 'postw90/x', ... have been added to the PATH
-  when: release_notes
+  when: release_notes is defined and release_notes

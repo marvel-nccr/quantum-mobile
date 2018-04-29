@@ -23,5 +23,5 @@
     value: >-
       cp2k was built via apt.
       simply run cp2k.popt
-  when: release_notes
+  when: release_notes is defined and release_notes
 

@@ -9,4 +9,4 @@
     section: "cp2k"
     option: "version"
     value: "{{ cp2k_version }}"
-  when: release_notes
+  when: release_notes is defined and release_notes

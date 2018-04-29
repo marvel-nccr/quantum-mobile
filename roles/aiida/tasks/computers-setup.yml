@@ -11,5 +11,5 @@
     value: >-
         localhost has already been set up and configured.
         List all available computers with 'verdi computer list -a'
-  when: release_notes
+  when: release_notes is defined and release_notes
 

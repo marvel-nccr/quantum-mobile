@@ -26,4 +26,4 @@
     value: >-
       aiida-siesta {{ aiida_siesta_version }} is installed.
       See 'verdi code list' for available codes.
-  when: release_notes
+  when: release_notes is defined and release_notes

@@ -24,4 +24,4 @@
         pseudopotential family {{ pp.name }}: {{ pp.description }}
         homepage: {{ pp.home_page }}
   tags: aiida-pps
-  when: release_notes
+  when: release_notes is defined and release_notes

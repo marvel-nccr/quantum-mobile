@@ -27,4 +27,4 @@
       aiida-quantumespresso {{ aiida_quantumespresso_version }} is installed.
       A number of codes are already installed and preconfigured. 
       See 'verdi code list'
-  when: release_notes
+  when: release_notes is defined and release_notes
