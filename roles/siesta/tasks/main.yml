@@ -20,13 +20,13 @@
 - name: Get siesta source
   get_url:
     url: "{{ siesta_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{ siesta_src_archive }}"
+    dest: "{{ siesta_code_folder }}/{{ siesta_src_archive }}"
   register: siesta_download
 
 - name: Extract siesta source
   unarchive:
     src: "{{ siesta_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ siesta_code_folder }}"
     remote_src: True
 
 - name: create Makefile

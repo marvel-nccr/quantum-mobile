@@ -2,13 +2,13 @@
 - name: Get Yambo
   get_url: 
     url: "{{ yambo_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{ yambo_src_archive }}"
+    dest: "{{ yambo_code_folder }}/{{ yambo_src_archive }}"
   register: yambo_download
 
 - name: Extract yambo source
   unarchive:
     src: "{{ yambo_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ yambo_code_folder }}"
     remote_src: True
 
 # Note: use ./configure --with-p2y-version=qexsd for QE 6.2 or higher with new xml schema

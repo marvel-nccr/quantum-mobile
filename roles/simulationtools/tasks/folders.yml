@@ -1,30 +1,30 @@
 - name: Create folder for codes
   file:
-      path: "{{ globalconfig.vm_codes_folder }}"
+      path: "{{ simulationtools_codes_folder }}"
       state: directory
 
 - name: clean archives of codes
   shell: rm -f *.tar *.tar.gz *.zip *.bz2 *.aiida
   ignore_errors: True
   args:
-    chdir: "{{ globalconfig.vm_codes_folder }}"
+    chdir: "{{ simulationtools_codes_folder }}"
   when: clean is defined and clean
 
 - name: Create folder for examples
   file:
-      path: "{{ globalconfig.vm_examples_folder }}"
+      path: "{{ simulationtools_examples_folder }}"
       state: directory
 
 - name: clean compiled python files
   shell: find . -name "*.pyc" | xargs rm -f
   ignore_errors: True
   args:
-    chdir: "{{ globalconfig.vm_examples_folder }}"
+    chdir: "{{ simulationtools_examples_folder }}"
   when: clean is defined and clean
 
 - name: Add readme for examples
   ini_file:
-    path: "{{ globalconfig.vm_examples_readme }}"
+    path: "{{ simulationtools_examples_readme }}"
     section: "General"
     option: "info"
     value: >-
@@ -36,6 +36,6 @@
 
 - name: symlink examples to desktop
   file:
-    src: "{{ globalconfig.vm_examples_folder }}"
+    src: "{{ simulationtools_examples_folder }}"
     dest: "{{ ansible_env.HOME }}/Desktop/examples"
     state: link

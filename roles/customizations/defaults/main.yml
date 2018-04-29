@@ -1,1 +1,9 @@
-headless: False
+customizations_headless: False
+customizations_vm_user: ubuntu
+#customizations_vm_password: ubuntu  # Need to specify this!
+customizations_browser: firefox
+
+customizations_vm_name: "Quantum Mobile"
+customizations_vm_version: ""
+customizations_vm_shared_folder: "/shared"
+customizations_vm_author: "MARVEL NCCR and MaX CoE"

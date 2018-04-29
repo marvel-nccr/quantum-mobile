@@ -1,7 +1,7 @@
 ---
 - import_tasks: prerequisites.yml
-  tags: jupyter-prerequisites
+  tags: jupyter_prerequisites
 - import_tasks: setup.yml
-  tags: jupyter-setup
+  tags: jupyter_setup
 - import_tasks: apps.yml
-  tags: jupyter-apps
+  tags: jupyter_apps

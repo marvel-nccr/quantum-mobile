@@ -7,8 +7,8 @@
   # This updates both the current hostname and /etc/hostname
 - name: "update machine hostname, if necessary"
   become: true
-  shell: "hostnamectl set-hostname {{ globalconfig.vm_hostname }}"
-  when: cur_hostname_command.stdout != globalconfig.vm_hostname
+  shell: "hostnamectl set-hostname {{ common_hostname }}"
+  when: cur_hostname_command.stdout != common_hostname
 
 - name: "remove any lines with 127.0.1.1"
   become: true
@@ -32,5 +32,5 @@
   lineinfile: 
     path: "/etc/hosts"
     # lines ending with hostname
-    regexp: "{{ globalconfig.vm_hostname }}$"
-    line: "{{ ansible_default_ipv4.address }} {{ globalconfig.vm_hostname }}"
+    regexp: "{{ common_hostname }}$"
+    line: "{{ ansible_default_ipv4.address }} {{ common_hostname }}"

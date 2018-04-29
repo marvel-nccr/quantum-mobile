@@ -1,15 +1,15 @@
 - name: create mountpoint for shared folder
   become: True
   file:
-    path: "{{ globalconfig.vm_shared_folder }}"
-    owner: "{{ globalconfig.vm_user }}"
-    group: "{{ globalconfig.vm_user }}"
+    path: "{{ customizations_vm_shared_folder }}"
+    owner: "{{ customizations_vm_user }}"
+    group: "{{ customizations_vm_user }}"
     state: directory
 
 - import_role:
     name: release_notes
   vars:
-    section: "{{ globalconfig.vm_name }}"
+    section: "{{ customizations_vm_name }}"
     option: "shared folder"
     value: >-
       Sharing a folder "/my/folder" with the VM: add folder in VirtualBox

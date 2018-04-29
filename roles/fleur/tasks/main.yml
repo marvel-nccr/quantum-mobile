@@ -21,7 +21,7 @@
 - name: Get fleur source
   unarchive:
     src: "{{ fleur_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ fleur_code_folder }}"
     remote_src: yes
 
   # note: this does not throw an error, even if configure fails...

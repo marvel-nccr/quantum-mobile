@@ -5,7 +5,7 @@
     path: /etc/lightdm/lightdm.conf.d/12-autologin.conf
     section: "Seat:*"
     option: "autologin-user"
-    value: "{{ globalconfig.vm_user }}"
+    value: "{{ customizations_vm_user }}"
 
 - name: disable autologin timeout
   become: true

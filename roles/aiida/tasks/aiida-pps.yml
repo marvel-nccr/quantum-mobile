@@ -2,17 +2,17 @@
 - name: Download "{{ pp.file }}"
   get_url:
     url: "{{ pp.url }}/{{ pp.file }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{ pp.file }}"
+    dest: "{{ aiida_code_folder }}/{{ pp.file }}"
     mode: "u+r"
-  tags: aiida-pps
+  tags: aiida_pps
   register: aiida_pp_download
 
 - import_tasks: aiida-pps-sssp.yml
-  tags: aiida-pps
+  tags: aiida_pps
   when: "'sssp' in pp.name and aiida_pp_download.changed"
 
 - import_tasks: aiida-pps-oncv.yml
-  tags: aiida-pps
+  tags: aiida_pps
   when: "'oncv' in pp.name and aiida_pp_download.changed"
 
 - import_role:
@@ -23,5 +23,5 @@
     value: >-
         pseudopotential family {{ pp.name }}: {{ pp.description }}
         homepage: {{ pp.home_page }}
-  tags: aiida-pps
+  tags: aiida_pps
   when: release_notes is defined and release_notes

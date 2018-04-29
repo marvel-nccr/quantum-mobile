@@ -33,7 +33,7 @@
 - name: download cp2k source
   get_url:
     url: "{{ cp2k_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ cp2k_code_folder }}"
     # for some reason, the first item used to time out
     # with the default timeout of 10s
     timeout: 30
@@ -42,7 +42,7 @@
   shell: |
       tar xf {{ cp2k_src_archive }} {{ cp2k_src }}/data
   args:
-    chdir: "{{ globalconfig.vm_codes_folder }}"
+    chdir: "{{ cp2k_code_folder }}"
 
 
 - name: download copyright notice

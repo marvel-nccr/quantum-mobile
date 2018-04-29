@@ -1,36 +1,36 @@
 ---
 - import_tasks: aiida-core.yml
-  tags: aiida,aiida-core
+  tags: aiida,aiida_core
 - import_tasks: aiida-daemon.yml
-  tags: aiida-daemon,aiida-core
+  tags: aiida_daemon,aiida_core
 
 - import_tasks: computers-setup.yml
 
 # codes need to come after computers
 - import_tasks: aiida-quantumespresso.yml
-  tags: aiida-quantumespresso
+  tags: aiida_quantumespresso
   when: quantum_espresso_executables is defined
 - import_tasks: aiida-yambo.yml
-  tags: aiida-yambo
+  tags: aiida_yambo
   when: yambo_executables is defined
 - import_tasks: aiida-fleur.yml
-  tags: aiida-fleur
+  tags: aiida_fleur
   when: fleur_executables is defined
 - import_tasks: aiida-siesta.yml
-  tags: aiida-siesta
+  tags: aiida_siesta
   when: siesta_executables is defined
 - import_tasks: aiida-cp2k.yml
-  tags: aiida-cp2k
+  tags: aiida_cp2k
   when: cp2k_executables is defined
 - import_tasks: aiida-wannier90.yml
-  tags: aiida-wannier90
+  tags: aiida_wannier90
   when: wannier90_executables is defined
 
 - include_tasks: aiida-pps.yml
   vars:
       pp: "{{ item }}"
   with_items: "{{ aiida_pseudopotentials }}"
-  tags: aiida-pps
+  tags: aiida_pps
 
 - import_tasks: aiida-examples.yml
-  tags: aiida-examples
+  tags: aiida_examples

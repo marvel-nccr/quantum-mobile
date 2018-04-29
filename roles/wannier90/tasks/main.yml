@@ -2,13 +2,13 @@
 - name: Get Wannier90 source
   get_url:
     url: "{{ wannier90_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{  wannier90_src_archive }}"
+    dest: "{{ wannier90_code_folder }}/{{  wannier90_src_archive }}"
   register: wannier90_download
 
 - name: Extract Wannier90 source
   unarchive:
     src: "{{ wannier90_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ wannier90_code_folder }}"
     remote_src: yes
 
 - name: Configure Wannier90

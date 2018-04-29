@@ -21,11 +21,11 @@
       name: "chromium-browser"
       state: latest
   notify: apt clean
-  when: use_chromium_browser
+  when: common_browser is 'chromium'
 
 - name: 
   import_role: 
     name: gantsign.default-web-browser
   vars:
     default_web_browser: chromium-browser
-  when: use_chromium_browser
+  when: common_browser is 'chromium'

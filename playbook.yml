@@ -1,6 +1,7 @@
 - name: set up the VM
   hosts: vms
   vars:
+    - release_notes: True
     - run_tests: True
     - clean: False
   pre_tasks:
@@ -8,31 +9,62 @@
       tags: always
       include_vars:
         file: globalconfig.yml
-        name: globalconfig
+    - name: test global config
+      debug:
+        msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+    - name: testing ansible environment
+      debug:
+        msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
   roles: 
     - role: common
       tags: common
+      common_hostname: "{{ vm_hostname }}"
+      common_vm_user: "{{ vm_user }}"
+      common_vm_password: "{{ vm_password }}"
+      common_headless: "{{ vm_headless }}"
+      common_browser: "{{ vm_browser }}"
     - role: customizations
       tags: customizations
+      customizations_vm_user: "{{ vm_user }}"
+      customizations_vm_password: "{{ vm_password }}"
+      customizations_vm_name: "{{ vm_name }}"
+      customizations_vm_version: "{{ vm_version }}"
+      customizations_vm_shared_folder: "{{ vm_shared_folder }}"
+      customizations_vm_author: "{{ vm_author }}"
+      customizations_headless: "{{ vm_headless }}"
+      customizations_browser: "{{ vm_browser }}"
     - role: editors
       tags: editors
     - role: scheduler
       tags: scheduler
+      scheduler_hostname: "{{ vm_hostname }}"
+      scheduler_cpus: "{{ vm_cpus }}"
     - role: simulationtools
       tags: simulationtools
+      simulationtools_codes_folder: "{{ vm_codes_folder }}"
+      simulationtools_examples_folder: "{{ vm_examples_folder }}"
     - role: quantum_espresso
       tags: quantum_espresso
+      quantum_espresso_code_folder: "{{ vm_codes_folder }}"
     - role: yambo
       tags: yambo
+      yambo_code_folder: "{{ vm_codes_folder }}"
     - role: fleur
       tags: fleur
+      fleur_code_folder: "{{ vm_codes_folder }}"
     - role: siesta
       tags: siesta
+      siesta_code_folder: "{{ vm_codes_folder }}"
     - role: cp2k
       tags: cp2k
+      cp2k_code_folder: "{{ vm_codes_folder }}"
     - role: wannier90
       tags: wannier90
+      wannier90_code_folder: "{{ vm_codes_folder }}"
     - role: aiida
       tags: aiida
+      aiida_code_folder: "{{ vm_codes_folder }}"
+      aiida_localhost_cpus: "{{ vm_cpus }}"
+      aiida_examples_folder: "{{ vm_examples_folder }}"
     - role: jupyter
       tags: jupyter

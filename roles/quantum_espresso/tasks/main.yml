@@ -2,13 +2,13 @@
 - name: Get Quantum ESPRESSO source
   get_url:
     url: "{{ quantum_espresso_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{  quantum_espresso_src_archive }}"
+    dest: "{{ quantum_espresso_code_folder }}/{{  quantum_espresso_src_archive }}"
   register: quantum_espresso_download
 
 - name: Extract QE source
   unarchive:
     src: "{{ quantum_espresso_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ quantum_espresso_code_folder }}"
     remote_src: yes
 
 # --fpe-summary=none removes all floating-point exceptions

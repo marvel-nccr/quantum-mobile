@@ -3,8 +3,9 @@ siesta_version: "4.0.1"
 siesta_minor_version: "4.0"
 siesta_src: siesta-{{ siesta_version }}
 siesta_src_archive: "{{ siesta_src }}.tar.gz"
+siesta_code_folder: "{{ ansible_env.HOME }}"
 siesta_url: "https://launchpad.net/siesta/{{ siesta_minor_version }}/{{ siesta_version }}/+download/{{ siesta_src_archive }}"
-siesta_topdir: "{{ globalconfig.vm_codes_folder }}/siesta-{{ siesta_version }}"
+siesta_topdir: "{{ siesta_code_folder }}/siesta-{{ siesta_version }}"
 siesta_executables:
   - siesta
 

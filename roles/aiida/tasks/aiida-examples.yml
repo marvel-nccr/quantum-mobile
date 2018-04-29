@@ -2,11 +2,11 @@
 - name: get AiiDA MaX examples
   git:
     repo: https://github.com/aiidateam/aiida-max-examples.git
-    dest: "{{ globalconfig.vm_examples_folder }}/aiida-max-examples"
+    dest: "{{ aiida_examples_folder }}/aiida-max-examples"
     version: master
 
 - name: get AiiDA demos
   git:
     repo: https://github.com/aiidateam/aiida_demos.git
-    dest: "{{ globalconfig.vm_examples_folder }}/aiida-demos"
+    dest: "{{ aiida_examples_folder }}/aiida-demos"
     version: master

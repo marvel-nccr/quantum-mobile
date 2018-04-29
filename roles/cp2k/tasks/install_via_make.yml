@@ -4,17 +4,17 @@
 - name: Get cp2k source
   get_url:
     url: "{{ cp2k_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{ cp2k_src_archive }}"
+    dest: "{{ cp2k_code_folder }}/{{ cp2k_src_archive }}"
   register: cp2k_download
 
 - name: Extract cp2k source
   unarchive:
     src: "{{ cp2k_download.dest }}"
-    dest: "{{ globalconfig.vm_codes_folder }}"
+    dest: "{{ cp2k_code_folder }}"
     remote_src: yes
 
 - name: Make cp2k executables
-  shell: "make -j{{ globalconfig.vm_cpus}} ARCH={{ cp2k_make_arch }} VERSION={{ item }}"
+  shell: "make -j{{ cp2k_make_cpus }} ARCH={{ cp2k_make_arch }} VERSION={{ item }}"
   args:
     chdir: "{{ cp2k_topdir }}/makefiles"
     creates: "{{ cp2k_topdir }}/exe/{{ cp2k_make_arch }}/cp2k.{{ item }}"

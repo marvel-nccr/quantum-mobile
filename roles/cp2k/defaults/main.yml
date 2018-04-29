@@ -5,12 +5,14 @@ cp2k_executables:
 
 cp2k_src: cp2k-{{ cp2k_version }}
 cp2k_src_archive: "{{ cp2k_src }}.tar.bz2"
+cp2k_code_folder: "{{ ansible_env.HOME }}"
 cp2k_url: "https://sourceforge.net/projects/cp2k/files/{{ cp2k_src_archive }}/download"
-cp2k_topdir: "{{ globalconfig.vm_codes_folder }}/{{cp2k_src}}"
+cp2k_topdir: "{{ cp2k_code_folder }}/{{cp2k_src}}"
 #cp2k_make_arch: Linux-x86-64-gfortran
 #cp2k_make_versions: 
 # - sopt 
 # - popt
+#cp2k_make_cpus: 2
 
 # binary download
 cp2k_binary: cp2k-{{ cp2k_version }}-Linux-x86_64.ssmp

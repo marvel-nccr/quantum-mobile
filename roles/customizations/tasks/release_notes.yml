@@ -1,9 +1,9 @@
 - import_role:
     name: release_notes
   vars:
-    section: "{{ globalconfig.vm_name }}"
+    section: "{{ customizations_vm_name }}"
     option: "version"
-    value: "{{ globalconfig.vm_version }}"
+    value: "{{ customizations_vm_version }}"
 
 - name: store Ubuntu version number
   command: lsb_release -sd
@@ -13,14 +13,14 @@
 - import_role:
     name: release_notes
   vars:
-    section: "{{ globalconfig.vm_name }}"
+    section: "{{ customizations_vm_name }}"
     option: "Operating System"
     value: "{{ lsb_release.stdout }}"
 
 - import_role:
     name: release_notes
   vars:
-    section: "{{ globalconfig.vm_name }}"
+    section: "{{ customizations_vm_name }}"
     option: "Login credentials"
-    value: "{{ globalconfig.vm_user }} / {{ globalconfig.vm_password }}"
+    value: "{{ customizations_vm_user }} / {{ customizations_vm_password }}"
 
