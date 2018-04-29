@@ -12,9 +12,9 @@
 
 - name: set up QE codes for localhost
   include_tasks: code-setup.yml code={{ item }}
-  with_items: "{{qe_executables}}"
+  with_items: "{{quantum_espresso_executables}}"
   vars:
-   - aiida_code_name:  "qe-{{code}}-{{qe_version}}"
+   - aiida_code_name:  "qe-{{code}}-{{quantum_espresso_version}}"
    - aiida_code_template:  qe.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 

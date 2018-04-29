@@ -12,11 +12,11 @@
 
 - name: set up Wannier90 codes for localhost
   include_tasks: code-setup.yml code={{ item.execname }}
-  with_items: "{{ w90_executables }}"
+  with_items: "{{ wannier90_executables }}"
   # Only Wannier90.x has a plugin for AiiDA yet
   when: items.execname == "wannier90.x" 
   vars:
-   - aiida_code_name:  "wannier90-{{w90_version}}"
+   - aiida_code_name:  "wannier90-{{wannier90_version}}"
    - aiida_code_template:  wannier90.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
 

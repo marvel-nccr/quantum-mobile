@@ -57,14 +57,14 @@
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/exe"
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"
 
 - name: "Put a line in ~/.bashrc for cp2k data directory"
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export CP2K_DATA_DIR={{ cp2k_topdir }}/data"
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes

@@ -1,11 +1,11 @@
-w90_version: "2.1"
-w90_src_archive: "wannier90-{{ w90_version }}.tar.gz"
-w90_url: "https://github.com/wannier-developers/wannier90/archive/v2.1.tar.gz"
+wannier90_version: "2.1"
+wannier90_src_archive: "wannier90-{{ wannier90_version }}.tar.gz"
+wannier90_url: "https://github.com/wannier-developers/wannier90/archive/v2.1.tar.gz"
 
-w90_src: "wannier90-{{ w90_version }}"
-w90_topdir: "{{ globalconfig.vm_codes_folder }}/{{w90_src}}"
+wannier90_src: "wannier90-{{ wannier90_version }}"
+wannier90_topdir: "{{ globalconfig.vm_codes_folder }}/{{wannier90_src}}"
 
-w90_executables:
+wannier90_executables:
   - target: wannier
     execname: wannier90.x
   - target: post

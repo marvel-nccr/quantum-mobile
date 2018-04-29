@@ -1,13 +1,13 @@
 # Will only download once
 - name: Get Quantum ESPRESSO source
   get_url:
-    url: "{{ qe_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{  qe_src_archive }}"
-  register: qe_download
+    url: "{{ quantum_espresso_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{  quantum_espresso_src_archive }}"
+  register: quantum_espresso_download
 
 - name: Extract QE source
   unarchive:
-    src: "{{ qe_download.dest }}"
+    src: "{{ quantum_espresso_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: yes
 
@@ -16,14 +16,14 @@
 - name: Configure QE
   shell: "FFLAGS='-O3 -g -ffpe-summary=none' ./configure --enable-parallel"
   args:
-    creates: "{{ qe_topdir }}/make.inc"
-    chdir: "{{ qe_topdir }}"
+    creates: "{{ quantum_espresso_topdir }}/make.inc"
+    chdir: "{{ quantum_espresso_topdir }}"
      
 # this is needed because aiida isn't yet able to parse
 # the new XML format
 - name: "Force to use old XML format"
   lineinfile:
-    path: "{{ qe_topdir }}/make.inc"
+    path: "{{ quantum_espresso_topdir }}/make.inc"
     insertafter: "DFLAGS         =  -D__FFTW3 -D__MPI"
     line: "DFLAGS        +=  -D__OLDXML"
 
@@ -31,27 +31,27 @@
 - name: Make QE executables
   shell: "make {{ item }}"
   args:
-    creates: "{{ qe_topdir }}/bin/{{ item }}.x"
-    chdir: "{{ qe_topdir }}"
-  with_items: "{{ qe_executables }}"
-  register: qe_make
+    creates: "{{ quantum_espresso_topdir }}/bin/{{ item }}.x"
+    chdir: "{{ quantum_espresso_topdir }}"
+  with_items: "{{ quantum_espresso_executables }}"
+  register: quantum_espresso_make
 
 - import_tasks: tests.yml
-  when: qe_make.changed and run_tests is defined and run_tests
+  when: quantum_espresso_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add QE to the path"
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "export PATH=${PATH}:{{ qe_topdir }}/bin"
+    line: "export PATH=${PATH}:{{ quantum_espresso_topdir }}/bin"
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes
   vars:
     section: "Quantum ESPRESSO"
     option: "version"
-    value: "{{ qe_version }}"
+    value: "{{ quantum_espresso_version }}"
   when: release_notes
 
 - import_role:
@@ -60,10 +60,10 @@
     section: "Quantum ESPRESSO"
     option: "usage"
     value: >-
-        Quantum ESPRESSO is installed in {{ qe_topdir }}. 
+        Quantum ESPRESSO is installed in {{ quantum_espresso_topdir }}. 
         'pw.x', 'cp.x', ... have been added to the PATH
   when: release_notes
 
 - name: Clean object files
-  shell: "rm {{ qe_topdir }}/*/src/*.o"
+  shell: "rm {{ quantum_espresso_topdir }}/*/src/*.o"
   when: clean is defined and clean

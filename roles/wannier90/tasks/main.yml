@@ -1,50 +1,50 @@
 # Will only download once
 - name: Get Wannier90 source
   get_url:
-    url: "{{ w90_url }}"
-    dest: "{{ globalconfig.vm_codes_folder }}/{{  w90_src_archive }}"
-  register: w90_download
+    url: "{{ wannier90_url }}"
+    dest: "{{ globalconfig.vm_codes_folder }}/{{  wannier90_src_archive }}"
+  register: wannier90_download
 
 - name: Extract Wannier90 source
   unarchive:
-    src: "{{ w90_download.dest }}"
+    src: "{{ wannier90_download.dest }}"
     dest: "{{ globalconfig.vm_codes_folder }}"
     remote_src: yes
 
 - name: Configure Wannier90
   copy:
     src: "make.inc"
-    dest: "{{ w90_topdir }}"
+    dest: "{{ wannier90_topdir }}"
 
 - name: Make Wannier90 executables
   shell: "make {{ item.target }}"
   args:
-    creates: "{{ w90_topdir }}/{{ item.execname }}"
-    chdir: "{{ w90_topdir }}"
-  with_items: "{{ w90_executables }}"
-  register: w90_make
+    creates: "{{ wannier90_topdir }}/{{ item.execname }}"
+    chdir: "{{ wannier90_topdir }}"
+  with_items: "{{ wannier90_executables }}"
+  register: wannier90_make
 
 - name: Clean object files
-  shell: "rm -f {{ w90_topdir }}/src/obj/* {{ w90_topdir }}/src/objp/*"
+  shell: "rm -f {{ wannier90_topdir }}/src/obj/* {{ wannier90_topdir }}/src/objp/*"
   when: clean is defined and clean
 
 - name: Wannier90 tests
   import_tasks: tests.yml
-  when: w90_make.changed and run_tests is defined and run_tests
+  when: wannier90_make.changed and run_tests is defined and run_tests
 
 - name: "Put a line in ~/.bashrc to add W90 to the path"
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "export PATH=${PATH}:{{ w90_topdir }}"
+    line: "export PATH=${PATH}:{{ wannier90_topdir }}"
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes
   vars:
     section: "Wannier90"
     option: "version"
-    value: "{{ w90_version }}"
+    value: "{{ wannier90_version }}"
   when: release_notes
 
 - import_role:
@@ -53,6 +53,6 @@
     section: "Wannier90"
     option: "usage"
     value: >-
-        Wannier90 is installed in {{ w90_topdir }}. 
+        Wannier90 is installed in {{ wannier90_topdir }}. 
         'wannier90.x', 'postw90/x', ... have been added to the PATH
   when: release_notes

@@ -4,4 +4,4 @@
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: ulimit -s unlimited
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"

@@ -3,8 +3,6 @@
   vars:
     - run_tests: True
     - clean: False
-    - release_notes: True
-    - use_chromium_browser: True
   pre_tasks:
     - name: import global variables
       tags: always
@@ -22,8 +20,8 @@
       tags: scheduler
     - role: simulationtools
       tags: simulationtools
-    - role: quantum-espresso
-      tags: quantum-espresso
+    - role: quantum_espresso
+      tags: quantum_espresso
     - role: yambo
       tags: yambo
     - role: fleur

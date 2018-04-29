@@ -9,5 +9,5 @@
 - name: run QE test suite
   shell: "make test-suite"
   args:
-    creates: "{{ qe_topdir }}/bin/.x"
-    chdir: "{{ qe_topdir }}"
+    creates: "{{ quantum_espresso_topdir }}/bin/.x"
+    chdir: "{{ quantum_espresso_topdir }}"

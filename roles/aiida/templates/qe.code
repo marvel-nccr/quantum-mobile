@@ -1,8 +1,8 @@
 {{ aiida_code_name }}
-{{ code }}.x from Quantum ESPRESSO {{ qe_version }}
+{{ code }}.x from Quantum ESPRESSO {{ quantum_espresso_version }}
 False
 quantumespresso.{{ code }}
 {{ aiida_computer_name }}
-{{ qe_topdir }}/bin/{{ code }}.x
+{{ quantum_espresso_topdir }}/bin/{{ code }}.x
 
 

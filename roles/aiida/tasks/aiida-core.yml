@@ -20,15 +20,15 @@
   become: True
   become_user: postgres
   postgresql_db:
-    name: "{{ postgres_db }}"
+    name: "{{ aiida_postgres_db }}"
 
 - name: Setup postgres user
   become: True
   become_user: postgres
   postgresql_user:
-    db: "{{ postgres_db }}"
-    name: "{{ postgres_user }}"
-    password: "{{ postgres_pw }}"
+    db: "{{ aiida_postgres_db }}"
+    name: "{{ aiida_postgres_user }}"
+    password: "{{ aiida_postgres_pw }}"
 
 # Note: this installs also a number of plugins. However at the moment,
 # for the case of the quantum espresso plugin, we later force a specific
@@ -102,8 +102,8 @@
        --email aiida@localhost \
        --backend django \
        --db_host localhost --db_port 5432 \
-       --db_name {{ postgres_db }} \
-       --db_user {{ postgres_user }} --db_pass '{{ postgres_pw }}' \
+       --db_name {{ aiida_postgres_db }} \
+       --db_user {{ aiida_postgres_user }} --db_pass '{{ aiida_postgres_pw }}' \
        --repo {{ ansible_env.HOME }}/.aiida/repository-aiida/
   when: aiida_config_file.stat.exists == False
 

@@ -9,7 +9,7 @@
 # codes need to come after computers
 - import_tasks: aiida-quantumespresso.yml
   tags: aiida-quantumespresso
-  when: qe_executables is defined
+  when: quantum_espresso_executables is defined
 - import_tasks: aiida-yambo.yml
   tags: aiida-yambo
   when: yambo_executables is defined
@@ -24,7 +24,7 @@
   when: cp2k_executables is defined
 - import_tasks: aiida-wannier90.yml
   tags: aiida-wannier90
-  when: w90_executables is defined
+  when: wannier90_executables is defined
 
 - include_tasks: aiida-pps.yml
   vars:

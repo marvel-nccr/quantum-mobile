@@ -7,9 +7,9 @@ aiida_extras:
   - notebook
 aiida_run_folder: "{{ ansible_env.HOME }}/.aiida_run"
 aiida_localhost_name: localhost
-postgres_pw: "ne9N_LDK-*JSS"
-postgres_db: aiidadb
-postgres_user: aiida
+aiida_postgres_pw: "ne9N_LDK-*JSS"
+aiida_postgres_db: aiidadb
+aiida_postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
 
 # plugins

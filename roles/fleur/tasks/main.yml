@@ -46,7 +46,7 @@
     path: "{{ ansible_env.HOME }}/.bashrc"
     line: "export PATH=${PATH}:{{ fleur_topdir }}/build"
     # Do this also non-interactively
-    insertbefore: "{{ reference_point_bashrc_string }}"
+    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes
