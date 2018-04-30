@@ -1,0 +1,24 @@
+---
+- name: add user {{ add_user_name }}
+  become: True
+  user:
+    name: "{{ add_user_name }}"
+    #group: "{{ add_user_group }}"
+
+- name: add ssh key 
+  become: True
+  authorized_key:
+    user: "{{ add_user_name }}"
+    key: "{{ add_user_public_key }}"
+  when: add_user_public_key is defined
+
+- name: set password
+  become: True
+  user:
+    name: "{{ add_user_name }}"
+    #password: "{{ add_user_password }}"
+    # string filter is workaround for ansible vault issue
+    # https://github.com/ansible/ansible/pull/35406
+    password: "{{ add_user_password | string | password_hash('sha512') }}"
+
+  when: add_user_password is defined
