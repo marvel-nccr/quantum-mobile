@@ -36,9 +36,9 @@
     dest: "{{ cp2k_code_folder }}"
     # for some reason, the first item used to time out
     # with the default timeout of 10s
-    timeout: 30
+    timeout: 60
 
-- name: Extract cp2k data directory
+- name: Extract (only) cp2k data directory
   shell: |
       tar xf {{ cp2k_src_archive }} {{ cp2k_src }}/data
   args:

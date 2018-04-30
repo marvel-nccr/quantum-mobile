@@ -21,7 +21,7 @@
   hosts: aws_aiida
   vars:
     - release_notes: True
-    - run_tests: True
+    - run_tests: False
     - clean: False
   pre_tasks:
     - name: import global variables
@@ -87,3 +87,4 @@
       aiida_examples_folder: "{{ vm_examples_folder }}"
     - role: jupyter
       tags: jupyter
+      jupyter_headless: "{{ vm_headless }}"

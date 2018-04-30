@@ -12,3 +12,4 @@ jupyter_apps:
   repo: materialscloud-org/mc-cscs
   #- name: epfl
   #  repo: materialscloud-org/mc-epfl
+jupyter_headless: False

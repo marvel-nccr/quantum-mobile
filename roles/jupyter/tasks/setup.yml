@@ -47,6 +47,7 @@
     src: apps.desktop
     dest: "{{ ansible_env.HOME }}/Desktop"
     mode: 0753
+  when: not jupyter_headless
 
 # below: stuff needed for jupyterhub
 #- name: copy singleuser script
