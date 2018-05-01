@@ -1,0 +1,24 @@
+---
+- name: Set password for postgres user
+  become: True
+  user:
+    name: postgres
+    password: "{{ aiida_postgres_password | string | password_hash('sha512') }}"
+
+- name: Setup postgres db
+  become: True
+  vars:
+    ansible_become_user: postgres
+    ansible_become_pass: "{{ aiida_postgres_password }}"
+  postgresql_db:
+    name: "{{ aiida_postgres_db }}"
+
+- name: Setup postgres user
+  become: True
+  vars:
+    ansible_become_user: postgres
+    ansible_become_pass: "{{ aiida_postgres_password }}"
+  postgresql_user:
+    db: "{{ aiida_postgres_db }}"
+    name: "{{ aiida_postgres_db_user }}"
+    password: "{{ aiida_postgres_db_pw }}"

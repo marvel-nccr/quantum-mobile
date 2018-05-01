@@ -16,19 +16,11 @@
     - libssl-dev
     - graphviz
 
-- name: Setup postgres db
-  become: True
-  become_user: postgres
-  postgresql_db:
-    name: "{{ aiida_postgres_db }}"
+- import_tasks: postgres_sudo.yml
+  when: ansible_become_method == 'sudo'
 
-- name: Setup postgres user
-  become: True
-  become_user: postgres
-  postgresql_user:
-    db: "{{ aiida_postgres_db }}"
-    name: "{{ aiida_postgres_user }}"
-    password: "{{ aiida_postgres_pw }}"
+- import_tasks: postgres_su.yml
+  when: ansible_become_method == 'su'
 
 # Note: this installs also a number of plugins. However at the moment,
 # for the case of the quantum espresso plugin, we later force a specific
@@ -103,7 +95,7 @@
        --backend django \
        --db_host localhost --db_port 5432 \
        --db_name {{ aiida_postgres_db }} \
-       --db_user {{ aiida_postgres_user }} --db_pass '{{ aiida_postgres_pw }}' \
+       --db_user {{ aiida_postgres_db_user }} --db_pass '{{ aiida_postgres_db_pw }}' \
        --repo {{ ansible_env.HOME }}/.aiida/repository-aiida/
   when: aiida_config_file.stat.exists == False
 

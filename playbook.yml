@@ -85,6 +85,7 @@
       aiida_code_folder: "{{ vm_codes_folder }}"
       aiida_localhost_cpus: "{{ vm_cpus }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
+      aiida_postgres_password: "{{ lookup('file', './keys/aws_postgres_pass') }}"
     - role: jupyter
       tags: jupyter
       jupyter_headless: "{{ vm_headless }}"

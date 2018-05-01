@@ -10,10 +10,14 @@ aiida_code_folder: "{{ ansible_env.HOME }}"
 aiida_examples_folder: "{{ ansible_env.HOME }}"
 aiida_localhost_name: localhost
 aiida_localhost_cpus: 2
-aiida_postgres_pw: "ne9N_LDK-*JSS"
-aiida_postgres_db: aiidadb
-aiida_postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
+
+# postgres
+aiida_postgres_user: postgres
+aiida_postgres_password: "nnKhpYt5SUjcdmR6"
+aiida_postgres_db: aiidadb
+aiida_postgres_db_pw: "ne9N_LDK-*JSS"
+aiida_postgres_db_user: aiida
 
 # plugins
 aiida_plugin_versions:
