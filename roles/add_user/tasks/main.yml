@@ -4,6 +4,7 @@
   user:
     name: "{{ add_user_name }}"
     #group: "{{ add_user_group }}"
+    shell: /bin/bash
 
 - name: add ssh key 
   become: True
