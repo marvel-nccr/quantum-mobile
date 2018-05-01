@@ -1,5 +1,3 @@
-- import_tasks: bashrc_refpoint.yml
-  tags: common_bashrc
 - import_tasks: swap.yml
   tags: common_swap
 - import_tasks: packages.yml

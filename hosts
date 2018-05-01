@@ -1,3 +1,3 @@
 [vms]
-aws_ubuntu ansible_host=34.250.203.115 ansible_user=ubuntu
-aws_aiida ansible_host=34.250.203.115 ansible_user=aiida
+aws_ubuntu ansible_host=34.244.10.104 ansible_user=ubuntu
+aws_aiida ansible_host=34.244.10.104 ansible_user=aiida

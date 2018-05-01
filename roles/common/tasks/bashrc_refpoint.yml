@@ -1,5 +1,0 @@
-- name: "Put a line in ~/.bashrc that acts as a reference point to add lines also when bash is run non-interactively (e.g. via ssh)"
-  lineinfile: 
-    path: "{{ ansible_env.HOME }}/.bashrc"
-    line: "{{ common_bashrc_string }}"
-    insertbefore: "^# If not running interactively.*$"

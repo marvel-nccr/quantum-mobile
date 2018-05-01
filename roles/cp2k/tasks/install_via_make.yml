@@ -24,12 +24,10 @@
 - import_tasks: tests.yml
   when: cp2k_make.changed and run_tests is defined and run_tests
 
-- name: "Put a line in ~/.bashrc to add cp2k to the path"
+- name: "Put a line in ~/.profile to add cp2k to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/bin"
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes

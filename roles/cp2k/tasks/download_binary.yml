@@ -52,19 +52,15 @@
   with_items:
   - COPYRIGHT
      
-- name: "Put a line in ~/.bashrc to add cp2k to the path"
+- name: "Put a line in ~/.profile to add cp2k to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/exe"
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"
 
-- name: "Put a line in ~/.bashrc for cp2k data directory"
+- name: "Put a line in ~/.profile for cp2k data directory"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_env.HOME }}/.profile"
     line: "export CP2K_DATA_DIR={{ cp2k_topdir }}/data"
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes

@@ -32,12 +32,10 @@
   import_tasks: tests.yml
   when: wannier90_make.changed and run_tests is defined and run_tests
 
-- name: "Put a line in ~/.bashrc to add W90 to the path"
+- name: "Put a line in ~/.profile to add W90 to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ wannier90_topdir }}"
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes

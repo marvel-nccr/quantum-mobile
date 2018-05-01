@@ -26,12 +26,10 @@
     creates: "{{ yambo_topdir }}/bin/{{ item }}"
   with_items: "{{ yambo_executables }}"
 
-- name: "Put a line in ~/.bashrc to add Yambo to the path"
+- name: "Put a line in ~/.profile to add Yambo to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ yambo_topdir }}/bin"
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"
 
 - import_role:
     name: release_notes
