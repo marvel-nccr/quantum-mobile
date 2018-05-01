@@ -12,3 +12,16 @@
   args:
     creates: "/etc/rc5.d/S??fix-hostname"
 
+- name: start service to set the hostname
+  become: True
+  service:
+      name: fix-hostname
+      state: started
+
+# should will trigger if-up.d script defined in scheduler
+- name: restart networking service
+  become: True
+  service:
+      name: networking
+      state: restarted
+
