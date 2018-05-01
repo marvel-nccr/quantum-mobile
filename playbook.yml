@@ -89,3 +89,9 @@
     - role: jupyter
       tags: jupyter
       jupyter_headless: "{{ vm_headless }}"
+    - role: aws_fixes
+      tags: aws_fixes
+    - role: aiida_tutorial
+      tags: aiida_tutorial
+      aiida_demos_folder: "{{ vm_examples_folder }}/aiida-demos"
+

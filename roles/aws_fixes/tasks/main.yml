@@ -1,0 +1,14 @@
+---
+- name: copy init.d template
+  become: True
+  template:
+   src: "fix-hostname"
+   dest: "/etc/init.d/"
+   mode: 0755
+
+- name: enable service forcing hostname to {{ vm_hostname }}
+  become: True
+  shell: update-rc.d fix-hostname defaults
+  args:
+    creates: "/etc/rc5.d/S??fix-hostname"
+

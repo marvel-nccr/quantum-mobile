@@ -1,4 +1,5 @@
 aiida_version: "0.11.4"
+aiida_tag: "v{{ aiida_version }}"
 aiida_extras:
   - rest
   - docs

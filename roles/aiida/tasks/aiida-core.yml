@@ -76,7 +76,7 @@
   git:
     repo: 'https://github.com/aiidateam/aiida_core.git'
     dest: "{{ ansible_env.HOME }}/codes/aiida_core"
-    version: "v{{ aiida_version }}"
+    version: "{{ aiida_tag }}"
 
 - name: "Activate TAB completion in virtualenv"
   lineinfile: 

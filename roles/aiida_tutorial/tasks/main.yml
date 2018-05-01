@@ -1,0 +1,18 @@
+---
+- name: link tutorials scripts in home
+  file:
+      state: link
+      src: "{{ aiida_demos_folder }}/tutorial/scripts"
+      path: "{{ ansible_env.HOME }}/tutorial_scripts"
+
+- name: install latex
+  become: True
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - texlive-base
+    - texlive-latex-base
+    - texlive-latex-recommended
+    - texlive-fonts-recommended
+    - texlive-latex-extra
