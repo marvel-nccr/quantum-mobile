@@ -2,23 +2,11 @@
 - name: Install ansible prerequisites
   hosts: aws_ubuntu
   gather_facts: no
-  pre_tasks:
-    - name: import global variables
-      include_vars:
-        file: globalconfig.yml
   roles:
     - ansible_prerequisites
-    - name: add user {{ vm_user }} with key
-      role: add_user
-      add_user_name: "{{ vm_user }}"
-      add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
-    - name: Set password for root user
-      role: add_user
-      add_user_name: root
-      add_user_password: "{{ lookup('file', './keys/aws_root_pass') }}" 
 
 - name: set up the VM
-  hosts: aws_aiida
+  hosts: aws_ubuntu
   vars:
     - release_notes: True
     - run_tests: False
@@ -35,6 +23,14 @@
       debug:
         msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
   roles: 
+    - name: add user {{ vm_user }} with key
+      role: add_user
+      add_user_name: "{{ vm_user }}"
+      add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
+    - name: Set password for root user
+      role: add_user
+      add_user_name: root
+      add_user_password: "{{ lookup('file', './keys/aws_root_pass') }}" 
     - role: common
       tags: common
       common_hostname: "{{ vm_hostname }}"

@@ -6,7 +6,7 @@ vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
 vm_author: "MARVEL NCCR and MaX CoE"
 vm_author_url: "http://nccr-marvel.ch"
-vm_release_notes_file: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+vm_release_notes_file: "${HOME}/Desktop/RELEASENOTES.txt"
 
 # VM configuration
 vm_hostname: "qmobile"
@@ -16,7 +16,7 @@ vm_memory: 1024
 vm_cpus: 2
 vm_vram: 128
 vm_shared_folder: "/shared"
-vm_codes_folder: "{{ ansible_env.HOME }}/codes"
-vm_examples_folder: "{{ ansible_env.HOME }}/examples"
+vm_codes_folder: "${HOME}/codes"
+vm_examples_folder: "${HOME}/examples"
 vm_headless: True
 vm_browser: chromium # 'chromium' or 'firefox'
