@@ -54,12 +54,12 @@
      
 - name: "Put a line in ~/.profile to add cp2k to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/exe"
 
 - name: "Put a line in ~/.profile for cp2k data directory"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export CP2K_DATA_DIR={{ cp2k_topdir }}/data"
 
 - include_role:

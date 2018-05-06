@@ -75,7 +75,7 @@
 - name: Get the AiiDA code from GIT
   git:
     repo: 'https://github.com/aiidateam/aiida_core.git'
-    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
+    dest: "${HOME}/codes/aiida_core"
     version: "{{ aiida_tag }}"
 
 - name: "Activate TAB completion in virtualenv"
@@ -84,7 +84,7 @@
     line: 'eval "$(verdi completioncommand)"'
 
 - name: "Check if AiiDA has already been configured"
-  stat: path="{{ ansible_env.HOME }}/.aiida/config.json"
+  stat: path="${HOME}/.aiida/config.json"
   register: aiida_config_file
 
 - name: "Configure AiiDA"
@@ -96,7 +96,7 @@
        --db_host localhost --db_port 5432 \
        --db_name {{ aiida_postgres_db }} \
        --db_user {{ aiida_postgres_db_user }} --db_pass '{{ aiida_postgres_db_pw }}' \
-       --repo {{ ansible_env.HOME }}/.aiida/repository-aiida/
+       --repo ${HOME}/.aiida/repository-aiida/
   when: aiida_config_file.stat.exists == False
 
 # TODO: change this 'when' condition: this might create problems

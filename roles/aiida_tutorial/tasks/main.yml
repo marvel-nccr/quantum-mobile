@@ -3,7 +3,7 @@
   file:
       state: link
       src: "{{ aiida_demos_folder }}/tutorial/scripts"
-      path: "{{ ansible_env.HOME }}/tutorial_scripts"
+      path: "${HOME}/tutorial_scripts"
 
 - name: install latex
   become: True

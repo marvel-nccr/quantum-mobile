@@ -1,6 +1,6 @@
 ---
 # The tmp directory
-remote_tmp: '{{ ansible_env.HOME }}/.ansible/tmp'
+remote_tmp: '${HOME}/.ansible/tmp'
 
 # The directory where desktop files are stored
 default_web_browser_applications_dir: /usr/share/applications

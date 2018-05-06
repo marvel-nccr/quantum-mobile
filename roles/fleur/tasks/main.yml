@@ -43,7 +43,7 @@
 
 - name: "Put a line in ~/.profile to add fleur to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export PATH=${PATH}:{{ fleur_topdir }}/build"
 
 - include_role:

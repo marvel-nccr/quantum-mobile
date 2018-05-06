@@ -1,5 +1,5 @@
 # this is needed by many codes...
 - name: set stack size to unlimited 
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: ulimit -s unlimited

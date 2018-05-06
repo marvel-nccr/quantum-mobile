@@ -6,12 +6,12 @@ aiida_extras:
   - atomic_tools
   - testing
   - notebook
-aiida_run_folder: "{{ ansible_env.HOME }}/.aiida_run"
-aiida_code_folder: "{{ ansible_env.HOME }}"
-aiida_examples_folder: "{{ ansible_env.HOME }}"
+aiida_run_folder: "${HOME}/.aiida_run"
+aiida_code_folder: "${HOME}"
+aiida_examples_folder: "${HOME}"
 aiida_localhost_name: localhost
 aiida_localhost_cpus: 2
-aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
+aiida_venv: "${HOME}/.virtualenvs/aiida"
 
 # postgres
 aiida_postgres_user: postgres

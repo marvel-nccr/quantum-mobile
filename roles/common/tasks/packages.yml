@@ -34,23 +34,23 @@
 - name: "Run virtualenvwrapper once to create folders"
   shell: "bash /usr/local/bin/virtualenvwrapper.sh"
   args:
-    creates: "{{ ansible_env.HOME }}/.virtualenvs/initialize"
+    creates: "${HOME}/.virtualenvs/initialize"
 
 # This fixes https://github.com/marvel-nccr/marvel-virtualmachine/issues/21
 # Note: this is needed for the 'workon' command and thus needs to go in the .bashrc
 - name: "Fix virtualenvwrapper python executable"
   lineinfile: 
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "${HOME}/.bashrc"
     line: "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python"
      
 # For safety, also put this into .profile (in case this is needed by non-interactive shells)
 - name: "Fix virtualenvwrapper python executable"
   lineinfile: 
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python"
 
 # Note: this provides the 'workon' command and thus needs to go in the .bashrc
 - name: "Activate the virtualenvwrapper for the user"
   lineinfile: 
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "${HOME}/.bashrc"
     line: "source /usr/local/bin/virtualenvwrapper.sh"

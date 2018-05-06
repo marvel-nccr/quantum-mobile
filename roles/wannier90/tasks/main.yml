@@ -34,7 +34,7 @@
 
 - name: "Put a line in ~/.profile to add W90 to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export PATH=${PATH}:{{ wannier90_topdir }}"
 
 - include_role:

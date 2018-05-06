@@ -3,5 +3,5 @@
 # to see whether they should include release notes
 
 release_notes_locally: True
-release_notes_vm: "{{ ansible_env.HOME }}/Desktop/RELEASENOTES.txt"
+release_notes_vm: "${HOME}/Desktop/RELEASENOTES.txt"
 release_notes_localhost: "{{ playbook_dir }}/RELEASENOTES.txt"

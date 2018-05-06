@@ -37,5 +37,5 @@
 - name: symlink examples to desktop
   file:
     src: "{{ customizations_examples_folder }}"
-    dest: "{{ ansible_env.HOME }}/Desktop/examples"
+    dest: "${HOME}/Desktop/examples"
     state: link

@@ -28,7 +28,7 @@
 
 - name: "Put a line in ~/.profile to add Yambo to the path"
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "${HOME}/.profile"
     line: "export PATH=${PATH}:{{ yambo_topdir }}/bin"
 
 - include_role:

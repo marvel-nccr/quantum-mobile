@@ -10,5 +10,5 @@
   # with the default bashrc by Ubuntu, it's run only interactively
   # moreover, login shells already print it by default
   lineinfile: 
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "${HOME}/.bashrc"
     line: "shopt -q login_shell || cat /etc/motd # Print only in non-login shells"

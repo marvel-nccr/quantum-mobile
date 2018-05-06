@@ -8,6 +8,6 @@ customizations_vm_version: ""
 customizations_vm_shared_folder: "/shared"
 customizations_vm_author: "MARVEL NCCR and MaX CoE"
 
-customizations_codes_folder: "{{ ansible_env.HOME }}"
-customizations_examples_folder: "{{ ansible_env.HOME }}"
+customizations_codes_folder: "${HOME}"
+customizations_examples_folder: "${HOME}"
 customizations_examples_readme: "{{ customizations_examples_folder }}/README.txt"

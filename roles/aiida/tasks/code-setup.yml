@@ -7,10 +7,10 @@
 - name: "Copy {{ aiida_code_template }} to setup the AiiDA code"
   template:
     src: "{{ aiida_code_template }}"
-    dest: "{{ ansible_env.HOME }}/.local/share/marvelnccr/"
+    dest: "${HOME}/.local/share/marvelnccr/"
     mode: 0755
   when: aiida_check_code.rc != 0
 
 - name: "Set up the {{ aiida_code_name }} code for AiiDA"
-  shell: "cat {{ ansible_env.HOME }}/.local/share/marvelnccr/{{ aiida_code_template }} | {{ aiida_venv }}/bin/verdi code setup"
+  shell: "cat ${HOME}/.local/share/marvelnccr/{{ aiida_code_template }} | {{ aiida_venv }}/bin/verdi code setup"
   when: aiida_check_code.rc != 0
