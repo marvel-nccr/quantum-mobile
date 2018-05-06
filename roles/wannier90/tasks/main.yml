@@ -37,7 +37,7 @@
     path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ wannier90_topdir }}"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "Wannier90"
@@ -45,7 +45,7 @@
     value: "{{ wannier90_version }}"
   when: release_notes is defined and release_notes
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "Wannier90"

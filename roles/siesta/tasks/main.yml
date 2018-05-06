@@ -55,7 +55,7 @@
     path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ siesta_topdir }}/Obj"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "siesta"
@@ -63,7 +63,7 @@
     value: "{{ siesta_version }}"
   when: release_notes is defined and release_notes
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "siesta"

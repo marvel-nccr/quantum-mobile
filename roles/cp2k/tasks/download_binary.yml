@@ -62,7 +62,7 @@
     path: "{{ ansible_env.HOME }}/.profile"
     line: "export CP2K_DATA_DIR={{ cp2k_topdir }}/data"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "cp2k"

@@ -13,7 +13,7 @@
     - jmol
     - default-jre
 
-- import_role: 
+- include_role: 
     name: release_notes
   vars:
     section: "Plotting Tools"

@@ -107,7 +107,7 @@
         {{ aiida_venv }}/bin/verdi profile setdefault daemon default
   when: aiida_config_file.stat.exists == False
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "AiiDA"
@@ -115,7 +115,7 @@
     value: "{{ aiida_version }}"
   when: release_notes is defined and release_notes
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "AiiDA"

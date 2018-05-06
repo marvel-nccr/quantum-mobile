@@ -19,7 +19,7 @@
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
   when: quantum_espresso_executables is defined
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "AiiDA"

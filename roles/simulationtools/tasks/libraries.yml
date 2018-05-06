@@ -27,7 +27,7 @@
     - libblas-dev
     - m4
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "MPI libraries"

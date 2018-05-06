@@ -20,7 +20,7 @@
   # Only Wannier90.x has a plugin for AiiDA so far
   when: wannier90_executables is defined and items.execname == "wannier90.x"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: AiiDA

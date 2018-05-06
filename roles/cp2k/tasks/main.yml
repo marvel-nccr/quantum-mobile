@@ -3,7 +3,7 @@
 #- import_tasks: install_via_make.yml
 - import_tasks: download_binary.yml
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "cp2k"

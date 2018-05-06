@@ -31,7 +31,7 @@
     path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ yambo_topdir }}/bin"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "Yambo"
@@ -39,7 +39,7 @@
     value: "{{ yambo_version }}"
   when: release_notes is defined and release_notes
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "Yambo"

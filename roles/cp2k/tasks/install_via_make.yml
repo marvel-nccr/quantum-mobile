@@ -29,7 +29,7 @@
     path: "{{ ansible_env.HOME }}/.profile"
     line: "export PATH=${PATH}:{{ cp2k_topdir }}/bin"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "cp2k"

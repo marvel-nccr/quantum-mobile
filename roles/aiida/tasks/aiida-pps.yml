@@ -15,7 +15,7 @@
   tags: aiida_pps
   when: "'oncv' in pp.name and aiida_pp_download.changed"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "AiiDA"

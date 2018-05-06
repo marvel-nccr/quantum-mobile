@@ -1,4 +1,4 @@
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "{{ customizations_vm_name }}"
@@ -10,14 +10,14 @@
   changed_when: false
   register: lsb_release
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "{{ customizations_vm_name }}"
     option: "Operating System"
     value: "{{ lsb_release.stdout }}"
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "{{ customizations_vm_name }}"

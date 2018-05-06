@@ -128,7 +128,7 @@
     group: root
     mode: 0755
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "Job Scheduler"

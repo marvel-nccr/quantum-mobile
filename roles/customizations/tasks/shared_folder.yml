@@ -6,7 +6,7 @@
     group: "{{ customizations_vm_user }}"
     state: directory
 
-- import_role:
+- include_role:
     name: release_notes
   vars:
     section: "{{ customizations_vm_name }}"
