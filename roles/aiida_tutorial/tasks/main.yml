@@ -16,3 +16,9 @@
     - texlive-latex-recommended
     - texlive-fonts-recommended
     - texlive-latex-extra
+
+- name: install nwchem (from APT)
+  become: True
+  apt:
+    name: "nwchem"
+    state: present

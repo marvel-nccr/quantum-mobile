@@ -9,6 +9,8 @@
     - postgresql-contrib
     - python-psycopg2
     - libpq-dev
+    # RabbitMQ
+    - rabbitmq-server
     # Needed for the ASE visualizer
     - python-gtk2
     # For AiiDA
@@ -22,13 +24,37 @@
 - import_tasks: postgres_su.yml
   when: ansible_become_method == 'su'
 
+- name: Make sure pip is at a recent version
+  pip:
+    name: "pip>=10.0.0"
+    virtualenv: "{{ aiida_venv }}"
+
 # Note: this installs also a number of plugins. However at the moment,
 # for the case of the quantum espresso plugin, we later force a specific
 # version (for the others, e.g. aiida-ase etc., not yet - note that the
 # dependency int he meta package is >= for these plugins).
+#
+## NOTE ALSO THAT LATER WE REINSTALL AIIDA AT A DIFFERENT VERSION!
+## TODO: replace this with installing the needed packages
+##   that should only be "aiida-ase>=1.0.1", "aiida-codtools>=1.0.1", "aiida-nwchem>=1.0.1".
 - name: Install the aiida meta package
   pip:
     name: "aiida=={{ aiida_version }}"
+    virtualenv: "{{ aiida_venv }}"
+  register: pip_install
+
+# get anyway the GIT code, it is often useful; checkout the same version (now actually we are forcing a different branch/tag...)
+- name: Get the AiiDA code from GIT
+  git:
+    repo: 'https://github.com/aiidateam/aiida_core.git'
+    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
+    version: "{{ aiida_tag }}"
+
+# In reinstall and override the pip_install variable, for all extras
+- name: "Reinstall AiiDA from the source package"
+  pip:
+    name: "file://{{ ansible_env.HOME }}/codes/aiida_core[{{ aiida_extras | join(',') }}]"
+    editable: True
     virtualenv: "{{ aiida_venv }}"
   register: pip_install
 
@@ -36,12 +62,6 @@
 - name: run reentry scan
   shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
   when: pip_install.changed
-
-- name: Install extras of aiida-core
-  pip:
-    name: "aiida-core[{{ item }}]=={{ aiida_version }}"
-    virtualenv: "{{ aiida_venv }}"
-  with_items: "{{ aiida_extras }}"
 
 - name: Additional pip dependencies
   pip:
@@ -70,13 +90,6 @@
     - pygtk.pth
     - pygtk.py
     - cairo
-
-# get anyway the GIT code, it is often useful; checkout the same version
-- name: Get the AiiDA code from GIT
-  git:
-    repo: 'https://github.com/aiidateam/aiida_core.git'
-    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
-    version: "{{ aiida_tag }}"
 
 - name: "Activate TAB completion in virtualenv"
   lineinfile: 
@@ -112,7 +125,7 @@
   vars:
     section: "AiiDA"
     option: "version"
-    value: "{{ aiida_version }}"
+    value: "{{ aiida_version }}, reinstalled later to tag/branch {{ aiida_tag }}"
   when: release_notes is defined and release_notes
 
 - import_role:
