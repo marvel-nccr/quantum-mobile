@@ -64,24 +64,36 @@
       tags: simulationtools
     - role: quantum_espresso
       tags: quantum_espresso
-      quantum_espresso_code_folder: "{{ vm_codes_folder }}"
+      # Note: it is important to pass this within a 'vars' group, at not at
+      # the same level. This is because within a 'vars' group, the variable
+      # value that we set is found also in subsequent roles, also if we run
+      # only those using a tag.
+      # Instead, if it's at the same level, it's only seen by this role and
+      # it replaces the default value, but subsequent roles see the default.
+      vars: 
+        quantum_espresso_code_folder: "{{ vm_codes_folder }}"
     - role: yambo
       tags: yambo
-      yambo_code_folder: "{{ vm_codes_folder }}"
+      vars: 
+        yambo_code_folder: "{{ vm_codes_folder }}"
     - role: fleur
       tags: fleur
-      fleur_code_folder: "{{ vm_codes_folder }}"
+      vars: 
+        fleur_code_folder: "{{ vm_codes_folder }}"
     - role: siesta
       tags: siesta
-      siesta_code_folder: "{{ vm_codes_folder }}"
+      vars: 
+        siesta_code_folder: "{{ vm_codes_folder }}"
     - role: cp2k
       tags: cp2k
-      cp2k_code_folder: "{{ vm_codes_folder }}"
+      vars: 
+        cp2k_code_folder: "{{ vm_codes_folder }}"
     - role: wannier90
       tags: wannier90
-      wannier90_code_folder: "{{ vm_codes_folder }}"
+      vars: 
+        wannier90_code_folder: "{{ vm_codes_folder }}"
     - role: aiida
-      tags: aiida
+      tags: aiida 
       aiida_code_folder: "{{ vm_codes_folder }}"
       aiida_localhost_cpus: "{{ vm_cpus }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
