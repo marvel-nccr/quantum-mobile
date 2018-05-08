@@ -8,7 +8,7 @@
   register: aiida_qe_fetched
 
 # In reinstall and override the pip_install variable, for all extras
-- name: "Reinstall AiiDA from the source package"
+- name: "Install AiiDA-quantumepresso from the source package"
   pip:
     name: "file://{{ ansible_env.HOME }}/codes/aiida-quantumespresso"
     editable: True

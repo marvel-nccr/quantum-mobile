@@ -27,16 +27,17 @@
   vars:
     aiida_siesta_version: "{{ aiida_plugin_versions.aiida_siesta }}"
   when: "'aiida_siesta' in aiida_plugins"
-- import_tasks: aiida-cp2k.yml
-  tags: aiida_cp2k
-  vars:
-    aiida_cp2k_version: "{{ aiida_plugin_versions.aiida_cp2k }}"
-  when: "'aiida_cp2k' in aiida_plugins"
-- import_tasks: aiida-wannier90.yml
-  tags: aiida_wannier90
-  vars:
-    aiida_wannier90_version: "{{ aiida_plugin_versions.aiida_wannier90 }}"
-  when: "'aiida_wannier90' in aiida_plugins"
+# AiiDA-cp2k reinstalls an older version of AiiDA
+#- import_tasks: aiida-cp2k.yml
+#  tags: aiida_cp2k
+#  vars:
+#    aiida_cp2k_version: "{{ aiida_plugin_versions.aiida_cp2k }}"
+#  when: "'aiida_cp2k' in aiida_plugins"
+#- import_tasks: aiida-wannier90.yml
+#  tags: aiida_wannier90
+#  vars:
+#    aiida_wannier90_version: "{{ aiida_plugin_versions.aiida_wannier90 }}"
+#  when: "'aiida_wannier90' in aiida_plugins"
 
 - include_tasks: aiida-pps.yml
   vars:

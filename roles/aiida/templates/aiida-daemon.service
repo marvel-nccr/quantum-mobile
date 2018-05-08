@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=forking
 ExecStart={{ aiida_venv }}/bin/verdi daemon start
-PIDFile={{ ansible_env.HOME }}/.aiida/daemon/log/celery.pid
+PIDFile={{ ansible_env.HOME }}/.aiida/daemon/circus-default.pid
 # 2s delay to prevent read error on PID file
 ExecStartPost=/bin/sleep 2
 
