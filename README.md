@@ -10,7 +10,7 @@
   - a file `aws_root_pass` with the root password that will be set (AWS anyway should not allow root login; moreover, this will probably change in the future)
 - This version has a number of fixes specific for `aws` (`aws_fixes` role) and for the AiiDA tutorial (`aiida_tutorial` role). 
 - To create the image from the first time, use e.g. `t2.medium` images that are fast enough for compilation. Instead, for running, `t2.micro` are fast enough.
-  
+- Create images with 15GB of disk, that should be sufficient  
 
 ## What is Quantum Mobile
 
