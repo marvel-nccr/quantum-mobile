@@ -10,3 +10,7 @@
     repo: https://github.com/aiidateam/aiida_demos.git
     dest: "{{ aiida_examples_folder }}/aiida-demos"
     version: master
+
+- name: create the compiled versions of the querybuilder tutorial
+  make:
+    chdir: "{{ aiida_examples_folder }}/aiida-demos/tutorial"
