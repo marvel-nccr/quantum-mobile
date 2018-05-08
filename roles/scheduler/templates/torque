@@ -25,7 +25,15 @@ if [ "$ADDRFAM" != inet ] && [ "$ADDRFAM" != inet6 ]; then
 fi
 
 THE_IP=`ip -4 address show "$IFACE" | grep inet | awk '{print $2;}' | cut -f1 -d/`
-THE_HOSTNAME=`hostname`
+# Note: here we hardcode the hostname again
+# This would not be needed and we could simply do
+# THE_HOSTNAME=`hostname`
+# However in some cases (e.g. on Amazon AWS) after recreating
+# an instance from an image, the hostname is reset to the IP
+# so here we make sure the correct hostname is set
+THE_HOSTNAME={{ vm_hostname }}
+hostname $HOSTNAME
+echo $HOSTNAME > /etc/hostname
 
 if [ "$THE_IP" == "" ]
 then

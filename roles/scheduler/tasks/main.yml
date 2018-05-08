@@ -109,7 +109,7 @@
 # (typically: crashed) and the server is up
 - name: Copy the torque script for if-up (when the interface goes up)
   become: true
-  copy:
+  template:
       src: torque
       dest: "/etc/network/if-up.d"
       mode: 0755
