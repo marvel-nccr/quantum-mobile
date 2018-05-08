@@ -1,4 +1,5 @@
 ---
+## Note: I'm not sure this whole part is still needed.
 - name: copy init.d template
   become: True
   template:
