@@ -57,6 +57,7 @@ required to set up the VM from scratch (note: [plan >1h](other_stuff/timings.txt
 git checkout git@github.com:marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 pip install -r requirements.txt
+ansible-galaxy install -r requirements.yml
 vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```

@@ -2,6 +2,6 @@
 # Other roles will check the `release_notes` variable
 # to see whether they should include release notes
 
-release_notes_locally: True
+release_notes_locally: False
 release_notes_vm: "${HOME}/Desktop/RELEASENOTES.txt"
 release_notes_localhost: "{{ playbook_dir }}/RELEASENOTES.txt"

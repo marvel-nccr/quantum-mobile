@@ -3,14 +3,14 @@
 - name: Get the AiiDA-quantumespresso code from GIT
   git:
     repo: 'https://github.com/aiidateam/aiida-quantumespresso.git'
-    dest: "{{ ansible_env.HOME }}/codes/aiida-quantumespresso"
+    dest: "${HOME}/codes/aiida-quantumespresso"
     version: "{{ aiida_quantumespresso_version }}"
   register: aiida_qe_fetched
 
 # In reinstall and override the pip_install variable, for all extras
 - name: "Install AiiDA-quantumepresso from the source package"
   pip:
-    name: "file://{{ ansible_env.HOME }}/codes/aiida-quantumespresso"
+    name: "file://${HOME}/codes/aiida-quantumespresso"
     editable: True
     virtualenv: "{{ aiida_venv }}"
   register: aiida_qe_installed

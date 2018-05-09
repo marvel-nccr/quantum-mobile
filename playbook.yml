@@ -61,7 +61,7 @@
       scheduler_cpus: "{{ vm_cpus }}"
     - role: simulationtools
       tags: simulationtools
-    - role: quantum_espresso
+    - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
       # Note: it is important to pass this within a 'vars' group, at not at
       # the same level. This is because within a 'vars' group, the variable

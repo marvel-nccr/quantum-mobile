@@ -43,7 +43,7 @@
 - name: Get the AiiDA code from GIT
   git:
     repo: 'https://github.com/aiidateam/aiida_core.git'
-    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
+    dest: "${HOME}/codes/aiida_core"
     version: "{{ aiida_tag }}"
 
 - name: Make sure pip is at a recent version
@@ -57,7 +57,7 @@
 - name: "Reinstall AiiDA from the source package"
   pip:
     name:
-      - "file://{{ ansible_env.HOME }}/codes/aiida_core[{{ aiida_extras | join(',') }}]"
+      - "file://${HOME}/codes/aiida_core[{{ aiida_extras | join(',') }}]"
     editable: True
     virtualenv: "{{ aiida_venv }}"
   register: pip_install
@@ -94,13 +94,6 @@
     - pygtk.pth
     - pygtk.py
     - cairo
-
-## get anyway the GIT code, it is often useful; checkout the same version
-#- name: Get the AiiDA code from GIT
-#  git:
-#    repo: 'https://github.com/aiidateam/aiida_core.git'
-#    dest: "${HOME}/codes/aiida_core"
-#    version: "{{ aiida_tag }}"
 
 - name: "Activate TAB completion in virtualenv"
   lineinfile: 
