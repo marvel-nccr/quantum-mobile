@@ -75,7 +75,7 @@
       tags: yambo
       vars: 
         yambo_code_folder: "{{ vm_codes_folder }}"
-    - role: fleur
+    - role: marvel-nccr.fleur
       tags: fleur
       vars: 
         fleur_code_folder: "{{ vm_codes_folder }}"

@@ -1,21 +1,32 @@
 ---
+- name: add toolchain repository for recent compiler versions
+  become: True
+  become_user: root
+  apt_repository:
+    repo: ppa:ubuntu-toolchain-r/test
+    state: present
+
 - name: Install fleur dependencies
   become: true
+  become_user: "{{ root_user }}"
   apt:
       name: "{{ item }}"
       state: latest
   with_items:
     - build-essential
-    - gfortran
     - gfortran-6
     - g++-6 
     - gcc-6 
+    - openmpi-bin
+    - libopenmpi-dev
+    - libfftw3-dev
+    - libfftw3-mpi-dev
+    - liblapack-dev
+    - libblas-dev
     - binutils-gold 
     - git 
     - cmake 
     - libxml2-dev 
-    - liblapack-dev 
-    - libblas-dev 
     - doxygen
 
 - name: Get fleur source

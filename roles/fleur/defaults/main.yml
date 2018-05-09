@@ -8,3 +8,5 @@ fleur_topdir: "{{ fleur_code_folder }}/fleur"
 fleur_executables:
   - fleur
   - inpgen
+
+root_user: root
