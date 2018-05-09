@@ -53,7 +53,7 @@
       customizations_codes_folder: "{{ vm_codes_folder }}"
       customizations_examples_folder: "{{ vm_examples_folder }}"
       customizations_browser: "{{ vm_browser }}"
-    - role: editors
+    - role: marvel-nccr.editors
       tags: editors
     - role: scheduler
       tags: scheduler
@@ -71,7 +71,7 @@
       # it replaces the default value, but subsequent roles see the default.
       vars: 
         quantum_espresso_code_folder: "{{ vm_codes_folder }}"
-    - role: yambo
+    - role: marvel-nccr.yambo
       tags: yambo
       vars: 
         yambo_code_folder: "{{ vm_codes_folder }}"

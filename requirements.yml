@@ -7,3 +7,7 @@
   version: master
 - src: marvel-nccr.wannier90
   version: master
+- src: marvel-nccr.yambo
+  version: master
+- src: marvel-nccr.editors
+  version: master
