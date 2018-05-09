@@ -39,5 +39,7 @@
   become_user: "{{ root_user }}"
   systemd:
     name: aiida-daemon
+    enabled: true
+    masked: no
     daemon-reload: yes
     state: restarted

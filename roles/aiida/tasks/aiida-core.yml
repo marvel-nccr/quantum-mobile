@@ -9,6 +9,8 @@
     - postgresql-contrib
     - python-psycopg2
     - libpq-dev
+    # RabbitMQ
+    - rabbitmq-server
     # Needed for the ASE visualizer
     - python-gtk2
     # For AiiDA
@@ -26,9 +28,37 @@
 # for the case of the quantum espresso plugin, we later force a specific
 # version (for the others, e.g. aiida-ase etc., not yet - note that the
 # dependency int he meta package is >= for these plugins).
+#
+## NOTE ALSO THAT LATER WE REINSTALL AIIDA AT A DIFFERENT VERSION!
+## Moreover, it installs a specific old version of pip
+## TODO: replace this with installing the needed packages
+##   that should only be "aiida-ase>=1.0.1", "aiida-codtools>=1.0.1", "aiida-nwchem>=1.0.1".
 - name: Install the aiida meta package
   pip:
     name: "aiida=={{ aiida_version }}"
+    virtualenv: "{{ aiida_venv }}"
+  register: pip_install
+
+# get anyway the GIT code, it is often useful; checkout the same version (now actually we are forcing a different branch/tag...)
+- name: Get the AiiDA code from GIT
+  git:
+    repo: 'https://github.com/aiidateam/aiida_core.git'
+    dest: "{{ ansible_env.HOME }}/codes/aiida_core"
+    version: "{{ aiida_tag }}"
+
+- name: Make sure pip is at a recent version
+  pip:
+    name: "pip>=10.0.0"
+    virtualenv: "{{ aiida_venv }}"
+
+# In reinstall and override the pip_install variable, for all extras
+## To pass the list of extras separated by comma, you need to pass 'name' as
+## a list of packages, otherwise it will convert commas as spaces
+- name: "Reinstall AiiDA from the source package"
+  pip:
+    name:
+      - "file://{{ ansible_env.HOME }}/codes/aiida_core[{{ aiida_extras | join(',') }}]"
+    editable: True
     virtualenv: "{{ aiida_venv }}"
   register: pip_install
 
@@ -36,12 +66,6 @@
 - name: run reentry scan
   shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
   when: pip_install.changed
-
-- name: Install extras of aiida-core
-  pip:
-    name: "aiida-core[{{ item }}]=={{ aiida_version }}"
-    virtualenv: "{{ aiida_venv }}"
-  with_items: "{{ aiida_extras }}"
 
 - name: Additional pip dependencies
   pip:
@@ -71,12 +95,12 @@
     - pygtk.py
     - cairo
 
-# get anyway the GIT code, it is often useful; checkout the same version
-- name: Get the AiiDA code from GIT
-  git:
-    repo: 'https://github.com/aiidateam/aiida_core.git'
-    dest: "${HOME}/codes/aiida_core"
-    version: "{{ aiida_tag }}"
+## get anyway the GIT code, it is often useful; checkout the same version
+#- name: Get the AiiDA code from GIT
+#  git:
+#    repo: 'https://github.com/aiidateam/aiida_core.git'
+#    dest: "${HOME}/codes/aiida_core"
+#    version: "{{ aiida_tag }}"
 
 - name: "Activate TAB completion in virtualenv"
   lineinfile: 
@@ -99,20 +123,17 @@
        --repo ${HOME}/.aiida/repository-aiida/
   when: aiida_config_file.stat.exists == False
 
-# TODO: change this 'when' condition: this might create problems
-# if there's an error between the previous task and this one
+## I removed the when condition, it's fast enough;
+## TODO: find a way to set the 'changed_when' ansible condition
 - name: "Set the default AiiDA profile"
-  shell: |
-        {{ aiida_venv }}/bin/verdi profile setdefault verdi default
-        {{ aiida_venv }}/bin/verdi profile setdefault daemon default
-  when: aiida_config_file.stat.exists == False
+  shell: "{{ aiida_venv }}/bin/verdi profile setdefault default"
 
 - include_role:
     name: release_notes
   vars:
     section: "AiiDA"
     option: "version"
-    value: "{{ aiida_version }}"
+    value: "{{ aiida_version }}, reinstalled later to tag/branch {{ aiida_tag }}"
   when: release_notes is defined and release_notes
 
 - include_role:
