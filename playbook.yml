@@ -79,7 +79,7 @@
       tags: fleur
       vars: 
         fleur_code_folder: "{{ vm_codes_folder }}"
-    - role: siesta
+    - role: marvel-nccr.siesta
       tags: siesta
       vars: 
         siesta_code_folder: "{{ vm_codes_folder }}"

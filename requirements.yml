@@ -1,0 +1,5 @@
+---
+- src: marvel-nccr.quantum-espresso
+  version: master
+- src: marvel-nccr.fleur
+  version: master
