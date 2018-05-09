@@ -7,10 +7,13 @@
 
 - name: set up the VM
   hosts: aws_ubuntu
+  become: True
+  become_user: aiida
   vars:
     - release_notes: True
     - run_tests: False
     - clean: False
+    - root_user: root
   pre_tasks:
     - name: import global variables
       tags: always

@@ -2,18 +2,41 @@
 #  shell: "{{ aiida_venv }}/bin/verdi daemon status"
 #  register: aiida_daemon_status
 #  changed_when: False
+ 
+## note: service will be run by root user
+#- name: store user $HOME
+#  shell: "echo $HOME"
+#  changed_when: False
+#  check_mode: False
+#  register: user_home_dir
+#   
+## note: service will be run by root user
+#- shell: whoami
+#  register: whoami
+
+# note: current_user is a dependency, but it won't run
+# if you use a tag to select just the daemon tasks
+- include_role: 
+    name: current_user
+  when: not current_user defined
    
 - name: Add AiiDA Daemon as system service
   become: True
+  become_user: "{{ root_user }}"
   template:
       src: aiida-daemon.service
       dest: /etc/systemd/system
       owner: root 
       group: root 
       mode: 0644
+  vars:
+      daemon_user: "{{ current_user }}"
+      daemon_user_home: "{{ current_user_home }}"
+      daemon_aiida_venv: "{{ aiida_venv |  regex_replace('\\$\\{HOME}', current_user_home) }}"
 
 - name: Start AiiDA Daemon system service
   become: True
+  become_user: "{{ root_user }}"
   systemd:
     name: aiida-daemon
     daemon-reload: yes

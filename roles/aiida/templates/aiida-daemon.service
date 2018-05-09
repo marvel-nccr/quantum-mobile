@@ -4,16 +4,16 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart={{ aiida_venv }}/bin/verdi daemon start
-PIDFile=${HOME}/.aiida/daemon/log/celery.pid
+ExecStart={{ daemon_aiida_venv }}/bin/verdi daemon start
+PIDFile={{ daemon_user_home }}/.aiida/daemon/log/celery.pid
 # 2s delay to prevent read error on PID file
 ExecStartPost=/bin/sleep 2
 
-ExecStop={{ aiida_venv }}/bin/verdi daemon stop
-ExecReload={{ aiida_venv }}/bin/verdi daemon restart
+ExecStop={{ daemon_aiida_venv }}/bin/verdi daemon stop
+ExecReload={{ daemon_aiida_venv }}/bin/verdi daemon restart
 
-User={{ ansible_user }}
-Group={{ ansible_user }}
+User={{ daemon_user }}
+Group={{ daemon_user }}
 Restart=on-failure
 RestartSec=60       # Restart daemon after 1 min if crashes
 StandardOutput=syslog
