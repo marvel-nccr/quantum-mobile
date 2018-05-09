@@ -3,3 +3,7 @@
   version: master
 - src: marvel-nccr.fleur
   version: master
+- src: marvel-nccr.cp2k
+  version: master
+- src: marvel-nccr.wannier90
+  version: master

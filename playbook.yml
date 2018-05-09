@@ -83,11 +83,11 @@
       tags: siesta
       vars: 
         siesta_code_folder: "{{ vm_codes_folder }}"
-    - role: cp2k
+    - role: marvel-nccr.cp2k
       tags: cp2k
       vars: 
         cp2k_code_folder: "{{ vm_codes_folder }}"
-    - role: wannier90
+    - role: marvel-nccr.wannier90
       tags: wannier90
       vars: 
         wannier90_code_folder: "{{ vm_codes_folder }}"
