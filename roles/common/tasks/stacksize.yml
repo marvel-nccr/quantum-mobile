@@ -1,5 +1,0 @@
-# this is needed by many codes...
-- name: set stack size to unlimited 
-  lineinfile:
-    path: "${HOME}/.profile"
-    line: ulimit -s unlimited

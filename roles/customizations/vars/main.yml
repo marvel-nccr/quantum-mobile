@@ -1,4 +1,0 @@
----
-launcher_favorites_firefox: "['application://ubiquity.desktop', 'application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://gnome-terminal.desktop', 'application://gedit.desktop', 'application://libreoffice-writer.desktop', 'application://libreoffice-calc.desktop', 'unity://running-apps', 'unity://expo-icon']"
-
-launcher_favorites_chromium: "['application://ubiquity.desktop', 'application://org.gnome.Nautilus.desktop', 'application://chromium-browser.desktop', 'application://gnome-terminal.desktop', 'application://gedit.desktop', 'application://libreoffice-writer.desktop', 'application://libreoffice-calc.desktop', 'unity://running-apps', 'unity://expo-icon']"

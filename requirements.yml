@@ -11,3 +11,9 @@
   version: master
 - src: marvel-nccr.editors
   version: master
+- src: marvel-nccr.simulationbase
+  version: master
+- src: marvel-nccr.ubuntu-desktop
+  version: master
+- src: marvel-nccr.quantum-mobile-customizations
+  version: master

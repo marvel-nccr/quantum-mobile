@@ -1,9 +1,0 @@
----
-- name: disable autolock after idle
-  dconf:
-    key: "{{ item }}"
-    value: "false"
-    state: present
-  with_items:
-    - /org/gnome/desktop/screensaver/idle-activation-enabled
-    - /org/gnome/desktop/screensaver/lock-enabled

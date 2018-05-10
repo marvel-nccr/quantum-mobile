@@ -34,33 +34,34 @@
       role: add_user
       add_user_name: root
       add_user_password: "{{ lookup('file', './keys/aws_root_pass') }}" 
-    - role: common
-      tags: common
-      common_hostname: "{{ vm_hostname }}"
-      common_vm_user: "{{ vm_user }}"
-      common_vm_password: "{{ vm_password }}"
-      common_headless: "{{ vm_headless }}"
-      common_browser: "{{ vm_browser }}"
-    - role: customizations
+    - role: marvel-nccr.simulationbase
+      tags: simulationbase
+      vars:
+        simulationbase_hostname: "{{ vm_hostname }}"
+        simulationbase_codes_folder: "{{ vm_codes_folder }}"
+    - role: marvel-nccr.ubuntu-desktop
+      tags: ubuntu_dektop
+      vars:
+        ubuntu_desktop_browser: "{{ vm_browser }}"
+        ubuntu_desktop_vm_user: "{{ vm_user }}"
+      when: not headless
+    - role: marvel-nccr.quantum-mobile-customizations
       tags: customizations
-      customizations_vm_user: "{{ vm_user }}"
-      customizations_vm_password: "{{ vm_password }}"
-      customizations_vm_name: "{{ vm_name }}"
-      customizations_vm_version: "{{ vm_version }}"
-      customizations_vm_shared_folder: "{{ vm_shared_folder }}"
-      customizations_vm_author: "{{ vm_author }}"
-      customizations_headless: "{{ vm_headless }}"
-      customizations_codes_folder: "{{ vm_codes_folder }}"
-      customizations_examples_folder: "{{ vm_examples_folder }}"
-      customizations_browser: "{{ vm_browser }}"
+      vars:
+        qm_customizations_vm_user: "{{ vm_user }}"
+        qm_customizations_vm_password: "{{ vm_password }}"
+        qm_customizations_vm_name: "{{ vm_name }}"
+        qm_customizations_vm_version: "{{ vm_version }}"
+        qm_customizations_vm_author: "{{ vm_author }}"
+        qm_customizations_headless: "{{ vm_headless }}"
+        qm_customizations_codes_folder: "{{ vm_codes_folder }}"
+        qm_customizations_examples_folder: "{{ vm_examples_folder }}"
     - role: marvel-nccr.editors
       tags: editors
     - role: scheduler
       tags: scheduler
       scheduler_hostname: "{{ vm_hostname }}"
       scheduler_cpus: "{{ vm_cpus }}"
-    - role: simulationtools
-      tags: simulationtools
     - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
       # Note: it is important to pass this within a 'vars' group, at not at

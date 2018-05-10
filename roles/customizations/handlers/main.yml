@@ -1,6 +1,0 @@
----
-- name: restart lightdm
-  become: true
-  service:
-    name: lightdm
-    state: restarted

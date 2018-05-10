@@ -1,5 +1,0 @@
-common_hostname: localhost
-common_vm_user: ubuntu
-#common_vm_password:   # Need to define this variable!
-common_headless: False
-common_browser: firefox
