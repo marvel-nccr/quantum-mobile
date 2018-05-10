@@ -5,15 +5,9 @@
   roles:
     - ansible_prerequisites
 
-- name: set up the VM
+- name: Add vm user
   hosts: aws_ubuntu
-  become: True
-  become_user: aiida
-  vars:
-    - release_notes: True
-    - run_tests: False
-    - clean: False
-    - root_user: root
+  gather_facts: no
   pre_tasks:
     - name: import global variables
       tags: always
@@ -25,18 +19,38 @@
     - name: testing ansible environment
       debug:
         msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
-  roles: 
+  roles:
     - name: add user {{ vm_user }} with key
-      role: add_user
-      add_user_name: "{{ vm_user }}"
-      add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
-    - name: Set password for root user
-      role: add_user
-      add_user_name: root
-      add_user_password: "{{ lookup('file', './keys/aws_root_pass') }}" 
+      role: marvel-nccr.add_user
+      vars:
+        add_user_name: "{{ vm_user }}"
+        add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
+         
+# Note: it is important to pass variables to roles within a 'vars' group
+# If they are passed on the same indentation level as the role, the variable is
+# set correctly inside the role, but following roles will read the *default*
+# value of the variable (as defined inside the role).
+- name: set up the VM
+  hosts: aws_ubuntu
+  become: True
+  become_user: aiida
+  pre_tasks:
+    - name: import global variables
+      tags: always
+      include_vars:
+        file: globalconfig.yml
+  vars:
+    - release_notes: True
+    - run_tests: False
+    - clean: False
+    - root_user: root
+    - cloud_platform: aws
+  roles: 
     - role: marvel-nccr.simulationbase
       tags: simulationbase
       vars:
+        simulationbase_vm_user: "{{ vm_user }}"
+        simulationbase_vm_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
         simulationbase_hostname: "{{ vm_hostname }}"
         simulationbase_codes_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.ubuntu-desktop
@@ -44,7 +58,7 @@
       vars:
         ubuntu_desktop_browser: "{{ vm_browser }}"
         ubuntu_desktop_vm_user: "{{ vm_user }}"
-      when: not headless
+      when: not vm_headless
     - role: marvel-nccr.quantum-mobile-customizations
       tags: customizations
       vars:
@@ -58,18 +72,13 @@
         qm_customizations_examples_folder: "{{ vm_examples_folder }}"
     - role: marvel-nccr.editors
       tags: editors
-    - role: scheduler
-      tags: scheduler
-      scheduler_hostname: "{{ vm_hostname }}"
-      scheduler_cpus: "{{ vm_cpus }}"
+    - role: marvel-nccr.torque
+      tags: torque
+      vars:
+        torque_hostname: "{{ vm_hostname }}"
+        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
-      # Note: it is important to pass this within a 'vars' group, at not at
-      # the same level. This is because within a 'vars' group, the variable
-      # value that we set is found also in subsequent roles, also if we run
-      # only those using a tag.
-      # Instead, if it's at the same level, it's only seen by this role and
-      # it replaces the default value, but subsequent roles see the default.
       vars: 
         quantum_espresso_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.yambo
@@ -94,16 +103,19 @@
         wannier90_code_folder: "{{ vm_codes_folder }}"
     - role: aiida
       tags: aiida 
-      aiida_code_folder: "{{ vm_codes_folder }}"
-      aiida_localhost_cpus: "{{ vm_cpus }}"
-      aiida_examples_folder: "{{ vm_examples_folder }}"
-      aiida_postgres_password: "{{ lookup('file', './keys/aws_postgres_pass') }}"
+      vars:
+        aiida_code_folder: "{{ vm_codes_folder }}"
+        aiida_localhost_cpus: "{{ vm_cpus }}"
+        aiida_examples_folder: "{{ vm_examples_folder }}"
+        aiida_postgres_password: "{{ lookup('file', './keys/aws_postgres_pass') }}"
     - role: jupyter
       tags: jupyter
-      jupyter_headless: "{{ vm_headless }}"
+      vars:
+        jupyter_headless: "{{ vm_headless }}"
     - role: aws_fixes
       tags: aws_fixes
     - role: aiida_tutorial
       tags: aiida_tutorial
-      aiida_demos_folder: "{{ vm_examples_folder }}/aiida-demos"
+      vars:
+        aiida_demos_folder: "{{ vm_examples_folder }}/aiida-demos"
 

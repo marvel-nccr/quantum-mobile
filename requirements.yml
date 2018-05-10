@@ -17,3 +17,7 @@
   version: master
 - src: marvel-nccr.quantum-mobile-customizations
   version: master
+- src: marvel-nccr.add-user
+  version: master
+- src: marvel-nccr.torque
+  version: master
