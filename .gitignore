@@ -11,4 +11,7 @@ INSTALL*.txt
 RELEASENOTES.txt
 doc/_build
 other_stuff/*/*.png
+
+# roles & dependencies
 roles/marvel-nccr*
+roles/gantsign.default-web-browser/

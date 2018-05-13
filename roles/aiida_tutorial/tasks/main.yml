@@ -7,6 +7,7 @@
 
 - name: install latex
   become: True
+  become_user: "{{ root_user }}"
   apt:
     name: "{{ item }}"
     state: present
@@ -19,6 +20,7 @@
 
 - name: install nwchem (from APT)
   become: True
+  become_user: "{{ root_user }}"
   apt:
     name: "nwchem"
     state: present

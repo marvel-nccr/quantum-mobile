@@ -107,7 +107,7 @@
         aiida_code_folder: "{{ vm_codes_folder }}"
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-    - role: jupyter
+    - role: marvel-nccr.jupyter
       tags: jupyter
       vars:
         jupyter_headless: "{{ vm_headless }}"
