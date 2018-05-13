@@ -21,3 +21,7 @@
   version: master
 - src: marvel-nccr.torque
   version: master
+- src: marvel-nccr.aiida
+  version: master
+- src: marvel-nccr.current-user
+  version: master

@@ -1,4 +1,0 @@
----
-- name: Import {{ pp.file }}
-  shell: "{{ aiida_venv }}/bin/verdi import {{aiida_code_folder}}/{{ pp.file }}"
-
