@@ -1,12 +1,12 @@
 ---
 - name: Install ansible prerequisites
-  hosts: aws_ubuntu
+  hosts: default
   gather_facts: no
   roles:
-    - ansible_prerequisites
+    - marvel-nccr.ansible-prerequisites
 
 - name: Add vm user
-  hosts: aws_ubuntu
+  hosts: default
   gather_facts: no
   pre_tasks:
     - name: import global variables
@@ -24,6 +24,7 @@
       role: marvel-nccr.add-user
       vars:
         add_user_name: "{{ vm_user }}"
+        add_user_password: "{{ vm_password }}"
         add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
          
 # Note: it is important to pass variables to roles within a 'vars' group
@@ -31,9 +32,9 @@
 # set correctly inside the role, but following roles will read the *default*
 # value of the variable (as defined inside the role).
 - name: set up the VM
-  hosts: aws_ubuntu
+  hosts: default
   become: True
-  become_user: aiida
+  become_user: max
   pre_tasks:
     - name: import global variables
       tags: always
@@ -111,10 +112,3 @@
       tags: jupyter
       vars:
         jupyter_headless: "{{ vm_headless }}"
-    - role: aws_fixes
-      tags: aws_fixes
-    - role: aiida_tutorial
-      tags: aiida_tutorial
-      vars:
-        aiida_demos_folder: "{{ vm_examples_folder }}/aiida-demos"
-

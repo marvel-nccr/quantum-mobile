@@ -1,3 +1,4 @@
+[vms:vars]
+ansible_ssh_common_args= -F vagrant-ssh
 [vms]
-aws_ubuntu ansible_host=54.246.137.157 ansible_user=ubuntu
-
+default ansible_user=vagrant

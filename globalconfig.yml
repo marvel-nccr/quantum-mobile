@@ -1,6 +1,6 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
-vm_version: "18.04.0"
+vm_version: "18.05.0"
 vm_name: "Quantum Mobile"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
@@ -10,7 +10,7 @@ vm_release_notes_file: "${HOME}/Desktop/RELEASENOTES.txt"
 
 # VM configuration
 vm_hostname: "qmobile"
-vm_user: "aiida"
+vm_user: "max"
 vm_password: "moritz"
 vm_memory: 1024
 vm_cpus: 2
@@ -18,5 +18,5 @@ vm_vram: 128
 vm_shared_folder: "/shared"
 vm_codes_folder: "${HOME}/codes"
 vm_examples_folder: "${HOME}/examples"
-vm_headless: True
+vm_headless: False
 vm_browser: chromium # 'chromium' or 'firefox'

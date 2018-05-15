@@ -27,3 +27,5 @@
   version: master
 - src: marvel-nccr.current-user
   version: master
+- src: marvel-nccr.ansible-prerequisites
+  version: master
