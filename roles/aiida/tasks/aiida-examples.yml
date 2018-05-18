@@ -11,6 +11,12 @@
     dest: "{{ aiida_examples_folder }}/aiida-demos"
     version: master
 
-- name: create the compiled versions of the querybuilder tutorial
+- name: make sure the solutions file is not there
+  file:
+    path: "{{ aiida_examples_folder }}/aiida-demos/tutorial/solution.ipynb"
+    state: "absent"
+
+- name: create the compiled versions of the querybuilder tutorial (only tutorial, no solutions)
   make:
     chdir: "{{ aiida_examples_folder }}/aiida-demos/tutorial"
+    target: "tutorial.ipynb"
