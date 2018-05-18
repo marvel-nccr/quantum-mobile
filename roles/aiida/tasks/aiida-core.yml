@@ -24,20 +24,11 @@
 - import_tasks: postgres_su.yml
   when: ansible_become_method == 'su'
 
-# Note: this installs also a number of plugins. However at the moment,
-# for the case of the quantum espresso plugin, we later force a specific
-# version (for the others, e.g. aiida-ase etc., not yet - note that the
-# dependency int he meta package is >= for these plugins).
-#
-## NOTE ALSO THAT LATER WE REINSTALL AIIDA AT A DIFFERENT VERSION!
-## Moreover, it installs a specific old version of pip
-## TODO: replace this with installing the needed packages
-##   that should only be "aiida-ase>=1.0.1", "aiida-codtools>=1.0.1", "aiida-nwchem>=1.0.1".
-- name: Install the aiida meta package
+- name: Remove the aiida metapackage
   pip:
-    name: "aiida=={{ aiida_version }}"
+    name: "aiida"
     virtualenv: "{{ aiida_venv }}"
-  register: pip_install
+    state: "absent"
 
 # get anyway the GIT code, it is often useful; checkout the same version (now actually we are forcing a different branch/tag...)
 - name: Get the AiiDA code from GIT
@@ -51,10 +42,9 @@
     name: "pip>=10.0.0"
     virtualenv: "{{ aiida_venv }}"
 
-# In reinstall and override the pip_install variable, for all extras
 ## To pass the list of extras separated by comma, you need to pass 'name' as
 ## a list of packages, otherwise it will convert commas as spaces
-- name: "Reinstall AiiDA from the source package"
+- name: "Install AiiDA from the source package"
   pip:
     name:
       - "file://{{ ansible_env.HOME }}/codes/aiida_core[{{ aiida_extras | join(',') }}]"
@@ -62,17 +52,25 @@
     virtualenv: "{{ aiida_venv }}"
   register: pip_install
 
-# this is necessary, since the meta package installs plugins
+- name: Install the aiida-ase package
+  pip:
+    name: "aiida-ase==1.0.1"
+    virtualenv: "{{ aiida_venv }}"
+
+- name: Install the aiida-nwchem package
+  pip:
+    name: "aiida-nwchem==1.0.2"
+    virtualenv: "{{ aiida_venv }}"
+
+- name: Install the aiida-codtools package
+  pip:
+    name: "aiida-codtools==1.0.1"
+    virtualenv: "{{ aiida_venv }}"
+
+# this might not be necessary anymore
 - name: run reentry scan
   shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
   when: pip_install.changed
-
-- name: Additional pip dependencies
-  pip:
-      name: "{{ item }}"
-      virtualenv: "{{ aiida_venv }}"
-  with_items:
-    - seekpath
 
 ## PyGTK cannot be installed with pip... we need to use 
 ## a workaround, see https://stackoverflow.com/questions/12830662/
