@@ -124,7 +124,7 @@
   vars:
     section: "AiiDA"
     option: "version"
-    value: "{{ aiida_version }}, reinstalled later to tag/branch {{ aiida_tag }}"
+    value: "From tag {{ aiida_tag }}"
   when: release_notes is defined and release_notes
 
 - import_role:
