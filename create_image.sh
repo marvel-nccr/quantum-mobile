@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+( echo "" | envsubst ) || (echo "envsubst not found, install e.g. via 'brew install gettext' + read information in output to finalize installation" ; exit 1)
+
 echo "### Parsing globalconfig.yml"
 source other_stuff/yaml_parser.sh
 eval $(parse_yaml globalconfig.yml)
