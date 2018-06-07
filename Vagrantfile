@@ -45,6 +45,7 @@ Vagrant.configure(2) do |config|
   #config.vbguest.no_remote = true
 
   config.vm.box = "bento/ubuntu-16.04"
+  #config.vm.box = "bento/ubuntu-18.04"
   #config.vm.box_version = "== 201801.02.0"
   #config.vm.box = "ubuntu/xenial64"
   config.vm.boot_timeout = 60
@@ -55,42 +56,20 @@ Vagrant.configure(2) do |config|
    
   # Shared folder
   # Unfortunately, VirtualBox only allows to share absolute paths, which cannot
-  # work across all host OS. Until this changes, let's add the shared folder
+  # work across all host OS.
   # https://www.virtualbox.org/ticket/15305
   #config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
   
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
    
-  # provisioner: python needed for ansible provisioner
-  config.vm.provision "bootstrap", type: "shell" do |s|
-    s.inline = "apt-get update && apt-get install -y python2.7 python3"
-  end
-
-  # provisioner: add custom user for ansible provisioner
-  user = gconfig['vm_user']
-  password = gconfig['vm_password']
-  commands = <<-EOF
-if [ ! -d /home/#{user} ] ; then
-  useradd -m -s /bin/bash --groups sudo,adm #{user} && \
-  cp -pr /home/vagrant/.ssh /home/#{user}/ && \
-  chown -R #{user}:#{user} /home/#{user} \
-#  echo #{user}:#{password} | chpasswd 
-fi
-EOF
-  config.vm.provision "adduser", type: "shell" do |s|
-    s.inline = commands
-  end
-
   # provisioner: set up VM via ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
-    ansible.inventory_path = './hosts'
     ansible.playbook = "playbook.yml"
     ansible.extra_vars = {
        ansible_python_interpreter: "/usr/bin/python2.7",
-       ansible_user: user
     }
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
   end

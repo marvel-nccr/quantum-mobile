@@ -4,8 +4,8 @@ python: '2.7'
 
 # Spin off separate builds for each of the following versions of Ansible
 env:
-  - ANSIBLE_VERSION=2.2.0
-  - ANSIBLE_VERSION=2.3.0
+  - ANSIBLE_VERSION=2.3.2
+  - ANSIBLE_VERSION=2.4.4
 
 # Require the standard build environment
 sudo: required
@@ -23,17 +23,18 @@ cache:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -o Dpkg::Options::='--force-confold' --force-yes -y docker-engine
+  - sudo apt-get install -o Dpkg::Options::='--force-confold' --force-yes -y docker-ce
 
 install:
   # Install Ansible
   - pip install "ansible~=$ANSIBLE_VERSION"
 
   # Install Python API for Docker (required by Molecule Docker driver)
-  - pip install docker
+  # Limit version as workaround for: https://github.com/ansible/ansible/issues/35612
+  - pip install 'docker<3.0'
 
   # Install Molecule
-  - pip install 'molecule==1.24'
+  - pip install 'molecule==2.12.1'
 
   # Check Ansible version
   - ansible --version

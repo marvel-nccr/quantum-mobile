@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 XDG_CONFIG_DIRS={{ default_web_browser_custom_config_dir }}:"$XDG_CONFIG_DIRS"
 export XDG_CONFIG_DIRS

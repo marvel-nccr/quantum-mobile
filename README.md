@@ -1,5 +1,7 @@
 # Quantum Mobile
 
+## What is Quantum Mobile
+
 *Quantum Mobile* is a Virtual Machine for computational materials science.
 
 It comes with a collection of software packages for quantum
@@ -16,26 +18,37 @@ all of which are set up and ready to be used through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
 provenance tracking.
 
+You can run Quantum Mobile on your Windows, MacOS or Linux computer using the
+[VirtualBox](http://virtualbox.org/) software.
+You can also install Quantum Mobile on virtual machines using cloud services
+like Amazon Web Services or OpenStack.
+
+![Demo](https://image.ibb.co/n50SdT/quantum_mobile.gif "A brief impression of the Quantum Mobile interface.")
+
 ## Download the VM
 
-Please see [releases](https://github.com/marvel-nccr/quantum-mobile/releases) for the latest VM image and installation instructions.
+Please see [releases](https://github.com/marvel-nccr/quantum-mobile/releases)
+for the latest VM image and installation instructions.
 
-For issues encountered during installation of the VM, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
+For issues encountered during installation of the VM, see the
+[FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
 
 ## Build it from scratch
 
 You would like to add/remove some components of the VM
 and produce your own modified VM image?
 
-This git repository contains all the vagrant and ansible scripts 
-required to set up the VM from scratch (note: [plan >1h](other_stuff/timings.txt) for this).
+This git repository contains all the vagrant and ansible scripts required to
+set up the VM from scratch (note: [plan >1h](other_stuff/timings.txt) for
+this).
 
 ### Prerequisites
 
 - [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [python](https://www.python.org/)
-- Host OS: Building VM tested only on Unix systems so far (MacOS, Ubuntu). Might work under Windows with a few modifications.
+- Host OS: Building VM tested only on Unix systems so far (MacOS, Ubuntu).
+  Might work under Windows with a few modifications.
 
 ### Create Virtual Machine
 
@@ -43,9 +56,12 @@ required to set up the VM from scratch (note: [plan >1h](other_stuff/timings.txt
 git checkout git@github.com:marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 pip install -r requirements.txt
+ansible-galaxy install -r requirements.yml
 vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
+
+Note: Due to a bug in the vbguest vagrant plugin, there are some additional steps #60
 
 ### Create image
 ```

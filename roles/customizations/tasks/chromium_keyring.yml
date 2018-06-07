@@ -1,7 +1,0 @@
----
-- name: don't use keyring in chromium
-  become: True
-  lineinfile: 
-    path: /etc/chromium-browser/default
-    line: CHROMIUM_FLAGS="--password-store=basic"
-    regexp: "^CHROMIUM_FLAGS="

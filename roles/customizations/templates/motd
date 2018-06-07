@@ -1,8 +1,0 @@
-##########################################################################
-# Welcome to {{ customizations_vm_name }} version {{ customizations_vm_version }} 
-# distributed by the {{ customizations_vm_author }}
-#
-# Instructions:
-# - See RELEASENOTES.txt on the Desktop for installed packages
-# - type 'workon aiida' to enable the AiiDA 'verdi' commands
-##########################################################################

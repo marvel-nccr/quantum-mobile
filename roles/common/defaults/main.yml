@@ -1,7 +1,0 @@
-# Note: don't use characters that are special for regexps here!
-common_bashrc_string: "## Add commands before this line if you want them to run also non-interactively"
-common_hostname: localhost
-common_vm_user: ubuntu
-#common_vm_password:   # Need to define this variable!
-common_headless: False
-common_browser: firefox

@@ -1,0 +1,37 @@
+---
+- src: marvel-nccr.quantum-espresso
+  version: master
+- src: marvel-nccr.fleur
+  version: master
+- src: marvel-nccr.cp2k
+  version: master
+- src: marvel-nccr.wannier90
+  version: master
+- src: marvel-nccr.siesta
+  version: master
+- src: marvel-nccr.yambo
+  version: master
+- src: marvel-nccr.editors
+  version: master
+- src: marvel-nccr.simulationbase
+  version: master
+- src: marvel-nccr.ubuntu-desktop
+  version: master
+# Needed to modify this role for become_user
+# See https://github.com/marvel-nccr/quantum-mobile/issues/67
+#- src: gantsign.default-web-browser
+#  version: 3.1.0
+- src: marvel-nccr.quantum-mobile-customizations
+  version: master
+- src: marvel-nccr.add-user
+  version: master
+- src: marvel-nccr.torque
+  version: master
+- src: marvel-nccr.aiida
+  version: master
+- src: marvel-nccr.current-user
+  version: master
+- src: marvel-nccr.ansible-prerequisites
+  version: master
+- src: marvel-nccr.aiidalab
+  version: master

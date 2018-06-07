@@ -3,12 +3,10 @@ galaxy_info:
   description: Role for setting the default web browser for Ubuntu Unity and Xfce4.
   company: GantSign Ltd.
   license: MIT
-  min_ansible_version: 2.2
+  min_ansible_version: 2.3
   platforms:
     - name: Ubuntu
       versions:
-        - trusty
-        - wily
         - xenial
   galaxy_tags:
     - ubuntu

@@ -1,7 +1,0 @@
-# this is needed by many codes...
-- name: set stack size to unlimited 
-  lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
-    line: ulimit -s unlimited
-    # Do this also non-interactively
-    insertbefore: "{{ common_bashrc_string }}"

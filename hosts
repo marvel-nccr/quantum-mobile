@@ -1,0 +1,4 @@
+[vms:vars]
+ansible_ssh_common_args= -F vagrant-ssh
+[vms]
+default ansible_user=vagrant

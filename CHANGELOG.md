@@ -1,5 +1,22 @@
 # Changelog
 
+## Quantum Mobile v18.06.0
+
+### Software updates
+* aiida-core v0.12.0
+* aiida-quantumespresso v2.0.1
+
+### Improvements
+
+- Add /scratch directory
+- Using shared folders no longer requires sudo
+
+### Build process
+
+- Separate roles into independent repositories
+- Roles are installed via ansible-galaxy
+- Continuous integration tests for individual roles 
+
 ## Quantum Mobile v18.04.0
 
 ### Software updates

@@ -1,8 +1,9 @@
 ---
 - name: create Xsession.d directory
   become: yes
+  become_user: "{{ root_user }}"
   file:
-    path: "{{ default_web_browser_xsession_d_dir }}"
+    path: '{{ default_web_browser_xsession_d_dir }}'
     state: directory
     owner: root
     group: root
@@ -10,6 +11,7 @@
 
 - name: write Xsession config
   become: yes
+  become_user: "{{ root_user }}"
   template:
     src: x-session.j2
     dest: '{{ default_web_browser_xsession_d_dir }}/80-ansible-default-web-browser'
