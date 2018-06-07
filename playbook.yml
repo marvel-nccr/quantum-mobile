@@ -25,7 +25,7 @@
       vars:
         add_user_name: "{{ vm_user }}"
         add_user_password: "{{ vm_password }}"
-        add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
+        add_user_sudo: True
          
 # Note: it is important to pass variables to roles within a 'vars' group
 # If they are passed on the same indentation level as the role, the variable is
@@ -34,7 +34,7 @@
 - name: set up the VM
   hosts: default
   become: True
-  become_user: max
+  become_user: "{{ vm_user }}"
   pre_tasks:
     - name: import global variables
       tags: always
@@ -45,7 +45,7 @@
     - run_tests: False
     - clean: False
     - root_user: root
-    - cloud_platform: aws
+    - cloud_platform: virtualbox
   roles: 
     - role: marvel-nccr.simulationbase
       tags: simulationbase
@@ -55,7 +55,7 @@
         simulationbase_hostname: "{{ vm_hostname }}"
         simulationbase_codes_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.ubuntu-desktop
-      tags: ubuntu_dektop
+      tags: ubuntu_desktop
       vars:
         ubuntu_desktop_browser: "{{ vm_browser }}"
         ubuntu_desktop_vm_user: "{{ vm_user }}"
@@ -108,7 +108,7 @@
         aiida_code_folder: "{{ vm_codes_folder }}"
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-    - role: marvel-nccr.jupyter
-      tags: jupyter
+    - role: marvel-nccr.aiidalab
+      tags: aiidalab
       vars:
-        jupyter_headless: "{{ vm_headless }}"
+        aiidalab_headless: "{{ vm_headless }}"

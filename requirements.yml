@@ -17,6 +17,10 @@
   version: master
 - src: marvel-nccr.ubuntu-desktop
   version: master
+# Needed to modify this role for become_user
+# See https://github.com/marvel-nccr/quantum-mobile/issues/67
+#- src: gantsign.default-web-browser
+#  version: 3.1.0
 - src: marvel-nccr.quantum-mobile-customizations
   version: master
 - src: marvel-nccr.add-user
@@ -28,4 +32,6 @@
 - src: marvel-nccr.current-user
   version: master
 - src: marvel-nccr.ansible-prerequisites
+  version: master
+- src: marvel-nccr.aiidalab
   version: master
