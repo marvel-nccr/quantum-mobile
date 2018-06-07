@@ -1,0 +1,3 @@
+---
+# The web browser to make the default (i.e. the name of the .desktop file without the extension)
+default_web_browser: google-chrome

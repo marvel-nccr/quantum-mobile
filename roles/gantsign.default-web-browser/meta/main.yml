@@ -1,0 +1,17 @@
+galaxy_info:
+  author: John Freeman
+  description: Role for setting the default web browser for Ubuntu Unity and Xfce4.
+  company: GantSign Ltd.
+  license: MIT
+  min_ansible_version: 2.3
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - ubuntu
+    - unity
+    - xfce4
+    - xubuntu
+    - browser
+dependencies: []

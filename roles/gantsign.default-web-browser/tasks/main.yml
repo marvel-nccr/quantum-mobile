@@ -1,0 +1,6 @@
+---
+- include: xsession.yml
+
+- include: gnome.yml
+
+- include: xfce4.yml
