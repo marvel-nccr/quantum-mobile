@@ -1,5 +1,14 @@
 # Changelog
 
+## Quantum Mobile v18.08.0
+
+### Software updates
+* Ubuntu 18.04 LTS
+
+### Improvements
+
+### Build process
+
 ## Quantum Mobile v18.06.0
 
 ### Software updates

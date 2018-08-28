@@ -84,8 +84,9 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
    ansible-playbook playbook.yml  # run ansible directly, add tags, ...
    ansible-playbook playbook.yml  --tags wannier90
    ```
- * ```ssh -F vagrant-ssh default```
- * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
+ * `ssh -F vagrant-ssh default`
+ * `scp -F vagrant-ssh default:/path/on/vm  my/path`
+ * `ansible-galaxy install -r requirements.yml --ignore-errors`
 
 ## Publishing customized VMs
 

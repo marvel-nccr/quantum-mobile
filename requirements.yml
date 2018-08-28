@@ -16,7 +16,7 @@
 - src: marvel-nccr.simulationbase
   version: master
 - src: marvel-nccr.ubuntu-desktop
-  version: master
+  version: ubuntu-18.04
 # Needed to modify this role for become_user
 # See https://github.com/marvel-nccr/quantum-mobile/issues/67
 #- src: gantsign.default-web-browser
