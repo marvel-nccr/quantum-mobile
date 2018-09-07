@@ -45,7 +45,7 @@ Vagrant.configure(2) do |config|
   #config.vbguest.no_remote = true
 
   config.vm.box = "bento/ubuntu-16.04"
-  config.vm.box_version = "== 201803.24.0"
+  config.vm.box_version = "201803.24.0"
   #config.vm.box = "bento/ubuntu-18.04"
   #config.vm.box = "ubuntu/xenial64"
   config.vm.boot_timeout = 60
