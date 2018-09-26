@@ -86,6 +86,7 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
    ```
  * `ssh -F vagrant-ssh default`
  * `scp -F vagrant-ssh default:/path/on/vm  my/path`
+ * ```./reconnect_vagrant.sh  # reconnect vagrant to an old VM```
  * `ansible-galaxy install -r requirements.yml --ignore-errors`
 
 ## Publishing customized VMs
