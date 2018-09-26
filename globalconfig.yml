@@ -19,4 +19,4 @@ vm_shared_folder: "/shared"
 vm_codes_folder: "${HOME}/codes"
 vm_examples_folder: "${HOME}/examples"
 vm_headless: False
-vm_browser: chromium # 'chromium' or 'firefox'
+vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
