@@ -7,8 +7,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_helpers_file_permissions(File):
-    config = File('/etc/xdg/ansible-default-web-browser/xfce4/helpers.rc')
+def test_helpers_file_permissions(host):
+    config = host.file('/etc/xdg/ansible-default-web-browser/xfce4/helpers.rc')
 
     assert config.exists
     assert config.is_file
@@ -18,9 +18,9 @@ def test_helpers_file_permissions(File):
     assert config.contains('WebBrowser=google-chrome')
 
 
-def test_desktop_file_permissions(File):
+def test_desktop_file_permissions(host):
     helper_dir = '/etc/xdg/ansible-default-web-browser/xfce4/helpers'
-    desktop = File(helper_dir + '/google-chrome.desktop')
+    desktop = host.file(helper_dir + '/google-chrome.desktop')
 
     assert desktop.exists
     assert desktop.is_file
@@ -35,9 +35,9 @@ def test_desktop_file_permissions(File):
     'X-XFCE-Commands=/usr/bin/google-chrome-stable',
     'X-XFCE-CommandsWithParameter=/usr/bin/google-chrome-stable "%s"'
 ])
-def test_desktop_file(File, expected):
+def test_desktop_file(host, expected):
     helper_dir = '/etc/xdg/ansible-default-web-browser/xfce4/helpers'
-    desktop = File(helper_dir + '/google-chrome.desktop')
+    desktop = host.file(helper_dir + '/google-chrome.desktop')
 
     assert desktop.exists
     assert desktop.is_file

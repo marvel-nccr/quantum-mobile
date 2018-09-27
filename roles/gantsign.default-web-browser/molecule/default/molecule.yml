@@ -9,8 +9,10 @@ lint:
   name: yamllint
 
 platforms:
-  - name: ansible-role-default-web-browser-01
+  - name: ansible-role-default-web-browser-ubuntu-min
     image: ubuntu:16.04
+  - name: ansible-role-default-web-browser-ubuntu-max
+    image: ubuntu:18.04
 
 provisioner:
   name: ansible

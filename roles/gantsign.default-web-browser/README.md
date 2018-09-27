@@ -12,17 +12,18 @@ Requirements
 
 * Ansible
 
-    * Minimum 2.3
+    * Minimum 2.4
 
 * Ubuntu
 
     * Xenial (16.04)
+    * Bionic (18.04)
 
 * Supported desktop
 
-    * Ubuntu Unity (i.e. the default desktop on Ubuntu)
+    * Gnome
 
-        Note: other Gnome based desktops may work but have not been tested.
+    * Ubuntu Unity
 
     * Xfce4 (i.e. the desktop on XUbuntu)
 
@@ -74,13 +75,19 @@ To develop or test you'll need to have installed the following:
 * [Ansible](https://www.ansible.com/)
 * [Molecule](http://molecule.readthedocs.io/)
 
-To run the role (i.e. the `tests/test.yml` playbook), and test the results
-(`tests/test_role.py`), execute the following command from the project root
-(i.e. the directory with `molecule.yml` in it):
+Because the above can be tricky to install, this project includes
+[Molecule Wrapper](https://github.com/gantsign/molecule-wrapper). Molecule
+Wrapper is a shell script that installs Molecule and it's dependencies (apart
+from Linux) and then executes Molecule with the command you pass it.
+
+To test this role using Molecule Wrapper run the following command from the
+project root:
 
 ```bash
-molecule test
+./moleculew test
 ```
+
+Note: some of the dependencies need `sudo` permission to install.
 
 License
 -------

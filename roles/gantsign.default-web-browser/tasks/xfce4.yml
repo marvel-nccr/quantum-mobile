@@ -21,7 +21,7 @@
 
 - name: create tmp directory
   file:
-    path: '~/.ansible/tmp'
+    path: '{{ remote_tmp }}'
     state: directory
     mode: 'u=rwx,go='
 

@@ -1,6 +1,6 @@
 ---
-- include: xsession.yml
+- import_tasks: xsession.yml
 
-- include: gnome.yml
+- import_tasks: gnome.yml
 
-- include: xfce4.yml
+- import_tasks: xfce4.yml
