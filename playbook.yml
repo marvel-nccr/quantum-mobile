@@ -42,7 +42,7 @@
         file: globalconfig.yml
   vars:
     - release_notes: True
-    - run_tests: False
+    - run_tests: True 
     - clean: False
     - root_user: root
     - cloud_platform: virtualbox
@@ -74,11 +74,18 @@
         qm_customizations_examples_folder: "{{ vm_examples_folder }}"
     - role: marvel-nccr.editors
       tags: editors
-    - role: marvel-nccr.torque
-      tags: torque
+    - role: marvel-nccr.slurm
+      tags: slurm
       vars:
-        torque_hostname: "{{ vm_hostname }}"
-        torque_cpus: "{{ vm_cpus }}"
+        slurm_hostname: "{{ vm_hostname }}"
+        slurm_user: "{{ vm_user }}"
+        slurm_cpus: "{{ vm_cpus }}"
+        slurm_memory: "{{ vm_memory }}"
+#    - role: marvel-nccr.torque
+#      tags: torque
+#      vars:
+#        torque_hostname: "{{ vm_hostname }}"
+#        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
       vars: 
