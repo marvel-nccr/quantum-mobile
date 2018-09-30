@@ -1,0 +1,19 @@
+# Test setup
+ * image: Quantum Mobile 18.06 (4.6GB image, 12GB extracted)
+ * machine: MacBook Pro Retina 15-inch Mid-2015 (fast SSD)
+ * USB stick 1: Kingston DataTraveler SE9, 16GB
+   * USB 2.0
+   * Using exFAT file system (default FAT only allows files up to 4GB)
+
+# Read/write timings
+ * write QM image to USB stick 1: 1015s 
+   (that's an abysmal write rate of 4.6 MByte/s) 
+ * copy QM image from USB stick 1: 182s
+   (that's the 25 MByte/s maximum of USB 2.0)
+ * download QM image from object store via 802.11ac home wifi: 310s
+   (hardware would allow for >500 Mbit/s; effective speed was just 120 Mbit/s)
+
+# Virtualbox timings
+ * import QM image from hard disk: 87s
+ * import QM image from USB stick 1: 180s
+   (i.e. = the read time, plus/minus 
