@@ -8,7 +8,7 @@
 - src: marvel-nccr.ubuntu-desktop
   version: ubuntu-18.04
 - src: marvel-nccr.quantum-mobile-customizations
-  version: ubuntu-18.04
+  version: master
 - src: marvel-nccr.quantum-espresso
   version: master
 - src: marvel-nccr.fleur
