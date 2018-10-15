@@ -27,8 +27,8 @@
         add_user_password: "{{ vm_password }}"
         add_user_sudo: True
          
-# Note: it is important to pass variables to roles within a 'vars' group
-# If they are passed on the same indentation level as the role, the variable is
+# Note: it is important to pass variables to roles using the 'vars' dictionary.
+# If variables are passed on the same indentation level as the role, the variable is
 # set correctly inside the role, but following roles will read the *default*
 # value of the variable (as defined inside the role).
 - name: set up the VM
@@ -78,14 +78,13 @@
       tags: slurm
       vars:
         slurm_hostname: "{{ vm_hostname }}"
-        slurm_user: "{{ vm_user }}"
         slurm_cpus: "{{ vm_cpus }}"
         slurm_memory: "{{ vm_memory }}"
-#    - role: marvel-nccr.torque
-#      tags: torque
-#      vars:
-#        torque_hostname: "{{ vm_hostname }}"
-#        torque_cpus: "{{ vm_cpus }}"
+    - role: marvel-nccr.torque
+      tags: torque
+      vars:
+        torque_hostname: "{{ vm_hostname }}"
+        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
       vars: 

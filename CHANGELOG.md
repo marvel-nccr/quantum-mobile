@@ -1,19 +1,21 @@
 # Changelog
 
-## Quantum Mobile v18.09.0
+## Quantum Mobile v18.10.0
+
+### Improvements
+* add link to FAQ on desktop
+* switch from torque to slurm scheduler
 
 ### Software updates
 * Ubuntu 18.04 LTS
 * Quantum Espresso v6.3
 * cp2k v6.1
 * yambo v4.2.4
+* fleur 0.27 MaXR3
 * siesta v4.0.2
 * aiida-core v0.12.2
 * aiidalab v18.09.0
-
-
-### Improvements
-* add link to FAQ on desktop
+* aiida-fleur v0.6.2
 
 ### Build process
 * Vagrant v2.1.6

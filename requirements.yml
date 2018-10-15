@@ -25,7 +25,7 @@
   version: master
 - src: marvel-nccr.add-user
   version: master
-- src: marvel-nccr.torque
+- src: marvel-nccr.slurm
   version: master
 - src: marvel-nccr.aiida
   version: master
