@@ -88,6 +88,25 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
  * ```scp -F vagrant-ssh default:/path/on/vm  my/path```
  * ```./reconnect_vagrant.sh  # reconnect vagrant to an old VM```
 
+## Customizing Quantum Mobile
+
+There are at least two ways to customize Quantum Mobile in order to fit your needs:
+
+ 1. Start VM, add/remove components manually, export image again
+   + it's quick
+   + no need to work with ansible/vagrant
+   - **but**: no clear record of changes
+   - need to redo this next time round
+ 1. Add/remove components in the [`playbook.yml`](playbook.yml), rebuild the VM
+   + it's reproducible
+   + easy to keep up to date (just rebuild with updated components)
+   - **but**: need to learn how to build the VM
+
+Quantum Mobile encapsulates components in
+[ansible roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
+which are selected in the [`playbook.yml`](playbook.yml) file.
+You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own](https://docs.ansible.com/ansible-container/roles/writing.html#writing-roles).
+
 ## Publishing customized VMs
 
 If you would like to publish a customized version of Quantum Mobile, we recommend that you
