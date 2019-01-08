@@ -42,7 +42,7 @@
         file: globalconfig.yml
   vars:
     - release_notes: True
-    - run_tests: True 
+    - run_tests: False
     - clean: False
     - root_user: root
     - cloud_platform: virtualbox
@@ -80,11 +80,11 @@
         slurm_hostname: "{{ vm_hostname }}"
         slurm_cpus: "{{ vm_cpus }}"
         slurm_memory: "{{ vm_memory }}"
-    - role: marvel-nccr.torque
-      tags: torque
-      vars:
-        torque_hostname: "{{ vm_hostname }}"
-        torque_cpus: "{{ vm_cpus }}"
+#    - role: marvel-nccr.torque
+#      tags: torque
+#      vars:
+#        torque_hostname: "{{ vm_hostname }}"
+#        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum-espresso
       tags: quantum_espresso
       vars: 
@@ -114,6 +114,7 @@
       vars:
         aiida_code_folder: "{{ vm_codes_folder }}"
         aiida_localhost_cpus: "{{ vm_cpus }}"
+        aiida_localhost_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
     - role: marvel-nccr.aiidalab
       tags: aiidalab

@@ -1,6 +1,6 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
-vm_version: "18.10.0RC1"
+vm_version: "18.10.0RC2"
 vm_name: "Quantum Mobile"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
@@ -20,3 +20,4 @@ vm_codes_folder: "${HOME}/codes"
 vm_examples_folder: "${HOME}/examples"
 vm_headless: False
 vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
+vm_scheduler: slurm # 'slurm' or 'torque'
