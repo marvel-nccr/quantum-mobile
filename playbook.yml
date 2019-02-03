@@ -21,7 +21,7 @@
         msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
   roles:
     - name: add user {{ vm_user }} with key
-      role: marvel-nccr.add-user
+      role: marvel-nccr.add_user
       vars:
         add_user_name: "{{ vm_user }}"
         add_user_password: "{{ vm_password }}"
@@ -54,13 +54,13 @@
         simulationbase_vm_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
         simulationbase_hostname: "{{ vm_hostname }}"
         simulationbase_codes_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.ubuntu-desktop
+    - role: marvel-nccr.ubuntu_desktop
       tags: ubuntu_desktop
       vars:
         ubuntu_desktop_browser: "{{ vm_browser }}"
         ubuntu_desktop_vm_user: "{{ vm_user }}"
       when: not vm_headless
-    - role: marvel-nccr.quantum-mobile-customizations
+    - role: marvel-nccr.quantum_mobile_customizations
       tags: qm_customizations
       vars:
         qm_customizations_browser: "{{ vm_browser }}"
@@ -85,7 +85,7 @@
 #      vars:
 #        torque_hostname: "{{ vm_hostname }}"
 #        torque_cpus: "{{ vm_cpus }}"
-    - role: marvel-nccr.quantum-espresso
+    - role: marvel-nccr.quantum_espresso
       tags: quantum_espresso
       vars: 
         quantum_espresso_code_folder: "{{ vm_codes_folder }}"

@@ -5,11 +5,11 @@
 #  version: 3.1.0
 - src: marvel-nccr.simulationbase
   version: master
-- src: marvel-nccr.ubuntu-desktop
+- src: marvel-nccr.ubuntu_desktop
   version: ubuntu-18.04
-- src: marvel-nccr.quantum-mobile-customizations
+- src: marvel-nccr.quantum_mobile_customizations
   version: master
-- src: marvel-nccr.quantum-espresso
+- src: marvel-nccr.quantum_espresso
   version: master
 - src: marvel-nccr.fleur
   version: master
@@ -23,15 +23,15 @@
   version: master
 - src: marvel-nccr.editors
   version: master
-- src: marvel-nccr.add-user
+- src: marvel-nccr.add_user
   version: master
 - src: marvel-nccr.slurm
   version: master
 - src: marvel-nccr.aiida
   version: master
-- src: marvel-nccr.current-user
+- src: marvel-nccr.current_user
   version: master
-- src: marvel-nccr.ansible-prerequisites
+- src: marvel-nccr.ansible_prerequisites
   version: master
 - src: marvel-nccr.aiidalab
   version: master
