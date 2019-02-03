@@ -31,6 +31,9 @@ Vagrant.configure(2) do |config|
      # turn off remote display (requires Virtualbox Extension pack)
      vb.customize ["modifyvm", :id, "--vrde", "off"]
 
+     # enable audio (default changed to off in virtualbox 6)
+     vb.customize ["modifyvm", :id, "--audio", "coreaudio"]
+
      # prevent VM time slipping out of sync by more than 10s (default: 20 min)
      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
    end
@@ -47,7 +50,7 @@ Vagrant.configure(2) do |config|
   #config.vm.box = "bento/ubuntu-16.04"
   #config.vm.box_version = "201803.24.0"
   config.vm.box = "bento/ubuntu-18.04"
-  config.vm.box_version = "201808.24.0"
+  config.vm.box_version = "201812.27.0"
   #config.vm.box = "ubuntu/xenial64"
   config.vm.boot_timeout = 60
 

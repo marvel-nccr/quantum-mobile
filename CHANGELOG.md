@@ -18,8 +18,11 @@
 * aiida-fleur v0.6.2
 
 ### Build process
-* Vagrant v2.1.6
-* Virtualbox v5.2.18
+* ansible 2.7.5
+* Vagrant v2.2.2
+  * vbguest v0.17.1
+  * bento/ubuntu-18.04 v201812.27.0
+* Virtualbox v6.0.0
 
 
 ## Quantum Mobile v18.06.0
