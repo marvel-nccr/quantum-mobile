@@ -106,7 +106,7 @@ There are at least two ways to customize Quantum Mobile in order to fit your nee
 Quantum Mobile encapsulates components in
 [ansible roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
 which are selected in the [`playbook.yml`](playbook.yml) file.
-You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own](https://docs.ansible.com/ansible-container/roles/writing.html#writing-roles).
+You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own](https://github.com/marvel-nccr/cookiecutter-ansible-role).
 
 ## Publishing customized VMs
 

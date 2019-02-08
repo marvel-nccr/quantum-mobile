@@ -3,7 +3,7 @@
   hosts: default
   gather_facts: no
   roles:
-    - marvel-nccr.ansible-prerequisites
+    - marvel-nccr.ansible_prerequisites
 
 - name: Add vm user
   hosts: default
