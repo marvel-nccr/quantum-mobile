@@ -20,7 +20,7 @@ provenance tracking.
 
 You can run Quantum Mobile on your Windows, MacOS or Linux computer using the
 [VirtualBox](http://virtualbox.org/) software.
-You can also 
+You can also
 [install Quantum Mobile on virtual machines using cloud services](https://github.com/materialscloud-org/ansible-playbook-workhorse)
 like Amazon Web Services or OpenStack.
 
@@ -89,6 +89,25 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
  * ```./reconnect_vagrant.sh  # reconnect vagrant to an old VM```
  * `ansible-galaxy install -r requirements.yml --ignore-errors`
 
+## Customizing Quantum Mobile
+
+There are at least two ways to customize Quantum Mobile in order to fit your needs:
+
+ 1. Start VM, add/remove components manually, export image again
+   + it's quick
+   + no need to work with ansible/vagrant
+   - **but**: no clear record of changes
+   - need to redo this next time round
+ 2. Add/remove components in the [`playbook.yml`](playbook.yml), rebuild the VM
+   + it's reproducible
+   + easy to keep up to date (just rebuild with updated components)
+   - **but**: need to learn how to build the VM
+
+Quantum Mobile encapsulates components in
+[ansible roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
+which are selected in the [`playbook.yml`](playbook.yml) file.
+You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own](https://docs.ansible.com/ansible-container/roles/writing.html#writing-roles).
+
 ## Publishing customized VMs
 
 If you would like to publish a customized version of Quantum Mobile, we recommend that you
@@ -108,7 +127,7 @@ For issues encountered during installation of the VM, see the [FAQ](https://gith
 
 ## Acknowledgements
 
-This work is supported by the [MARVEL National Centre for Competency in Research](http://nccr-marvel.ch) 
+This work is supported by the [MARVEL National Centre for Competency in Research](http://nccr-marvel.ch)
 funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
