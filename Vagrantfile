@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
      vb.customize ["modifyvm", :id, "--vrde", "off"]
 
      # enable audio (default changed to off in virtualbox 6)
-     vb.customize ["modifyvm", :id, "--audio", "coreaudio"]
+     # vb.customize ["modifyvm", :id, "--audio", "coreaudio"]
 
      # prevent VM time slipping out of sync by more than 10s (default: 20 min)
      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
