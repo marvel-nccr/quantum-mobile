@@ -1,0 +1,13 @@
+language: python
+python:
+- "3.6"
+
+before_install:
+- pip install -U pip wheel setuptools
+
+install:
+- pip install -r requirements.txt
+- ansible-galaxy install -r requirements.yml
+
+script:
+- ansible-playbook playbook.yml --syntax-check
