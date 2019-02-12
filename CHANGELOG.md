@@ -89,7 +89,7 @@
 
 ### Improvements
 
-- Add jupyter apps (just like on [jupyter.materialslcoud.org](jupyter.materialscloud.org))
+- Add jupyter apps (just like on [aiidalab.materialslcoud.org](aiidalab.materialscloud.org))
 
 ### Software updates
 * aiida-yambo v0.2.4

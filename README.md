@@ -117,7 +117,10 @@ If you would like to publish a customized version of Quantum Mobile, we recommen
  1. Adapt `globalconfig.yml`, `EULA.txt` and `README.md` appropriately
  1. Pull the latest changes from time to time to keep things up to date
 
-Last, but not least, [let us know](mailto:leopold.talirz@gmail.com)!
+Note: If you are developing new ansible roles for computational materials
+science applications and would like to make them easier to find,
+we'd be happy to host them under the marvel-nccr github organisation
+- just [drop us a line](mailto:leopold.talirz@gmail.com).
 
 ## Contact
 
