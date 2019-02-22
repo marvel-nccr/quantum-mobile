@@ -1,7 +1,7 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
 vm_version: "18.04.0"
-vm_name: "Quantum Mobile"
+vm_name: "Quantum Mobile AiiDA tutorial"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
 vm_author: "MARVEL NCCR and MaX CoE"
@@ -18,5 +18,6 @@ vm_vram: 128
 vm_shared_folder: "/shared"
 vm_codes_folder: "{{ ansible_env.HOME }}/codes"
 vm_examples_folder: "{{ ansible_env.HOME }}/examples"
-vm_headless: True
-vm_browser: chromium # 'chromium' or 'firefox'
+vm_headless: False
+# 'chromium' or 'firefox'
+vm_browser: chromium

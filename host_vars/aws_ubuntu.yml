@@ -1,1 +1,1 @@
-ansible_ssh_common_args: -i ./keys/aiida-tutorial.pem -o StrictHostKeyChecking=no
+ansible_ssh_common_args: -i /Users/pizzi/git/quantum-mobile/.vagrant/machines/default/virtualbox/private_key -o StrictHostKeyChecking=no -p 2222

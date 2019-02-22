@@ -11,6 +11,7 @@
     - name: add user {{ vm_user }} with key
       role: add_user
       add_user_name: "{{ vm_user }}"
+      add_user_password: tutorial
       add_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
     - name: Set password for root user
       role: add_user

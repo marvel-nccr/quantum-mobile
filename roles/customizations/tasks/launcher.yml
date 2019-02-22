@@ -6,7 +6,7 @@
     value: "{{ launcher_favorites_firefox }}"
     state: present
   notify: restart lightdm
-  when: customizations_browser is 'chromium'
+  when: customizations_browser == 'chromium'
 
 - name: set icons/applications (with Chromium)
   dconf:
@@ -14,4 +14,4 @@
     value: "{{ launcher_favorites_chromium }}"
     state: present
   notify: restart lightdm
-  when: customizations_browser is 'chromium'
+  when: customizations_browser == 'chromium'

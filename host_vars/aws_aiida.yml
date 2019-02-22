@@ -1,4 +1,4 @@
-ansible_ssh_common_args: -i ./keys/aiida_tutorial_aiidaaccount -o StrictHostKeyChecking=no
+ansible_ssh_common_args: -i ./keys/aiida_tutorial_aiidaaccount -o StrictHostKeyChecking=no -p 2222
 
 ansible_become_user: root
 ansible_become_method: su
