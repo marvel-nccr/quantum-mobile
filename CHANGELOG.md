@@ -1,6 +1,6 @@
 # Changelog
 
-## Quantum Mobile v18.10.0
+## Quantum Mobile v19.03.0
 
 ### Improvements
 * add link to FAQ on desktop
@@ -10,19 +10,18 @@
 * Ubuntu 18.04 LTS
 * Quantum Espresso v6.3
 * cp2k v6.1
-* yambo v4.2.4
+* yambo v4.3.2
 * fleur 0.27 MaXR3
 * siesta v4.0.2
-* aiida-core v0.12.2
-* aiidalab v18.09.0
-* aiida-fleur v0.6.2
+* aiida-core v0.12.3
+* aiidalab v19.03.0
 
 ### Build process
 * ansible 2.7.5
-* Vagrant v2.2.2
+* Vagrant v2.2.4
   * vbguest v0.17.1
   * bento/ubuntu-18.04 v201812.27.0
-* Virtualbox v6.0.0
+* Virtualbox v6.0.4
 
 
 ## Quantum Mobile v18.06.0
