@@ -48,8 +48,8 @@ this).
 - [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [python](https://www.python.org/)
-- Host OS: Building VM tested only on Unix systems so far (MacOS, Ubuntu).
-  Might work under Windows with a few modifications.
+- Host OS: Building Quantum Mobile has been tested on MacOS, Ubuntu
+  and Windows (see [instructions](https://github.com/marvel-nccr/quantum-mobile/wiki/Instructions-for-building-Quantum-Mobile)).
 
 ### Create Virtual Machine
 
