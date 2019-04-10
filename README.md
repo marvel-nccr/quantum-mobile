@@ -23,7 +23,7 @@ provenance tracking.
 You can run Quantum Mobile on your Windows, MacOS or Linux computer using the
 [VirtualBox](http://virtualbox.org/) software.
 You can also
-[install Quantum Mobile on virtual machines using cloud services](https://github.com/materialscloud-org/ansible-playbook-workhorse)
+[install Quantum Mobile on virtual machines using cloud services](https://github.com/marvel-nccr/ansible-playbook-workhorse)
 like Amazon Web Services or OpenStack.
 
 ![Demo](https://image.ibb.co/n50SdT/quantum_mobile.gif "A brief impression of the Quantum Mobile interface.")

@@ -3,11 +3,14 @@
   hosts: default
   gather_facts: no
   roles:
-    - marvel-nccr.ansible_prerequisites
+    - role: marvel-nccr.ansible_prerequisites
 
+# Note: This play could be merged with "set up the VM" but it can make sense to
+# connect to the VM using the user created here. Leaving it separate for the moment.
 - name: Add vm user
   hosts: default
   gather_facts: no
+  tags: add_user
   pre_tasks:
     - name: import global variables
       tags: always
@@ -25,7 +28,10 @@
       vars:
         add_user_name: "{{ vm_user }}"
         add_user_password: "{{ vm_password }}"
-        add_user_sudo: True
+        add_user_groups:
+          - "{{ vm_user }}"
+          - sudo
+        add_user_passwordless_sudo: true
          
 # Note: it is important to pass variables to roles using the 'vars' dictionary.
 # If variables are passed on the same indentation level as the role, the variable is
@@ -35,11 +41,6 @@
   hosts: default
   become: True
   become_user: "{{ vm_user }}"
-  pre_tasks:
-    - name: import global variables
-      tags: always
-      include_vars:
-        file: globalconfig.yml
   vars:
     - release_notes: True
     - run_tests: False
@@ -80,11 +81,6 @@
         slurm_hostname: "{{ vm_hostname }}"
         slurm_cpus: "{{ vm_cpus }}"
         slurm_memory: "{{ vm_memory }}"
-#    - role: marvel-nccr.torque
-#      tags: torque
-#      vars:
-#        torque_hostname: "{{ vm_hostname }}"
-#        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum_espresso
       tags: quantum_espresso
       vars: 
@@ -109,6 +105,10 @@
       tags: wannier90
       vars: 
         wannier90_code_folder: "{{ vm_codes_folder }}"
+    - role: marvel-nccr.aiidalab
+      tags: aiidalab
+      vars:
+        aiidalab_headless: "{{ vm_headless }}"
     - role: marvel-nccr.aiida
       tags: aiida 
       vars:
@@ -116,7 +116,3 @@
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_localhost_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-    - role: marvel-nccr.aiidalab
-      tags: aiidalab
-      vars:
-        aiidalab_headless: "{{ vm_headless }}"

@@ -1,5 +1,19 @@
 # Changelog
 
+## Quantum Mobile v19.XX.0
+
+### Improvements
+* now installing fixed versions of ansible roles for improved reproducibility
+  and tracking of changes between Quantum Mobile releases
+
+### Software updates
+* roles:
+  * marvel-nccr.add_user v0.2.1
+  * marvel-nccr.simulationbase v0.1.1
+
+### Build process
+ * Virtualbox v6.0.8
+
 ## Quantum Mobile v19.03.0
 
 ### Improvements
