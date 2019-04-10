@@ -32,6 +32,6 @@
 - src: marvel-nccr.wannier90
   version: master
 - src: marvel-nccr.aiida
-  version: master
+  version: develop
 - src: marvel-nccr.aiidalab
   version: master
