@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/marvel-nccr/quantum-mobile.svg?branch=master)](https://travis-ci.org/marvel-nccr/quantum-mobile)
+
 # Quantum Mobile
 
 ## What is Quantum Mobile
@@ -54,7 +56,7 @@ this).
 ### Create Virtual Machine
 
 ```
-git checkout git@github.com:marvel-nccr/quantum-mobile.git
+git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 pip install -r requirements.txt
 ansible-galaxy install -r requirements.yml
