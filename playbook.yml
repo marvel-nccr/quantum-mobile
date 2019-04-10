@@ -116,7 +116,7 @@
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_localhost_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-    - role: marvel-nccr.aiidalab
-      tags: aiidalab
-      vars:
-        aiidalab_headless: "{{ vm_headless }}"
+#    - role: marvel-nccr.aiidalab
+#      tags: aiidalab
+#      vars:
+#        aiidalab_headless: "{{ vm_headless }}"
