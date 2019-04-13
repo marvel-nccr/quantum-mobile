@@ -1,5 +1,12 @@
 # Changelog
 
+## Quantum Mobile v19.04.0
+
+### Improvements
+* now installing fixed versions of ansible roles for improved reproducibility
+  and tracking of changes between Quantum Mobile releases
+
+
 ## Quantum Mobile v19.03.0
 
 ### Improvements
