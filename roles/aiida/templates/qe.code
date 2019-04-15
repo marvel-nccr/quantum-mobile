@@ -1,5 +1,5 @@
 {{ aiida_code_name }}
-{{ code }}.x from Quantum ESPRESSO {{ qe_version }}
+{{ code }}.x from Quantum ESPRESSO
 False
 quantumespresso.{{ code }}
 {{ aiida_computer_name }}

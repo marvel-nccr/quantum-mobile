@@ -5,11 +5,13 @@
 - include_tasks: computers-setup.yml
 
 # codes need to come after computers
-- include_tasks: aiida-quantumespresso.yml
+- import_tasks: aiida-quantumespresso.yml
   tags: aiida-quantumespresso
-  when: qe_executables is defined
+  #  when: qe_executables
 
-- include_tasks: aiida-pps.yml pp={{ item }}
-  tags: aiida-pps
+- include_tasks: aiida-pps.yml
+  vars:
+      pp: "{{ item }}"
   with_items: "{{ aiida_pseudopotentials }}"
+  tags: aiida-pps
 

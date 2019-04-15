@@ -1,8 +1,7 @@
 - name: set up aiida computers
-  include_tasks: computer-setup.yml aiida_computer_name={{ item }}
-  with_items:
-    - "{{ aiida_localhost_name }}"
-    - fidis
+  include_tasks: computer-setup.yml
+  vars:
+    aiida_computer_name: "{{ aiida_localhost_name }}"
 
 - include_role:
     name: release_notes

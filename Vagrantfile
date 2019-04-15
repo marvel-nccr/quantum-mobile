@@ -34,17 +34,6 @@ Vagrant.configure(2) do |config|
      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
    end
 
-  # Vagrant automatically updates/upgrades the Guest Additions at every 
-  # login (this requires 'vagrant plugin install vbguest')
-  # Uncomment the following if you don't want to check/update the
-  # Guest Additions at every reboot, but just once
-  #config.vbguest.auto_update = false
-  #
-  # VirtualBox 5.2.6 ships broken GuestAdditions, see
-  # https://www.virtualbox.org/wiki/Downloads
-  # Do: vagrant vbguest --do install
-  config.vbguest.iso_path = "https://www.virtualbox.org/download/testcase/VBoxGuestAdditions_5.2.7-120528.iso"
-   
   # Uncomment to avoid remote downloads of ISO
   #config.vbguest.no_remote = true
 
@@ -94,5 +83,6 @@ EOF
        ansible_user: user
     }
     ansible.playbook = "playbook.yml"
+    ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
   end
 end

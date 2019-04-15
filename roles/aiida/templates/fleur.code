@@ -1,8 +1,0 @@
-{{ aiida_code_name }}
-fleur v{{ fleur_version }} {{ fleur_release }} 
-False
-fleur.{{ code }}
-{{ aiida_computer_name }}
-{{ fleur_topdir }}/build/{{ code }}
-ulimit -s unlimited
-

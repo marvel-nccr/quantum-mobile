@@ -2,12 +2,13 @@
 # In AiiDA 0.9.1, aiida-qe was still part of aiida-core
 
 - name: set up QE codes for localhost
-  include_tasks: code-setup.yml code={{ item }}
+  include_tasks: code-setup.yml
   with_items: "{{qe_executables}}"
   vars:
-   - aiida_code_name:  "qe-{{code}}-{{qe_version}}"
+   - aiida_code_name:  "qe-{{code}}"
    - aiida_code_template:  qe.code
    - aiida_computer_name:  "{{ aiida_localhost_name }}"
+   - code: "{{ item }}"
 
 - include_role:
     name: release_notes
