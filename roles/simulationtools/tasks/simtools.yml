@@ -1,0 +1,10 @@
+---
+- name: Install simulation tools from Ubuntu packages
+  become: true
+  apt:
+      name: "{{ item }}"
+      state: latest
+      update_cache: True
+  with_items:
+    - quantum-espresso
+    

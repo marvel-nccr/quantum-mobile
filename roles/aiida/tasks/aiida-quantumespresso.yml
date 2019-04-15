@@ -1,5 +1,5 @@
 ---
-# aiida-quantumespresso plugin installed via 'aiida' metapackage
+# In AiiDA 0.9.1, aiida-qe was still part of aiida-core
 
 - name: set up QE codes for localhost
   include_tasks: code-setup.yml code={{ item }}

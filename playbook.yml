@@ -20,18 +20,9 @@
     - role: scheduler
       tags: scheduler
     - role: simulationtools
-      tags: simulationtools
-    - role: quantum-espresso
-      tags: quantum-espresso
-    - role: yambo
-      tags: yambo
-    - role: fleur
-      tags: fleur
-    - role: siesta
-      tags: siesta
-    - role: cp2k
-      tags: cp2k
+      tags: simulationtools  # Install also QE from Ubuntu
+#    - role: quantum-espresso
+#      tags: quantum-espresso
     - role: aiida
       tags: aiida
-    - role: jupyter
-      tags: jupyter
+

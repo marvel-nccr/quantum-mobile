@@ -1,22 +1,12 @@
-aiida_version: "0.10.1"
+aiida_version: "0.9.1"
 aiida_extras:
-  - REST
-  - docs
   - atomic_tools
-  - testing
-  - notebook
 aiida_run_folder: "{{ ansible_env.HOME }}/.aiida_run"
 aiida_localhost_name: localhost
 postgres_pw: "ne9N_LDK-*JSS"
 postgres_db: aiidadb
 postgres_user: aiida
 aiida_venv: "{{ ansible_env.HOME }}/.virtualenvs/aiida"
-
-# plugins
-aiida_fleur_version: "0.6.0"
-aiida_siesta_version: "0.9.8"
-aiida_cp2k_version: "0.7"
-aiida_yambo_version: "0.2.4"
 
 # pseudos
 aiida_pseudopotentials:
@@ -36,10 +26,3 @@ aiida_pseudopotentials:
     description: >-
      Standard Solid State Pseudopotentials (accuracy) 
      for the PBE functional
-  - name: sg15-oncv-1.1
-    file: sg15_oncv_upf_2015-10-07.tar.gz
-    url: http://www.quantum-simulation.org/potentials/sg15_oncv
-    folder: sg15-oncv-1.1
-    home_page: http://www.quantum-simulation.org/potentials/sg15_oncv/
-    description: >-
-     SG15 Optimized Norm-Conserving Vanderbilt (ONCV) pseudopotentials

@@ -26,22 +26,17 @@
     name: "{{ postgres_user }}"
     password: "{{ postgres_pw }}"
 
-- name: Install the aiida meta package
+- name: Install aiida-core with extras
   pip:
-    name: "aiida=={{ aiida_version }}"
+    name: "aiida-core[{{ item }}]=={{ aiida_version }}"
     virtualenv: "{{ aiida_venv }}"
+  with_items: "{{ aiida_extras }}"
   register: pip_install
 
 # this is necessary, since the meta package installs plugins
 - name: run reentry scan
   shell: "{{ aiida_venv }}/bin/reentry scan -r aiida"
   when: pip_install.changed
-
-- name: Install extras of aiida-core
-  pip:
-    name: "aiida-core[{{ item }}]=={{ aiida_version }}"
-    virtualenv: "{{ aiida_venv }}"
-  with_items: "{{ aiida_extras }}"
 
 - name: Additional pip dependencies
   pip:

@@ -2,6 +2,15 @@
 
 *Quantum Mobile* is a Virtual Machine for computational materials science.
 
+## Note on this version
+This is historical branch, stripped down from the main Quantum Mobile (e.g. with Quantum ESPRESSO only, installed from
+the APT Ubuntu packages, and no other codes; fewer pseudopotential libraries; ...).
+
+The main purpose is to recreate an environment where older versions work. In this case, AiiDA 0.9.1 (to 
+address issue aiidateam/aiida_core#2426, and PR aiidateam/aiida_core#2478).
+
+## Content
+
 It comes with a collection of software packages for quantum
 mechanical calculations, including
 

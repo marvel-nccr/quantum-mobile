@@ -8,23 +8,8 @@
 - include_tasks: aiida-quantumespresso.yml
   tags: aiida-quantumespresso
   when: qe_executables is defined
-- include_tasks: aiida-yambo.yml
-  tags: aiida-yambo
-  when: yambo_executables is defined
-- include_tasks: aiida-fleur.yml
-  tags: aiida-fleur
-  when: fleur_executables is defined
-- include_tasks: aiida-siesta.yml
-  tags: aiida-siesta
-  when: siesta_executables is defined
-- include_tasks: aiida-cp2k.yml
-  tags: aiida-cp2k
-  when: cp2k_executables is defined
 
 - include_tasks: aiida-pps.yml pp={{ item }}
   tags: aiida-pps
   with_items: "{{ aiida_pseudopotentials }}"
 
-- include_tasks: aiida-examples.yml
-  tags: aiida-examples
-  when: copy_examples is defined and copy_examples
