@@ -20,24 +20,10 @@
 - src: marvel-nccr.slurm
   version: v0.1.1
 - src: marvel-nccr.quantum_espresso
-  version: v0.1.0
-- src: marvel-nccr.yambo
-  version: v0.1.0
-- src: marvel-nccr.fleur
-  version: v0.1.0
-- src: marvel-nccr.siesta
-  version: v0.1.0
+  version: v0.1.2
 - src: marvel-nccr.cp2k
+  version: v0.1.1
+- src: marvel-nccr.lammps
   version: v0.1.0
-- src: marvel-nccr.wannier90
-  version: v0.1.0
-#- src: marvel-nccr.aiida
-#  version: v0.1.0
-- src: https://github.com/marvel-nccr/ansible-role-aiida.git
-  version: tutorial-2019-05
-  name: marvel-nccr.aiida
-#- src: marvel-nccr.aiidalab
-#  version: v0.1.0
-- src: https://github.com/marvel-nccr/ansible-role-aiidalab.git
-  version: tutorial-2019-05
-  name: marvel-nccr.aiidalab
+- src: uchida.miniconda
+  version: master

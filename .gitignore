@@ -14,3 +14,5 @@ other_stuff/*/*.png
 
 # roles & dependencies
 roles/marvel-nccr*
+roles/ltalirz.distance-matrix/
+roles/uchida.miniconda/

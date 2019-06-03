@@ -85,34 +85,33 @@
       tags: quantum_espresso
       vars: 
         quantum_espresso_code_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.yambo
-      tags: yambo
-      vars: 
-        yambo_code_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.fleur
-      tags: fleur
-      vars: 
-        fleur_code_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.siesta
-      tags: siesta
-      vars: 
-        siesta_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.cp2k
       tags: cp2k
       vars: 
         cp2k_code_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.wannier90
-      tags: wannier90
+    - role: marvel-nccr.lammps
+      tags: lammps
       vars: 
-        wannier90_code_folder: "{{ vm_codes_folder }}"
-    - role: marvel-nccr.aiidalab
-      tags: aiidalab
+        lammps_code_folder: "{{ vm_codes_folder }}"
+    # notes: for some reason, this role fails the first time you run it
+    # just re-run it, should work the second time
+    - role: uchida.miniconda
+      tags: miniconda
       vars:
-        aiidalab_headless: "{{ vm_headless }}"
-    - role: marvel-nccr.aiida
-      tags: aiida 
-      vars:
-        aiida_code_folder: "{{ vm_codes_folder }}"
-        aiida_localhost_cpus: "{{ vm_cpus }}"
-        aiida_localhost_scheduler: "{{ vm_scheduler }}"
-        aiida_examples_folder: "{{ vm_examples_folder }}"
+        miniconda_python: 3
+        miniconda_version: 4.6.14
+        miniconda_prefix: "{{ vm_codes_folder }}/miniconda"
+        miniconda_env:
+          name: root
+          channels: 
+            - conda-forge
+          dependencies:
+            - rdkit=2019.03.2.0
+            - ase=3.17.0
+            - scipy=1.3.0
+            - matplotlib=3.1.0
+            - jupyter=1.0.0
+    - role: addis-school
+      tags: addis_school
+      vars: 
+        addis_school_code_folder: "{{ vm_codes_folder }}"

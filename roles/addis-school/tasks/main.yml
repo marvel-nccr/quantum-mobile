@@ -1,0 +1,6 @@
+---
+- name: activate conda
+  command: "{{ addis_school_code_folder }}/miniconda/bin/conda init bash"
+
+- name: clean conda cache
+  command: "{{ addis_school_code_folder }}/miniconda/bin/conda clean --all -y"
