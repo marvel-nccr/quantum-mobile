@@ -20,10 +20,12 @@
 - src: marvel-nccr.slurm
   version: v0.1.1
 - src: marvel-nccr.quantum_espresso
-  version: v0.1.2
+  version: v1.0.0
 - src: marvel-nccr.cp2k
-  version: v0.1.1
+  version: v1.0.0
 - src: marvel-nccr.lammps
-  version: v0.1.0
+  version: v1.0.0
+- src: marvel-nccr.dl_poly
+  version: master
 - src: uchida.miniconda
   version: master

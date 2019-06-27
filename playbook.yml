@@ -115,3 +115,13 @@
       tags: addis_school
       vars: 
         addis_school_code_folder: "{{ vm_codes_folder }}"
+    - role: marvel-nccr.dl_poly
+      tags: dl_poly
+      vars: 
+        dl_poly_code_folder: "{{ vm_codes_folder }}"
+    - role: marvel-nccr.vmd
+      tags: vmd
+      vars: 
+        vmd_code_folder: "{{ vm_codes_folder }}"
+        vmd_download_link: "{{ lookup('file', './keys/vmd-download-link') }}"
+        vmd_headless: false
