@@ -1,8 +1,6 @@
 ---
-# Needed to modify this role for become_user
-# See https://github.com/marvel-nccr/quantum-mobile/issues/67
-#- src: gantsign.default-web-browser
-#  version: 3.1.0
+- src: gantsign.default-web-browser
+  version: 3.1.0
 - src: marvel-nccr.ansible_prerequisites
   version: v0.1.0
 - src: marvel-nccr.current_user
