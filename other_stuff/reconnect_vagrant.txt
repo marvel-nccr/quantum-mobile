@@ -1,4 +1,6 @@
-In order to connect vagrant to a new VM in Virtualbox:
+In order to connect vagrant to a new VM in Virtualbox, use ./reconnect_vagrant.sh
+
+### Old instructions
 
 1. Get uuid of machine from: vboxmanage list vms
 2. echo "<the-uuid>" > .vagrant/machines/default/virtualbox/id
@@ -10,7 +12,7 @@ folder which contains, amongst other things, the private key.
 
 3. cp ~/.vagrant.d/insecure_private_key .vagrant/machines/default/virtualbox/
 4. Generate the corresponding public key
-   ssh-keygen -y -f  ~/.vagrant.d/insecure_private_key
+   ssh-keygen -y -f  ~/.vagrant.d/private_key
 5. Use the Virtualbox GUI to paste the public key inside the VM:
    mkdir -p ~/.ssh
    vim ~/.ssh/authorized_keys

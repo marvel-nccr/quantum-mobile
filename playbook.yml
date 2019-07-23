@@ -2,12 +2,6 @@
 - name: Install ansible prerequisites
   hosts: default
   gather_facts: no
-  roles:
-    - marvel-nccr.ansible_prerequisites
-
-- name: Add vm user
-  hosts: default
-  gather_facts: no
   pre_tasks:
     - name: import global variables
       tags: always
@@ -20,33 +14,31 @@
       debug:
         msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
   roles:
-    - name: add user {{ vm_user }} with key
-      role: marvel-nccr.add_user
-      vars:
-        add_user_name: "{{ vm_user }}"
-        add_user_password: "{{ vm_password }}"
-        add_user_sudo: True
-         
-# Note: it is important to pass variables to roles using the 'vars' dictionary.
+    - role: marvel-nccr.ansible_prerequisites
+
+# Note: Pass variables to roles using the 'vars' dictionary!
 # If variables are passed on the same indentation level as the role, the variable is
 # set correctly inside the role, but following roles will read the *default*
 # value of the variable (as defined inside the role).
 - name: set up the VM
   hosts: default
-  become: True
-  become_user: "{{ vm_user }}"
-  pre_tasks:
-    - name: import global variables
-      tags: always
-      include_vars:
-        file: globalconfig.yml
   vars:
     - release_notes: True
+    - release_notes_vm_user: "{{ vm_user }}"
     - run_tests: False
     - clean: False
     - root_user: root
     - cloud_platform: virtualbox
   roles: 
+    - name: add user {{ vm_user }} with key
+      role: marvel-nccr.add_user
+      vars:
+        add_user_name: "{{ vm_user }}"
+        add_user_password: "{{ vm_password }}"
+        add_user_groups:
+          - "{{ vm_user }}"
+          - sudo
+        add_user_passwordless_sudo: true
     - role: marvel-nccr.simulationbase
       tags: simulationbase
       vars:
@@ -74,49 +66,38 @@
         qm_customizations_examples_folder: "{{ vm_examples_folder }}"
     - role: marvel-nccr.editors
       tags: editors
+      vars:
+        editors_vm_user: "{{ vm_user }}"
     - role: marvel-nccr.slurm
       tags: slurm
       vars:
         slurm_hostname: "{{ vm_hostname }}"
         slurm_cpus: "{{ vm_cpus }}"
         slurm_memory: "{{ vm_memory }}"
-#    - role: marvel-nccr.torque
-#      tags: torque
-#      vars:
-#        torque_hostname: "{{ vm_hostname }}"
-#        torque_cpus: "{{ vm_cpus }}"
     - role: marvel-nccr.quantum_espresso
       tags: quantum_espresso
-      vars: 
-        quantum_espresso_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.yambo
       tags: yambo
-      vars: 
-        yambo_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.fleur
       tags: fleur
-      vars: 
-        fleur_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.siesta
       tags: siesta
-      vars: 
-        siesta_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.cp2k
       tags: cp2k
-      vars: 
-        cp2k_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.wannier90
       tags: wannier90
-      vars: 
-        wannier90_code_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.aiida
       tags: aiida 
+      become: true
+      become_user: "{{ vm_user }}"
       vars:
         aiida_code_folder: "{{ vm_codes_folder }}"
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_localhost_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-#    - role: marvel-nccr.aiidalab
-#      tags: aiidalab
-#      vars:
-#        aiidalab_headless: "{{ vm_headless }}"
+    - role: marvel-nccr.aiidalab
+      become: true
+      become_user: "{{ vm_user }}"
+      tags: aiidalab
+      vars:
+        aiidalab_headless: "{{ vm_headless }}"
