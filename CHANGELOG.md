@@ -5,6 +5,11 @@
 ### Improvements
 * now installing fixed versions of ansible roles for improved reproducibility
   and tracking of changes between Quantum Mobile releases
+* now installing codes system-wide for better reuse in servers 
+  + following ansible conventions
+
+### Software updates
+* aiidalab v19.05.2
 
 ### Build process
 * ansible 2.7.10
