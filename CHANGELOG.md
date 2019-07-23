@@ -1,11 +1,17 @@
 # Changelog
 
-## Quantum Mobile v19.04.0
+## Quantum Mobile v19.07.0
 
 ### Improvements
 * now installing fixed versions of ansible roles for improved reproducibility
   and tracking of changes between Quantum Mobile releases
 
+### Build process
+* ansible 2.7.10
+* Vagrant v2.2.5
+  * vbguest v0.19.0
+  * bento/ubuntu-18.04 v201906.18.0
+* Virtualbox v6.0.10
 
 ## Quantum Mobile v19.03.0
 
