@@ -18,7 +18,7 @@
 - src: marvel-nccr.slurm
   version: v1.0.0
 - src: marvel-nccr.quantum_espresso
-  version: support/qe-6.3
+  version: v1.0.1-qe-6.3
 - src: marvel-nccr.yambo
   version: v1.0.0
 - src: marvel-nccr.fleur
