@@ -14,3 +14,4 @@ other_stuff/*/*.png
 
 # roles & dependencies
 roles/marvel-nccr*
+roles/gantsign*

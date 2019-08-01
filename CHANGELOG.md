@@ -9,7 +9,7 @@
   + following ansible conventions
 
 ### Software updates
-* aiidalab v19.05.2
+* aiidalab v19.05.3
 
 ### Build process
 * ansible 2.7.10

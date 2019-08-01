@@ -18,18 +18,18 @@
 - src: marvel-nccr.slurm
   version: v1.0.0
 - src: marvel-nccr.quantum_espresso
-  version: v1.0.0
+  version: support/qe-6.3
 - src: marvel-nccr.yambo
   version: v1.0.0
 - src: marvel-nccr.fleur
   version: v1.0.0
 - src: marvel-nccr.siesta
-  version: v1.0.0
+  version: v1.0.1
 - src: marvel-nccr.cp2k
-  version: v1.0.0
+  version: v1.0.1
 - src: marvel-nccr.wannier90
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v0.1.1
+  version: v0.1.2
 - src: marvel-nccr.aiidalab
-  version: v0.1.1
+  version: v0.1.2

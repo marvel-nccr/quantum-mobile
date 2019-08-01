@@ -84,6 +84,8 @@
       tags: siesta
     - role: marvel-nccr.cp2k
       tags: cp2k
+      #vars:
+      #  cp2k_installation_route: "apt"
     - role: marvel-nccr.wannier90
       tags: wannier90
     - role: marvel-nccr.aiida
