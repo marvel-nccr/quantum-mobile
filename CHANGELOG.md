@@ -1,5 +1,34 @@
 # Changelog
 
+## Quantum Mobile v19.09.0
+
+### Improvements
+* first official Quantum Mobile release with AiiDA 1.0
+* python environment switched from 2.7 to 3.6
+
+### Software updates
+* aiida-core v1.0.0b6
+  * aiida-quantumespresso v3.0.0a4
+* aiidalab v19.08.0a1
+
+## Quantum Mobile v19.07.0
+
+### Improvements
+* now installing fixed versions of ansible roles for improved reproducibility
+  and tracking of changes between Quantum Mobile releases
+* now installing codes system-wide for better reuse in servers 
+  + following ansible conventions
+
+### Software updates
+* aiidalab v19.05.3
+
+### Build process
+* ansible 2.7.10
+* Vagrant v2.2.5
+  * vbguest v0.19.0
+  * bento/ubuntu-18.04 v201906.18.0
+* Virtualbox v6.0.10
+
 ## Quantum Mobile v19.03.0
 
 ### Improvements

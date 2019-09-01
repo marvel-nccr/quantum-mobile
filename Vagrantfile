@@ -26,6 +26,8 @@ Vagrant.configure(2) do |config|
      vb.customize ["modifyvm", :id, "--vram", gconfig['vm_vram']]
      # makes mouse/typing more responsive
      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     # see https://github.com/marvel-nccr/quantum-mobile/issues/99
+     vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
      # turn off remote display (requires Virtualbox Extension pack)
@@ -51,7 +53,7 @@ Vagrant.configure(2) do |config|
   #config.vm.box = "bento/ubuntu-16.04"
   #config.vm.box_version = "201803.24.0"
   config.vm.box = "bento/ubuntu-18.04"
-  config.vm.box_version = "201812.27.0"
+  config.vm.box_version = "201906.18.0"
   #config.vm.box = "ubuntu/xenial64"
   config.vm.boot_timeout = 60
 
@@ -74,7 +76,7 @@ Vagrant.configure(2) do |config|
     ansible.verbose = "v"
     ansible.playbook = "playbook.yml"
     ansible.extra_vars = {
-       ansible_python_interpreter: "/usr/bin/python2.7",
+       ansible_python_interpreter: "/usr/bin/python3",
     }
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
   end

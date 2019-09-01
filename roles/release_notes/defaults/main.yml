@@ -3,5 +3,6 @@
 # to see whether they should include release notes
 
 release_notes_locally: False
-release_notes_vm: "${HOME}/Desktop/RELEASENOTES.txt"
-release_notes_localhost: "{{ playbook_dir }}/RELEASENOTES.txt"
+release_notes_vm_user: ubuntu
+release_notes_vm: "/home/{{ release_notes_vm_user }}/Desktop/RELEASE_NOTES.txt"
+release_notes_localhost: "{{ playbook_dir }}/RELEASE_NOTES.txt"
