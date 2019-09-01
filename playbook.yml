@@ -43,7 +43,6 @@
       tags: simulationbase
       vars:
         simulationbase_vm_user: "{{ vm_user }}"
-        simulationbase_vm_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
         simulationbase_hostname: "{{ vm_hostname }}"
         simulationbase_codes_folder: "{{ vm_codes_folder }}"
     - role: marvel-nccr.ubuntu_desktop
@@ -88,6 +87,12 @@
       #  cp2k_installation_route: "apt"
     - role: marvel-nccr.wannier90
       tags: wannier90
+    - role: marvel-nccr.aiidalab
+      become: true
+      become_user: "{{ vm_user }}"
+      tags: aiidalab
+      vars:
+        aiidalab_headless: "{{ vm_headless }}"
     - role: marvel-nccr.aiida
       tags: aiida 
       become: true
@@ -97,9 +102,3 @@
         aiida_localhost_cpus: "{{ vm_cpus }}"
         aiida_localhost_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
-    - role: marvel-nccr.aiidalab
-      become: true
-      become_user: "{{ vm_user }}"
-      tags: aiidalab
-      vars:
-        aiidalab_headless: "{{ vm_headless }}"
