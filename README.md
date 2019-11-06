@@ -16,7 +16,7 @@ mechanical calculations, including
  * [CP2K](https://www.cp2k.org)
  * [Wannier90](http://www.wannier.org)
 
-all of which are set up and ready to be used through the
+all of which are set up and ready to be used through on their own or through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
 provenance tracking.
 
