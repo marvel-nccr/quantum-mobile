@@ -93,36 +93,7 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
 
 ## Customizing Quantum Mobile
 
-There are at least two ways to customize Quantum Mobile in order to fit your needs:
-
- 1. Start VM, add/remove components manually, export image again
-   + it's quick
-   + no need to work with ansible/vagrant
-   - **but**: no clear record of changes
-   - need to redo this next time round
- 2. Add/remove components in the [`playbook.yml`](playbook.yml), rebuild the VM
-   + it's reproducible
-   + easy to keep up to date (just rebuild with updated components)
-   - **but**: need to learn how to build the VM
-
-Quantum Mobile encapsulates components in
-[ansible roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
-which are selected in the [`playbook.yml`](playbook.yml) file.
-You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own](https://github.com/marvel-nccr/cookiecutter-ansible-role).
-
-## Publishing customized VMs
-
-If you would like to publish a customized version of Quantum Mobile, we recommend that you
-
- 1. Fork this repository
- 1. Give your VM a different name to avoid confusion
- 1. Adapt `globalconfig.yml`, `EULA.txt` and `README.md` appropriately
- 1. Pull the latest changes from time to time to keep things up to date
-
-Note: If you are developing new ansible roles for computational materials
-science applications and would like to make them easier to find,
-we'd be happy to host them under the marvel-nccr github organisation
-- just [drop us a line](mailto:leopold.talirz@gmail.com).
+Please see the [Quantum Mobile Wiki](https://github.com/marvel-nccr/quantum-mobile/wiki) on how to adapt Quantum Mobile for your course / tutorial / ....
 
 ## Contact
 
