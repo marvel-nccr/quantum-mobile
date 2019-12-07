@@ -8,19 +8,19 @@
 - src: marvel-nccr.add_user
   version: v0.2.1
 - src: marvel-nccr.simulationbase
-  version: v1.0.1
+  version: v1.0.2
 - src: marvel-nccr.ubuntu_desktop
   version: v1.0.0
 - src: marvel-nccr.quantum_mobile_customizations
-  version: v1.0.0
+  version: v1.0.3
 - src: marvel-nccr.editors
   version: v1.0.1
 - src: marvel-nccr.slurm
   version: v1.0.0
 - src: marvel-nccr.quantum_espresso
-  version: v1.0.1
+  version: v1.1.1
 - src: marvel-nccr.yambo
-  version: v1.0.0
+  version: v1.0.2
 - src: marvel-nccr.fleur
   version: v1.0.0
 - src: marvel-nccr.siesta
@@ -29,13 +29,10 @@
   version: v1.0.1
 - src: marvel-nccr.wannier90
   version: v1.0.0
-#- src: marvel-nccr.aiida
-#  version: v0.1.2
-- src: https://github.com/marvel-nccr/ansible-role-aiida.git
-  version: develop
-  name: marvel-nccr.aiida
-#- src: marvel-nccr.aiidalab
-#  version: v0.1.2
-- src: https://github.com/marvel-nccr/ansible-role-aiidalab.git
-  version: develop
-  name: marvel-nccr.aiidalab
+- src: marvel-nccr.aiida
+  version: v1.0.0
+#- src: https://github.com/marvel-nccr/ansible-role-aiida.git
+#  version: develop
+#  name: marvel-nccr.aiida
+- src: marvel-nccr.aiidalab
+  version: v1.0.0
