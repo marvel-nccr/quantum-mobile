@@ -1,9 +1,10 @@
 # Changelog
 
-## Quantum Mobile v19.12.0RC1
+## Quantum Mobile v19.12.0
 
 ### Improvements
 * first Quantum Mobile release with AiiDA 1.0
+* add BigDFT + AiiDA plugin
 
 ### Software updates
 * Ubuntu 18.04.3 LTS
@@ -17,6 +18,7 @@
 * yambo 4.4
 * QE 6.5 with EPW and Wannier90
 * fleur 0.30 MaxR4
+* bigdft 1.9.0
 
 ## Quantum Mobile v19.09.0
 

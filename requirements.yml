@@ -27,6 +27,8 @@
   version: v1.0.1
 - src: marvel-nccr.cp2k
   version: v1.0.1
+- src: marvel-nccr.bigdft
+  version: v1.0.0
 - src: marvel-nccr.wannier90
   version: v1.0.0
 - src: marvel-nccr.aiida
