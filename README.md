@@ -12,7 +12,7 @@ mechanical calculations, including
  * [Quantum ESPRESSO](http://www.quantum-espresso.org/)
  * [Yambo](http://www.yambo-code.org/)
  * [fleur](http://www.flapw.de/)
- * [Siesta](https://launchpad.net/siesta)
+ * [Siesta](https://gitlab.com/siesta-project/siesta)
  * [CP2K](https://www.cp2k.org)
  * [Wannier90](http://www.wannier.org)
 
