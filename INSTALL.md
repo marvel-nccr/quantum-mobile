@@ -11,6 +11,8 @@ Get Quantum Mobile running on your computer in three simple steps:
     File => Import Appliance
 
 Note: username: `${vm_user}`, password: `${vm_password}`
+In case of issues, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
+
 
 ## Contact
 

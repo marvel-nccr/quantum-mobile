@@ -42,6 +42,8 @@ vdisk_path_grep=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
 [[ $vdisk_path_grep =~ ^.*=\"(.*)\"$ ]]
 vdisk_path=${BASH_REMATCH[1]}
 vm_vdisk_size=`du -sh "$vdisk_path" | awk '{print $1}' `
+echo "### vdisk size: $vm_vdisk_size"
+echo "### image size: $vm_image_size"
 
 export fname vm_version vm_user vm_password 
 export vm_image_size vm_image_md5 vm_vdisk_size

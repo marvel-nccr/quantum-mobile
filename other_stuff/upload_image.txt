@@ -1,2 +1,0 @@
-openstack object create marvel-vms quantum_mobile_<version>.ova
-openstack object create marvel-vms INSTALL_<version>.txt

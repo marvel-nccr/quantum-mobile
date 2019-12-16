@@ -1,12 +1,13 @@
 ---
 # Caution: This file is read by vagrant, ansible and bash
 vm_name: "Quantum Mobile"
-vm_version: "19.09.0"
+vm_version: "19.12.0RC1"
 vm_description: "A Virtual Machine for Computational Materials Science"
 vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
 vm_author: "MARVEL NCCR and MaX CoE"
 vm_author_url: "http://nccr-marvel.ch"
-vm_release_notes_file: "${HOME}/Desktop/RELEASENOTES.txt"
+vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
+vm_readme_file: "${HOME}/Desktop/README.md"
 
 # VM configuration
 vm_hostname: "qmobile"
@@ -17,6 +18,7 @@ vm_cpus: 2
 vm_vram: 128
 vm_shared_folder: "/shared"
 vm_codes_folder: "${HOME}/codes"
+vm_data_folder: "/usr/local/share"
 vm_examples_folder: "${HOME}/examples"
 vm_headless: False
 vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
