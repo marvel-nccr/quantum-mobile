@@ -12,7 +12,7 @@
 - src: marvel-nccr.ubuntu_desktop
   version: v1.0.1
 - src: marvel-nccr.quantum_mobile_customizations
-  version: v1.0.4
+  version: v1.0.5
 - src: marvel-nccr.editors
   version: v1.0.1
 - src: marvel-nccr.slurm
