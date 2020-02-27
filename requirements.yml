@@ -20,21 +20,21 @@
 - src: marvel-nccr.quantum_espresso
   version: v1.1.2
 - src: marvel-nccr.yambo
-  version: v1.0.2
+  version: v1.1.0
 - src: marvel-nccr.fleur
   version: v1.0.2
 - src: marvel-nccr.siesta
   version: v1.0.1
 - src: marvel-nccr.cp2k
-  version: v1.0.1
+  version: v1.1.0
 - src: marvel-nccr.bigdft
   version: v1.0.0
 - src: marvel-nccr.wannier90
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v1.0.1
+  version: v2.1.0
 #- src: https://github.com/marvel-nccr/ansible-role-aiida.git
 #  version: develop
 #  name: marvel-nccr.aiida
 - src: marvel-nccr.aiidalab
-  version: v1.0.1
+  version: v1.1.0
