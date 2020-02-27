@@ -32,9 +32,6 @@
 - src: marvel-nccr.wannier90
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v2.1.0
-#- src: https://github.com/marvel-nccr/ansible-role-aiida.git
-#  version: develop
-#  name: marvel-nccr.aiida
+  version: v2.1.1
 - src: marvel-nccr.aiidalab
   version: v1.1.0
