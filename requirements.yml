@@ -32,6 +32,6 @@
 - src: marvel-nccr.wannier90
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v2.1.2
+  version: v2.1.3
 - src: marvel-nccr.aiidalab
   version: v1.1.0
