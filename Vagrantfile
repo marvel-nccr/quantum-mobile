@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
      # makes mouse/typing more responsive
      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
      # see https://github.com/marvel-nccr/quantum-mobile/issues/99
-     vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
+     vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
      vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
      # turn off remote display (requires Virtualbox Extension pack)
