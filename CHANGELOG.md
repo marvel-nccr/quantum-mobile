@@ -2,6 +2,9 @@
 
 ## Quantum Mobile v20.03.0
 
+### Improvements
+* add WannierTools
+
 ### Build process
 * ansible 2.9.5
 * Vagrant v2.2.7
@@ -11,9 +14,12 @@
 
 ### Software updates
 * yambo 4.5.1
+* siesta 4.1-rc1
 * cp2k 7.1
+* wannier90 3.1
 * aiida v1.1.0
-* aiidalab v20.2.0b2
+  * aiida-yambo 1.0
+  * aiidalab v20.2.0b2
 
 ## Quantum Mobile v19.12.0
 
