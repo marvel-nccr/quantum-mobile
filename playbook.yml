@@ -25,7 +25,7 @@
   vars:
     - release_notes: true
     - release_notes_vm_user: "{{ vm_user }}"
-    - run_tests: false
+    - run_tests: true
     - clean: false
     - root_user: root
     - cloud_platform: virtualbox

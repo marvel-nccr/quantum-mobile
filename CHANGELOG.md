@@ -4,6 +4,8 @@
 
 ### Improvements
 * add WannierTools
+* add bigdft 1.9.0
+* add aiida-bigdft v0.1.0a0
 
 ### Build process
 * ansible 2.9.5
@@ -20,12 +22,12 @@
 * aiida v1.1.0
   * aiida-yambo 1.0
   * aiidalab v20.2.0b2
+  * aiida-wannier90 v2.0.0
 
 ## Quantum Mobile v19.12.0
 
 ### Improvements
 * first Quantum Mobile release with AiiDA 1.0
-* add BigDFT + AiiDA plugin
 
 ### Software updates
 * Ubuntu 18.04.3 LTS
@@ -34,12 +36,10 @@
   * aiida-quantumespresso v3.0.0a5
   * aiida-siesta v1.0.0
   * aiida-fleur v1.0.0a0
-  * aiida-bigdft v0.1.0a0
 * aiidalab v19.11.0a2
 * yambo 4.4
 * QE 6.5 with EPW and Wannier90
 * fleur 0.30 MaxR4
-* bigdft 1.9.0
 
 ## Quantum Mobile v19.09.0
 

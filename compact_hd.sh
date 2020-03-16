@@ -19,11 +19,11 @@ vdisk_uuid=${BASH_REMATCH[1]}
 vm_vdisk_size=`du -sh "$vdisk_path" | awk '{print $1}' `
 echo "### Initial vdisk size: $vm_vdisk_size"
 
-#echo "### Filling free space with zeros (this can take several minutes)"
-#ssh -F vagrant-ssh default "cat /dev/zero > zero.fill; sync; sleep 1; sync; rm -f zero.fill"
-#
-#echo "### Halting any running machines"
-#vagrant halt
+echo "### Filling free space with zeros (this can take several minutes)"
+ssh -F vagrant-ssh default "cat /dev/zero > zero.fill; sync; sleep 1; sync; rm -f zero.fill"
+
+echo "### Halting any running machines"
+vagrant halt
  
 echo "### Converting vdisk to vdi format"
 tmp_vdisk_vdi=tmp.vdi
