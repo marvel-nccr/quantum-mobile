@@ -15,6 +15,8 @@ echo "### Use e.g.: ssh -F vagrant-ssh default'"
 cat > hosts <<EOF
 [vms:vars]
 ansible_ssh_common_args= -F vagrant-ssh
+# modify this line to switch to python2
+ansible_python_interpreter=/usr/bin/python3
 [vms]
 default ansible_user=vagrant
 EOF

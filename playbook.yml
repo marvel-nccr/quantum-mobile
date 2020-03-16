@@ -89,10 +89,12 @@
       #vars:
       #  cp2k_installation_route: "apt"
     # Wannier90 3.0 bundled with QE
-    #- role: marvel-nccr.wannier90
-    #  tags: wannier90
-    #- role: marvel-nccr.bigdft
-    #  tags: bigdft 
+    - role: marvel-nccr.wannier90
+      tags: wannier90
+    - role: marvel-nccr.wannier_tools
+      tags: wannier_tools
+    - role: marvel-nccr.bigdft
+      tags: bigdft 
     - role: marvel-nccr.aiidalab
       become: true
       become_user: "{{ vm_user }}"
@@ -105,8 +107,13 @@
       become: true
       become_user: "{{ vm_user }}"
       vars:
-        aiida_code_folder: "{{ vm_codes_folder }}"
+        aiida_source_folder: "{{ vm_codes_folder }}"
         aiida_data_folder: "{{ vm_data_folder }}/aiida"
-        aiida_localhost_cpus: "{{ vm_cpus }}"
-        aiida_localhost_scheduler: "{{ vm_scheduler }}"
+        aiida_computer_cpus: "{{ vm_cpus }}"
+        aiida_computer_scheduler: "{{ vm_scheduler }}"
         aiida_examples_folder: "{{ vm_examples_folder }}"
+        aiida_components:
+          - computers
+          - plugins
+          - pseudopotentials
+          - examples

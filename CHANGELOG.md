@@ -1,6 +1,30 @@
 # Changelog
 
-## Quantum Mobile v19.12.0RC1
+## Quantum Mobile v20.03.0
+
+### Improvements
+* add WannierTools
+* add bigdft 1.9.0
+* add aiida-bigdft v0.1.0a0
+
+### Build process
+* ansible 2.9.5
+* Vagrant v2.2.7
+  * vbguest v0.23.0
+  * bento/ubuntu-18.04 v202002.04.0
+* Virtualbox v6.1.4
+
+### Software updates
+* yambo 4.5.1
+* siesta 4.1-rc1
+* cp2k 7.1
+* wannier90 3.1
+* aiida v1.1.0
+  * aiida-yambo 1.0
+  * aiidalab v20.2.0b2
+  * aiida-wannier90 v2.0.0
+
+## Quantum Mobile v19.12.0
 
 ### Improvements
 * first Quantum Mobile release with AiiDA 1.0
@@ -12,7 +36,6 @@
   * aiida-quantumespresso v3.0.0a5
   * aiida-siesta v1.0.0
   * aiida-fleur v1.0.0a0
-  * aiida-bigdft v0.1.0a0
 * aiidalab v19.11.0a2
 * yambo 4.4
 * QE 6.5 with EPW and Wannier90
