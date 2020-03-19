@@ -14,7 +14,7 @@ vagrant halt # shut down machine
 vm_id="$vm_name $vm_version"
 
 echo "### Exporting '$vm_id'"
-git_tag=`git describe --abbrev=0`
+git_tag=`git describe --abbrev=0 --tags`
 if [ "$git_tag" != "$vm_version" ]; then
     echo "latest git tag $git_tag and version number $vm_version do not agree"
 #    exit
