@@ -1,4 +1,4 @@
-# Installation instructions
+## Installation instructions
 
 Get Quantum Mobile running on your computer in three simple steps:
 
@@ -12,9 +12,18 @@ Get Quantum Mobile running on your computer in three simple steps:
     File => Import Appliance
 
 Note: username: `${vm_user}`, password: `${vm_password}`
-In case of issues, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions#virtualbox-installationstartup-issues).
 
 
 ## Contact
 
+For issues encountered during installation, please first consult the [FAQ page](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions#virtualbox-installationstartup-issues).
+
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+
+## Changelog
+
+### Bug fixes
+### Improvements
+### Software updates
+
+## Version Summary
