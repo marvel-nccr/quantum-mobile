@@ -8,7 +8,7 @@
 - src: marvel-nccr.add_user
   version: v0.2.1
 - src: marvel-nccr.simulationbase
-  version: v1.0.6
+  version: v1.0.7
 - src: marvel-nccr.ubuntu_desktop
   version: v1.0.4
 - src: marvel-nccr.quantum_mobile_customizations
@@ -36,4 +36,4 @@
 - src: marvel-nccr.aiida
   version: v2.1.8
 - src: marvel-nccr.aiidalab
-  version: v1.1.1
+  version: v1.1.3
