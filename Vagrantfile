@@ -79,5 +79,6 @@ Vagrant.configure(2) do |config|
        ansible_python_interpreter: "/usr/bin/python3",
     }
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
+    ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
   end
 end
