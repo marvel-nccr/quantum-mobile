@@ -17,7 +17,7 @@ mechanical calculations, including
  * [Wannier90](http://www.wannier.org)
  * [BigDFT](http://www.bigdft.org)
 
-all of which are set up and ready to be used through on their own or through the
+all of which are set up and ready to be used on their own or through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
 provenance tracking.
 
@@ -59,7 +59,8 @@ vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
 
-Note: Due to a bug in the vbguest vagrant plugin, there are some additional steps #60
+Note: If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional
+steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
 
 ### Create image
 ```

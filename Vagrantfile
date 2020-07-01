@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "bento/ubuntu-18.04"
   #config.vm.box_version = "201910.21.0"
   #config.vm.box = "ubuntu/xenial64"
-  config.vm.boot_timeout = 60
+  config.vm.boot_timeout = 120
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
