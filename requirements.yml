@@ -16,7 +16,7 @@
 - src: marvel-nccr.editors
   version: v1.0.2
 - src: marvel-nccr.slurm
-  version: v1.1.0
+  version: v1.2.0
 - src: marvel-nccr.quantum_espresso
   version: v1.1.4
 - src: marvel-nccr.yambo
@@ -28,7 +28,7 @@
 - src: marvel-nccr.cp2k
   version: v1.1.1
 - src: marvel-nccr.bigdft
-  version: v1.2.0
+  version: v1.3.0
 - src: marvel-nccr.wannier90
   version: v1.1.2
 - src: marvel-nccr.wannier_tools
