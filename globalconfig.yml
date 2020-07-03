@@ -13,7 +13,7 @@ vm_readme_file: "${HOME}/Desktop/README.md"
 vm_hostname: "qmobile"
 vm_user: "max"
 vm_password: "moritz"
-vm_memory: 2048
+vm_memory: 1536
 vm_cpus: 2
 vm_vram: 128
 vm_shared_folder: "/shared"
