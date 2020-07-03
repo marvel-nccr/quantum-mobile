@@ -1,5 +1,9 @@
 # Changelog
 
+## Quantum Mobile v20.06.1a1
+
+Alpha 1 (pre-release) of v20.06.1.
+
 ## Quantum Mobile v20.03.0
 
 ### Improvements
