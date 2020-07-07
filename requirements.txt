@@ -5,3 +5,5 @@ paramiko
 # for testing
 molecule
 docker
+# for deployment
+python-openstackclient
