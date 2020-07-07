@@ -32,6 +32,7 @@
   roles: 
     - name: add user {{ vm_user }} with key
       role: marvel-nccr.add_user
+      tags: add_user
       vars:
         add_user_name: "{{ vm_user }}"
         add_user_password: "{{ vm_password }}"
@@ -93,8 +94,9 @@
       tags: wannier90
     - role: marvel-nccr.wannier_tools
       tags: wannier_tools
-    - role: marvel-nccr.bigdft
-      tags: bigdft 
+    # this can be added back when ansible-role-bigdft/issues/8 is fixed
+    #- role: marvel-nccr.bigdft
+    #  tags: bigdft
     - role: marvel-nccr.aiidalab
       become: true
       become_user: "{{ vm_user }}"

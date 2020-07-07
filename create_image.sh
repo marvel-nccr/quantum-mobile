@@ -14,7 +14,7 @@ vagrant halt # shut down machine
 vm_id="$vm_name $vm_version"
 
 echo "### Exporting '$vm_id'"
-git_tag=`git describe --abbrev=0`
+git_tag=`git describe --abbrev=0 --tags`
 if [ "$git_tag" != "$vm_version" ]; then
     echo "latest git tag $git_tag and version number $vm_version do not agree"
 #    exit
@@ -37,7 +37,7 @@ echo "### Find image in $fname"
 
 echo "### Computing size of vm image and vm disk"
 vm_image_size=`du -sh $fname  | awk '{print $1}'`
-vm_image_md5=`md5 $fname  | awk '{print $4}'`
+vm_image_md5=`md5sum $fname  | awk '{print $4}'`
 vdisk_path_grep=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
 [[ $vdisk_path_grep =~ ^.*=\"(.*)\"$ ]]
 vdisk_path=${BASH_REMATCH[1]}

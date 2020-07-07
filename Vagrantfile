@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "bento/ubuntu-18.04"
   #config.vm.box_version = "201910.21.0"
   #config.vm.box = "ubuntu/xenial64"
-  config.vm.boot_timeout = 60
+  config.vm.boot_timeout = 120
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
@@ -79,5 +79,7 @@ Vagrant.configure(2) do |config|
        ansible_python_interpreter: "/usr/bin/python3",
     }
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
+    # Ensure that public key auth is not disabled by the user's config
+    ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
   end
 end
