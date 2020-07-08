@@ -32,6 +32,7 @@
   - aiida-zeopp                     1.1.1
   - aiidalab                        20.7.0b2
 - simulation codes:
+  - Quantum Espresso 6.5
   - Yambo     4.5.1
   - fleur     0.30 MaX4
   - siesta    v4.1-rc1
