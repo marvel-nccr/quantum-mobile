@@ -1,5 +1,67 @@
 # Changelog
 
+## Quantum Mobile v20.07.0
+
+### Improvements
+
+- Re-added BigDFT
+
+### Software updates
+
+- Yambo 4.5.2
+- Siesta 4.1-rc2
+- aiida-bigdft 0.2.1a2
+- aiida-quantumespresso 3.1.0
+
+### Software summary
+
+- OS: Ubuntu 18.04.4 LTS, Linux 4.15.0-112, VirtualBox 6.1.12
+- tools: atomistic (xcrysden, jmol, cif2cell, ase, pymatgen, seekpath, spglib), visualization (grace, gnuplot, matplotlib, bokeh, jupyter), simulation environment (slurm, OpenMPI, FFT/BLAS/LAPACK, gcc, gfortran, singularity)
+- aiida-core                      1.3.0
+  - aiida-bands-inspect             0.4.0
+  - aiida-bigdft                    0.2.1a2
+  - aiida-codtools                  2.1.0
+  - aiida-cp2k                      1.1.0
+  - aiida-ddec                      1.0.0a1
+  - aiida-diff                      1.2.0
+  - aiida-fleur                     1.1.0
+  - aiida-lsmo                      1.0.0b2
+  - aiida-optimize                  0.3.1
+  - aiida-qeq                       1.0.0a1
+  - aiida-quantumespresso           3.1.0
+  - aiida-raspa                     1.1.1
+  - aiida-siesta                    1.0.1
+  - aiida-tbmodels                  0.4.0rc1
+  - aiida-tools                     0.3.3
+  - aiida-vasp                      0.2.4
+  - aiida-wannier90                 2.0.1
+  - aiida-wannier90-workflows       1.0.1
+  - aiida-yambo                     1.1.1
+  - aiida-zeopp                     1.1.1
+- aiidalab                        20.7.0b2
+  - aiidalab-widgets-base           1.0.0b7
+- simulation codes:
+  - Quantum Espresso 6.5
+  - Yambo     4.5.2
+  - fleur     0.30 MaX4
+  - siesta    v4.1-rc2
+  - cp2k      7.1
+  - Wannier90 3.1.0
+  - BigDFT 1.9.0
+- pseudopotentials
+  - SSSP (PBE) efficiency v1.1
+  - SSSP (PBE) precision v1.1
+  - SG15 ONCV v1.1
+
+### Build process
+
+- ansible 2.9.9
+- Vagrant v2.2.9
+  - vbguest v0.24.0
+  - bento/ubuntu-18.04 v202007.17.0
+- Virtualbox v6.1.12
+
+
 ## Quantum Mobile v20.06.1a1
 
 ### Improvements
@@ -55,6 +117,7 @@
 
 BigDFT is not installed, since a fix is outstanding for <https://github.com/marvel-nccr/ansible-role-bigdft/issues/8>.
 
+
 ## Quantum Mobile v20.03.0
 
 ### Improvements
@@ -82,6 +145,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
   - aiidalab v20.2.0b2
   - aiida-wannier90 v2.0.0
 
+
 ## Quantum Mobile v19.12.0
 
 ### Improvements
@@ -101,6 +165,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 - QE 6.5 with EPW and Wannier90
 - fleur 0.30 MaxR4
 
+
 ## Quantum Mobile v19.09.0
 
 ### Improvements
@@ -112,6 +177,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 - aiida-core v1.0.0b6
   - aiida-quantumespresso v3.0.0a4
 - aiidalab v19.08.0a1
+
 
 ## Quantum Mobile v19.07.0
 
@@ -130,6 +196,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
   - vbguest v0.19.0
   - bento/ubuntu-18.04 v201906.18.0
 - Virtualbox v6.0.10
+
 
 ## Quantum Mobile v19.03.0
 
@@ -176,6 +243,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 - Roles are installed via ansible-galaxy
 - Continuous integration tests for individual roles 
 
+
 ## Quantum Mobile v18.04.0
 
 ### Software updates
@@ -203,6 +271,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
   `ansible-playbook playbook.yml -i inventory_file`
 - Adjustments for ansible 2.5
 
+
 ## Quantum Mobile v18.03.0
 
 ### Improvements
@@ -213,12 +282,14 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 
 - VM image built using Virtualbox 5.2.8
 
+
 ## Quantum Mobile v18.02.2
 
 ### Software updates
 
 - aiida-core v0.11.0
 - aiida-siesta v0.11.5
+
 
 ## Quantum Mobile v18.02.0
 
@@ -238,6 +309,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 
 - VM image built using Virtualbox 5.2.6 + Guest Additions 5.2.7
 
+
 ## Quantum Mobile v17.12.0
 
 ### Improvements
@@ -256,6 +328,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
 
 - VM image built using Virtualbox 5.2.4
 - Size of VM image and virtual disk added to install instructions
+
 
 ## Quantum Mobile v17.11.0
 
