@@ -95,8 +95,8 @@
     - role: marvel-nccr.wannier_tools
       tags: wannier_tools
     # this can be added back when ansible-role-bigdft/issues/8 is fixed
-    #- role: marvel-nccr.bigdft
-    #  tags: bigdft
+    - role: marvel-nccr.bigdft
+      tags: bigdft
     - role: marvel-nccr.aiidalab
       become: true
       become_user: "{{ vm_user }}"

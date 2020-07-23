@@ -12,7 +12,7 @@
 - src: marvel-nccr.ubuntu_desktop
   version: v1.0.4
 - src: marvel-nccr.quantum_mobile_customizations
-  version: v1.0.6
+  version: v1.0.7
 - src: marvel-nccr.editors
   version: v1.0.2
 - src: marvel-nccr.slurm
@@ -20,20 +20,20 @@
 - src: marvel-nccr.quantum_espresso
   version: v1.1.4
 - src: marvel-nccr.yambo
-  version: v1.1.0
+  version: v1.1.1
 - src: marvel-nccr.fleur
   version: v1.0.2
 - src: marvel-nccr.siesta
-  version: v1.0.4
+  version: v1.0.5
 - src: marvel-nccr.cp2k
   version: v1.1.1
 - src: marvel-nccr.bigdft
-  version: v1.3.0
+  version: v1.3.1
 - src: marvel-nccr.wannier90
   version: v1.1.2
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v2.3.2
+  version: v2.4.0
 - src: marvel-nccr.aiidalab
   version: v1.2.2
