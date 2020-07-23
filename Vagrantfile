@@ -56,6 +56,8 @@ Vagrant.configure(2) do |config|
   #config.vm.box_version = "201910.21.0"
   #config.vm.box = "ubuntu/xenial64"
   config.vm.boot_timeout = 120
+  # The machine takes a long time to shut down
+  config.vm.graceful_halt_timeout = 360
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
@@ -73,7 +75,7 @@ Vagrant.configure(2) do |config|
   # provisioner: set up VM via ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
   config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
+    ansible.verbose = "vv"
     ansible.playbook = "playbook.yml"
     ansible.extra_vars = {
        ansible_python_interpreter: "/usr/bin/python3",
