@@ -37,15 +37,20 @@ echo "### Find image in $fname"
 
 echo "### Computing size of vm image and vm disk"
 vm_image_size=`du -sh $fname  | awk '{print $1}'`
-vm_image_md5=`md5sum $fname  | awk '{print $4}'`
 vdisk_path_grep=`vboxmanage showvminfo --machinereadable "$vm_id" | grep vmdk `
 [[ $vdisk_path_grep =~ ^.*=\"(.*)\"$ ]]
 vdisk_path=${BASH_REMATCH[1]}
 vm_vdisk_size=`du -sh "$vdisk_path" | awk '{print $1}' `
 echo "### vdisk size: $vm_vdisk_size"
 echo "### image size: $vm_image_size"
+if vm_image_md5=$(md5 $fname 2>/dev/null); then  # MacOS
+    vm_image_md5=$(echo $vm_image_md5 | awk '{print $4}')
+elif vm_image_md5=$(md5sum $fname 2>/dev/null); then  # Linux
+    vm_image_md5=$(echo $vm_image_md5 | awk '{print $1}')
+fi
+echo "### image md5: $vm_image_md5"
 
-export fname vm_version vm_user vm_password 
+export fname vm_version vm_user vm_password vm_cpus vm_memory
 export vm_image_size vm_image_md5 vm_vdisk_size
 envsubst < INSTALL.md > INSTALL_${vm_version}.txt
 echo "### Instructions in INSTALL_${vm_version}${rc}.txt"

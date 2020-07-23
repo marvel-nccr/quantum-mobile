@@ -11,8 +11,8 @@ Get Quantum Mobile running on your computer in three simple steps:
  3. Import virtual machine image into Virtualbox (${vm_vdisk_size})
     File => Import Appliance
 
-Login credentials: username: `${vm_user}`, password: `${vm_password}`.  
-The default configuration of `${vm_cpus}` cores and `${vm_memory}` MB RAM can be adjusted in the VM settings.
+Login credentials: username: `${vm_user}`, password: `${vm_password}`.
+The default configuration of ${vm_cpus} cores and ${vm_memory} MB RAM can be adjusted in the VM settings.
 
 
 ## Contact
