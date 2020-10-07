@@ -10,21 +10,10 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
 
     - uses: actions/checkout@v2
-
-    - name: install virtualbox
-      run: |
-        sudo apt update
-        sudo apt-get install virtualbox
-
-    - name: install vagrant
-      run: |
-        curl -O https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb
-        sudo apt install ./vagrant_2.2.6_x86_64.deb
-        vagrant --version
 
     - name: set up Python 3.8
       uses: actions/setup-python@v2
