@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
 
      ## Resource details
      vb.memory = gconfig['vm_memory']
-     vb.cpus = gconfig['vm_cpus']
+     vb.cpus = 1  # gconfig['vm_cpus']
 
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
