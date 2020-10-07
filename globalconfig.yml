@@ -20,6 +20,6 @@ vm_shared_folder: "/shared"
 vm_codes_folder: "${HOME}/codes"
 vm_data_folder: "/usr/local/share"
 vm_examples_folder: "${HOME}/examples"
-vm_headless: False
+vm_headless: True
 vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
 vm_scheduler: slurm # 'slurm' or 'direct'
