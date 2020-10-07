@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
 
      ## Resource details
      vb.memory = gconfig['vm_memory']
-     vb.cpus = 2  # gconfig['vm_cpus']
+     vb.cpus = gconfig['vm_cpus']
 
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
@@ -25,7 +25,7 @@ Vagrant.configure(2) do |config|
      # See https://www.virtualbox.org/manual/ch08.html
      vb.customize ["modifyvm", :id, "--vram", gconfig['vm_vram']]
      # makes mouse/typing more responsive
-    #  vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
      # see https://github.com/marvel-nccr/quantum-mobile/issues/99
      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]

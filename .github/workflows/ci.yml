@@ -21,9 +21,7 @@ jobs:
         python-version: 3.8
 
     - name: install python requirements
-      run: |
-        pip install wheel
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
 
     - name: install Galaxy roles
       run: ansible-galaxy install -r requirements.yml
