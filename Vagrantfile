@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
 
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
-     vb.gui = true
+     vb.gui = false
 
      # More customizations
      # See https://www.virtualbox.org/manual/ch08.html
