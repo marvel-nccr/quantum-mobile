@@ -65,21 +65,21 @@ Vagrant.configure(2) do |config|
   # Unfortunately, VirtualBox only allows to share absolute paths, which cannot
   # work across all host OS.
   # https://www.virtualbox.org/ticket/15305
-  #config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
+  # config.vm.synced_folder ".", gconfig['vm_shared_folder'], owner: gconfig['vm_user']
   
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
    
   # provisioner: set up VM via ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
-    ansible.playbook = "playbook.yml"
-    ansible.extra_vars = {
-       ansible_python_interpreter: "/usr/bin/python3",
-    }
-    ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
-    # Ensure that public key auth is not disabled by the user's config
-    ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
-  end
+  # config.vm.provision "ansible" do |ansible|
+  #   ansible.verbose = "v"
+  #   ansible.playbook = "playbook.yml"
+  #   ansible.extra_vars = {
+  #      ansible_python_interpreter: "/usr/bin/python3",
+  #   }
+  #   ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
+  #   # Ensure that public key auth is not disabled by the user's config
+  #   ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
+  # end
 end
