@@ -33,6 +33,7 @@ jobs:
         VAGRANT_ON_GH: true
 
     - name: Archive build log
+      uses: actions/upload-artifact@v2
       with:
         name: build-log
         path: ansible.log
@@ -44,7 +45,7 @@ jobs:
       run: tox -e py38-package
 
     - name: Archive distribution
+      uses: actions/upload-artifact@v2
       with:
         name: distribution
         path: dist/
-      

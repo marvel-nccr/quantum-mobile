@@ -32,16 +32,16 @@
     root_user: root
     cloud_platform: virtualbox
   roles:
-    - name: add user {{ vm_user }} with key
-      role: marvel-nccr.add_user
-      tags: [add_user]
-      vars:
-        add_user_name: "{{ vm_user }}"
-        add_user_password: "{{ vm_password }}"
-        add_user_groups:
-          - "{{ vm_user }}"
-          - sudo
-        add_user_passwordless_sudo: true
+  - name: add user {{ vm_user }} with key
+    role: marvel-nccr.add_user
+    tags: [add_user]
+    vars:
+      add_user_name: "{{ vm_user }}"
+      add_user_password: "{{ vm_password }}"
+      add_user_groups:
+      - "{{ vm_user }}"
+      - sudo
+      add_user_passwordless_sudo: true
     # - role: marvel-nccr.simulationbase
     #   tags: [simulationbase]
     #   vars:

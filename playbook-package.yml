@@ -9,153 +9,154 @@
 
   tasks:
 
-    - name: import global variables
-      include_vars:
-        file: globalconfig.yml
-      tags: [always]
+  - name: import global variables
+    include_vars:
+      file: globalconfig.yml
+    tags: [always]
 
-    - set_fact:
-        vm_id: "{{ vm_name }} {{ vm_version }}"
-      tags: [always]
+  - name: set VM ID
+    set_fact:
+      vm_id: "{{ vm_name }} {{ vm_version }}"
+    tags: [always]
 
-    - name: Get machine information for "{{ vm_id }}"
-      shell: vboxmanage showvminfo --machinereadable "{{ vm_id }}"
-      register: vminfo
-      tags: [always]
+  - name: Get machine information for "{{ vm_id }}"
+    shell: vboxmanage showvminfo --machinereadable "{{ vm_id }}"
+    register: vminfo
+    tags: [always]
 
-    - set_fact:
-        vdisk_path: "{{ vminfo.stdout | regex_search('\"SATA Controller-0-0\"=\"(.+)\"', '\\1') | first }}"
-        vdisk_uuid: "{{ vminfo.stdout | regex_search('\"SATA Controller-ImageUUID-0-0\"=\"(.+)\"', '\\1') | first }}"
-      tags: [always]
+  - name: set VM machine information
+    set_fact:
+      vdisk_path: "{{ vminfo.stdout | regex_search('\"SATA Controller-0-0\"=\"(.+)\"', '\\1') | first }}"
+      vdisk_uuid: "{{ vminfo.stdout | regex_search('\"SATA Controller-ImageUUID-0-0\"=\"(.+)\"', '\\1') | first }}"
+    tags: [always]
 
-    - name: Get stats of {{ vdisk_path }}
-      stat:
-        path: "{{ vdisk_path }}"
-      register: vm_vdisk_file
-      tags: [always]
-    
-    - debug:
-        msg: "vdisk size: {{ vm_vdisk_file.stat.size }}"
-      tags: [always]
+  - name: Get stats of {{ vdisk_path }}
+    stat:
+      path: "{{ vdisk_path }}"
+    register: vm_vdisk_file
+    tags: [always]
+  - debug:
+      msg: "vdisk size: {{ vm_vdisk_file.stat.size }}"
+    tags: [always]
 
-    - name: Ensure VM started
-      shell: vagrant up
-      tags: [clean]
+  - name: Ensure VM started
+    shell: vagrant up
+    tags: [clean]
 
-    - name: Output SSH connection configuration
-      shell: vagrant ssh-config > vagrant-ssh
-      tags: [clean]
+  - name: Output SSH connection configuration
+    shell: vagrant ssh-config > vagrant-ssh
+    tags: [clean]
 
-    - name: Clear bash history
-      shell: ssh -F vagrant-ssh default "cat /dev/null > ~/.bash_history && history -c"
-      tags: [clean]
+  - name: Clear bash history
+    shell: ssh -F vagrant-ssh default "cat /dev/null > ~/.bash_history && history -c"
+    tags: [clean]
 
-    - name: Filling free space with zeros (this can take several minutes)
-      shell: ssh -F vagrant-ssh default "cat /dev/zero > zero.fill; sync; sleep 1; sync; rm -f zero.fill"
-      tags: [clean]
+  - name: Filling free space with zeros (this can take several minutes)
+    shell: ssh -F vagrant-ssh default "cat /dev/zero > zero.fill; sync; sleep 1; sync; rm -f zero.fill"
+    tags: [clean]
 
-    - name: Halt any running machines
-      shell: vagrant halt
-      tags: [always]
+  - name: Halt any running machines
+    shell: vagrant halt
+    tags: [always]
 
-    - name: Remove old temporary files
-      file:
-        path: "{{ item }}"
-        state: absent
-      with_items:
-        - "{{ tmp_vdisk_vdi }}"
-        - "{{ tmp_vdisk_vmdk }}"
-      tags: [compact]
+  - name: Remove old temporary files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+    - "{{ tmp_vdisk_vdi }}"
+    - "{{ tmp_vdisk_vmdk }}"
+    tags: [compact]
 
-    - name: Convert vdisk to vdi format
-      shell: vboxmanage clonehd "{{ vdisk_path }}" "{{ tmp_vdisk_vdi }}" --format vdi
-      tags: [compact]
+  - name: Convert vdisk to vdi format
+    shell: vboxmanage clonehd "{{ vdisk_path }}" "{{ tmp_vdisk_vdi }}" --format vdi
+    tags: [compact]
 
-    - name: Compact vdisk
-      shell: vboxmanage modifyhd "{{ tmp_vdisk_vdi }}" --compact
-      tags: [compact]
+  - name: Compact vdisk
+    shell: vboxmanage modifyhd "{{ tmp_vdisk_vdi }}" --compact
+    tags: [compact]
 
-    - name: Convert vdisk back to vmdk
-      shell: vboxmanage clonehd "{{ tmp_vdisk_vdi }}" "{{ tmp_vdisk_vmdk }}" --format vmdk
-      tags: [compact]
+  - name: Convert vdisk back to vmdk
+    shell: vboxmanage clonehd "{{ tmp_vdisk_vdi }}" "{{ tmp_vdisk_vmdk }}" --format vmdk
+    tags: [compact]
 
-    - name: Remove vdi temporary file
-      shell: vboxmanage closemedium "{{ tmp_vdisk_vdi }}" --delete
-      tags: [compact]
+  - name: Remove vdi temporary file
+    shell: vboxmanage closemedium "{{ tmp_vdisk_vdi }}" --delete
+    tags: [compact]
 
-    - name: Replace VM file
-      copy:
-        src: "{{ tmp_vdisk_vmdk }}"
-        dest: "{{ vdisk_path }}"
-        force: true
-      tags: [compact]
+  - name: Replace VM file
+    copy:
+      src: "{{ tmp_vdisk_vmdk }}"
+      dest: "{{ vdisk_path }}"
+      force: true
+    tags: [compact]
 
-    - name: Reset VM UUID
-      shell: vboxmanage internalcommands sethduuid "{{ vdisk_path }}" {{ vdisk_uuid }}
-      tags: [compact]
+  - name: Reset VM UUID
+    shell: vboxmanage internalcommands sethduuid "{{ vdisk_path }}" {{ vdisk_uuid }}
+    tags: [compact]
 
-    - name: Remove vdmk temporary file
-      shell: vboxmanage closemedium "{{ tmp_vdisk_vmdk }}" --delete
-      tags: [compact]
+  - name: Remove vdmk temporary file
+    shell: vboxmanage closemedium "{{ tmp_vdisk_vmdk }}" --delete
+    tags: [compact]
 
-    - name: Get stats of {{ vdisk_path }}
-      stat:
-        path: "{{ vdisk_path }}"
-      register: vm_vdisk_file
-      tags: [clean, compact]
-    
-    - debug:
-        msg: "Final vdisk size: {{ vm_vdisk_file.stat.size }}"
-      tags: [clean, compact]
+  - name: Get stats of {{ vdisk_path }}
+    stat:
+      path: "{{ vdisk_path }}"
+    register: vm_vdisk_file
+    tags: [clean, compact]
+  - debug:
+      msg: "Final vdisk size: {{ vm_vdisk_file.stat.size }}"
+    tags: [clean, compact]
 
-    - name: Retrieve git tag
-      shell: git describe --abbrev=0 --tags
-      register: git_tag
-      tags: [export,validate]
+  - name: Retrieve git tag
+    shell: git describe --abbrev=0 --tags
+    register: git_tag
+    tags: [export, validate, skip_ansible_lint]
 
-    - name: "Assert git tag ({{ git_tag.stdout }}) == VM version({{ vm_version }})"
-      assert:
-        that:
-          - git_tag.stdout == vm_version
-      tags: [export,validate]
+  - name: "Assert git tag ({{ git_tag.stdout }}) == VM version({{ vm_version }})"
+    assert:
+      that:
+      - git_tag.stdout == vm_version
+    tags: [export, validate]
 
-    - name: Clean dist folder
-      file:
-        state: "{{ item }}"
-        path: "dist/"
-      with_items:
-        - absent
-        - directory
-      tags: [export]
+  - name: Clean dist folder
+    file:
+      state: "{{ item }}"
+      path: "dist/"
+    with_items:
+    - absent
+    - directory
+    tags: [export]
 
-    - set_fact:
-        image_path: dist/quantum_mobile_{{ vm_version }}.ova
-      tags: [export]
+  - name: set output path for image
+    set_fact:
+      image_path: dist/quantum_mobile_{{ vm_version }}.ova
+    tags: [export]
 
-    - name: "Export image to: {{ image_path }}"
-      shell: |
-        vboxmanage export "{{ vm_id }}"  \
-          -o {{ image_path }} \
-          --vsys 0 \
-          --product "{{ vm_name }}" \
-          --version "{{ vm_version }}" \
-          --producturl "{{ vm_url }}" \
-          --vendor "{{ vm_author }}" \
-          --vendorurl "{{ vm_author_url }}" \
-          --description "{{ vm_description }}" \
-          --eulafile "resources/EULA.txt"
-      tags: [export]
+  - name: "Export image to: {{ image_path }}"
+    shell: |
+      vboxmanage export "{{ vm_id }}"  \
+        -o {{ image_path }} \
+        --vsys 0 \
+        --product "{{ vm_name }}" \
+        --version "{{ vm_version }}" \
+        --producturl "{{ vm_url }}" \
+        --vendor "{{ vm_author }}" \
+        --vendorurl "{{ vm_author_url }}" \
+        --description "{{ vm_description }}" \
+        --eulafile "resources/EULA.txt"
+    tags: [export]
 
-    - name: Get stats of {{ image_path }}
-      stat:
-        path: "{{ image_path }}"
-        get_checksum: true
-        checksum_algorithm: md5
-      register: vm_image_file
-      tags: [export]
+  - name: Get stats of {{ image_path }}
+    stat:
+      path: "{{ image_path }}"
+      get_checksum: true
+      checksum_algorithm: md5
+    register: vm_image_file
+    tags: [export]
 
-    - name: Create dist/Install.md template
-      template:
-        src: resources/INSTALL.md.j2
-        dest: dist/Install_{{ vm_version }}.md
-      tags: [export]
+  - name: Create dist/Install.md template
+    template:
+      src: resources/INSTALL.md.j2
+      dest: dist/Install_{{ vm_version }}.md
+    tags: [export]

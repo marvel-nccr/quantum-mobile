@@ -1,3 +1,4 @@
 warn_list:  # or 'skip_list' to silence them completely
   - '208'  # File permissions unset or incorrect
   - '301'  # Commands should not change things if nothing needs doing
+  - '305'  # Use shell only when shell functionality is required 
