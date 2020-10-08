@@ -36,7 +36,7 @@
     register: vm_vdisk_file
     tags: [always]
   - debug:
-      msg: "vdisk size: {{ vm_vdisk_file.stat.size }}"
+      msg: "vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
     tags: [always]
 
   - name: Ensure VM started
@@ -105,7 +105,7 @@
     register: vm_vdisk_file
     tags: [clean, compact]
   - debug:
-      msg: "Final vdisk size: {{ vm_vdisk_file.stat.size }}"
+      msg: "Final vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
     tags: [clean, compact]
 
   - name: Retrieve git tag

@@ -42,7 +42,7 @@ jobs:
       run: tox -e py38-continue -- --tags ubuntu_desktop,qm_customizations,simulationbase --extra-vars "clean=true"
 
     - name: Package VM
-      run: tox -e py38-package
+      run: tox -e py38-package --skip-tags validate
 
     - name: Archive distribution
       uses: actions/upload-artifact@v2
