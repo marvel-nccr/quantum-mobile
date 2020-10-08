@@ -4,6 +4,10 @@ Vagrant.require_version ">= 2.0.0"
 require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
 gconfig        = YAML.load_file("#{current_dir}/globalconfig.yml")
+launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
+
+# Currently on GitHub Actions it fails if more than 1 CPU or accelerate3d activated
+on_ci          = ENV.has_key?('VAGRANT_ON_GH') ? true : false
 
 Vagrant.configure(2) do |config|
 
@@ -15,17 +19,23 @@ Vagrant.configure(2) do |config|
 
      ## Resource details
      vb.memory = gconfig['vm_memory']
-     vb.cpus = gconfig['vm_cpus']
+     if on_ci
+      vb.cpus = gconfig['vm_cpus']
+     else
+      vb.cpus = 1
+     end
 
      ## To allow to graphically connect to it from the VirtualBox interface
      ## (called 'show in the VirtualBox GUI')
-     vb.gui = false
+     vb.gui = launch_gui
 
      # More customizations
      # See https://www.virtualbox.org/manual/ch08.html
      vb.customize ["modifyvm", :id, "--vram", gconfig['vm_vram']]
      # makes mouse/typing more responsive
-    #  vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     if !(on_ci)
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     end
      # see https://github.com/marvel-nccr/quantum-mobile/issues/99
      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
@@ -50,11 +60,7 @@ Vagrant.configure(2) do |config|
   # Uncomment to avoid remote downloads of ISO
   #config.vbguest.no_remote = true
 
-  #config.vm.box = "bento/ubuntu-16.04"
-  #config.vm.box_version = "201803.24.0"
-  config.vm.box = "bento/ubuntu-18.04"
-  #config.vm.box_version = "201910.21.0"
-  #config.vm.box = "ubuntu/xenial64"
+  config.vm.box = gconfig["vm_base_image"]
   config.vm.boot_timeout = 120
 
   ## In case you need to specify explicitly SSH credentials...
@@ -74,7 +80,7 @@ Vagrant.configure(2) do |config|
   #   vagrant provision --provision-with ansible
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "playbook-build.yml"
     ansible.extra_vars = {
        ansible_python_interpreter: "/usr/bin/python3",
     }

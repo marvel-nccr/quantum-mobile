@@ -1,4 +1,3 @@
----
 - src: gantsign.default-web-browser
   version: 3.2.0
 - src: marvel-nccr.ansible_prerequisites

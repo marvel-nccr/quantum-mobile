@@ -1,4 +1,3 @@
----
 # Caution: This file is read by vagrant, ansible and bash
 vm_name: "Quantum Mobile"
 vm_version: "20.06.1"
@@ -10,6 +9,7 @@ vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
 vm_readme_file: "${HOME}/Desktop/README.md"
 
 # VM configuration
+vm_base_image: "bento/ubuntu-18.04"
 vm_hostname: "qmobile"
 vm_user: "max"
 vm_password: "moritz"
@@ -20,6 +20,6 @@ vm_shared_folder: "/shared"
 vm_codes_folder: "${HOME}/codes"
 vm_data_folder: "/usr/local/share"
 vm_examples_folder: "${HOME}/examples"
-vm_headless: True
-vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
-vm_scheduler: slurm # 'slurm' or 'direct'
+vm_headless: false
+vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
+vm_scheduler: slurm  # 'slurm' or 'direct'

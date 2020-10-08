@@ -1,0 +1,50 @@
+name: CD
+
+on:
+  push:
+    branches: [master]
+    tags:
+    - '*'
+  pull_request:
+
+jobs:
+
+  build:
+
+    # Vagrant builds require Mac OSX machines,
+    # see: https://github.com/actions/virtual-environments/issues/183
+    runs-on: macos-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: install tox
+      run: pip install tox
+
+    - name: Build VM
+      run: tox -e py38-build
+      env:
+        VAGRANT_NO_GUI: true
+        VAGRANT_ON_GH: true
+
+    - name: Archive build log
+      with:
+        name: build-log
+        path: ansible.log
+
+    - name: Clean build files on VM
+      run: tox -e py38-continue -- --tags ubuntu_desktop,qm_customizations,simulationbase --extra-vars "clean=true"
+
+    - name: Package VM
+      run: tox -e py38-package
+
+    - name: Archive distribution
+      with:
+        name: distribution
+        path: dist/
+      

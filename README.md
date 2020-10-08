@@ -9,13 +9,13 @@
 It comes with a collection of software packages for quantum
 mechanical calculations, including
 
- * [Quantum ESPRESSO](http://www.quantum-espresso.org/)
- * [Yambo](http://www.yambo-code.org/)
- * [fleur](http://www.flapw.de/)
- * [Siesta](https://gitlab.com/siesta-project/siesta)
- * [CP2K](https://www.cp2k.org)
- * [Wannier90](http://www.wannier.org)
- * [BigDFT](http://www.bigdft.org)
+- [Quantum ESPRESSO](http://www.quantum-espresso.org/)
+- [Yambo](http://www.yambo-code.org/)
+- [fleur](http://www.flapw.de/)
+- [Siesta](https://gitlab.com/siesta-project/siesta)
+- [CP2K](https://www.cp2k.org)
+- [Wannier90](http://www.wannier.org)
+- [BigDFT](http://www.bigdft.org)
 
 all of which are set up and ready to be used on their own or through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
@@ -23,22 +23,20 @@ provenance tracking.
 
 Quantum Mobile is available in two editions:
 
-  * *Quantum Mobile Desktop Edition* [**(download)**](https://github.com/marvel-nccr/quantum-mobile/releases) comes with the familiar Ubuntu Desktop and runs on your Windows, MacOS or Linux computer using the [VirtualBox](http://virtualbox.org/) software.
+- *Quantum Mobile Desktop Edition* [**(download)**](https://github.com/marvel-nccr/quantum-mobile/releases) comes with the familiar Ubuntu Desktop and runs on your Windows, MacOS or Linux computer using the [VirtualBox](http://virtualbox.org/) software.
     The Desktop Edition is tailored to provide students with a familiar working environment.
 
-  * *Quantum Mobile Cloud Edition* [**(download)**](https://github.com/marvel-nccr/quantum-mobile-cloud-edition/releases) is intended for use on servers using cloud services like Amazon Web Services. Google Cloud, or OpenStack.
+- *Quantum Mobile Cloud Edition* [**(download)**](https://github.com/marvel-nccr/quantum-mobile-cloud-edition/releases) is intended for use on servers using cloud services like Amazon Web Services. Google Cloud, or OpenStack.
     The Cloud Edition targets advanced users who are familiar with the command line & SSH and prefer to run calculations on a remote server.
 
 ![Demo](https://image.ibb.co/n50SdT/quantum_mobile.gif "A brief impression of the Quantum Mobile interface.")
-
 
 ## Build it from scratch
 
 You would like to add/remove some components of Quantum Mobile and produce your own customised image?
 
 This git repository contains the vagrant and ansible scripts required to
-set up the virtual machine from scratch (note: [plan >1h](other_stuff/timings.txt) for
-this).
+set up the virtual machine from scratch (note: [plan >1h](resources/timings.txt) for this).
 
 ### Prerequisites
 
@@ -50,7 +48,7 @@ this).
 
 ### Create Virtual Machine
 
-```
+```bash
 git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 pip install -r requirements.txt
@@ -63,9 +61,10 @@ Note: If you get an error during the installation of the VirtualBox Guest Additi
 steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
 
 ### Create image
-```
+
+```bash
 # optional: reduce size of VM
-ansible-playbook playbook.yml --extra-vars "clean=true"
+ansible-playbook playbook-build.yml --extra-vars "clean=true"
 ./compact_hd.sh
 
 ./create_image.sh
@@ -73,19 +72,21 @@ ansible-playbook playbook.yml --extra-vars "clean=true"
 
 ### Useful commands
 
- * `vagrant provision --provision-with ansible`: re-run ansible scripts
- * `vagrant reload`: restart machine
- * `vagrant halt`: stop machine
- * `ANSIBLE_ARGS="-twannier90" vagrant provision --provision-with=ansible`: run ansible scripts for the `wannier90` tag
- * ```
+- `vagrant provision --provision-with ansible`: re-run ansible scripts
+- `vagrant reload`: restart machine
+- `vagrant halt`: stop machine
+- `ANSIBLE_ARGS="-twannier90" vagrant provision --provision-with=ansible`: run ansible scripts for the `wannier90` tag
+
+- ```bash
    ./setup-ansible.sh             # inform ansible about ssh config
-   ansible-playbook playbook.yml  # run ansible directly, add tags, ...
-   ansible-playbook playbook.yml  --tags wannier90
+   ansible-playbook playbook-build.yml  # run ansible directly, add tags, ...
+   ansible-playbook playbook-build.yml  --tags wannier90
    ```
- * `ssh -F vagrant-ssh default`
- * `scp -F vagrant-ssh default:/path/on/vm  my/path`
- * ```./reconnect_vagrant.sh  # reconnect vagrant to an old VM```
- * `ansible-galaxy install -r requirements.yml --ignore-errors`
+
+- `ssh -F vagrant-ssh default`
+- `scp -F vagrant-ssh default:/path/on/vm  my/path`
+- ```./reconnect_vagrant.sh  # reconnect vagrant to an old VM```
+- `ansible-galaxy install -r requirements.yml --ignore-errors`
 
 ## Customizing Quantum Mobile
 
@@ -104,5 +105,5 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-![MARVEL](other_stuff/logos/MARVEL.png)
-![MaX](other_stuff/logos/MaX.png)
+![MARVEL](resources/logos/MARVEL.png)
+![MaX](resources/logos/MaX.png)

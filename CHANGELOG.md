@@ -200,7 +200,7 @@ BigDFT is not installed, since a fix is outstanding for <https://github.com/marv
   - 'headless': if true, avoids GUI-related setup
   - 'release_notes': if false, does not add release notes
 - Running the ansible roles on a different host is now as easy as
-  `ansible-playbook playbook.yml -i inventory_file`
+  `ansible-playbook playbook-build.yml -i inventory_file`
 - Adjustments for ansible 2.5
 
 ## Quantum Mobile v18.03.0
