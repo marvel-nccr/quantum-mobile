@@ -154,6 +154,9 @@
       checksum_algorithm: md5
     register: vm_image_file
     tags: [export]
+  - debug:
+      msg: "image size: {{ vm_image_file.stat.size | filesizeformat }}"
+    tags: [export]
 
   - name: Create dist/Install.md template
     template:

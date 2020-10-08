@@ -17,3 +17,4 @@ repos:
   rev: v4.3.5
   hooks:
   - id: ansible-lint
+    args: [--exclude, roles/]
