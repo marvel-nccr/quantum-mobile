@@ -14,6 +14,11 @@ jobs:
     # Vagrant builds require Mac OSX machines,
     # see: https://github.com/actions/virtual-environments/issues/183
     runs-on: macos-latest
+
+    env:
+      VAGRANT_NO_GUI: true
+      VAGRANT_ON_GH: true
+
     steps:
 
     - uses: actions/checkout@v2
@@ -28,9 +33,6 @@ jobs:
 
     - name: Build VM
       run: tox -e py38-build
-      env:
-        VAGRANT_NO_GUI: true
-        VAGRANT_ON_GH: true
       continue-on-error: true
       id: build_1
 
