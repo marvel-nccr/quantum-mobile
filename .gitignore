@@ -11,6 +11,7 @@ docs/_build
 resources/*/*.png
 tmp.vdi
 tmp.vmdk
+.vscode/
 .tox/
 dist/
 _archive

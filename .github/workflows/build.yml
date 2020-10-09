@@ -31,24 +31,44 @@ jobs:
       env:
         VAGRANT_NO_GUI: true
         VAGRANT_ON_GH: true
-      # we allow ansible to fail here, to improve resilience
-      # for example if a download time's out (as can happen)
-      # ansible can then retry from this step during `py38-continue`
       continue-on-error: true
+      id: build_1
+
+    # improve resilience, if ansible fails, for example due to a download timeout
+    # ansible is idempotent, so in principle we can retry as many times as needed
+    - name: Build VM (retry)
+      if: failure() && steps.build_1.outcome == 'failure'
+      run: tox -e py38-continue
 
     - name: Archive build log
       uses: actions/upload-artifact@v2
       with:
         name: build-log
         path: ansible.log
+      continue-on-error: true
 
     - name: Clean build files on VM
-      run: tox -e py38-continue -- --extra-vars "clean=true"
+      # only roles that include "when: clean is defined and clean"
+      run: tox -e py38-continue --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop,wannier90 --extra-vars "clean=true"
+
+    - name: Archive clean log
+      uses: actions/upload-artifact@v2
+      with:
+        name: clean-log
+        path: ansible.log
+      continue-on-error: true
 
     - name: Package VM
       run: tox -e py38-package -- --skip-tags validate
 
-    # Encountered: https://github.com/actions/upload-artifact/issues/84
+    - name: Archive package log
+      uses: actions/upload-artifact@v2
+      with:
+        name: package-log
+        path: ansible.log
+      continue-on-error: true
+
+    # Note encountered: https://github.com/actions/upload-artifact/issues/84
     - name: Archive distribution
       uses: actions/upload-artifact@v2
       with:
