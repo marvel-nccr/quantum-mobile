@@ -1,4 +1,4 @@
-- name: Compact HD
+- name: Package VM
 
   hosts: 127.0.0.1
   connection: local
@@ -39,8 +39,8 @@
       msg: "vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
     tags: [always]
 
-  - name: Ensure VM started
-    shell: vagrant up
+  - name: Reload VM (to ensure /tmp wiped)
+    shell: vagrant reload
     tags: [clean]
 
   - name: Output SSH connection configuration
@@ -119,18 +119,21 @@
       - git_tag.stdout == vm_version
     tags: [export, validate]
 
-  - name: Clean dist folder
+  - name: Make dist folder
     file:
-      state: "{{ item }}"
-      path: "dist/"
-    with_items:
-    - absent
-    - directory
+      state: directory
+      path: "{{ local_dist_folder }}/"
     tags: [export]
 
   - name: set output path for image
     set_fact:
-      image_path: dist/quantum_mobile_{{ vm_version }}.ova
+      image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}.ova"
+    tags: [export]
+
+  - name: Remove old image file
+    file:
+      state: absent
+      path: "{{ image_path }}"
     tags: [export]
 
   - name: "Export image to: {{ image_path }}"
@@ -158,8 +161,8 @@
       msg: "image size: {{ vm_image_file.stat.size | filesizeformat }}"
     tags: [export]
 
-  - name: Create dist/Install.md template
+  - name: Add release template to dist folder
     template:
-      src: resources/INSTALL.md.j2
-      dest: dist/Install_{{ vm_version }}.md
+      src: resources/Release.md.j2
+      dest: "{{ release_instructions }}"
     tags: [export]

@@ -39,11 +39,12 @@ jobs:
         path: ansible.log
 
     - name: Clean build files on VM
-      run: tox -e py38-continue -- --tags ubuntu_desktop,qm_customizations,simulationbase --extra-vars "clean=true"
+      run: tox -e py38-continue -- --extra-vars "clean=true"
 
     - name: Package VM
       run: tox -e py38-package -- --skip-tags validate
 
+    # Encountered: https://github.com/actions/upload-artifact/issues/84
     - name: Archive distribution
       uses: actions/upload-artifact@v2
       with:

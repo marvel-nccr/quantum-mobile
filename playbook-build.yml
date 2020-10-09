@@ -14,14 +14,15 @@
   - name: testing ansible environment
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+  - name: Make local dist folder
+    local_action:
+      module: file
+      state: directory
+      path: "{{ local_dist_folder }}/"
 
   roles:
   - role: marvel-nccr.ansible_prerequisites
 
-# Note: Pass variables to roles using the 'vars' dictionary!
-# If variables are passed on the same indentation level as the role, the variable is
-# set correctly inside the role, but following roles will read the *default*
-# value of the variable (as defined inside the role).
 - name: set up the VM
   hosts: default
   vars:

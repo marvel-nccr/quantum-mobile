@@ -1,4 +1,4 @@
-# Caution: This file is read by vagrant, ansible and bash
+# Caution: This file is read by vagrant and ansible
 vm_name: "Quantum Mobile"
 vm_version: "20.06.1"
 vm_description: "A Virtual Machine for Computational Materials Science"
@@ -23,3 +23,11 @@ vm_examples_folder: "${HOME}/examples"
 vm_headless: false
 vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
 vm_scheduler: slurm  # 'slurm' or 'direct'
+
+# local configuration
+local_dist_folder: "{{ playbook_dir }}/dist"
+# this is populated by roles during the build phase
+release_notes_locally: true
+release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
+# this is created during the package/export phase
+release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
