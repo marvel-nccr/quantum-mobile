@@ -41,7 +41,7 @@
 
   - name: Reload VM (to ensure /tmp wiped)
     shell: vagrant reload
-    tags: [clean]
+    tags: [clean, reload]
 
   - name: Output SSH connection configuration
     shell: vagrant ssh-config > vagrant-ssh

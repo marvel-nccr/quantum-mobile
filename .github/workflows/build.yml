@@ -63,7 +63,7 @@ jobs:
       continue-on-error: true
 
     - name: Package VM
-      run: tox -e py38-package -- --skip-tags validate
+      run: tox -e py38-package -- --skip-tags reload,validate
 
     - name: Archive package log
       uses: actions/upload-artifact@v2
