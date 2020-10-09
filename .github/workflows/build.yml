@@ -31,6 +31,10 @@ jobs:
       env:
         VAGRANT_NO_GUI: true
         VAGRANT_ON_GH: true
+      # we allow ansible to fail here, to improve resilience
+      # for example if a download time's out (as can happen)
+      # ansible can then retry from this step during `py38-continue`
+      continue-on-error: true
 
     - name: Archive build log
       uses: actions/upload-artifact@v2
