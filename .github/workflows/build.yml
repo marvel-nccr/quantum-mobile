@@ -49,7 +49,7 @@ jobs:
 
     - name: Clean build files on VM
       # only roles that include "when: clean is defined and clean"
-      run: tox -e py38-continue --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop,wannier90 --extra-vars "clean=true"
+      run: tox -e py38-continue -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop,wannier90 --extra-vars "clean=true"
 
     - name: Archive clean log
       uses: actions/upload-artifact@v2
