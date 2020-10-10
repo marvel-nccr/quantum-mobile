@@ -78,3 +78,4 @@ jobs:
       with:
         name: distribution
         path: dist/
+        retention-days: 30
