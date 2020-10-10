@@ -36,16 +36,23 @@ jobs:
       continue-on-error: true
       id: build_1
 
+    - name: Archive log
+      uses: actions/upload-artifact@v2
+      with:
+        name: ansible-log
+        path: ansible.log
+      continue-on-error: true
+
     # improve resilience, if ansible fails, for example due to a download timeout
     # ansible is idempotent, so in principle we can retry as many times as needed
     - name: Build VM (retry)
-      if: failure() && steps.build_1.outcome == 'failure'
+      if: failure() || steps.build_1.outcome == 'failure'
       run: tox -e py38-continue
 
-    - name: Archive build log
+    - name: Archive log
       uses: actions/upload-artifact@v2
       with:
-        name: build-log
+        name: ansible-log
         path: ansible.log
       continue-on-error: true
 
@@ -55,20 +62,20 @@ jobs:
       # since it can't find the configparser module, pip installed in earlier task
       run: tox -e py38-continue -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
 
-    - name: Archive clean log
+    - name: Archive log
       uses: actions/upload-artifact@v2
       with:
-        name: clean-log
+        name: ansible-log
         path: ansible.log
       continue-on-error: true
 
     - name: Package VM
       run: tox -e py38-package -- --skip-tags reload,validate
 
-    - name: Archive package log
+    - name: Archive log
       uses: actions/upload-artifact@v2
       with:
-        name: package-log
+        name: ansible-log
         path: ansible.log
       continue-on-error: true
 

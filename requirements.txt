@@ -1,5 +1,3 @@
 ansible>=2.7
 passlib
 paramiko
-# for deployment
-python-openstackclient
