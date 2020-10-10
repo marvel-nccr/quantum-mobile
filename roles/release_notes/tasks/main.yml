@@ -10,6 +10,7 @@
 
 - name: "localhost release notes: Add '{{ option }}' to '{{ section }}'"
   delegate_to: localhost
+  become: false
   ini_file:
     path: "{{ release_notes_localhost }}"
     section: "{{ section }}"
