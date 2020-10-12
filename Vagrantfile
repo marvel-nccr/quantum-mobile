@@ -3,7 +3,9 @@ Vagrant.require_version ">= 2.0.0"
 ## Read global configuration file from YAML
 require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
-gconfig        = YAML.load_file("#{current_dir}/config-global.yml")
+inventory      = YAML.load_file("#{current_dir}/inventory.yml")
+# host specific variables take priority over global ones
+gconfig        = inventory['all']['vars'].merge(inventory['all']['hosts']['vagrant-provision'])
 launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 
 # Currently on GitHub Actions it fails if more than 1 CPU or accelerate3d activated
@@ -75,21 +77,18 @@ Vagrant.configure(2) do |config|
   
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
-   
+
   # provisioner: set up VM via ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
+  # Note we use a static inventory, see: https://www.vagrantup.com/docs/provisioning/ansible_intro#static-inventory
+  config.vm.network :private_network, ip: gconfig["ansible_host"]
   config.vm.provision "ansible" do |ansible|
-    # NOTE the host inventory file is auto-generated in
-    # .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory
-    # it does NOT use config-hosts.yaml
-    # TODO ideally this would use that inventory file: https://www.vagrantup.com/docs/provisioning/ansible_intro#static-inventory
+    ansible.inventory_path = "inventory.yml"
+    ansible.limit = "vagrant-provision"
     ansible.playbook = "playbook-build.yml"
     ansible.verbose = "v"
     ansible.extra_vars = {
-      build_hosts: "default",
-      cloud_platform: "virtualbox",
-      ansible_python_interpreter: "/usr/bin/python3",
-      root_user: "root"
+      build_hosts: "vagrant-provision",
     }
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
     # Ensure that public key auth is not disabled by the user's config

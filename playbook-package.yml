@@ -9,11 +9,6 @@
 
   tasks:
 
-  - name: import global variables
-    include_vars:
-      file: config-global.yml
-    tags: [always]
-
   - name: set VM ID
     set_fact:
       vm_id: "{{ vm_name }} {{ vm_version }}"
