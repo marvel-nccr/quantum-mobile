@@ -1,13 +1,13 @@
 - name: Install ansible prerequisites
 
-  hosts: default
+  hosts: "{{ build_hosts | default('vagrant') }}"
   gather_facts: no
 
   pre_tasks:
   - name: import global variables
     tags: always
     include_vars:
-      file: globalconfig.yml
+      file: config-global.yml
   - name: test global config
     debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
@@ -19,19 +19,19 @@
       module: file
       state: directory
       path: "{{ local_dist_folder }}/"
+    when: release_notes_locally is defined and release_notes_locally
 
   roles:
   - role: marvel-nccr.ansible_prerequisites
 
 - name: set up the VM
-  hosts: default
+  hosts: "{{ build_hosts | default('vagrant') }}"
   vars:
     release_notes: true
     release_notes_vm_user: "{{ vm_user }}"
     run_tests: true
     clean: false
-    root_user: root
-    cloud_platform: virtualbox
+
   roles:
   - name: add user {{ vm_user }} with key
     role: marvel-nccr.add_user

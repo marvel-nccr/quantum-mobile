@@ -1,3 +1,5 @@
+# This file provides global configuration for all hosts
+
 # Caution: This file is read by vagrant and ansible
 vm_name: "Quantum Mobile"
 vm_version: "20.06.1"

@@ -11,7 +11,7 @@
 
   - name: import global variables
     include_vars:
-      file: globalconfig.yml
+      file: config-global.yml
     tags: [always]
 
   - name: set VM ID

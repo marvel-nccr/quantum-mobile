@@ -31,8 +31,8 @@ jobs:
     - name: install tox
       run: pip install tox
 
-    - name: Build VM
-      run: tox -e py38-build
+    - name: Build Vagrant Box
+      run: tox -e py38-vagrant
       continue-on-error: true
       id: build_1
 
@@ -43,11 +43,14 @@ jobs:
         path: ansible.log
       continue-on-error: true
 
+    - name: Write vagrant connection configuration
+      run: vagrant ssh-config > vagrant-ssh
+
     # improve resilience, if ansible fails, for example due to a download timeout
     # ansible is idempotent, so in principle we can retry as many times as needed
-    - name: Build VM (retry)
+    - name: Provision VM (retry)
       if: failure() || steps.build_1.outcome == 'failure'
-      run: tox -e py38-continue
+      run: tox -e py38-ansible
 
     - name: Archive log
       uses: actions/upload-artifact@v2
@@ -60,7 +63,7 @@ jobs:
       # only roles that include "when: clean is defined and clean"
       # TODO wannier90 has a clean task, but it appears to running against the wrong python executable
       # since it can't find the configparser module, pip installed in earlier task
-      run: tox -e py38-continue -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+      run: tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
@@ -79,10 +82,11 @@ jobs:
         path: ansible.log
       continue-on-error: true
 
-    # Note encountered: https://github.com/actions/upload-artifact/issues/84
-    - name: Archive distribution
-      uses: actions/upload-artifact@v2
-      with:
-        name: distribution
-        path: dist/
-        retention-days: 30
+    # This always encounters: https://github.com/actions/upload-artifact/issues/29#issuecomment-706512345
+    # TODO upload directly to openstack (as dev version), or another location?
+    # - name: Archive distribution
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: distribution
+    #     path: dist/
+    #     retention-days: 30
