@@ -1,5 +1,10 @@
 # VirtualBox troubleshooting
 
+:::{note}
+If the following sections to not solve your issue,
+please direct further inquiries to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+:::
+
 ## Installation / start-up
 
 ### Downloading over an instable network

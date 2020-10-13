@@ -73,6 +73,7 @@ jobs:
       continue-on-error: true
 
     - name: Package VM
+      # validate tests the git tag against the version variable
       run: tox -e py38-package -- --skip-tags reload,validate
 
     - name: Archive log

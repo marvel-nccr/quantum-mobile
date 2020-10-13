@@ -49,7 +49,7 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 
 ## Demonstration
 
-![A brief impression of the Quantum Mobile interface.](static/quantum_mobile.gif)
+![A brief impression of the Quantum Mobile interface.](_static/quantum_mobile.gif)
 
 ## Contents
 
@@ -57,26 +57,26 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 :maxdepth: 1
 :caption: Users
 
-launch_cloud.md
-faq.md
-troubleshoot.md
+users/launch.md
+users/faq.md
+users/troubleshoot.md
 ```
 
 ```{toctree}
 :maxdepth: 1
 :caption: Developers
 
-build-vagrant.md
-build-cloud.md
-customize.md
-roles.md
+developers/build-vagrant.md
+developers/build-cloud.md
+developers/customize.md
+developers/roles.md
 ```
 
 ```{toctree}
 :maxdepth: 1
 :caption: Maintainers
 
-develop.md
+maintainers/develop.md
 ```
 
 ## Acknowledgements
@@ -86,4 +86,4 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-![MaX](static/MaX.png)
+![MaX](_static/MaX.png)

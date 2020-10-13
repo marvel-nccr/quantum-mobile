@@ -22,8 +22,8 @@ Add your role to the `playbook.yml` file with a *tag*:
 
 ```yaml
 - role: marvel-nccr.simulationbase
-tags: [simulationbase]
-vars:
+  tags: [simulationbase]
+  vars:
     simulationbase_vm_user: "{{ vm_user }}"
     simulationbase_vm_user_public_key: "{{ lookup('file', './keys/aiida_tutorial_aiidaaccount.pub') }}"
     simulationbase_hostname: "{{ vm_hostname }}"
