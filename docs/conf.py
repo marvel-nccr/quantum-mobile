@@ -49,7 +49,7 @@ pygments_style = "sphinx"
 html_theme = "sphinx_book_theme"
 html_title = f"version: {version}"
 html_favicon = "_static/quantum-mobile-v4-text-square.png"
-html_logo = "_static/quantum-mobile-v4-text-wide.svg"
+html_logo = "_static/quantum_mobile_text_wide.png"
 html_theme_options = {
     "home_page_in_toc": True,
     "repository_url": "https://github.com/marvel-nccr/quantum-mobile",

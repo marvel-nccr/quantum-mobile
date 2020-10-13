@@ -82,6 +82,10 @@ Extra modifications as of QM 20.03.1:
 
 ### Pricing
 
+Although quantum-mobile is free and open-source, hosting a server on a cloud platform like Amazon (AWS) and Google (GCP) cloud, will incur a cost.
+
+Here are some indicative prices for this service:
+
 * Image pricing (for us to host it):
   * magnetic: 8.5c/GB/month (GCP)
 * Disk pricing (for users):
