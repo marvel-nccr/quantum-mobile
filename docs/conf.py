@@ -39,6 +39,7 @@ html_title = f"version: {version}"
 html_favicon = "static/quantum-mobile-v4-text-square.png"
 html_logo = "static/quantum-mobile-v4-text-wide.svg"
 html_theme_options = {
+    "home_page_in_toc": True,
     "repository_url": "https://github.com/marvel-nccr/quantum-mobile",
     "repository_branch": "develop",
     "use_repository_button": True,
