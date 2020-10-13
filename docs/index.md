@@ -54,6 +54,10 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 ## Contents
 
 ```{toctree}
+releases/index.md
+```
+
+```{toctree}
 :maxdepth: 1
 :caption: Users
 

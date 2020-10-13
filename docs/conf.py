@@ -6,6 +6,7 @@
 # get the version from the inventory file
 from pathlib import Path
 import yaml
+
 inventory = yaml.safe_load(Path("../inventory.yml").read_text())
 
 # -- Project information -----------------------------------------------------
@@ -19,9 +20,18 @@ release = version
 
 # -- General configuration ---------------------------------------------------
 
-needs_sphinx = '2.0'
-extensions = ["myst_parser", "sphinx_panels"]
+needs_sphinx = "2.0"
+extensions = ["myst_parser", "sphinx_panels", "ablog", "sphinx.ext.intersphinx"]
+
 myst_admonition_enable = True
+
+blog_path = "releases/index"
+blog_title = "Releases"
+blog_post_pattern = "releases/*/*.md"
+post_redirect_refresh = 1
+post_auto_excerpt = 2
+fontawesome_included = True
+html_sidebars = {"releases/index": ['tagcloud.html', 'archives.html']}
 
 # The master toctree document.
 master_doc = "index"
@@ -49,4 +59,4 @@ html_theme_options = {
     "path_to_docs": "docs",
     "use_edit_page_button": True,
 }
-panels_add_bootstrap_css=False
+panels_add_bootstrap_css = False

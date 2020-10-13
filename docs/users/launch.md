@@ -1,11 +1,13 @@
 # Launching VMs
 
+(launch/vagrant)=
 ## Vagrant Desktop
 
-* Download the virtual machine image
+* Download a released virtual machine image (from [the releases here](../releases/index.md))
 * Install Virtual Box 6.1.6 or later (see <https://www.virtualbox.org>)
 * Import the virtual machine image into Virtualbox: `File => Import Appliance`
 
+(launch/aws)=
 ## Amazon Cloud (AWS)
 
 * Open the Amazon EC2 console at <https://console.aws.amazon.com/ec2/>.
@@ -40,6 +42,7 @@ ssh max@<IP> -i /path/to/key.pem
 
 :::
 
+(launch/gcp)=
 ## Google Cloud (GCP)
 
 :::{admonition} Prerequisites
@@ -50,7 +53,7 @@ ssh max@<IP> -i /path/to/key.pem
 
 ### Launching the VM
 
-* Go to [https://console.cloud.google.com/compute/imagesDetail/projects/marvel-nccr/global/images/quantum-mobile-20-05-0](https://console.cloud.google.com/compute/imagesDetail/projects/marvel-nccr/global/images/quantum-mobile-20-05-0)  
+* Go to one of the links in [the releases page](../releases/index.md), such as [quantum-mobile-20-05-0](https://console.cloud.google.com/compute/imagesDetail/projects/marvel-nccr/global/images/quantum-mobile-20-05-0)  
 * Click on "CREATE INSTANCE"
 * Adapt VM to your needs
 * Use `ssh-keygen` on your machine to create an SSH private-public key pair
