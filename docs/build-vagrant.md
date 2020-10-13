@@ -62,6 +62,7 @@ steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60))
 
 ## Create image
 
+
 ```bash
 # optional: reduce size of VM
 ansible-playbook playbook-build.yml --extra-vars "clean=true"
