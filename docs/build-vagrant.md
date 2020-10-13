@@ -46,7 +46,6 @@ See the continuous deployment (CD) workflow, for up-to-date timings <https://git
 
 ## Create Virtual Machine
 
-
 ```bash
 git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
