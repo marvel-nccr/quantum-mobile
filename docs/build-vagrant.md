@@ -38,9 +38,9 @@ See the continuous deployment (CD) workflow, for up-to-date timings <https://git
 
 ## Prerequisites
 
-- [vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
-- [virtualbox](https://www.virtualbox.org/wiki/Downloads)
-- [python](https://www.python.org/) >= 3.6
+- [Vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- [Python](https://www.python.org/) >= 3.6
 - Host OS: Building Quantum Mobile has been tested on MacOS, Ubuntu
   and Windows (see [instructions](https://github.com/marvel-nccr/quantum-mobile/wiki/Instructions-for-building-Quantum-Mobile)).
 
