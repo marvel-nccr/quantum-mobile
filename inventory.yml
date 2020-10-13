@@ -1,7 +1,7 @@
 # This file provides variable configuration:
 
-# `vars` provides the global configuration
-# host specific variables override global variables
+# `all/vars` provides the global configuration
+# `all/hosts/*` specifies variables that override global configuration
 # CLI variables override any in this file: `ansible-playbook --extra-vars "name=value"`
 
 all:
@@ -68,27 +68,37 @@ all:
       ansible_host: default
       ansible_ssh_common_args: "-F vagrant-ssh"
       ansible_user: vagrant
+
+    # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
       cloud_platform: aws
       ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
-      add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     hwcloud:
       cloud_platform: hwcloud
       ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: root
-      add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     openstack:
       cloud_platform: openstack
       ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
-      add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     gcp:
       cloud_platform: gcp
       ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: max
-      add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
