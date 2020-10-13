@@ -55,8 +55,10 @@ vagrant plugin install vagrant-vbguest  # optional, improves interface
 vagrant up  # build vm from scratch (takes some tens of minutes)
 ```
 
-Note: If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional
+:::{note}
+If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional
 steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
+:::
 
 ## Create image
 
