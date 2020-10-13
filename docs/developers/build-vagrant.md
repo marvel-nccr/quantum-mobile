@@ -108,6 +108,10 @@ The ansible automation steps are generally idempotent, meaning that if they have
 The `inventory.yml` file contains all the variables used during the VM build.
 You can modify this to control aspects of the build, such as the default #CPUs and what web-browser to install.
 
+:::{seealso}
+The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
+:::
+
 ## Running only selected steps
 
 All steps of the ansible build process are "tagged", meaning you can select to run only certain steps, or skip others.

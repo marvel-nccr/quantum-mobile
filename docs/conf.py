@@ -2,9 +2,11 @@
 #
 # Configuration file for the Sphinx documentation builder.
 #
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+
+# get the version from the inventory file
+from pathlib import Path
+import yaml
+inventory = yaml.safe_load(Path("../inventory.yml").read_text())
 
 # -- Project information -----------------------------------------------------
 
@@ -12,8 +14,8 @@ project = "Quantum Mobile"
 copyright = "2020, NCCR MARVEL"
 author = "Chris Sewell, Giovanni Pizzi, Leopold Talirz"
 
-version = "20.06.1"
-release = "20.06.1"
+version = inventory["all"]["vars"]["vm_version"]
+release = version
 
 # -- General configuration ---------------------------------------------------
 

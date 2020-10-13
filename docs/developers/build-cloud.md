@@ -29,32 +29,54 @@ Security rules:
 ## Provisioning the server
 
 To get set up, run the following on your client (e.g. your laptop -- *not* on the server itself):
-```
-git clone https://github.com/marvel-nccr/quantum-mobile-cloud-edition.git
-cd quantum-mobile-cloud-edition
-pip install -r requirements.txt  # installs python requirements
-ansible-galaxy install -r requirements.yml  # installs ansible roles
+
+```bash
+git clone https://github.com/marvel-nccr/quantum-mobile.git
+cd quantum-mobile
 ```
 
-1. Add your server to the [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) in the `hosts` file, e.g.
-   ```
-   [myplatform]
-   qm ansible_host=1.1.1.1
-   ```
-2. Adapt the corresponding `./group_vars/*.yml` file (or create your own), with
-   * the path to your private SSH key for connecting to the server
-   * the user to connect as via SSH
-3. Tune the `globalconfig.yml` file, in particular:
-   * `vm_user`: the user for which to install the simulation environment (usually *not* the admin user you are connecting as)
-   * `vm_memory`, `vm_cpus`
-4. (optional) adaptation of the ansible `playbook.yml`
-   * 
-   * You want to preload a SSH public key for the `vm_user`?  
-   Then uncomment the `"add user {{ vm_user }} with key"` role and adjust the path to the public key in the lookup for the `add_user_public_key` variable
-   * Add/remove further roles depending on what you want to have in the image
-5. run `ansible-playbook playbook.yml`
+To allow ansible to connect to the server, you should adapt the `inventory.yml` file, to contain the correct connection details for the desired server.
+For example, to connect to an `aws` host, adapt:
+
+```yaml
+    aws:
+      cloud_platform: aws
+      ansible_host: 34.250.68.129 # change this
+      ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
+      ansible_user: ubuntu
+```
+
+with:
+
+- the IP of the server
+- the path to your private SSH key for connecting to the server
+- the user to connect as via SSH
+
+:::{seealso}
+The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
+:::
+
+You can also "tune" the variables in `inventory.yml`, such as:
+
+- `vm_user`: the user for which to install the simulation environment (usually *not* the admin user you are connecting as)
+- `vm_memory`, `vm_cpus`
+- If you want to pre-load an SSH public key for the `vm_user` to connect with (as opposed to the admin key set above),
+  uncomment and set the `add_user_public_key` variable.
+
+Finally, to run the ansible playbook against the required host, use:
+
+```bash
+pip install tox
+tox -e py38-ansible -- --extra-vars "build_hosts=aws"
+```
 
 Your server should now be fully deployed and operational.
+
+:::{tip}
+The ansible automation steps are generally idempotent, meaning that if they have been previously run successfully, then they will be skipped in any subsequent runs.
+
+This means, if the build is interrupted for any reason, you can simply re-run the above command.
+:::
 
 You can log in to the server as the `vm_user` via the public SSH key you provided.
 
@@ -62,8 +84,11 @@ You can log in to the server as the `vm_user` via the public SSH key you provide
 
 Before creating an image from the disk volume of the server you provisioned:
 
-1. Remove unnecessary temporary files:  
-   `ansible-playbook playbook.yml --extra-vars "clean=true" --tags qm_customizations,simulationbase`
+1. Remove unnecessary temporary build files:
+
+   ```bash
+   tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
+   ```
 
 2. Clear bash history: `cat /dev/null > ~/.bash_history && history -c && exit`
 

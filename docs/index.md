@@ -21,7 +21,7 @@ provenance tracking.
 ## Quantum Mobile Flavours
 
 Quantum Mobile VMs are built using a set of automated steps *via* [ansible](https://www.ansible.com/).
-You can build a VM yourself ([see the build guide](./build-vagrant.md)), or use one of the pre-built options:
+You can build a VM yourself ([see the build guide](./developers/build-vagrant.md)), or use one of the pre-built options:
 
 ```{panels}
 

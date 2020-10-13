@@ -2,3 +2,4 @@ myst-parser~=0.12.9
 sphinx-book-theme~=0.0.37
 sphinx-panels~=0.5.2
 sphinx-autobuild
+pyyaml

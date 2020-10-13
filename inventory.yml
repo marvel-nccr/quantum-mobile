@@ -4,6 +4,8 @@
 # `all/hosts/*` specifies variables that override global configuration
 # CLI variables override any in this file: `ansible-playbook --extra-vars "name=value"`
 
+# see also: https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
 all:
 
   vars:
