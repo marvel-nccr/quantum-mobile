@@ -9,7 +9,7 @@ If your network connection is unstable or very slow and you are unable to downlo
 ### Importing the VM results in an error: `NS_ERROR_INVALID_ARG (0x80070057)`
 
 This [may indicate that your hard disk is full](https://www.virtualbox.org/ticket/18343).
-Do you have enough disk space to accommodate both the Quantum Mobile image *and* the extracted image (sizes reported in the [installation instructions of the release]((https://github.com/marvel-nccr/quantum-mobile/releases)))?
+Do you have enough disk space to accommodate both the Quantum Mobile image *and* the extracted image (sizes reported in the [installation instructions of the release](https://github.com/marvel-nccr/quantum-mobile/releases)?
 
 ### Running the VM yields an error: `VMDK: Compressed image is corrupted`
 

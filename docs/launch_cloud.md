@@ -33,7 +33,7 @@ ssh max@<IP> -i /path/to/key.pem
 
 ### Prerequisites
 
- * An account on [cloud.google.com](cloud.google.com)
+ * An account on [cloud.google.com](https://cloud.google.com/)
  * A project with Compute Engine API enabled (see their [quickstart docs](https://cloud.google.com/compute/docs/quickstart-linux) )
 
 

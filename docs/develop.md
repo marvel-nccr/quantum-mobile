@@ -52,7 +52,7 @@ All items listed here are candidates for automation.
   * merge into `master`
   * `git tag 19.12.0RC1 && git push --tags`
   * [draft new release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `INSTALL_...` file and `CHANGELOG.md`
-  * replace URL to object store by [bit.ly](bit.ly) shortlink
+  * replace URL to object store by [bit.ly](https://bitly.com/) shortlink
 
 Extra modifications for QM 20.03.1:
  * delete examples/ icon on desktop
