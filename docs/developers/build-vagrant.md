@@ -37,10 +37,10 @@ See the [continuous deployment (CD) workflow](https://github.com/marvel-nccr/qua
 
 ## Prerequisites
 
+- Host OS: Building Quantum Mobile has been tested on MacOS, Ubuntu and Windows.
 - [Vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads) >= 6.1.6
 - [Python](https://www.python.org/) >= 3.6
-- Host OS: Building Quantum Mobile has been tested on MacOS, Ubuntu and Windows.
 
 ````{dropdown} Building on Windows
 - Install [Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
