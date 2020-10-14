@@ -2,7 +2,7 @@
 
 In the following, we explain how to build your own custom Quantum Mobile image, allowing you to remove components you don't need and add new ones.
 
-The [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile) contains the Vagrant and [Ansible playbooks]([ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html)) required to set up the virtual machine from scratch.
+The [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile) contains the Vagrant and [Ansible playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) required to set up the virtual machine from scratch.
 
 Calculate at least one hour for building the VM:
 
@@ -32,7 +32,7 @@ marvel-nccr.editors : Install some common editors ------------------------------
 ````
 
 :::{seealso}
-See the continuous deployment (CD) workflow, for up-to-date timings <https://github.com/marvel-nccr/quantum-mobile/actions?query=workflow%3ACD>
+See the [continuous deployment (CD) workflow](https://github.com/marvel-nccr/quantum-mobile/actions?query=workflow%3ACD) for up-to-date timings
 :::
 
 ## Prerequisites

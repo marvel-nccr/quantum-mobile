@@ -86,7 +86,7 @@ Vagrant.configure(2) do |config|
     ansible.inventory_path = "inventory.yml"
     ansible.limit = "vagrant-provision"
     ansible.playbook = "playbook-build.yml"
-    ansible.verbose = "v"
+    # ansible.verbose = "v"
     ansible.extra_vars = {
       build_hosts: "vagrant-provision",
     }
