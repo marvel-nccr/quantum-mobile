@@ -23,6 +23,8 @@ provenance tracking.
 
 See [the documentation for further details](docs/intro.md)
 
+![A brief impression of the Quantum Mobile interface.](docs/_static/quantum_mobile.gif)
+
 ## Contact
 
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)

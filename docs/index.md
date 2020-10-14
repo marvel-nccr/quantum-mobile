@@ -51,13 +51,27 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 
 ![A brief impression of the Quantum Mobile interface.](_static/quantum_mobile.gif)
 
-## Contents
+
+## Acknowledgements
+
+This work is supported by the [MARVEL National Centre for Competency in Research](http://nccr-marvel.ch)
+funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
+as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
+the Horizon 2020 EINFRA-5 program, Grant No. 676598.
+
+<img src="_static/marvel-logo-4x.png" alt="Marvel" width="300px">
+
+![MaX](_static/MaX.png)
+
 
 ```{toctree}
+:hidden: true
+
 releases/index.md
 ```
 
 ```{toctree}
+:hidden: true
 :maxdepth: 1
 :caption: Users
 
@@ -67,27 +81,20 @@ users/troubleshoot.md
 ```
 
 ```{toctree}
+:hidden: true
 :maxdepth: 1
 :caption: Developers
 
+developers/customize.md
 developers/build-vagrant.md
 developers/build-cloud.md
-developers/customize.md
 developers/roles.md
 ```
 
 ```{toctree}
+:hidden: true
 :maxdepth: 1
 :caption: Maintainers
 
 maintainers/develop.md
 ```
-
-## Acknowledgements
-
-This work is supported by the [MARVEL National Centre for Competency in Research](http://nccr-marvel.ch)
-funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
-as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
-the Horizon 2020 EINFRA-5 program, Grant No. 676598.
-
-![MaX](_static/MaX.png)

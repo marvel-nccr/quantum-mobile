@@ -24,6 +24,7 @@ needs_sphinx = "2.0"
 extensions = ["myst_parser", "sphinx_panels", "ablog", "sphinx.ext.intersphinx"]
 
 myst_admonition_enable = True
+myst_html_img_enable = True
 
 blog_path = "releases/index"
 blog_title = "Releases"

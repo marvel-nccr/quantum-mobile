@@ -55,6 +55,15 @@ See the continuous deployment (CD) workflow, for up-to-date timings <https://git
   ```
 ````
 
+## Customising the build
+
+The `inventory.yml` file contains all the variables used during the VM build.
+You can modify this to control aspects of the build, such as the default #CPUs and what web-browser to install.
+
+:::{seealso}
+The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
+:::
+
 ## Create the Virtual Machine
 
 :::{tip}
@@ -103,15 +112,6 @@ tox -e py38-ansible
 ```
 
 The ansible automation steps are generally idempotent, meaning that if they have been previously run successfully, then they will be skipped in any subsequent runs.
-
-## Customising the build
-
-The `inventory.yml` file contains all the variables used during the VM build.
-You can modify this to control aspects of the build, such as the default #CPUs and what web-browser to install.
-
-:::{seealso}
-The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
-:::
 
 ## Running only selected steps
 

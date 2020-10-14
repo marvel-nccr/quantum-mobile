@@ -23,7 +23,9 @@ You might want to test reimporting it on a different computer to check that it w
 
 :::{tip}
 We suggest you keep an eye on the size of your VM and the final OVA image as there are often users who don't have much disk space to spare.
-When you modify the VM, the size of the (virtual) disk increases automatically as needed but it may **not shrink when you delete files**. When following the reproducible approach (see below), you can use the `./compact_hd.sh` script to shrink the disk back to the size that is actually needed, which can dramatically reduce image size.
+When you modify the VM, the size of the (virtual) disk increases automatically as needed but it may **not shrink when you delete files**.
+
+When following the reproducible approach (see below), you can use the `playbook-package.yml` (specifically the `clean` and `compact` tags) to shrink the disk back to the size that is actually needed, which can dramatically reduce image size.
 :::
 
 ## Reproducible approach (suggested)
@@ -50,7 +52,8 @@ If you need to install a new simulation code or want to remove components from q
 You are free to publish customized images of Quantum Mobile, as long as you include with it the original `LICENSE.txt`.
 
 If you do so, we recommend that you:
- * Give your VM a different name to avoid confusion
- * Adapt the EULA appropriately
+
+* Give your VM a different name to avoid confusion
+* Adapt the EULA appropriately
 
 In all cases, we appreciate if you acknowledge that your VM has been adapted from the Quantum Mobile.
