@@ -1,8 +1,9 @@
 # Build a cloud VM
 
-The steps for building a cloud VM are very similar to those for building a desktop one ([see the guide here](./build-vagrant.md)).
+In the following, we explain how to install Quantum Mobile on your own virtual machine in the cloud (for building your own Desktop Edition, [see here](./build-vagrant.md)).
 
-This procedure is automated entirely using the [ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) in the [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile), which has been used successfully to deploy Quantum Mobile on Amazon Web Services, Google Compute Cloud, Huawei Cloud, Openstack as well as on bare metal servers.
+This procedure is automated entirely using an [ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) in the [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile).
+It has been used successfully to deploy Quantum Mobile on servers from Amazon Web Services, Google Compute Cloud, Huawei Cloud, Openstack as well as on bare metal servers.
 
 ## Prerequisites
 
@@ -35,7 +36,7 @@ git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 ```
 
-To allow ansible to connect to the server, you should adapt the `inventory.yml` file, to contain the correct connection details for the desired server.
+The `inventory.yml` already contains templates for connecting to servers from different cloud providers, which are easy to populate with the connection details for your server.
 For example, to connect to an `aws` host, adapt:
 
 ```yaml
@@ -56,7 +57,7 @@ with:
 The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
 :::
 
-You can also "tune" the variables in `inventory.yml`, such as:
+You may also want to "tune" the variables under `vars:` in `inventory.yml`, such as:
 
 - `vm_user`: the user for which to install the simulation environment (usually *not* the admin user you are connecting as)
 - `vm_memory`, `vm_cpus`
@@ -70,12 +71,12 @@ pip install tox
 tox -e py38-ansible -- --extra-vars "build_hosts=aws"
 ```
 
-Your server should now be fully deployed and operational.
+This will take of the order of one hour, after which your server should be fully deployed and operational.
 
 :::{tip}
-The ansible automation steps are generally idempotent, meaning that if they have been previously run successfully, then they will be skipped in any subsequent runs.
+The ansible steps are idempotent, meaning they will essentially do nothing when run again on the same machine.
 
-This means, if the build is interrupted for any reason, you can simply re-run the above command.
+This means, if the build was interrupted for any reason, you can simply re-run the above command.
 :::
 
 You can log in to the server as the `vm_user` via the public SSH key you provided.
@@ -90,7 +91,7 @@ Before creating an image from the disk volume of the server you provisioned:
    tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
    ```
 
-2. Clear bash history: `cat /dev/null > ~/.bash_history && history -c && exit`
+2. Clear bash history:  SSH to the VM and run `cat /dev/null > ~/.bash_history && history -c && exit`
 
 3. Shut down instance (this will clear temporary data in `/tmp`)
 
@@ -105,7 +106,7 @@ Now follow the instructions of your platform for creating an image from your ser
 - If you intend to publish the image, follow AWS instructions to remove system SSH keys:  
    `sudo shred -u /etc/ssh/*_key /etc/ssh/*_key.pub`
 
-- List image publicly: After creation, edit the properties and select "public"
+- Listing an image publicly: After creation of the image, edit its properties and select "public"
 
 ### GCP
 

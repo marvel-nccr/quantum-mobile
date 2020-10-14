@@ -21,7 +21,7 @@ provenance tracking.
 ## Quantum Mobile Flavours
 
 Quantum Mobile VMs are built using a set of automated steps *via* [ansible](https://www.ansible.com/).
-You can build a VM yourself ([see the build guide](./developers/build-vagrant.md)), or use one of the pre-built options:
+You can [build a VM yourself](./developers/build-vagrant.md), or use one of the pre-built images:
 
 ```{panels}
 
@@ -39,7 +39,7 @@ The Desktop Edition is tailored to provide students with a familiar working envi
 {fa}`cloud,mr-1` Cloud Edition
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Is intended for use on servers using cloud services like Amazon Web Services. Google Cloud, or OpenStack.
+Intended for use on servers using cloud services like Amazon Web Services, Google Cloud, or OpenStack.
 
 The Cloud Edition targets advanced users who are familiar with the command line & SSH and prefer to run calculations on a remote server.
 

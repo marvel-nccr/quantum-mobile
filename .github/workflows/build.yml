@@ -36,7 +36,7 @@ jobs:
       continue-on-error: true
       id: build_1
 
-    - name: Archive log
+    - name: Archive ansible log
       uses: actions/upload-artifact@v2
       with:
         name: ansible-log

@@ -1,10 +1,10 @@
 # Build a desktop VM
 
-> Would you like to add/remove some components of Quantum Mobile and produce your own customised image?
+In the following, we explain how to build your own custom Quantum Mobile image, allowing you to remove components you don't need and add new ones.
 
 The [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile) contains the Vagrant and [Ansible playbooks]([ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html)) required to set up the virtual machine from scratch.
 
-Allow at least one hour for the build:
+Calculate at least one hour for building the VM:
 
 ````{dropdown} Approximate Timings
 ```
@@ -58,7 +58,8 @@ See the continuous deployment (CD) workflow, for up-to-date timings <https://git
 ## Create the Virtual Machine
 
 :::{tip}
-The `.github/workflows/build.yml` file contains tested steps for the full build process on GitHub Actions.
+Building the Desktop Edition is tested on GitHub Actions on every commit to the repository.
+For the tested steps see the `.github/workflows/build.yml` file.
 :::
 
 First clone the repository:
@@ -68,13 +69,13 @@ git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 ```
 
-The simplest approach is to then use [tox](https://tox.readthedocs.io/), to set up the Python environment and run the build steps.
+Then use [tox](https://tox.readthedocs.io/) to set up the Python environment and run the build steps.
 
 ```bash
 pip install tox
 # to show all available automations
-tox -a -v
-# optional, improves interface
+tox -a -v        # shows available automations
+# improves interface
 vagrant plugin install vagrant-vbguest
 ```
 
@@ -138,7 +139,7 @@ tox -e py38-ansible -- --tags tag1,tag2 --skip-tags tag3
 
 ## Creating the image
 
-First run the clean task to remove un-needed build files:
+First, clean unnecessary build files:
 
 ```bash
 tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
@@ -150,10 +151,10 @@ Then run `playbook-package.yml` *via*:
 tox -e py38-package -- --skip-tags validate
 ```
 
-This will write the image and release notes into the `dist/` folder.
+This will compact the hard disk of the virtual machine and export the image and release notes to the `dist/` folder.
 
 :::{note}
-The `validate` checks that the repositories git tag is the same as the `vm_version` specified in `inventory.yml`, so is only needed for strict releases.
+The `validate` tag checks that the repositories git tag is the same as the `vm_version` specified in `inventory.yml`, and is only needed for strict releases.
 :::
 
 ## Other Useful commands
