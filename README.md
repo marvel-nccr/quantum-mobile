@@ -29,7 +29,7 @@ See [the documentation for further details](docs/intro.md)
 
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
 
-For issues encountered during installation of the VM, see the [FAQ](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions).
+For issues encountered during installation of the VM, see the [FAQ documentation](docs/users/faq.md).
 
 ## Acknowledgements
 
