@@ -2,9 +2,7 @@ name: CI-build
 
 on:
   pull_request:
-    paths:
-    - '**'
-    - '!docs/**'
+    paths-ignore: ['docs/**']
 
 jobs:
   build-init:
