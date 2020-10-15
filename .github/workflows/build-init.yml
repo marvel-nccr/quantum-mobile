@@ -1,6 +1,8 @@
 name: CI-build
 
 on:
+  push:
+    branches: [develop]
   pull_request:
     paths-ignore: ['docs/**']
 
