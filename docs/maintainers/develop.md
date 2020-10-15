@@ -40,7 +40,7 @@ tox -e docs-live
 
 ### Building the VM
 
-Follow the [vagrant build instructions](../developers/build-vagrant.md)
+Follow the [vagrant build instructions](../developers/build-vagrant.md).
 
 :::{note}
 One step that is currently not automated is to double-click on the Desktop symbols to show the icons.
