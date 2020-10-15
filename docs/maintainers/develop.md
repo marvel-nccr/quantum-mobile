@@ -61,7 +61,7 @@ One step that is currently not automated is to double-click on the Desktop symbo
   * merge into `master`
   * [create new release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `dist/Release-<version>.md` (replace `Changelog` section with link to documentation) file and `CHANGELOG.md`
 
-Extra modifications as of QM 20.03.1:
+Extra modifications, as of QM 20.03.1:
 
 * delete examples/ icon on desktop
 * fix issue with rabbitmq not shutting down ([#111](https://github.com/marvel-nccr/quantum-mobile/issues/111))
