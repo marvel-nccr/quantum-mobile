@@ -7,7 +7,7 @@ on:
     branches: [master]
     tags:
     - '*'
-  # pull_request:
+  pull_request:
 
 jobs:
 
@@ -84,6 +84,13 @@ jobs:
         name: ansible-log
         path: ansible.log
       continue-on-error: true
+
+    - name: Archive release notes
+      with:
+        name: release-notes
+        path: |
+          dist/*.md
+          dist/*.ini
 
     # Ideally we would like a way to inspect the final VM image this process creates.
     # This always encounters: https://github.com/actions/upload-artifact/issues/29#issuecomment-706512345
