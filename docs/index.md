@@ -33,7 +33,7 @@ Comes with the familiar Ubuntu Desktop and runs on your Windows, MacOS or Linux 
 The Desktop Edition is tailored to provide students with a familiar working environment.
 
 +++
-[**Download release**](https://github.com/marvel-nccr/quantum-mobile/releases)
+[**Download release**](releases/index.md)
 ---
 
 {fa}`cloud,mr-1` Cloud Edition
@@ -44,7 +44,7 @@ Intended for use on servers using cloud services like Amazon Web Services, Googl
 The Cloud Edition targets advanced users who are familiar with the command line & SSH and prefer to run calculations on a remote server.
 
 +++
-[**Download release**](https://github.com/marvel-nccr/quantum-mobile-cloud-edition/releases)
+[**Download release**](releases/index.md)
 ```
 
 ## Demonstration
