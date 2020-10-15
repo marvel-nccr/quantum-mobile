@@ -95,7 +95,7 @@ If you get an error during the installation of the VirtualBox Guest Additions, y
 To build and provision the machine, you can then run:
 
 ```bash
-tox -e py37-vagrant
+tox -e vagrant
 ```
 
 This will call `vagrant up`, to initialise the VM, which then calls `ansible-playbook playbook-build.yml`, to configure the VM and build the required software on it.
@@ -108,7 +108,7 @@ you can continue the build with:
 ```bash
 # output the vagrant box connection details
 vagrant ssh-config > vagrant-ssh
-tox -e py38-ansible
+tox -e ansible
 ```
 
 The ansible automation steps are generally idempotent, meaning that if they have been previously run successfully, then they will be skipped in any subsequent runs.
@@ -120,7 +120,7 @@ All steps of the ansible build process are "tagged", meaning you can select to r
 To list all the tags:
 
 ```bash
-tox -e py38-ansible -- --list-tags
+tox -e ansible -- --list-tags
 ```
 
 or look at `playbook-build.yml`.
@@ -128,13 +128,13 @@ or look at `playbook-build.yml`.
 To run run only certain tags, use either:
 
 ```bash
-ANSIBLE_ARGS="--tags tag1,tag2 --skip-tags tag3" tox -e py38-vagrant
+ANSIBLE_ARGS="--tags tag1,tag2 --skip-tags tag3" tox -e vagrant
 ```
 
 or
 
 ```bash
-tox -e py38-ansible -- --tags tag1,tag2 --skip-tags tag3
+tox -e ansible -- --tags tag1,tag2 --skip-tags tag3
 ```
 
 ## Creating the image
@@ -142,13 +142,13 @@ tox -e py38-ansible -- --tags tag1,tag2 --skip-tags tag3
 First, clean unnecessary build files:
 
 ```bash
-tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
 ```
 
 Then run `playbook-package.yml` *via*:
 
 ```bash
-tox -e py38-package -- --skip-tags validate
+tox -e package -- --skip-tags validate
 ```
 
 This will compact the hard disk of the virtual machine and export the image and release notes to the `dist/` folder.

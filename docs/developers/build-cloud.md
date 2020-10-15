@@ -68,7 +68,7 @@ Finally, to run the ansible playbook against the required host, use:
 
 ```bash
 pip install tox
-tox -e py38-ansible -- --extra-vars "build_hosts=aws"
+tox -e ansible -- --extra-vars "build_hosts=aws"
 ```
 
 This will take of the order of one hour, after which your server should be fully deployed and operational.
@@ -88,7 +88,7 @@ Before creating an image from the disk volume of the server you provisioned:
 1. Remove unnecessary temporary build files:
 
    ```bash
-   tox -e py38-ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
+   tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
    ```
 
 2. Clear bash history:  SSH to the VM and run `cat /dev/null > ~/.bash_history && history -c && exit`
