@@ -78,3 +78,4 @@ Here are some indicative prices for hosting public images and disk pricing:
 * Disk pricing (for users):
   * magnetic: 4c/GB/month (GCP), 2.5c/GB/month (AWS)
   * SSD: 10c/GB/month (AWS)
+:::
