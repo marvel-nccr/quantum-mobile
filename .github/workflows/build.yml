@@ -17,6 +17,8 @@ jobs:
     # see: https://github.com/actions/virtual-environments/issues/183
     runs-on: macos-latest
 
+    timeout-minutes: 210
+
     env:
       VAGRANT_NO_GUI: true
       VAGRANT_ON_GH: true
