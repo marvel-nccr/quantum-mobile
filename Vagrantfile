@@ -64,6 +64,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = gconfig["vm_base_image"]
   config.vm.boot_timeout = 120
+  config.vm.graceful_halt_timeout = 360
 
   ## In case you need to specify explicitly SSH credentials...
   #config.ssh.username = "ubuntu"
