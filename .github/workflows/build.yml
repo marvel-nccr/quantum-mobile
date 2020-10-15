@@ -7,7 +7,7 @@ on:
     branches: [master]
     tags:
     - '*'
-  # pull_request:
+  pull_request:
 
 jobs:
 

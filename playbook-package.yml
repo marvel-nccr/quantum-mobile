@@ -123,7 +123,7 @@
   - name: set output path for image
     set_fact:
       image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}.ova"
-    tags: [export]
+    tags: [export, release]
 
   - name: Remove old image file
     file:
@@ -151,13 +151,24 @@
       get_checksum: true
       checksum_algorithm: md5
     register: vm_image_file
-    tags: [export]
+    tags: [export, release]
+
   - debug:
       msg: "image size: {{ vm_image_file.stat.size | filesizeformat }}"
-    tags: [export]
+    tags: [export, release]
+
+  - name: Get Virtual Box version
+    command: vboxmanage --version
+    register: vbox_version
+    tags: [export, release]
+
+  - name: Get Vagrant version
+    command: vagrant --version
+    register: vagrant_version
+    tags: [export, release]
 
   - name: Add release template to dist folder
     template:
       src: resources/Release.md.j2
       dest: "{{ release_instructions }}"
-    tags: [export]
+    tags: [export, release]

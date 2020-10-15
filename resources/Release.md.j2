@@ -23,14 +23,24 @@ For issues encountered during installation, please first consult the [FAQ page](
 
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
 
-## Build Summary
-
-- Base VM Image: `{{ vm_base_image }}`
-
 ## Changelog
-
-### Bug fixes
 
 ### Improvements
 
-### Software updates
+<!-- Fill this out manually -->
+
+### Bug fixes
+
+<!-- Fill this out manually -->
+
+### Build Process
+
+- OS: `{{ ansible_distribution }}`
+- Ansible: `{{ ansible_version.string }}`
+- Vagrant: `{{ vagrant_version.stdout.replace('Vagrant ', '') }}`
+- Virtualbox: `{{ vbox_version.stdout }}`
+- Base VM Image: `{{ vm_base_image }}`
+
+### Software Summary
+
+<!--Copy-paste here: `{{ release_notes_localhost }}` -->
