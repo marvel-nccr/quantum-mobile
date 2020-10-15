@@ -1,4 +1,5 @@
 ![CI](https://github.com/marvel-nccr/quantum-mobile/workflows/CI/badge.svg)
+![CI-build](https://github.com/marvel-nccr/quantum-mobile/workflows/CI-build/badge.svg)
 
 # Quantum Mobile
 
@@ -21,7 +22,7 @@ all of which are set up and ready to be used on their own or through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and
 provenance tracking.
 
-See [the documentation for further details](docs/intro.md)
+See the documentation for further details: <https://quantum-mobile.readthedocs.io>
 
 ![A brief impression of the Quantum Mobile interface.](docs/_static/quantum_mobile.gif)
 
@@ -29,7 +30,7 @@ See [the documentation for further details](docs/intro.md)
 
 Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
 
-For issues encountered during installation of the VM, see the [FAQ documentation](docs/users/faq.md).
+For issues encountered during installation of the VM, see the [FAQ documentation]([docs/users/faq.md](https://quantum-mobile.readthedocs.io/en/latest/users/faq.html)).
 
 ## Acknowledgements
 
