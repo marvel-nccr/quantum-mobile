@@ -48,17 +48,18 @@ One step that is currently not automated is to double-click on the Desktop symbo
 
 ### Releasing the VM
 
+* Fill in the manual sections of `dist/Release-<version>.md`
 * upload contents of `dist/` to object store
-  * `openstack object create marvel-vms INSTALL_<version>.txt`
+  * `openstack object create marvel-vms Release-<version>.md`
   * `openstack object create marvel-vms quantum_mobile_<version>.ova`
 
 * Prepare release:
+  * in `dist/Release-<version>.md`, replace URL to object store by [bit.ly](https://bitly.com/) short-link
+  * Copy `dist/Release-<version>.md` to `docs/releases/` and add the top-matter section.
   * update `CHANGELOG.md`
   * Commit changes of quantum-mobile repository to `develop` branch
   * merge into `master`
-  * `git tag 19.12.0RC1 && git push --tags`
-  * [draft new release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `INSTALL_...` file and `CHANGELOG.md`
-  * replace URL to object store by [bit.ly](https://bitly.com/) shortlink
+  * [create new release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `dist/Release-<version>.md` (replace `Changelog` section with link to documentation) file and `CHANGELOG.md`
 
 Extra modifications as of QM 20.03.1:
 
