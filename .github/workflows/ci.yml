@@ -22,7 +22,7 @@ jobs:
 
   build-init:
     # this job initialises the vagrant box
-    # then just runs the initial ansible prerequisites role
+    # then just runs some initial ansible tasks
     # for the full build, see build.yml
     runs-on: macos-latest
     env:
@@ -37,7 +37,7 @@ jobs:
     - name: install tox
       run: pip install tox
     - name: Build Vagrant Box
-      run: ANSIBLE_ARGS="--tags prerequisites" tox -e vagrant
+      run: ANSIBLE_ARGS="--tags init" tox -e vagrant
     - name: Archive ansible log
       uses: actions/upload-artifact@v2
       with:

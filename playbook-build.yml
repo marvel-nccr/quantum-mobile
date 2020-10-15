@@ -8,15 +8,18 @@
   - name: test configuration
     debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+    tags: [init]
   - name: testing ansible environment
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+    tags: [init]
   - name: Make local dist folder
     local_action:
       module: file
       state: directory
       path: "{{ local_dist_folder }}/"
     when: release_notes_locally is defined and release_notes_locally
+    tags: [init]
 
   roles:
   - role: marvel-nccr.ansible_prerequisites
