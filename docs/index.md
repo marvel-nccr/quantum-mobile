@@ -47,8 +47,6 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 [**Download release**](releases/index.md)
 ```
 
-## Demonstration
-
 ![A brief impression of the Quantum Mobile interface.](_static/quantum_mobile.gif)
 
 
@@ -97,4 +95,5 @@ developers/roles.md
 :caption: Maintainers
 
 maintainers/develop.md
+maintainers/release.md
 ```

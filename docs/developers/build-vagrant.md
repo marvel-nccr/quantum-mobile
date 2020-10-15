@@ -1,8 +1,6 @@
 # Build a desktop VM
 
-In the following, we explain how to build your own custom Quantum Mobile image, allowing you to remove components you don't need and add new ones.
-
-The [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile) contains the Vagrant and [Ansible playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) required to set up the virtual machine from scratch.
+In the following, we explain how to build your own custom Quantum Mobile VirtualBox image from scratch.
 
 Calculate at least one hour for building the VM:
 
@@ -29,15 +27,15 @@ marvel-nccr.wannier_tools : Get wannier_tools source ---------------------------
 marvel-nccr.ubuntu_desktop : install chromium-browser -------------------------------------------------------- 129.00s
 marvel-nccr.editors : Install some common editors ------------------------------------------------------------ 126.35s
 ```
-````
-
 :::{seealso}
 See the [continuous deployment (CD) workflow](https://github.com/marvel-nccr/quantum-mobile/actions?query=workflow%3ACD) for up-to-date timings
 :::
+````
 
-## Prerequisites
 
-- Host OS: Building Quantum Mobile has been tested on MacOS, Ubuntu and Windows.
+## Prerequisites & Installation
+
+- Operating system: Building Quantum Mobile has been tested on MacOS, Ubuntu and Windows.
 - [Vagrant](https://www.vagrantup.com/downloads.html) >= 2.0.1
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads) >= 6.1.6
 - [Python](https://www.python.org/) >= 3.6
@@ -55,43 +53,20 @@ See the [continuous deployment (CD) workflow](https://github.com/marvel-nccr/qua
   ```
 ````
 
-## Customising the build
-
-The `inventory.yml` file contains all the variables used during the VM build.
-You can modify this to control aspects of the build, such as the default #CPUs and what web-browser to install.
-
-:::{seealso}
-The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
-:::
-
-## Create the Virtual Machine
-
-:::{tip}
-Building the Desktop Edition is tested on GitHub Actions on every commit to the repository.
-For the tested steps see the `.github/workflows/build.yml` file.
-:::
-
-First clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/marvel-nccr/quantum-mobile.git
 cd quantum-mobile
 ```
 
-Then use [tox](https://tox.readthedocs.io/) to set up the Python environment and run the build steps.
+Install [tox](https://tox.readthedocs.io/) and the `vagrant-vbguest` plugin:
 
 ```bash
 pip install tox
-# to show all available automations
-tox -a -v        # shows available automations
 # improves interface
 vagrant plugin install vagrant-vbguest
 ```
-
-:::{tip}
-If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
-:::
-
 :::{tip}
 For those using [Conda](https://docs.conda.io/), it is recommended to also install [tox-conda](https://github.com/tox-dev/tox-conda):
 
@@ -101,15 +76,31 @@ pip install tox-conda
 
 :::
 
-To build and provision the machine, you can then run:
+## Create the Virtual Machine
+
+:::{seealso}
+If you would like to [customise](customize.md) any aspects of the VM, now would be a good time to do so.
+:::
+
+
+Use [tox](https://tox.readthedocs.io/) to set up the Python environment and run the build steps.
 
 ```bash
+tox -a -v        # shows available automations
 tox -e vagrant
 ```
-
 This will call `vagrant up`, to initialise the VM, which then calls `ansible-playbook playbook-build.yml`, to configure the VM and build the required software on it.
 
-## Continuing a failed build
+:::{tip}
+If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
+:::
+:::{tip}
+Building the Desktop Edition is tested on GitHub Actions on every commit to the repository.
+For the tested steps see the `.github/workflows/build.yml` file.
+:::
+
+
+### Continuing a failed build
 
 If the build fails or is interrupted at any step (for example a failed download, due to a bad connection),
 you can continue the build with:
@@ -122,9 +113,9 @@ tox -e ansible
 
 The ansible automation steps are generally idempotent, meaning that if they have been previously run successfully, then they will be skipped in any subsequent runs.
 
-## Running only selected steps
+### Running only selected steps
 
-All steps of the ansible build process are "tagged", meaning you can select to run only certain steps, or skip others.
+All steps of the ansible build process are "tagged", wich allows you to select to run only certain steps, or skip others.
 
 To list all the tags:
 
@@ -134,7 +125,7 @@ tox -e ansible -- --list-tags
 
 or look at `playbook-build.yml`.
 
-To run run only certain tags, use either:
+To run only certain tags, use either:
 
 ```bash
 ANSIBLE_ARGS="--tags tag1,tag2 --skip-tags tag3" tox -e vagrant
@@ -163,7 +154,7 @@ tox -e package -- --skip-tags validate
 This will compact the hard disk of the virtual machine and export the image and release notes to the `dist/` folder.
 
 :::{note}
-The `validate` tag checks that the repositories git tag is the same as the `vm_version` specified in `inventory.yml`, and is only needed for strict releases.
+The `validate` tag checks that the repositories git tag is the same as the `vm_version` specified in `inventory.yml`, and is only needed for new releases by Quantum Mobile maintainers.
 :::
 
 ## Other Useful commands

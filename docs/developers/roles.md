@@ -1,4 +1,4 @@
-# Creating an ansible role
+# Create a new ansible role
 
 Please use the [ansible role cookiecutter](https://github.com/marvel-nccr/cookiecutter-ansible-role) to template a new role.
 

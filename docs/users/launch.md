@@ -1,14 +1,36 @@
-# Launching VMs
+# Launching the VM
 
 (launch/vagrant)=
-## Vagrant Desktop
+## Desktop Edition with VirtualBox
 
-* Download a released virtual machine image (from [the releases here](../releases/index.md))
-* Install Virtual Box 6.1.6 or later (see <https://www.virtualbox.org>)
+* Download the latest VirtualBox image from [the releases](../releases/index.md))
+* Install [Virtual Box](https://www.virtualbox.org) 6.1.6 or later
 * Import the virtual machine image into Virtualbox: `File => Import Appliance`
 
+
+## Cloud Edition on remote server
+
+:::{note}
+Although Quantum Mobile is free and open-source, running a server on a cloud platform cloud will incur a cost.
+:::
+
+* Find the latest [Cloud Edition image](../releases/index.md)
+* Follow the instructions below for the cloud platform of your choice
+* If the cloud platform of your choice is not among the list, you can [build your own cloud VM](../developers/build-cloud.md)
+
+We have started offering pre-built Quantum Mobile images on a selection of cloud providers, such as Amazon Web Services and the Google Cloud Platform, since this allows launching a VM from such an image with just a few clicks.
+
+We are in the process of evaluating which platforms to target and whether to release a separate image for the Cloud Edition (e.g. in `ova` format).
+Your feedback is welcome!
+
+
 (launch/aws)=
-## Amazon Cloud (AWS)
+### Amazon Web Services (AWS)
+
+:::{admonition} Prerequisites
+
+* An account on [aws.amazon.com](https://aws.amazon.com/account/)
+:::
 
 * Open the Amazon EC2 console at <https://console.aws.amazon.com/ec2/>.
 * Click "Launch instance"
@@ -43,15 +65,13 @@ ssh max@<IP> -i /path/to/key.pem
 :::
 
 (launch/gcp)=
-## Google Cloud (GCP)
+### Google Cloud Platform (GCP)
 
 :::{admonition} Prerequisites
 
 * An account on [cloud.google.com](https://cloud.google.com/)
 * A project with Compute Engine API enabled (see their [quickstart docs](https://cloud.google.com/compute/docs/quickstart-linux))
 :::
-
-### Launching the VM
 
 * Go to one of the links in [the releases page](../releases/index.md), such as [quantum-mobile-20-05-0](https://console.cloud.google.com/compute/imagesDetail/projects/marvel-nccr/global/images/quantum-mobile-20-05-0)  
 * Click on "CREATE INSTANCE"

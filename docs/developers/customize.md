@@ -1,4 +1,4 @@
-# Customizing Quantum Mobile
+# Customise Quantum Mobile
 
 There are at least two ways to customize Quantum Mobile in order to fit your needs:
 
@@ -37,15 +37,23 @@ When following the reproducible approach (see below), you can use the `playbook-
 
 Quantum Mobile encapsulates components in
 [ansible roles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html), which are selected in the `playbook-build.yml` file.
-You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or write your own.
+You can choose from our [growing repository of roles](https://galaxy.ansible.com/marvel-nccr) or [write your own roles](./roles.md).
 
 If you need to install a new simulation code or want to remove components from quantum mobile:
 
-1. See [Creating and testing roles](./roles.md) on how to create an ansible role for your code
-2. Fork the quantum-mobile GitHub repository
-3. Add/remove roles in the `playbook-build.yml` file
-4. Adapt `inventory.yml`, `resources/EULA.txt` and `README.md` appropriately
-5. Follow the [Instructions for building Quantum Mobile](./build-vagrant.md) to build your VM from scratch
+1. Fork the quantum-mobile GitHub repository
+1. Add/remove roles in the `playbook-build.yml` file
+1. Adapt `inventory.yml`, `resources/EULA.txt` and `README.md` appropriately
+
+    The `inventory.yml` controls many aspects of the build, such as the name of the machine, the default number of CPUs and amount of memory, what web-browser to install, etc.
+
+    :::{seealso}
+    The [ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) and [playbook variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html) documentation.
+    :::
+
+
+1. Follow the [Instructions for building Quantum Mobile](./build-vagrant.md) to build your VM from scratch
+
 
 ## Publishing customized VMs
 
