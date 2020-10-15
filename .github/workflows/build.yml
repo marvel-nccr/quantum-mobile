@@ -1,11 +1,13 @@
 name: CD
 
+# This process takes over an hour,
+# so we only run when pushing to the master branch, or creating a new tag/release
 on:
   push:
     branches: [master]
     tags:
     - '*'
-  pull_request:
+  # pull_request:
 
 jobs:
 
@@ -83,6 +85,7 @@ jobs:
         path: ansible.log
       continue-on-error: true
 
+    # Ideally we would like a way to inspect the final VM image this process creates.
     # This always encounters: https://github.com/actions/upload-artifact/issues/29#issuecomment-706512345
     # TODO upload directly to openstack (as dev version), or another location?
     # - name: Archive distribution

@@ -92,6 +92,15 @@ vagrant plugin install vagrant-vbguest
 If you get an error during the installation of the VirtualBox Guest Additions, you may need to perform additional steps (see [issue #60](https://github.com/marvel-nccr/quantum-mobile/issues/60)).
 :::
 
+:::{tip}
+For those using [Conda](https://docs.conda.io/), it is recommended to also install [tox-conda](https://github.com/tox-dev/tox-conda):
+
+```bash
+pip install tox-conda
+```
+
+:::
+
 To build and provision the machine, you can then run:
 
 ```bash

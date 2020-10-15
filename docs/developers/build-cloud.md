@@ -1,9 +1,14 @@
 # Build a cloud VM
 
-In the following, we explain how to install Quantum Mobile on your own virtual machine in the cloud (for building your own Desktop Edition, [see here](./build-vagrant.md)).
+In the following, we explain how to install Quantum Mobile on your own virtual machine in the cloud.
 
 This procedure is automated entirely using an [ansible playbook](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) in the [quantum mobile repository](https://github.com/marvel-nccr/quantum-mobile).
 It has been used successfully to deploy Quantum Mobile on servers from Amazon Web Services, Google Compute Cloud, Huawei Cloud, Openstack as well as on bare metal servers.
+
+:::{note}
+This process essentially a sub-set of the process to build the Desktop Edition ([see the instructions here](./build-vagrant.md)),
+in that we are provisioning an existing VM, rather than creating one from scratch.
+:::
 
 ## Prerequisites
 
