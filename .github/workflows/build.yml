@@ -1,0 +1,104 @@
+name: CD
+
+# This process takes over an hour,
+# so we only run when pushing to the master branch, or creating a new tag/release
+on:
+  push:
+    branches: [master]
+    tags:
+    - '*'
+  # pull_request:
+
+jobs:
+
+  build:
+
+    # Vagrant builds require Mac OSX machines,
+    # see: https://github.com/actions/virtual-environments/issues/183
+    runs-on: macos-latest
+
+    env:
+      VAGRANT_NO_GUI: true
+      VAGRANT_ON_GH: true
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: install tox
+      run: pip install tox
+
+    - name: Build Vagrant Box
+      run: tox -e vagrant
+      continue-on-error: true
+      id: build_1
+
+    - name: Archive ansible log
+      uses: actions/upload-artifact@v2
+      with:
+        name: ansible-log
+        path: ansible.log
+      continue-on-error: true
+
+    - name: Write vagrant connection configuration
+      run: vagrant ssh-config > vagrant-ssh
+
+    # improve resilience, if ansible fails, for example due to a download timeout
+    # ansible is idempotent, so in principle we can retry as many times as needed
+    - name: Provision VM (retry)
+      if: failure() || steps.build_1.outcome == 'failure'
+      run: tox -e ansible
+
+    - name: Archive log
+      uses: actions/upload-artifact@v2
+      with:
+        name: ansible-log
+        path: ansible.log
+      continue-on-error: true
+
+    - name: Clean build files on VM
+      # only roles that include "when: clean is defined and clean"
+      # TODO wannier90 has a clean task, but it appears to running against the wrong python executable
+      # since it can't find the configparser module, pip installed in earlier task
+      run: tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+
+    - name: Archive log
+      uses: actions/upload-artifact@v2
+      with:
+        name: ansible-log
+        path: ansible.log
+      continue-on-error: true
+
+    - name: Package VM
+      # validate tests the git tag against the version variable
+      run: tox -e package -- --skip-tags reload,validate
+
+    - name: Archive log
+      uses: actions/upload-artifact@v2
+      with:
+        name: ansible-log
+        path: ansible.log
+      continue-on-error: true
+
+    - name: Archive release notes
+      uses: actions/upload-artifact@v2
+      with:
+        name: release-notes
+        path: |
+          dist/*.md
+          dist/*.ini
+
+    # Ideally we would like a way to inspect the final VM image this process creates.
+    # This always encounters: https://github.com/actions/upload-artifact/issues/29#issuecomment-706512345
+    # TODO upload directly to openstack (as dev version), or another location?
+    # - name: Archive distribution
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: distribution
+    #     path: dist/
+    #     retention-days: 30

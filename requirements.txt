@@ -1,9 +1,3 @@
 ansible>=2.7
 passlib
-sphinx>=1.5
 paramiko
-# for testing
-molecule
-docker
-# for deployment
-python-openstackclient

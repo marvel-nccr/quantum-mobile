@@ -6,11 +6,15 @@
 *.ova
 vagrant-ssh
 .vagrant
-hosts
-INSTALL*.txt
 RELEASENOTES.txt
-doc/_build
-other_stuff/*/*.png
+docs/_build
+resources/*/*.png
+tmp.vdi
+tmp.vmdk
+.vscode/
+.tox/
+dist/
+_archive
 
 # roles & dependencies
 roles/marvel-nccr*

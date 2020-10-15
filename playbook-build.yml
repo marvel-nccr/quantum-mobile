@@ -1,0 +1,132 @@
+- name: Install ansible prerequisites
+
+  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+  gather_facts: no
+
+  pre_tasks:
+
+  - name: test configuration
+    debug:
+      msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+    tags: [init]
+  - name: testing ansible environment
+    debug:
+      msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+    tags: [init]
+  - name: Make local dist folder
+    local_action:
+      module: file
+      state: directory
+      path: "{{ local_dist_folder }}/"
+    when: release_notes_locally is defined and release_notes_locally
+    tags: [init]
+
+  roles:
+  - role: marvel-nccr.ansible_prerequisites
+    tags: [prerequisites]
+
+- name: set up the VM
+  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+
+  roles:
+  - name: add user {{ vm_user }} with key
+    role: marvel-nccr.add_user
+    tags: [add_user]
+    vars:
+      add_user_name: "{{ vm_user }}"
+      add_user_password: "{{ vm_password }}"
+      add_user_groups:
+      - "{{ vm_user }}"
+      - sudo
+      add_user_passwordless_sudo: true
+  - role: marvel-nccr.simulationbase
+    tags: [simulationbase]
+    vars:
+      simulationbase_vm_user: "{{ vm_user }}"
+      simulationbase_hostname: "{{ vm_hostname }}"
+      simulationbase_codes_folder: "{{ vm_codes_folder }}"
+  - role: marvel-nccr.ubuntu_desktop
+    tags: [ubuntu_desktop]
+    vars:
+      ubuntu_desktop_browser: "{{ vm_browser }}"
+      ubuntu_desktop_vm_user: "{{ vm_user }}"
+    when: not vm_headless
+  - role: marvel-nccr.quantum_mobile_customizations
+    tags: [qm_customizations]
+    vars:
+      qm_customizations_browser: "{{ vm_browser }}"
+      qm_customizations_vm_user: "{{ vm_user }}"
+      qm_customizations_vm_password: "{{ vm_password }}"
+      qm_customizations_vm_name: "{{ vm_name }}"
+      qm_customizations_vm_version: "{{ vm_version }}"
+      qm_customizations_vm_author: "{{ vm_author }}"
+      qm_customizations_vm_cpus: "{{ vm_cpus }}"
+      qm_customizations_headless: "{{ vm_headless }}"
+      qm_customizations_examples_folder: "{{ vm_examples_folder }}"
+      qm_customizations_data_folder: "{{ vm_data_folder }}"
+  - role: marvel-nccr.editors
+    tags: [editors]
+    vars:
+      editors_vm_user: "{{ vm_user }}"
+  - role: marvel-nccr.slurm
+    tags: [slurm]
+    vars:
+      slurm_hostname: "{{ vm_hostname }}"
+      slurm_cpus: "{{ vm_cpus }}"
+      slurm_memory: "{{ vm_memory }}"
+  - role: marvel-nccr.quantum_espresso
+    tags: [quantum_espresso]
+    vars:
+      quantum_espresso_data_folder: "{{ vm_data_folder }}"
+  - role: marvel-nccr.yambo
+    tags: [yambo]
+  - role: marvel-nccr.fleur
+    tags: [fleur]
+  - role: marvel-nccr.siesta
+    tags: [siesta]
+  - role: marvel-nccr.cp2k
+    tags: [cp2k]
+      #vars:
+      #  cp2k_installation_route: "apt"
+    # Wannier90 3.0 bundled with QE
+  - role: marvel-nccr.wannier90
+    tags: [wannier90]
+  - role: marvel-nccr.wannier_tools
+    tags: [wannier_tools]
+    # this can be added back when ansible-role-bigdft/issues/8 is fixed
+    #- role: marvel-nccr.bigdft
+    #  tags: bigdft
+  - name: aiidalab
+    role: marvel-nccr.aiidalab
+    become: true
+    become_user: "{{ vm_user }}"
+    tags: [aiidalab]
+    vars:
+      aiidalab_headless: "{{ vm_headless }}"
+  # note: installing aiida role after aiidalab role, since aiida role has latest AiiDA version
+  - role: marvel-nccr.aiida
+    tags: [aiida]
+    become: true
+    become_user: "{{ vm_user }}"
+    vars:
+      aiida_source_folder: "{{ vm_codes_folder }}"
+      aiida_data_folder: "{{ vm_data_folder }}/aiida"
+      aiida_computer_cpus: "{{ vm_cpus }}"
+      aiida_computer_scheduler: "{{ vm_scheduler }}"
+      aiida_examples_folder: "{{ vm_examples_folder }}"
+      aiida_components:
+      - computers
+      - plugins
+      - pseudopotentials
+      - examples
+
+  # TODO this is currently failing due to:
+  # aiidalab 20.7.0b2 has requirement numpy==1.17.5, but you have numpy 1.17.4.
+  # post_tasks:
+
+  # - name: Check package version integrity in virtualenv
+  #   command: "{{ aiida_venv }}/bin/pip check --no-color"
+  #   become: true
+  #   become_user: "{{ vm_user }}"
+  #   changed_when: false
+  #   tags: [aiida, aiidalab, pipcheck]

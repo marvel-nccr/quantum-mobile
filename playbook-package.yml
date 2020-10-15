@@ -1,0 +1,174 @@
+- name: Package VM
+
+  hosts: 127.0.0.1
+  connection: local
+
+  vars:
+    tmp_vdisk_vdi: "tmp.vdi"
+    tmp_vdisk_vmdk: "tmp.vmdk"
+
+  tasks:
+
+  - name: set VM ID
+    set_fact:
+      vm_id: "{{ vm_name }} {{ vm_version }}"
+    tags: [always]
+
+  - name: Get machine information for "{{ vm_id }}"
+    shell: vboxmanage showvminfo --machinereadable "{{ vm_id }}"
+    register: vminfo
+    tags: [always]
+
+  - name: set VM machine information
+    set_fact:
+      vdisk_path: "{{ vminfo.stdout | regex_search('\"SATA Controller-0-0\"=\"(.+)\"', '\\1') | first }}"
+      vdisk_uuid: "{{ vminfo.stdout | regex_search('\"SATA Controller-ImageUUID-0-0\"=\"(.+)\"', '\\1') | first }}"
+    tags: [always]
+
+  - name: Get stats of {{ vdisk_path }}
+    stat:
+      path: "{{ vdisk_path }}"
+    register: vm_vdisk_file
+    tags: [always]
+  - debug:
+      msg: "vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
+    tags: [always]
+
+  - name: Reload VM (to ensure /tmp wiped)
+    shell: vagrant reload
+    tags: [clean, reload]
+
+  - name: Output SSH connection configuration
+    shell: vagrant ssh-config > vagrant-ssh
+    tags: [clean]
+
+  - name: Clear bash history
+    shell: ssh -F vagrant-ssh default "cat /dev/null > ~/.bash_history && history -c"
+    tags: [clean]
+
+  - name: Filling free space with zeros (this can take several minutes)
+    shell: ssh -F vagrant-ssh default "cat /dev/zero > zero.fill; sync; sleep 1; sync; rm -f zero.fill"
+    tags: [clean]
+
+  - name: Halt any running machines
+    shell: vagrant halt
+    tags: [always]
+
+  - name: Remove old temporary files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+    - "{{ tmp_vdisk_vdi }}"
+    - "{{ tmp_vdisk_vmdk }}"
+    tags: [compact]
+
+  - name: Convert vdisk to vdi format
+    shell: vboxmanage clonehd "{{ vdisk_path }}" "{{ tmp_vdisk_vdi }}" --format vdi
+    tags: [compact]
+
+  - name: Compact vdisk
+    shell: vboxmanage modifyhd "{{ tmp_vdisk_vdi }}" --compact
+    tags: [compact]
+
+  - name: Convert vdisk back to vmdk
+    shell: vboxmanage clonehd "{{ tmp_vdisk_vdi }}" "{{ tmp_vdisk_vmdk }}" --format vmdk
+    tags: [compact]
+
+  - name: Remove vdi temporary file
+    shell: vboxmanage closemedium "{{ tmp_vdisk_vdi }}" --delete
+    tags: [compact]
+
+  - name: Replace VM file
+    copy:
+      src: "{{ tmp_vdisk_vmdk }}"
+      dest: "{{ vdisk_path }}"
+      force: true
+    tags: [compact]
+
+  - name: Reset VM UUID
+    shell: vboxmanage internalcommands sethduuid "{{ vdisk_path }}" {{ vdisk_uuid }}
+    tags: [compact]
+
+  - name: Remove vdmk temporary file
+    shell: vboxmanage closemedium "{{ tmp_vdisk_vmdk }}" --delete
+    tags: [compact]
+
+  - name: Get stats of {{ vdisk_path }}
+    stat:
+      path: "{{ vdisk_path }}"
+    register: vm_vdisk_file
+    tags: [clean, compact]
+  - debug:
+      msg: "Final vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
+    tags: [clean, compact]
+
+  - name: Retrieve git tag
+    shell: git describe --abbrev=0 --tags
+    register: git_tag
+    tags: [export, validate, skip_ansible_lint]
+
+  - name: "Assert git tag ({{ git_tag.stdout }}) == VM version({{ vm_version }})"
+    assert:
+      that:
+      - git_tag.stdout == vm_version
+    tags: [export, validate]
+
+  - name: Make dist folder
+    file:
+      state: directory
+      path: "{{ local_dist_folder }}/"
+    tags: [export]
+
+  - name: set output path for image
+    set_fact:
+      image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}.ova"
+    tags: [export, release]
+
+  - name: Remove old image file
+    file:
+      state: absent
+      path: "{{ image_path }}"
+    tags: [export]
+
+  - name: "Export image to: {{ image_path }}"
+    shell: |
+      vboxmanage export "{{ vm_id }}"  \
+        -o {{ image_path }} \
+        --vsys 0 \
+        --product "{{ vm_name }}" \
+        --version "{{ vm_version }}" \
+        --producturl "{{ vm_url }}" \
+        --vendor "{{ vm_author }}" \
+        --vendorurl "{{ vm_author_url }}" \
+        --description "{{ vm_description }}" \
+        --eulafile "resources/EULA.txt"
+    tags: [export]
+
+  - name: Get stats of {{ image_path }}
+    stat:
+      path: "{{ image_path }}"
+      get_checksum: true
+      checksum_algorithm: md5
+    register: vm_image_file
+    tags: [export, release]
+
+  - debug:
+      msg: "image size: {{ vm_image_file.stat.size | filesizeformat }}"
+    tags: [export, release]
+
+  - name: Get Virtual Box version
+    command: vboxmanage --version
+    register: vbox_version
+    tags: [export, release]
+
+  - name: Get Vagrant version
+    command: vagrant --version
+    register: vagrant_version
+    tags: [export, release]
+
+  - name: Add release template to dist folder
+    template:
+      src: resources/Release.md.j2
+      dest: "{{ release_instructions }}"
+    tags: [export, release]

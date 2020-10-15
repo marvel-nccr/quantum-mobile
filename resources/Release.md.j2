@@ -1,0 +1,46 @@
+# {{ vm_name }} ({{ vm_version }})
+
+{{ vm_description }}
+
+## Installation instructions
+
+Get Quantum Mobile running on your computer in three simple steps:
+
+ 1. Download virtual machine image ({{ vm_image_file.stat.size | filesizeformat }})
+    <https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/marvel-vms/{{ image_path | basename }}>
+    Filename: `{{ image_path | basename }}`
+    MD5 hash: `{{ vm_image_file.stat.checksum }}`
+ 2. Install Virtual Box 6.1.6 or later (see <https://www.virtualbox.org>)
+ 3. Import virtual machine image into Virtualbox ({{ vm_vdisk_file.stat.size | filesizeformat }})
+    File => Import Appliance
+
+Login credentials: username: `{{ vm_user }}`, password: `{{ vm_password }}`.  
+The default configuration of `{{ vm_cpus }}` cores and `{{ vm_memory }}` MB RAM can be adjusted in the VM settings.
+
+## Contact
+
+For issues encountered during installation, please first consult the [FAQ page](https://github.com/marvel-nccr/quantum-mobile/wiki/Frequently-Asked-Questions#virtualbox-installationstartup-issues).
+
+Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+
+## Changelog
+
+### Improvements
+
+<!-- Fill this out manually -->
+
+### Bug fixes
+
+<!-- Fill this out manually -->
+
+### Build Process
+
+- OS: `{{ ansible_distribution }}`
+- Ansible: `{{ ansible_version.string }}`
+- Vagrant: `{{ vagrant_version.stdout.replace('Vagrant ', '') }}`
+- Virtualbox: `{{ vbox_version.stdout }}`
+- Base VM Image: `{{ vm_base_image }}`
+
+### Software Summary
+
+<!--Copy-paste here: `{{ release_notes_localhost }}` -->

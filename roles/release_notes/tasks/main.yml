@@ -6,14 +6,15 @@
     section: "{{ section }}"
     option: "{{ option }}"
     value: "{{ value }}"
-    create: True
+    create: true
 
 - name: "localhost release notes: Add '{{ option }}' to '{{ section }}'"
   delegate_to: localhost
+  become: false
   ini_file:
     path: "{{ release_notes_localhost }}"
     section: "{{ section }}"
     option: "{{ option }}"
     value: "{{ value }}"
-    create: True
+    create: true
   when: release_notes is defined and release_notes_locally

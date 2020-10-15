@@ -1,0 +1,106 @@
+# This file provides variable configuration:
+
+# `all/vars` provides the global configuration
+# `all/hosts/*` specifies variables that override global configuration
+# CLI variables override any in this file: `ansible-playbook --extra-vars "name=value"`
+
+# see also: https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
+all:
+
+  vars:
+    # VM Metadata
+    vm_name: "Quantum Mobile"
+    vm_version: "20.06.1"
+    vm_description: "A Virtual Machine for Computational Materials Science"
+    vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
+    vm_author: "MARVEL NCCR and MaX CoE"
+    vm_author_url: "http://nccr-marvel.ch"
+    vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
+    vm_readme_file: "${HOME}/Desktop/README.md"
+
+    # VM configuration
+    vm_base_image: "bento/ubuntu-18.04"
+    vm_hostname: "qmobile"
+    vm_user: "max"
+    vm_password: "moritz"
+    vm_memory: 1536
+    vm_cpus: 2
+    vm_vram: 128
+    vm_shared_folder: "/shared"
+    vm_codes_folder: "${HOME}/codes"
+    vm_data_folder: "/usr/local/share"
+    vm_examples_folder: "${HOME}/examples"
+    vm_headless: false
+    vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
+    vm_scheduler: slurm  # 'slurm' or 'direct'
+
+    # Python virtual environment
+    # TODO it may be better if these shared the same name
+    aiida_venv: "${HOME}/.virtualenvs/aiida"
+    aiidalab_venv: "${HOME}/.virtualenvs/aiida"
+
+    # Release Notes (populated by roles during build)
+    release_notes: true
+    release_notes_vm_user: "{{ vm_user }}"
+    release_notes_locally: true
+    local_dist_folder: "{{ playbook_dir }}/dist"
+    release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
+
+    # Vagrant Intructions (created during the package/export phase)
+    release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
+
+    # Connection variables
+    ansible_python_interpreter: /usr/bin/python3
+    root_user: root
+
+    # Build options
+    run_tests: true
+    clean: false  # remove build files (will break idempotance, so only run before packaging/release)
+
+  hosts:
+    vagrant-provision:
+      # this private network IP will be created by `vagrant up`
+      cloud_platform: virtualbox
+      ansible_host: 192.168.111.222
+      ansible_user: vagrant
+    vagrant-ssh:
+      # requires first running `vagrant ssh-config > vagrant-ssh`
+      cloud_platform: virtualbox
+      ansible_host: default
+      ansible_ssh_common_args: "-F vagrant-ssh"
+      ansible_user: vagrant
+
+    # To connect to VMs you should change the host IP and provide an SSH key file
+    aws:
+      cloud_platform: aws
+      ansible_host: 34.250.68.129 # change this
+      ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
+      ansible_user: ubuntu
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+    hwcloud:
+      cloud_platform: hwcloud
+      ansible_host: 34.250.68.129 # change this
+      ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
+      ansible_user: root
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+    openstack:
+      cloud_platform: openstack
+      ansible_host: 34.250.68.129 # change this
+      ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
+      ansible_user: ubuntu
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+    gcp:
+      cloud_platform: gcp
+      ansible_host: 34.250.68.129 # change this
+      ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
+      ansible_user: max
+      vm_headless: true
+      slurm_hostname_service: true
+      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
