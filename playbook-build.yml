@@ -95,13 +95,13 @@
     tags: [wannier_tools]
   - role: marvel-nccr.bigdft
     tags: [bigdft]
-  - name: aiidalab
-    role: marvel-nccr.aiidalab
-    become: true
-    become_user: "{{ vm_user }}"
-    tags: [aiidalab]
-    vars:
-      aiidalab_headless: "{{ vm_headless }}"
+  # - name: aiidalab
+  #   role: marvel-nccr.aiidalab
+  #   become: true
+  #   become_user: "{{ vm_user }}"
+  #   tags: [aiidalab]
+  #   vars:
+  #     aiidalab_headless: "{{ vm_headless }}"
   # note: installing aiida role after aiidalab role, since aiida role has latest AiiDA version
   - role: marvel-nccr.aiida
     tags: [aiida]
