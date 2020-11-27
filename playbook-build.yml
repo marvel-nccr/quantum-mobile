@@ -29,6 +29,7 @@
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
 
   roles:
+
   - name: add user {{ vm_user }} with key
     role: marvel-nccr.add_user
     tags: [add_user]
@@ -39,18 +40,21 @@
       - "{{ vm_user }}"
       - sudo
       add_user_passwordless_sudo: true
+
   - role: marvel-nccr.simulationbase
     tags: [simulationbase]
     vars:
       simulationbase_vm_user: "{{ vm_user }}"
       simulationbase_hostname: "{{ vm_hostname }}"
       simulationbase_codes_folder: "{{ vm_codes_folder }}"
+
   - role: marvel-nccr.ubuntu_desktop
     tags: [ubuntu_desktop]
     vars:
       ubuntu_desktop_browser: "{{ vm_browser }}"
       ubuntu_desktop_vm_user: "{{ vm_user }}"
     when: not vm_headless
+
   - role: marvel-nccr.quantum_mobile_customizations
     tags: [qm_customizations]
     vars:
@@ -64,45 +68,48 @@
       qm_customizations_headless: "{{ vm_headless }}"
       qm_customizations_examples_folder: "{{ vm_examples_folder }}"
       qm_customizations_data_folder: "{{ vm_data_folder }}"
+
   - role: marvel-nccr.editors
     tags: [editors]
     vars:
       editors_vm_user: "{{ vm_user }}"
+
   - role: marvel-nccr.slurm
     tags: [slurm]
     vars:
       slurm_hostname: "{{ vm_hostname }}"
       slurm_cpus: "{{ vm_cpus }}"
       slurm_memory: "{{ vm_memory }}"
+
   - role: marvel-nccr.quantum_espresso
     tags: [quantum_espresso]
     vars:
       quantum_espresso_data_folder: "{{ vm_data_folder }}"
+
   - role: marvel-nccr.yambo
     tags: [yambo]
+
   - role: marvel-nccr.fleur
     tags: [fleur]
+
   - role: marvel-nccr.siesta
     tags: [siesta]
+
   - role: marvel-nccr.cp2k
     tags: [cp2k]
-      #vars:
-      #  cp2k_installation_route: "apt"
-    # Wannier90 3.0 bundled with QE
+
   - role: marvel-nccr.wannier90
     tags: [wannier90]
+
   - role: marvel-nccr.wannier_tools
     tags: [wannier_tools]
+
   - role: marvel-nccr.bigdft
     tags: [bigdft]
-  # - name: aiidalab
-  #   role: marvel-nccr.aiidalab
-  #   become: true
-  #   become_user: "{{ vm_user }}"
-  #   tags: [aiidalab]
-  #   vars:
-  #     aiidalab_headless: "{{ vm_headless }}"
-  # note: installing aiida role after aiidalab role, since aiida role has latest AiiDA version
+
+  - role: marvel-nccr.abinit
+    tags: [abinit]
+
   - role: marvel-nccr.aiida
     tags: [aiida]
     become: true
@@ -113,14 +120,15 @@
       aiida_computer_cpus: "{{ vm_cpus }}"
       aiida_computer_scheduler: "{{ vm_scheduler }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
-      aiida_components:
-      - computers
-      - plugins
-      - pseudopotentials
-      - examples
 
-  # TODO this is currently failing due to:
-  # aiidalab 20.7.0b2 has requirement numpy==1.17.5, but you have numpy 1.17.4.
+  # - name: aiidalab
+  #   role: marvel-nccr.aiidalab
+  #   become: true
+  #   become_user: "{{ vm_user }}"
+  #   tags: [aiidalab]
+  #   vars:
+  #     aiidalab_headless: "{{ vm_headless }}"
+
   # post_tasks:
 
   # - name: Check package version integrity in virtualenv
