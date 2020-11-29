@@ -22,9 +22,9 @@ Vagrant.configure(2) do |config|
      ## Resource details
      vb.memory = gconfig['vm_memory']
      if on_ci
-      vb.cpus = gconfig['vm_cpus']
+      vb.cpus = 2
      else
-      vb.cpus = 1
+      vb.cpus = gconfig['vm_cpus']
      end
 
      ## To allow to graphically connect to it from the VirtualBox interface
