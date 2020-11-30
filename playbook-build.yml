@@ -28,6 +28,10 @@
 - name: set up the VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
 
+  vars:
+    libxc_version: "4.3.4"
+    libxc_prefix: "/usr/local/libxc-{{ libxc_version }}"
+
   roles:
 
   - name: add user {{ vm_user }} with key
@@ -68,6 +72,17 @@
       qm_customizations_headless: "{{ vm_headless }}"
       qm_customizations_examples_folder: "{{ vm_examples_folder }}"
       qm_customizations_data_folder: "{{ vm_data_folder }}"
+      qm_customizations_readme_file: "{{ vm_readme_file }}"
+      qm_customizations_homepage: "https://quantum-mobile.readthedocs.io"
+      qm_customizations_urls:
+        Abinit: https://www.abinit.org
+        BigDFT: http://www.bigdft.org
+        CP2K: https://www.cp2k.org
+        Fleur: http://www.flapw.de/
+        Quantum ESPRESSO: http://www.quantum-espresso.org/
+        Siesta: https://gitlab.com/siesta-project/siesta
+        Wannier90: http://www.wannier.org
+        Yambo: http://www.yambo-code.org/
 
   - role: marvel-nccr.editors
     tags: [editors]
@@ -106,9 +121,19 @@
 
   - role: marvel-nccr.bigdft
     tags: [bigdft]
+    vars:
+      bigdft_test_cpus: "{{ vm_cpus }}"
+
+  - role: marvel-nccr.libxc
+    tags: [abinit]
+    vars:
+      libxc_build_cpus: "{{ vm_cpus }}"
 
   - role: marvel-nccr.abinit
     tags: [abinit]
+    vars:
+      abinit_build_cpus: "{{ vm_cpus }}"
+      abinit_libxc_path: "{{ libxc_prefix }}"
 
   - role: marvel-nccr.aiida
     tags: [aiida]
