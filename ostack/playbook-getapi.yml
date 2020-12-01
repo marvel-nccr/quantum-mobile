@@ -1,0 +1,55 @@
+- name: Generate OpenStack API Token
+  hosts: localhost
+
+  vars:
+    ostack_env:
+      # generated using https://user.cscs.ch/tools/openstack/#access-to-pollux + `$ env | grep OS_`
+      # see also: https://docs.openstack.org/openstacksdk/latest/user/config/configuration.html
+      OS_AUTH_URL: https://pollux.cscs.ch:13000/v3
+      OS_IDENTITY_PROVIDER_URL: https://auth.cscs.ch/auth/realms/cscs/protocol/saml/
+      OS_PROTOCOL: mapped
+      OS_IDENTITY_API_VERSION: 3
+      OS_AUTH_TYPE: token
+      OS_IDENTITY_PROVIDER: cscskc
+      OS_INTERFACE: public
+
+      OS_PROJECT_ID: b1d80408b3d340db9f03d373bbde5c1e  # mrcloud
+
+  vars_prompt:
+  - name: auth_username
+    prompt: "Enter openstack username"
+    private: yes
+    default:
+  - name: auth_password
+    prompt: "Enter openstack password"
+    private: yes
+    default:
+
+  tasks:
+
+  - name: Set OS_USERNAME
+    set_fact:
+      ostack_env: "{{ ostack_env | combine({'OS_USERNAME': auth_username}) }}"
+
+  # NOTE: this will return the following error isf the password was not recognised
+  # msg: /S:Envelope/S:Header/ecp:Response/@AssertionConsumerServiceURL should provide a single element list
+  - name: create OS_TOKEN
+    os_auth:
+      auth_type: v3samlpassword
+      auth:
+        password: "{{ auth_password }}"
+    environment: "{{ ostack_env }}"
+
+  - name: Set OS_TOKEN
+    set_fact:
+      ostack_env: "{{ ostack_env | combine({'OS_TOKEN': auth_token}) }}"
+
+  - name: Create output for printing
+    set_fact:
+      exports: "{{ exports | default([]) + [' '.join(('export', item))] }}"
+    loop: "{{ ostack_env.items() | map('join', '=') }}"
+
+  - name: Print environment
+    debug:
+      msg:
+      - "{{ exports | join('\n') }}"

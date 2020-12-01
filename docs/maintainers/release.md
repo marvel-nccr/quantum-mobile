@@ -49,22 +49,55 @@ Follow the [cloud build instructions](../developers/build-cloud.md).
 
 ## Releasing the VM image
 
-### Desktop Edition
+To prepare the release:
 
 * Fill in the manual sections of `dist/Release-<version>.md`
-* upload contents of `dist/` to object store
-  * `openstack object create marvel-vms Release-<version>.md`
-  * `openstack object create marvel-vms quantum_mobile_<version>.ova`
+* Release the distributions (see below)
+* Copy `dist/Release-<version>.md` to `docs/releases/` and add the top-matter section.
+* Update `CHANGELOG.md`
+* Commit changes of quantum-mobile repository to `develop` branch
+* merge into `master`
+* [create new GitHub release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `dist/Release-<version>.md` (replace `Changelog` section with link to documentation) file and `CHANGELOG.md`
 
-* Prepare release:
-  * in `dist/Release-<version>.md`, replace URL to object store by [bit.ly](https://bitly.com/) short-link
-  * Copy `dist/Release-<version>.md` to `docs/releases/` and add the top-matter section.
-  * update `CHANGELOG.md`
-  * Commit changes of quantum-mobile repository to `develop` branch
-  * merge into `master`
-  * [create new GitHub release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `dist/Release-<version>.md` (replace `Changelog` section with link to documentation) file and `CHANGELOG.md`
+### Desktop Edition
 
+Releases should be uploaded to the `mrcloud` openstack account and `marvel-vms` container.
 
+If you have authentication to this project, you can generate the API key and other environmental variables necessary to connect using:
+
+(this will ask for your username and password)
+```console
+$ tox -e openstack-api
+...
+TASK [Print environment]
+ok: [localhost] =>
+  msg:
+  - |-
+    export OS_AUTH_URL=https://pollux.cscs.ch:13000/v3
+    export OS_IDENTITY_PROVIDER_URL=https://auth.cscs.ch/auth/realms/cscs/protocol/saml/
+    export OS_PROTOCOL=mapped
+    export OS_IDENTITY_API_VERSION=3
+    export OS_AUTH_TYPE=token
+    export OS_IDENTITY_PROVIDER=cscskc
+    export OS_INTERFACE=public
+...
+```
+
+Copy/paste these export commands into the terminal, then you can use the openstack CLI *via*:
+
+```console
+$ tox -e openstack -- object list marvel-vms
+```
+
+Upload contents of `dist/` to object store
+  
+```console
+$ tox -e openstack -- openstack object create marvel-vms dist/Release-<version>.md
+$ tox -e openstack -- openstack object create marvel-vms dist/quantum_mobile_<version>.ova
+```
+
+Finally generate a short-link for the object store URL with [bit.ly](https://bitly.com/),
+then replace the URL in `dist/Release-<version>.md`.
 
 ### Cloud Edition
 

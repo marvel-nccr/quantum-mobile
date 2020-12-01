@@ -72,12 +72,12 @@ all:
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
       cloud_platform: aws
-      ansible_host: 34.250.68.129  # change this
+      ansible_host: 3.90.111.223  # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       vm_headless: true
       slurm_hostname_service: true
-      # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+      add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     hwcloud:
       cloud_platform: hwcloud
       ansible_host: 34.250.68.129  # change this
