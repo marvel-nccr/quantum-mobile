@@ -15,8 +15,8 @@ project = "Quantum Mobile"
 copyright = "2020, NCCR MARVEL"
 author = "Chris Sewell, Giovanni Pizzi, Leopold Talirz"
 
-version = inventory["all"]["vars"]["vm_version"]
-release = version
+# version = inventory["all"]["vars"]["vm_version"]
+# release = version
 
 # -- General configuration ---------------------------------------------------
 
@@ -32,7 +32,7 @@ blog_post_pattern = "releases/*/*.md"
 post_redirect_refresh = 1
 post_auto_excerpt = 2
 fontawesome_included = True
-html_sidebars = {"releases/index": ['tagcloud.html', 'archives.html']}
+html_sidebars = {"releases/index": ['tagcloud.html', 'archives.html', 'sbt-sidebar-nav.html']}
 
 # The master toctree document.
 master_doc = "index"
