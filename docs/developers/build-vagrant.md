@@ -115,7 +115,7 @@ The ansible automation steps are generally idempotent, meaning that if they have
 
 ### Running only selected steps
 
-All steps of the ansible build process are "tagged", wich allows you to select to run only certain steps, or skip others.
+All steps of the ansible build process are "tagged", which allows you to select to run only certain steps, or skip others.
 
 To list all the tags:
 
