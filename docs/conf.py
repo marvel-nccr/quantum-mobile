@@ -32,7 +32,7 @@ blog_post_pattern = "releases/*/*.md"
 post_redirect_refresh = 1
 post_auto_excerpt = 2
 fontawesome_included = True
-html_sidebars = {"releases/index": ['tagcloud.html', 'archives.html']}
+html_sidebars = {"releases/index": ['tagcloud.html', 'archives.html', 'sbt-sidebar-nav.html']}
 
 # The master toctree document.
 master_doc = "index"
@@ -48,7 +48,7 @@ pygments_style = "sphinx"
 # -- Options for HTML output -------------------------------------------------
 
 html_theme = "sphinx_book_theme"
-html_title = f"version: {version}"
+html_title = html_short_title = f"{version}"
 html_favicon = "_static/quantum-mobile-v4-text-square.png"
 html_logo = "_static/quantum_mobile_text_wide.png"
 html_theme_options = {
