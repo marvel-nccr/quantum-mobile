@@ -15,8 +15,8 @@ project = "Quantum Mobile"
 copyright = "2020, NCCR MARVEL"
 author = "Chris Sewell, Giovanni Pizzi, Leopold Talirz"
 
-# version = inventory["all"]["vars"]["vm_version"]
-# release = version
+version = inventory["all"]["vars"]["vm_version"]
+release = version
 
 # -- General configuration ---------------------------------------------------
 
@@ -48,7 +48,7 @@ pygments_style = "sphinx"
 # -- Options for HTML output -------------------------------------------------
 
 html_theme = "sphinx_book_theme"
-html_title = f"version: {version}"
+# html_title = f"version: {version}"
 html_favicon = "_static/quantum-mobile-v4-text-square.png"
 html_logo = "_static/quantum_mobile_text_wide.png"
 html_theme_options = {
