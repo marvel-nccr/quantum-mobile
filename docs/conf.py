@@ -28,7 +28,6 @@ myst_html_img_enable = True
 
 blog_path = "releases/index"
 blog_title = "Releases"
-blog_archive_titles = False
 blog_post_pattern = "releases/*/*.md"
 post_redirect_refresh = 1
 post_auto_excerpt = 2
