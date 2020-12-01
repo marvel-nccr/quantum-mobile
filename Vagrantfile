@@ -8,7 +8,7 @@ inventory      = YAML.load_file("#{current_dir}/inventory.yml")
 gconfig        = inventory['all']['vars'].merge(inventory['all']['hosts']['vagrant-provision'])
 launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 
-# Currently on GitHub Actions it fails if more than 1 CPU or accelerate3d activated
+# Currently on GitHub Actions it fails if accelerate3d activated
 on_ci          = ENV.has_key?('VAGRANT_ON_GH') ? true : false
 
 Vagrant.configure(2) do |config|

@@ -1,7 +1,7 @@
 - name: Install ansible prerequisites
 
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
-  gather_facts: no
+  gather_facts: false
 
   pre_tasks:
 
@@ -51,6 +51,7 @@
       simulationbase_vm_user: "{{ vm_user }}"
       simulationbase_hostname: "{{ vm_hostname }}"
       simulationbase_codes_folder: "{{ vm_codes_folder }}"
+      simulationbase_tmz: Europe/Zurich
 
   - role: marvel-nccr.ubuntu_desktop
     tags: [ubuntu_desktop]
@@ -135,8 +136,16 @@
       abinit_build_cpus: "{{ vm_cpus }}"
       abinit_libxc_path: "{{ libxc_prefix }}"
 
+  - role: geerlingguy.nodejs
+    tags: [aiida, aiidalab, nodejs]
+    become: true
+    become_user: "{{ root_user }}"
+    vars:
+      nodejs_version: 12.x
+      nodejs_install_npm_user: "{{ root_user }}"
+
   - role: marvel-nccr.aiida
-    tags: [aiida]
+    tags: [aiida, aiidalab]
     become: true
     become_user: "{{ vm_user }}"
     vars:
@@ -146,6 +155,7 @@
       aiida_computer_scheduler: "{{ vm_scheduler }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
 
+  # TODO aiidalab is soon to come out of Beta
   # - name: aiidalab
   #   role: marvel-nccr.aiidalab
   #   become: true

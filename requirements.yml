@@ -1,5 +1,7 @@
 - src: gantsign.default-web-browser
   version: 3.2.0
+- src: geerlingguy.nodejs
+  version: 5.1.1
 - src: marvel-nccr.ansible_prerequisites
   version: v0.1.0
 - src: marvel-nccr.current_user
@@ -7,7 +9,7 @@
 - src: marvel-nccr.add_user
   version: v0.2.1
 - src: marvel-nccr.simulationbase
-  version: v1.0.8
+  version: v1.1.0
 - src: marvel-nccr.python
   version: v0.2.2
 - src: marvel-nccr.ubuntu_desktop
@@ -39,6 +41,6 @@
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v3.0.0
+  version: v3.1.1
 # - src: marvel-nccr.aiidalab
 #   version: v1.2.2

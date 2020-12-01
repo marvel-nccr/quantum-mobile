@@ -19,3 +19,4 @@ _archive
 # roles & dependencies
 roles/marvel-nccr*
 roles/gantsign*
+roles/geerlingguy*
