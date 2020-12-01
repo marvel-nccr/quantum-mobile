@@ -1,10 +1,9 @@
 name: CD
 
-# This process takes over an hour,
-# so we only run when pushing to the master branch, or creating a new tag/release
+# This process takes over two hours,
+# so we only run when creating a new tag/release
 on:
   push:
-    branches: [master]
     tags:
     - '*'
   # pull_request:

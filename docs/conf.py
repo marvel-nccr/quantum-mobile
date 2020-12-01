@@ -54,7 +54,7 @@ html_logo = "_static/quantum_mobile_text_wide.png"
 html_theme_options = {
     "home_page_in_toc": True,
     "repository_url": "https://github.com/marvel-nccr/quantum-mobile",
-    "repository_branch": "develop",
+    "repository_branch": "main",
     "use_repository_button": True,
     "use_issues_button": True,
     "path_to_docs": "docs",

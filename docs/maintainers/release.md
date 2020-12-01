@@ -55,8 +55,7 @@ To prepare the release:
 * Release the distributions (see below)
 * Copy `dist/Release-<version>.md` to `docs/releases/` and add the top-matter section.
 * Update `CHANGELOG.md`
-* Commit changes of quantum-mobile repository to `develop` branch
-* merge into `master`
+* Commit changes of quantum-mobile repository to `main` branch
 * [create new GitHub release](https://github.com/marvel-nccr/quantum-mobile/releases/new), copying content of `dist/Release-<version>.md` (replace `Changelog` section with link to documentation) file and `CHANGELOG.md`
 
 ### Desktop Edition
