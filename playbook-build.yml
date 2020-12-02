@@ -154,21 +154,25 @@
       aiida_computer_cpus: "{{ vm_cpus }}"
       aiida_computer_scheduler: "{{ vm_scheduler }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
+      aiida_venv: "{{ aiida_venv_base }}/aiida"
+      aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
+      aiida_venv_constraints: "{{ vm_data_folder }}/constraints.txt"
 
-  # TODO aiidalab is soon to come out of Beta
-  # - name: aiidalab
-  #   role: marvel-nccr.aiidalab
-  #   become: true
-  #   become_user: "{{ vm_user }}"
-  #   tags: [aiidalab]
-  #   vars:
-  #     aiidalab_headless: "{{ vm_headless }}"
+  - name: aiidalab
+    role: marvel-nccr.aiidalab
+    become: true
+    become_user: "{{ vm_user }}"
+    tags: [aiidalab]
+    vars:
+      aiidalab_aiida_venv: "{{ aiida_venv_base }}/aiida"
+      aiidalab_aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
+      aiidalab_aiida_venv_constraints: "{{ vm_data_folder }}/constraints.txt"
 
-  # post_tasks:
+  post_tasks:
 
-  # - name: Check package version integrity in virtualenv
-  #   command: "{{ aiida_venv }}/bin/pip check --no-color"
-  #   become: true
-  #   become_user: "{{ vm_user }}"
-  #   changed_when: false
-  #   tags: [aiida, aiidalab, pipcheck]
+  - name: Check package version integrity in virtualenv
+    command: "{{ aiida_venv }}/bin/pip check --no-color"
+    become: true
+    become_user: "{{ vm_user }}"
+    changed_when: false
+    tags: [aiida, aiidalab, pipcheck]
