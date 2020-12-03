@@ -43,4 +43,4 @@
 - src: marvel-nccr.aiida
   version: v3.2.2
 - src: marvel-nccr.aiidalab
-  version: v2.0.0
+  version: v2.0.1
