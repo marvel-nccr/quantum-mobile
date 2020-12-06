@@ -11,7 +11,7 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "20.11.0a"
+    vm_version: "20.11.1a"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
@@ -37,6 +37,10 @@ all:
 
     # Python virtual environments base location
     aiida_venv_base: "${HOME}/.virtualenvs"
+
+    # Connection Ports
+    aiida_jupyter_port: 8890
+    aiidalab_jupyter_port: 8888
 
     # Release Notes (populated by roles during build)
     release_notes: true

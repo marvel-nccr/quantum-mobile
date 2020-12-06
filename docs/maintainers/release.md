@@ -26,9 +26,9 @@ Follow the [desktop build instructions](../developers/build-vagrant.md).
 :::{note}
 Manual modifications required, as of QM 20.03.1:
 
-* double-click on the Desktop symbols to show the icons
-* delete examples/ icon on desktop
-* fix issue with rabbitmq not shutting down ([#111](https://github.com/marvel-nccr/quantum-mobile/issues/111))
+* Double-click on the Desktop symbols to show the icons (see [#150](https://github.com/marvel-nccr/quantum-mobile/issues/150))
+* Delete `examples/` icon on desktop
+* Fix issue with RabbitMQ not shutting down (see [#111](https://github.com/marvel-nccr/quantum-mobile/issues/111))
 
 :::
 
@@ -36,8 +36,10 @@ Manual modifications required, as of QM 20.03.1:
 
 Follow the [cloud build instructions](../developers/build-cloud.md).
 
-* For the server to build the VM, choose e.g. 2 CPUs with 4GB of RAM
-  * Your configuration may also be the standard configuration shown to users creating a VM using your image (to figure out?)
+* For the server to build the VM, choose e.g. 2 CPUs with 4GB of RAM, with at least 16GB of storage.
+  * Your configuration may also be the standard configuration shown to users creating a VM using your image
+  * Currently Ubuntu Server 18.04 LTS
+  * Expose ports as listed in instructions
   * You won't need it for long, so price for CPU/RAM is of no concern
 * Exemplary metadata:
   * name: `quantum-mobile-20-05-0`  (GCP only allows alphanumeric characters + dashes)

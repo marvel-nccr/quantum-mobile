@@ -24,8 +24,8 @@ Security rules:
 
 - Port 22 open (for SSH access)
 - You may want to open further ports (optional):
-  - port 8888 to connect to the AiiDA Lab Server
-  - port 8890 to connect to thr Jupyter Lab Server
+  - port 8888 to connect to the AiiDA Lab Server (or value of `aiidalab_jupyter_port`)
+  - port 8890 to connect to thr Jupyter Lab Server (or value of `aiida_jupyter_port`)
   - port 5000 to connect to the AiiDA REST API
 
 ### Client (your computer)
