@@ -23,7 +23,7 @@
 - src: marvel-nccr.libxc
   version: v0.1.0
 - src: marvel-nccr.abinit
-  version: v0.2.0
+  version: v2.0.1
 - src: marvel-nccr.quantum_espresso
   version: v1.1.5
 - src: marvel-nccr.yambo
@@ -31,7 +31,7 @@
 - src: marvel-nccr.fleur
   version: v1.0.2
 - src: marvel-nccr.siesta
-  version: v1.0.5
+  version: v2.2.0
 - src: marvel-nccr.cp2k
   version: v1.1.1
 - src: marvel-nccr.bigdft
@@ -41,6 +41,6 @@
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v3.2.2
+  version: v3.2.3
 - src: marvel-nccr.aiidalab
-  version: v2.0.1
+  version: v2.1.0

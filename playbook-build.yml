@@ -69,7 +69,6 @@
       qm_customizations_vm_name: "{{ vm_name }}"
       qm_customizations_vm_version: "{{ vm_version }}"
       qm_customizations_vm_author: "{{ vm_author }}"
-      qm_customizations_vm_cpus: "{{ vm_cpus }}"
       qm_customizations_headless: "{{ vm_headless }}"
       qm_customizations_examples_folder: "{{ vm_examples_folder }}"
       qm_customizations_data_folder: "{{ vm_data_folder }}"
@@ -94,8 +93,6 @@
     tags: [slurm]
     vars:
       slurm_hostname: "{{ vm_hostname }}"
-      slurm_cpus: "{{ vm_cpus }}"
-      slurm_memory: "{{ vm_memory }}"
 
   - role: marvel-nccr.quantum_espresso
     tags: [quantum_espresso]
@@ -107,9 +104,6 @@
 
   - role: marvel-nccr.fleur
     tags: [fleur]
-
-  - role: marvel-nccr.siesta
-    tags: [siesta]
 
   - role: marvel-nccr.cp2k
     tags: [cp2k]
@@ -125,10 +119,16 @@
     vars:
       bigdft_test_cpus: "{{ vm_cpus }}"
 
-  - role: marvel-nccr.libxc
-    tags: [abinit]
+  - role: marvel-nccr.libxc  # this is used by abinit and siesta
+    tags: [abinit, siesta]
     vars:
       libxc_build_cpus: "{{ vm_cpus }}"
+
+  - role: marvel-nccr.siesta
+    tags: [siesta]
+    vars:
+      siesta_build_cpus: "{{ vm_cpus }}"
+      siesta_libxc_root: "{{ libxc_prefix }}"
 
   - role: marvel-nccr.abinit
     tags: [abinit]
@@ -136,7 +136,7 @@
       abinit_build_cpus: "{{ vm_cpus }}"
       abinit_libxc_path: "{{ libxc_prefix }}"
 
-  - role: geerlingguy.nodejs
+  - role: geerlingguy.nodejs  # this is used by jupyterlab and aiidalab
     tags: [aiida, nodejs]
     become: true
     become_user: "{{ root_user }}"
