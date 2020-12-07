@@ -17,6 +17,37 @@
 * [AiiDA packages on PyPI](https://pypi.org/search/?q=aiida&o=-created)
 * Quantum Mobile itself
 
+One way to check that the latest ansible roles are being used in the `requirements.yml` file,
+is to use the [GitHub GraphQL](https://developer.github.com/v4/) query:
+
+```
+# endpoint = https://api.github.com/graphql
+{
+  search(query: "org:marvel-nccr ansible-role in:repo", type: REPOSITORY, first: 100) {
+    nodes {
+      ... on Repository {
+        name
+        refs(refPrefix: "refs/tags/", last: 1) {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+After updating `requirements.yml`, be sure to run:
+
+```bash
+tox -e ansible-galaxy
+```
+
+to force upgrade of the downloaded roles.
+
 ## Provisioning the VM
 
 ### Desktop Edition
@@ -28,7 +59,6 @@ Manual modifications required, as of QM 20.03.1:
 
 * Double-click on the Desktop symbols to show the icons (see [#150](https://github.com/marvel-nccr/quantum-mobile/issues/150))
 * Delete `examples/` icon on desktop
-* Fix issue with RabbitMQ not shutting down (see [#111](https://github.com/marvel-nccr/quantum-mobile/issues/111))
 
 :::
 
