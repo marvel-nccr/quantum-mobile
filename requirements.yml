@@ -19,7 +19,7 @@
 - src: marvel-nccr.editors
   version: v1.0.2
 - src: marvel-nccr.slurm
-  version: v1.2.1
+  version: v2.0.2
 - src: marvel-nccr.libxc
   version: v0.1.0
 - src: marvel-nccr.abinit
