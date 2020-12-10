@@ -73,6 +73,14 @@ all:
       ansible_ssh_common_args: "-F vagrant-ssh"
       ansible_user: vagrant
 
+    docker:
+      # see playbook-docker.yml to start container
+      cloud_platform: docker
+      ansible_host: qm_instance  # the instance name
+      ansible_connection: docker
+      ansible_user: root
+      vm_headless: true
+
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
       cloud_platform: aws
