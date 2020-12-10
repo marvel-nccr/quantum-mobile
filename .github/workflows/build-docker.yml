@@ -34,7 +34,7 @@ jobs:
       run: tox -e docker
 
     - name: Provision Docker container
-      run: tox -e ansible -- --extra-vars "build_hosts=docker" --tags init
+      run: tox -e ansible -- --extra-vars "build_hosts=docker"
       continue-on-error: true
       id: build_1
 
@@ -49,7 +49,7 @@ jobs:
     # ansible is idempotent, so in principle we can retry as many times as needed
     - name: Provision Docker container (retry)
       if: failure() || steps.build_1.outcome == 'failure'
-      run: tox -e ansible -- --extra-vars "build_hosts=docker" --tags init
+      run: tox -e ansible -- --extra-vars "build_hosts=docker"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
@@ -58,9 +58,9 @@ jobs:
         path: ansible.log
       continue-on-error: true
 
-    # - name: Clean build files on container
-    #   # only roles that include "when: clean is defined and clean"
-    #   run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=docker clean=true"
+    - name: Clean build files on container
+      # only roles that include "when: clean is defined and clean"
+      run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=docker clean=true"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
