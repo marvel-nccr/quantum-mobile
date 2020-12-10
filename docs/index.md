@@ -2,21 +2,45 @@
 
 ## What is Quantum Mobile
 
-*Quantum Mobile* is a Virtual Machine for computational materials science.
+Quantum Mobile is a Virtual Machine for computational materials science.
 
-It comes with a collection of software packages for quantum mechanical calculations, including:
+Quantum Mobile provides a uniform environment for quantum mechanical materials simulations. Simulation codes are set up and ready to be used either directly or through the [AiiDA](http://www.aiida.net) python framework for automated workflows and provenance tracking.
 
-- [Quantum ESPRESSO](http://www.quantum-espresso.org/)
-- [Yambo](http://www.yambo-code.org/)
-- [fleur](http://www.flapw.de/)
-- [Siesta](https://gitlab.com/siesta-project/siesta)
-- [CP2K](https://www.cp2k.org)
-- [Wannier90](http://www.wannier.org)
-- [BigDFT](http://www.bigdft.org)
+Open source throughout
+: Based on [Ubuntu Linux](http://releases.ubuntu.com/18.04/)
 
-all of which are set up and ready to be used on their own or through the
-[AiiDA](http://www.aiida.net) python framework for automated workflows and
-provenance tracking.
+Pre-built images
+: Available for Linux, MacOS or Windows computers, using VirtualBox. Or deploy on cloud services like OpenStack or Amazon Elastic Compute Cloud using [ansible](https://www.ansible.com/).
+
+Simulation codes pre-installed
+: [Abinit](https://www.abinit.org), [BigDFT](http://www.bigdft.org), [CP2K](https://www.cp2k.org), [Fleur](http://www.flapw.de/), [Quantum ESPRESSO](http://www.quantum-espresso.org/), [Siesta](https://gitlab.com/siesta-project/siesta), [Wannier90](http://www.wannier.org), [Yambo](http://www.yambo-code.org/), together with [AiiDA](http://www.aiida.net/), [JupyterLab](https://jupyterlab.readthedocs.io), and the [AiiDAlab](https://www.materialscloud.org/aiidalab/) Jupyter environment.
+
+Tools pre-installed
+: atomistic (xcrysden, jmol, cif2cell, ase, pymatgen, seekpath, spglib, pycifrw), visualization (grace, gnuplot, matplotlib, bokeh, jupyter), simulation environment (slurm, OpenMPI, FFT/BLAS/LAPACK, gcc, gfortran, singularity).
+
+Modular setup
+: with individually tested [ansible roles](https://galaxy.ansible.com/marvel-nccr). Build your own flavour tailored to your use case.
+
+```{list-table}
+* - ![bigdft](_static/software_logos/bigdft.png)
+  - ![cp2k](_static/software_logos/cp2k.png)
+  - ![fleur](_static/software_logos/fleur.png)
+  - ![quantumespresso](_static/software_logos/quantumespresso.png)
+  - ![siesta](_static/software_logos/siesta.png)
+  - ![wannier90](_static/software_logos/wannier90.png)
+  - ![yambo](_static/software_logos/yambo.png)
+```
+
+<!-- ```{list-table}
+* - ![aiida](_static/software_logos/aiida.png)
+  - ![postgres](_static/software_logos/postgres.png)
+  - ![rabbitmq](_static/software_logos/rabbitmq.png)
+  - ![slurm](_static/software_logos/slurm.png)
+  -
+  -
+  -
+```
+-->
 
 ## Quantum Mobile Flavours
 
@@ -58,8 +82,58 @@ The Docker image provides a means to rapidly spawn a fully functioning Quantum M
 [**Download release**](https://hub.docker.com/r/marvelnccr/quantum-mobile)
 ```
 
-![A brief impression of the Quantum Mobile interface.](_static/quantum_mobile.gif)
+<img src="_static/quantum_mobile.gif" alt="QM Desktop Screenshot" width="60%">
 
+## Testimonials
+
+```{epigraph}
+Compared to [courses of] previous years, the overhead due to technical problems and misunderstandings has been greatly reduced. Quantum Mobile is absolutely the right tool to have.
+
+-- Stefaan Cottenier, [compmatphys.org](http://compmatphys.epotentia.com/)
+```
+
+```{epigraph}
+Quantum Mobile is really a fantastic tool! I do think that it really gives a gigantic help for the organisation of Schools focusing on simulation codes.
+
+-- Andrea Marini, founder of the [Yambo code](http://www.yambo-code.org/)
+```
+
+```{epigraph}
+We run a class on computational quantum mechanics and DFT where we have started using Quantum Mobile. Very useful and effective!
+
+-- Andrea Ferretti, Researcher [S3 Center, Istituto Nanoscienze, CNR](http://www.nano.cnr.it/)
+```
+
+Quantum Mobile has been used, amongst others, in the following schools and courses:
+
+- [Understanding Advanced Molecular Simulations](https://edu.epfl.ch/coursebook/en/understanding-advanced-molecular-simulation-CH-420) (2018, EPFL, Switzerland)
+- [Computational Methods in Molecular Quantum Mechanics](https://edu.epfl.ch/coursebook/en/computational-methods-in-molecular-quantum-mechanics-CH-452) (2018, EPFL, Switzerland)
+- [MolSim school](http://www.acmm.nl/molsim/molsim2019/) (2019, Amsterdam, Netherlands)
+- [Molecular and Materials Modelling](http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lerneinheitId=120724&semkez=2018S&ansicht=KATALOGDATEN&lang=en) (2018, ETH Zurich, Switzerland)
+- [Computational Materials Physics online course](https://compmatphys.org/) (University of Ghent, Belgium)
+- [Ethiopia School on Electronic Structure Methods](https://agenda.ethernet.edu.et/event/33/) (2019, Addis Ababa, Ethiopia)
+- [Computational School on Electronic Excitations in Novel Materials Using the Yambo Code](http://indico.ictp.it/event/9018/) (2020, Trieste, Italy)
+- [Wannier90 v3.0 school](https://www.materialscloud.org/learn/sections/C8ad91/wannier90-v3-0-school-virtual-edition-2020), virtual edition 2020
+- [AiiDA tutorials](https://aiida-tutorials.readthedocs.io) in Switzerland, Italy, Slovenia, China, Japan, India, Norway, ...
+
+```{list-table}
+* - ![cineca](_static/user_logos/cineca.png)
+  - ![ethz](_static/user_logos/ethz.png)
+  - ![ictp](_static/user_logos/ictp.png)
+  - ![jsi](_static/user_logos/jsi.png)
+  - ![sintef](_static/user_logos/sintef.png)
+  - 
+  - 
+  - 
+* - ![epfl](_static/user_logos/epfl.png)
+  - ![uni_aas](_static/user_logos/uni_aas.png)
+  - ![uni_amsterdam](_static/user_logos/uni_amsterdam.png)
+  - ![uni_dschang](_static/user_logos/uni_dschang.png)
+  - ![uni_ghent](_static/user_logos/uni_ghent.png)
+  - ![uni_iit-mandi](_static/user_logos/uni_iit-mandi.png)
+  - ![uni_tokyo](_static/user_logos/uni_tokyo.png)
+  - ![uni_xiamen](_static/user_logos/uni_xiamen.png)
+```
 
 ## Acknowledgements
 
@@ -68,9 +142,11 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-<img src="_static/marvel-logo-4x.png" alt="Marvel" width="300px">
+<img src="_static/sponsor_logos/marvel.png" alt="Marvel" width="300px">
 
-![MaX](_static/MaX.png)
+<img src="_static/sponsor_logos/swissuniversities.png" alt="SNF" width="300px">
+
+<img src="_static/sponsor_logos/max_small.png" alt="MaX" width="300px">
 
 
 ```{toctree}
@@ -85,6 +161,7 @@ releases/index.md
 :caption: Users
 
 users/launch.md
+users/use.md
 users/faq.md
 users/troubleshoot.md
 ```

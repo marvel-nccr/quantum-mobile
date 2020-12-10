@@ -1,37 +1,36 @@
-# Build a desktop VM
+# Build a Desktop VM
 
 In the following, we explain how to build your own custom Quantum Mobile VirtualBox image from scratch.
 
-Calculate at least one hour for building the VM:
+Calculate at around two hours for building the full VM:
 
 ````{dropdown} Approximate Timings
 ```
-marvel-nccr.quantum_espresso : Make QE executables ---------------------------------------------------------- 2085.47s
-marvel-nccr.fleur : run fleur tests ------------------------------------------------------------------------- 1454.29s
-marvel-nccr.yambo : Make Yambo executables ------------------------------------------------------------------ 1167.91s
-marvel-nccr.fleur : Make fleur executables ------------------------------------------------------------------ 1002.09s
-marvel-nccr.ubuntu_desktop : Install ubuntu-desktop (apt) ---------------------------------------------------- 978.57s
-marvel-nccr.wannier90 : run Wannier90 default tests ---------------------------------------------------------- 972.97s
-marvel-nccr.aiidalab : Install aiidalab ---------------------------------------------------------------------- 749.07s
-marvel-nccr.siesta : Make siesta executables ----------------------------------------------------------------- 422.45s
-marvel-nccr.cp2k : download cp2k binary ---------------------------------------------------------------------- 349.02s
-marvel-nccr.slurm : Install apt packages --------------------------------------------------------------------- 246.30s
-marvel-nccr.simulationbase : Install plotting tools, etc. ---------------------------------------------------- 227.87s
-marvel-nccr.wannier90 : Get Wannier90 source ----------------------------------------------------------------- 203.48s
-marvel-nccr.simulationbase : Install packages for build environment (apt) ------------------------------------ 187.30s
-marvel-nccr.wannier90 : Make Wannier90 executables ----------------------------------------------------------- 179.31s
-marvel-nccr.siesta : Compile "tbtrans" ----------------------------------------------------------------------- 173.52s
-marvel-nccr.simulationbase : Install apt, pip3 --------------------------------------------------------------- 151.31s
-marvel-nccr.aiida : Install DB & more ------------------------------------------------------------------------ 146.25s
-marvel-nccr.wannier_tools : Get wannier_tools source --------------------------------------------------------- 131.27s
-marvel-nccr.ubuntu_desktop : install chromium-browser -------------------------------------------------------- 129.00s
-marvel-nccr.editors : Install some common editors ------------------------------------------------------------ 126.35s
+marvel-nccr.bigdft : Compile bigdft executables ----------------------- 906.73s
+marvel-nccr.quantum_espresso : Make QE executables -------------------- 867.71s
+marvel-nccr.abinit : Make abinit executable (2 cpu) ------------------- 807.30s
+marvel-nccr.wannier90 : run Wannier90 default tests ------------------- 720.07s
+marvel-nccr.libxc : Compile libxc executable (2 cpu) ------------------ 678.97s
+marvel-nccr.ubuntu_desktop : Install ubuntu-desktop (apt) ------------- 532.78s
+marvel-nccr.yambo : Make Yambo executables ---------------------------- 406.67s
+marvel-nccr.fleur : run fleur tests ----------------------------------- 395.95s
+marvel-nccr.fleur : Make fleur executables ---------------------------- 345.77s
+marvel-nccr.abinit : run the tests (2 cpu) ---------------------------- 315.32s
+marvel-nccr.libxc : Run make check for libxc -------------------------- 313.18s
+marvel-nccr.siesta : Make siesta executable --------------------------- 308.16s
+marvel-nccr.aiida : Install aiida-core + plugins into venv ------------ 262.80s
+marvel-nccr.slurm : Install apt packages ------------------------------ 211.29s
+marvel-nccr.simulationbase : Install plotting tools, etc. ------------- 187.73s
+marvel-nccr.siesta : Make xmlf90 -------------------------------------- 179.07s
+marvel-nccr.bigdft : run test suite ----------------------------------- 143.86s
+marvel-nccr.aiidalab : install server-side (aiida) dependencies ------- 120.63s
+marvel-nccr.cp2k : download cp2k binary ------------------------------- 108.26s
+marvel-nccr.ansible_prerequisites : Install aptitude ------------------ 104.13s
 ```
 :::{seealso}
 See the [continuous deployment (CD) workflow](https://github.com/marvel-nccr/quantum-mobile/actions?query=workflow%3ACD) for up-to-date timings
 :::
 ````
-
 
 ## Prerequisites & Installation
 
@@ -142,7 +141,7 @@ tox -e ansible -- --tags tag1,tag2 --skip-tags tag3
 First, clean unnecessary build files:
 
 ```bash
-tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
 ```
 
 Then run `playbook-package.yml` *via*:
