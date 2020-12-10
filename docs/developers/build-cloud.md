@@ -1,4 +1,4 @@
-# Build a cloud VM
+# Build a Cloud VM
 
 In the following, we explain how to install Quantum Mobile on your own virtual machine in the cloud.
 
@@ -94,7 +94,7 @@ Before creating an image from the disk volume of the server you provisioned:
 1. Remove unnecessary temporary build files:
 
    ```bash
-   tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
+   tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
    ```
 
 2. Clear bash history:  SSH to the VM and run `cat /dev/null > ~/.bash_history && history -c && exit`
@@ -150,5 +150,5 @@ wget https://networkgenomics.com/try/mitogen-0.2.8.tar.gz && tar xf mitogen-0.2.
 
 and uncomment the corresponding lines in the `ansible.cfg` file.
 
-In my tests, an example task (adding the "max" user to two new user groups) took 15s on an AWS VM in the hongkong region, and 156s on a Huawei Cloud VM in the Guangzhou region (and that's after turning on "pipelining" to reduce the number of SSH connections).
+In tests, an example task (adding the "max" user to two new user groups) took 15s on an AWS VM in the hongkong region, and 156s on a Huawei Cloud VM in the Guangzhou region (and that's after turning on "pipelining" to reduce the number of SSH connections).
 Switching to mitogen brought down the timings to 1s for the AWS hongkong machine and 3s on the Huawei VM (i.e. more than one order of magnitude).
