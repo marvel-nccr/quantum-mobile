@@ -58,9 +58,9 @@ jobs:
         path: ansible.log
       continue-on-error: true
 
-    - name: Clean build files on container
-      # only roles that include "when: clean is defined and clean"
-      run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+    # - name: Clean build files on container
+    #   # only roles that include "when: clean is defined and clean"
+    #   run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=docker clean=true"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
