@@ -1,0 +1,37 @@
+- name: Initialise a docker container
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    # see https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule
+    image: marvelnccr/docker-ubuntu1804-ansible:latest
+    instance_name: qm_instance
+    command: ""  # by default the container will initialise with systemd as PID1
+    # privileged mode and mounting the cgroup are required for correctly running sytsemd inside the container
+    privileged: true
+    volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    env:
+      LC_ALL: "en_US.UTF-8"
+      LANG: "en_US.UTF-8"
+
+  tasks:
+  - name: Create docker instance
+    docker_container:
+      name: "{{ instance_name }}"
+      hostname: "{{ instance_name }}"
+      image: "{{ image }}"
+      docker_host: "{{ lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock' }}"
+      cacert_path: "{{ (lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit }}"
+      cert_path: "{{ (lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit }}"
+      key_path: "{{ (lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit }}"
+      tls_verify: "{{ lookup('env', 'DOCKER_TLS_VERIFY') or false }}"
+      state: started
+      recreate: false
+      log_driver: json-file
+      command: "{{ command }}"
+      privileged: "{{ privileged | default(omit) }}"
+      volumes: "{{ volumes | default(omit) }}"
+      env: "{{ env | default(omit) }}"
+      container_default_behavior: "{{ ('compatibility' if ansible_version.full is version_compare('2.10', '>=') else omit) }}"

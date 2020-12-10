@@ -25,7 +25,7 @@ You can [build a VM yourself](./developers/build-vagrant.md), or use one of the 
 
 ```{panels}
 
-{fa}`desktop,mr-1` Desktop Edition
+{fa}`desktop,mr-1` Desktop VirtualBox
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Comes with the familiar Ubuntu Desktop and runs on your Windows, MacOS or Linux computer using the [VirtualBox](http://virtualbox.org/) software.
@@ -36,7 +36,7 @@ The Desktop Edition is tailored to provide students with a familiar working envi
 [**Download release**](releases/index.md)
 ---
 
-{fa}`cloud,mr-1` Cloud Edition
+{fa}`cloud,mr-1` Cloud Image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Intended for use on servers using cloud services like Amazon Web Services, Google Cloud, or OpenStack.
@@ -45,6 +45,17 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 
 +++
 [**Download release**](releases/index.md)
+---
+
+{fa}`cube,mr-1` Docker Image
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Intended for testing purposes.
+
+The Docker image provides a means to rapidly spawn a fully functioning Quantum Mobile instance, ideal for CI testing.
+
++++
+[**Download release**](https://hub.docker.com/r/marvelnccr/quantum-mobile)
 ```
 
 ![A brief impression of the Quantum Mobile interface.](_static/quantum_mobile.gif)
@@ -86,6 +97,7 @@ users/troubleshoot.md
 developers/customize.md
 developers/build-vagrant.md
 developers/build-cloud.md
+developers/build-docker.md
 developers/roles.md
 ```
 

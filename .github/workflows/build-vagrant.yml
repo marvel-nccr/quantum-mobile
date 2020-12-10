@@ -1,12 +1,11 @@
-name: CD
+name: CD-vagrant
 
 # This process takes over two hours,
 # so we only run when creating a new tag/release
 on:
   push:
     tags:
-    - '*'
-  # pull_request:
+    - 'vagrant-*'
 
 jobs:
 
@@ -64,7 +63,7 @@ jobs:
 
     - name: Clean build files on VM
       # only roles that include "when: clean is defined and clean"
-      run: tox -e ansible -- --tags quantum_espresso,qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+      run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
