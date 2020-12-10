@@ -18,6 +18,7 @@ version: '3'
 
 services:
   quantum-mobile:
+    # using the required tag
     image: "marvelnccr/quantum-mobile:20.11.2a"
     container_name: quantum-mobile
     expose:
