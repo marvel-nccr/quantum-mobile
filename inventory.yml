@@ -80,7 +80,6 @@ all:
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       vm_headless: true
-      slurm_hostname_service: true
       add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     hwcloud:
       cloud_platform: hwcloud
@@ -88,7 +87,6 @@ all:
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: root
       vm_headless: true
-      slurm_hostname_service: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     openstack:
       cloud_platform: openstack
@@ -96,7 +94,6 @@ all:
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       vm_headless: true
-      slurm_hostname_service: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     gcp:
       cloud_platform: gcp
@@ -104,5 +101,4 @@ all:
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: max
       vm_headless: true
-      slurm_hostname_service: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
