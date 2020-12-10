@@ -143,3 +143,13 @@ Here are some indicative prices for hosting public images and disk pricing:
   * magnetic: 4c/GB/month (GCP), 2.5c/GB/month (AWS)
   * SSD: 10c/GB/month (AWS)
 :::
+
+### Docker
+
+See the [Docker build instructions](../developers/build-docker.md)
+
+```bash
+docker commit -a "Chris Sewell" -m "Container provisioned by ansible" qm_instance marvelnccr/quantum-mobile:20.11.2a
+docker login -u username -p password
+docker push marvelnccr/quantum-mobile:20.11.2a
+```
