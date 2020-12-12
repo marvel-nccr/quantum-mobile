@@ -136,12 +136,11 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-<img src="_static/sponsor_logos/marvel.png" alt="Marvel" width="270px">
-
-<img src="_static/sponsor_logos/swissuniversities.*" alt="SNF" width="300px">
-
-<img src="_static/sponsor_logos/max_small.png" alt="MaX" width="300px">
-
+```{list-table}
+* - ![Marvel](_static/sponsor_logos/marvel.png)
+  - ![MaX](_static/sponsor_logos/max_large.png)
+  - ![SNF](_static/sponsor_logos/swissuniversities.png)
+```
 
 ```{toctree}
 :hidden: true
