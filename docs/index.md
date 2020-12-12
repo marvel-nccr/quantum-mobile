@@ -22,25 +22,19 @@ Modular setup
 : with individually tested [ansible roles](https://galaxy.ansible.com/marvel-nccr). Build your own flavour tailored to your use case.
 
 ```{list-table}
-* - ![bigdft](_static/software_logos/bigdft.png)
+* - ![abinit](_static/software_logos/abinit.svg)
+  - ![bigdft](_static/software_logos/bigdft.png)
   - ![cp2k](_static/software_logos/cp2k.png)
   - ![fleur](_static/software_logos/fleur.png)
   - ![quantumespresso](_static/software_logos/quantumespresso.png)
   - ![siesta](_static/software_logos/siesta.png)
-  - ![wannier90](_static/software_logos/wannier90.png)
+* - ![wannier90](_static/software_logos/wannier90.png)
   - ![yambo](_static/software_logos/yambo.png)
-```
-
-<!-- ```{list-table}
-* - ![aiida](_static/software_logos/aiida.png)
+  - ![aiida](_static/software_logos/aiida.png)
   - ![postgres](_static/software_logos/postgres.png)
-  - ![rabbitmq](_static/software_logos/rabbitmq.png)
+  - ![rabbitmq](_static/software_logos/rabbitmq-text.png)
   - ![slurm](_static/software_logos/slurm.png)
-  -
-  -
-  -
 ```
--->
 
 ## Quantum Mobile Flavours
 
@@ -142,9 +136,9 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-<img src="_static/sponsor_logos/marvel.png" alt="Marvel" width="300px">
+<img src="_static/sponsor_logos/marvel.png" alt="Marvel" width="270px">
 
-<img src="_static/sponsor_logos/swissuniversities.png" alt="SNF" width="300px">
+<img src="_static/sponsor_logos/swissuniversities.*" alt="SNF" width="300px">
 
 <img src="_static/sponsor_logos/max_small.png" alt="MaX" width="300px">
 
