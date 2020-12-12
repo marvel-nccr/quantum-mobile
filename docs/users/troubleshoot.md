@@ -1,13 +1,13 @@
-# VirtualBox troubleshooting
+# Troubleshooting
 
 :::{note}
 If the following sections to not solve your issue,
 please direct further inquiries to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
 :::
 
-## Installation / start-up
+## VirtualBox installation / start-up
 
-### Downloading over an instable network
+### Downloading over an unstable network
 
 If your network connection is unstable or very slow and you are unable to download the Quantum Mobile image in one go, consider using a download manager that can resume downloads, [such as the `curl` / `wget` command line utilities](https://superuser.com/a/529951/345438).
 
@@ -49,7 +49,7 @@ Stackoverflow has [some help](https://askubuntu.com/questions/920689/how-to-fix-
 
 [More detailed instructions by Matthew Palmer](https://matthewpalmer.net/blog/2017/12/10/install-virtualbox-mac-high-sierra/index.html).
 
-## Runtime (performance, graphics, ...)
+## VirtualBox Runtime (performance, graphics, ...)
 
 **IMPORTANT** Preliminary tests indicate that VirtualBox 6.1 (released Dec 10th, 2019) addresses at least one of the long-standing graphics issues. Please upgrade.
 
@@ -79,3 +79,9 @@ Password is `vagrant`.
 
 1. stop VM
 2. Machine => Settings => Network => Tick "Cable Connected"
+
+## Python / Jupyter Issues
+
+- If you get errors `ImportError: No module named aiida` or `No command ’verdi’ found`,
+  double check that you have loaded the virtual environment with `workon aiida` before using `python` or `verdi`,
+  or use `workon jupyter` before launching a `jupyter` notebook server.
