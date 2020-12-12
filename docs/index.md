@@ -22,18 +22,18 @@ Modular setup
 : with individually tested [ansible roles](https://galaxy.ansible.com/marvel-nccr). Build your own flavour tailored to your use case.
 
 ```{list-table}
-* - ![abinit](_static/software_logos/abinit.svg)
-  - ![bigdft](_static/software_logos/bigdft.png)
-  - ![cp2k](_static/software_logos/cp2k.png)
-  - ![fleur](_static/software_logos/fleur.png)
-  - ![quantumespresso](_static/software_logos/quantumespresso.png)
-  - ![siesta](_static/software_logos/siesta.png)
-* - ![wannier90](_static/software_logos/wannier90.png)
-  - ![yambo](_static/software_logos/yambo.png)
-  - ![aiida](_static/software_logos/aiida.png)
-  - ![postgres](_static/software_logos/postgres.png)
-  - ![rabbitmq](_static/software_logos/rabbitmq-text.png)
-  - ![slurm](_static/software_logos/slurm.png)
+* - [![abinit](_static/software_logos/abinit.svg)](https://www.abinit.org)
+  - [![bigdft](_static/software_logos/bigdft.png)](http://www.bigdft.org)
+  - [![cp2k](_static/software_logos/cp2k.png)](https://www.cp2k.org)
+  - [![fleur](_static/software_logos/fleur.png)](http://www.flapw.de/)
+  - [![quantumespresso](_static/software_logos/quantumespresso.png)](http://www.quantum-espresso.org/)
+  - [![siesta](_static/software_logos/siesta.png)](https://gitlab.com/siesta-project/siesta)
+* - [![wannier90](_static/software_logos/wannier90.png)](http://www.wannier.org)
+  - [![yambo](_static/software_logos/yambo.png)](http://www.yambo-code.org/)
+  - [![aiida](_static/software_logos/aiida.png)](http://www.aiida.net/)
+  - [![postgres](_static/software_logos/postgres.png)](https://www.postgresql.org/)
+  - [![rabbitmq](_static/software_logos/rabbitmq-text.png)](https://www.rabbitmq.com/)
+  - [![slurm](_static/software_logos/slurm.png)](https://slurm.schedmd.com/)
 ```
 
 ## Quantum Mobile Flavours
@@ -111,22 +111,26 @@ Quantum Mobile has been used, amongst others, in the following schools and cours
 - [AiiDA tutorials](https://aiida-tutorials.readthedocs.io) in Switzerland, Italy, Slovenia, China, Japan, India, Norway, ...
 
 ```{list-table}
-* - ![cineca](_static/user_logos/cineca.png)
-  - ![ethz](_static/user_logos/ethz.png)
-  - ![ictp](_static/user_logos/ictp.png)
-  - ![jsi](_static/user_logos/jsi.png)
-  - ![sintef](_static/user_logos/sintef.png)
+---
+header-rows: 0
+---
+* - [![cineca](_static/user_logos/cineca.png)](https://www.cineca.it/en)
+  - [![epfl](_static/user_logos/epfl.png)](https://www.epfl.ch/en/)
+  - [![ethz](_static/user_logos/ethz.png)](https://ethz.ch/en.html)
+  - [![uni_ghent](_static/user_logos/uni_ghent.png)](https://www.ugent.be/en)
+  - [![ictp](_static/user_logos/ictp.png)](https://www.ictp.it/)
+  - [![jsi](_static/user_logos/jsi.png)](https://www.ijs.si/ijsw/JSI)
+  - [![uni_iit-mandi](_static/user_logos/uni_iit-mandi.png)](http://www.iitmandi.ac.in/)
+  -
+
+* - [![sintef](_static/user_logos/sintef.png)](https://www.sintef.no/en/)
+  - [![uni_aas](_static/user_logos/uni_aas.png)](http://www.aau.edu.et/)
+  - [![uni_amsterdam](_static/user_logos/uni_amsterdam.png)](https://www.uva.nl/en)
+  - [![uni_dschang](_static/user_logos/uni_dschang.png)](https://www.univ-dschang.org/)
+  - [![uni_tokyo](_static/user_logos/uni_tokyo.png)](https://www.u-tokyo.ac.jp/en/index.html)
+  - [![uni_xiamen](_static/user_logos/uni_xiamen.png)](https://en.xmu.edu.cn/)
+  -
   - 
-  - 
-  - 
-* - ![epfl](_static/user_logos/epfl.png)
-  - ![uni_aas](_static/user_logos/uni_aas.png)
-  - ![uni_amsterdam](_static/user_logos/uni_amsterdam.png)
-  - ![uni_dschang](_static/user_logos/uni_dschang.png)
-  - ![uni_ghent](_static/user_logos/uni_ghent.png)
-  - ![uni_iit-mandi](_static/user_logos/uni_iit-mandi.png)
-  - ![uni_tokyo](_static/user_logos/uni_tokyo.png)
-  - ![uni_xiamen](_static/user_logos/uni_xiamen.png)
 ```
 
 ## Acknowledgements
@@ -137,6 +141,9 @@ as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/)
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
 ```{list-table}
+---
+header-rows: 0
+---
 * - ![Marvel](_static/sponsor_logos/marvel.png)
   - ![MaX](_static/sponsor_logos/max_large.png)
   - ![SNF](_static/sponsor_logos/swissuniversities.png)
