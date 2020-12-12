@@ -206,3 +206,10 @@ The [AiiDAlab documentation](https://www.materialscloud.org/aiidalab/)
 If you are using the VirtualBox GUI, you can also double-click on the short-cut icons.
 
 ![VM Desktop](../_static/quantum_mobile.png)
+
+:::{tip}
+If you are using cloud QM and your browser cannot connect to the jupyter notebook server, check that you have configured SSH tunneling/forwarding as described in the [VM Launch Instructions](./launch.md).
+Keep in mind that you need to start the jupyter server from the terminal connected to the VM, while opening the web browser locally on your laptop.
+
+See the [jupyter notebook documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html#browser-compatibility) for compatibility of jupyter with various web browsers.
+:::
