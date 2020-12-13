@@ -1,5 +1,6 @@
 ![CI](https://github.com/marvel-nccr/quantum-mobile/workflows/CI/badge.svg)
 ![CI-build](https://github.com/marvel-nccr/quantum-mobile/workflows/CI-build/badge.svg)
+[![Docker](https://img.shields.io/docker/v/marvelnccr/quantum-mobile?label=DockerHub)](https://hub.docker.com/r/marvelnccr/quantum-mobile)
 
 # Quantum Mobile
 
