@@ -1,5 +1,5 @@
 python-openstackclient==5.2
 # Python bindings to the OpenStack Object Storage API
 python-swiftclient==3.9
-lxml==4.5
+lxml==4.6.2
 oauthlib==3.1
