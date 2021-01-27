@@ -43,7 +43,7 @@ Stackoverflow has [some help](https://askubuntu.com/questions/920689/how-to-fix-
 
 ### Installation of VirtualBox fails on recent versions of macOS
 
-1, Go to System Preferences => Security & Privacy
+1. Go to System Preferences => Security & Privacy
 2. Click on the 'General' tab on the top left
 3. Click the ‘Allow’ button at the bottom right ('Some system software was blocked from loading').
 4. Select 'Oracle' among the developers not to be blocked; click 'OK'
