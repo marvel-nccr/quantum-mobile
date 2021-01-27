@@ -41,11 +41,13 @@ The kernel of your host OS may have been updated since the installation of Virtu
 
 Stackoverflow has [some help](https://askubuntu.com/questions/920689/how-to-fix-modprobe-vboxdrv-error-in-virtualbox) on this.
 
-### Installation of VirtualBox fails on macOS High Sierra/Mojave
+### Installation of VirtualBox fails on recent versions of macOS
 
-1. Go to System Preferences => Security & Privacy
-2. Click the ‘Allow’ button at the bottom.
-3. Re-run the installer.
+1, Go to System Preferences => Security & Privacy
+2. Click on the 'General' tab on the top left
+3. Click the ‘Allow’ button at the bottom right ('Some system software was blocked from loading').
+4. Select 'Oracle' among the developers not to be blocked; click 'OK'
+5. Re-run the installer.
 
 [More detailed instructions by Matthew Palmer](https://matthewpalmer.net/blog/2017/12/10/install-virtualbox-mac-high-sierra/index.html).
 
