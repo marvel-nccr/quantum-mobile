@@ -49,9 +49,9 @@ Stackoverflow has [some help](https://askubuntu.com/questions/920689/how-to-fix-
 4. Select 'Oracle' among the developers not to be blocked; click 'OK'
 5. Re-run the installer.
 
-<img src="images/mac_install_failed.png" height="300px">
+<img src="images/mac_install_failed.png" width="350px">
 
-<img src="images/mac_security_settings.png" height="300px">
+<img src="images/mac_security_settings.png" width="350px">
 
 [More detailed instructions by Matthew Palmer](https://matthewpalmer.net/blog/2017/12/10/install-virtualbox-mac-high-sierra/index.html).
 
