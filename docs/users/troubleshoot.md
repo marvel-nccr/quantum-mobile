@@ -69,7 +69,7 @@ See this page for the fix: <https://techsupportwhale.com/not-in-a-hypervisor-par
 3. Once the restart is clicked the system enters BIOS mode. In the BIOS look for option Virtualization which is under Advanced or System Configuration for most of the computers. Change it to enabled.
 4. Once done you can exit with save (F10 is the shortcut for most of the computers).
 
-<img src="images/Enable-virtualization-in-Windows.jpg" width="350px">
+<img src="images/Enable-virtualization-in-Windows.jpg" width="450px">
 
 ## VirtualBox Runtime (performance, graphics, ...)
 
