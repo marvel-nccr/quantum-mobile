@@ -55,6 +55,22 @@ Stackoverflow has [some help](https://askubuntu.com/questions/920689/how-to-fix-
 
 [More detailed instructions by Matthew Palmer](https://matthewpalmer.net/blog/2017/12/10/install-virtualbox-mac-high-sierra/index.html).
 
+### Installation of VirtualBox fails on Windows
+
+If you are trying to create a new virtual machine using VirtualBox on Windows 10 or any other Windows versions, you may get an error as below:
+
+> Not in a hypervisor partition (HVP=0)(VERR_NEM_NOT_AVAILABLE).
+> VT-x is disabled in the BIOS for all CPU modes (VERR_VMX_MSR_ALL_VMX_DISABLED).
+
+See this page for the fix: <https://techsupportwhale.com/not-in-a-hypervisor-partition/>:
+
+1. In Windows machine go to Settings -> Update & Security -> Recovery. There is a Restart Now option as highlighted under Advanced startup.
+2. Once the Restart Now is clicked the below options need to be followed in sequence: Troubleshoot → Advanced option → UEFI Firmware Settings → Restart
+3. Once the restart is clicked the system enters BIOS mode. In the BIOS look for option Virtualization which is under Advanced or System Configuration for most of the computers. Change it to enabled.
+4. Once done you can exit with save (F10 is the shortcut for most of the computers).
+
+<img src="images/Enable-virtualization-in-Windows.jpg" width="350px">
+
 ## VirtualBox Runtime (performance, graphics, ...)
 
 **IMPORTANT** Preliminary tests indicate that VirtualBox 6.1 (released Dec 10th, 2019) addresses at least one of the long-standing graphics issues. Please upgrade.
