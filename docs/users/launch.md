@@ -3,7 +3,7 @@
 (launch/vagrant)=
 ## Desktop Edition with VirtualBox
 
-- Download the latest VirtualBox image from [the releases](../releases/index.md))
+- Download the latest VirtualBox image from [the releases](../releases/index.md)
 - Install [Virtual Box](https://www.virtualbox.org) 6.1.6 or later
 - Import the virtual machine image into Virtualbox: `File => Import Appliance`
 
