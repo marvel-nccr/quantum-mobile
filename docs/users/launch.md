@@ -14,7 +14,7 @@ The Docker images can be found on [DockerHub](https://hub.docker.com/r/marvelncc
 The easiest way to spawn a working container is to create a `docker-compose.yml`, and launch it with `docker-compose up -d`.
 
 ```yaml
-version: '3'
+version: '3.4'
 
 services:
   quantum-mobile:
