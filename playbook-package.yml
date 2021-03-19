@@ -54,6 +54,10 @@
     shell: vagrant halt
     tags: [always]
 
+  - name: Disable the virtual network created by vagrant
+    shell: vboxmanage modifyvm "{{ vm_id }}" --nic2 none
+    tags: [always]
+
   - name: Remove old temporary files
     file:
       path: "{{ item }}"
