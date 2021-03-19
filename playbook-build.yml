@@ -21,10 +21,6 @@
     when: release_notes_locally is defined and release_notes_locally
     tags: [init]
 
-  roles:
-  - role: marvel-nccr.ansible_prerequisites
-    tags: [prerequisites]
-
 - name: set up the VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
 
