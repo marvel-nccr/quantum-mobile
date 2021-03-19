@@ -39,6 +39,6 @@
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v3.2.3
+  version: v4.0.1
 - src: marvel-nccr.aiidalab
-  version: v2.1.0
+  version: v2.2.0

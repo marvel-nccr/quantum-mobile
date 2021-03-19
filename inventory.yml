@@ -80,6 +80,7 @@ all:
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
+      jupyter_ip: "0.0.0.0"
 
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
