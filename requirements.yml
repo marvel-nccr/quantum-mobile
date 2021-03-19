@@ -22,6 +22,8 @@
   version: v0.1.0
 - src: marvel-nccr.abinit
   version: v2.0.1
+- src: marvel-nccr.nwchem
+  version: v0.0.2
 - src: marvel-nccr.quantum_espresso
   version: v1.1.5
 - src: marvel-nccr.yambo
