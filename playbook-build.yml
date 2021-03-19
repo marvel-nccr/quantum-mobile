@@ -75,6 +75,7 @@
         BigDFT: http://www.bigdft.org
         CP2K: https://www.cp2k.org
         Fleur: http://www.flapw.de/
+        NWChem: https://nwchemgit.github.io/
         Quantum ESPRESSO: http://www.quantum-espresso.org/
         Siesta: https://gitlab.com/siesta-project/siesta
         Wannier90: http://www.wannier.org
@@ -112,6 +113,9 @@
     tags: [bigdft]
     vars:
       bigdft_test_cpus: "{{ vm_cpus }}"
+
+  - role: marvel-nccr.nwchem
+    tags: [nwchem]
 
   - role: marvel-nccr.libxc  # this is used by abinit and siesta
     tags: [abinit, siesta]
