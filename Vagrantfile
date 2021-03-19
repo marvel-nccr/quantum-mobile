@@ -6,6 +6,7 @@ current_dir    = File.dirname(File.expand_path(__FILE__))
 inventory      = YAML.load_file("#{current_dir}/inventory.yml")
 # host specific variables take priority over global ones
 gconfig        = inventory['all']['vars'].merge(inventory['all']['hosts']['vagrant-provision'])
+playbook       = ENV["BUILD_PLAYBOOK"] || "playbook-build.yml"
 launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 
 # Currently on GitHub Actions it fails if accelerate3d activated
@@ -86,7 +87,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.inventory_path = "inventory.yml"
     ansible.limit = "vagrant-provision"
-    ansible.playbook = "playbook-build.yml"
+    ansible.playbook = playbook
     # ansible.verbose = "v"
     ansible.extra_vars = {
       build_hosts: "vagrant-provision",
