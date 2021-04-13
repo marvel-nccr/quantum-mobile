@@ -34,6 +34,7 @@ all:
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
     vm_scheduler: slurm  # 'slurm' or 'direct'
+    vm_mpirun_command: "srun -n {tot_num_mpiprocs}"  # Should be set if `slurm` is set for `vm_scheduler`
 
     # Python virtual environments base location
     aiida_venv_base: "${HOME}/.virtualenvs"

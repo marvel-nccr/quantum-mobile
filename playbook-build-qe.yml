@@ -99,6 +99,7 @@
       aiida_data_folder: "{{ vm_data_folder }}/aiida"
       aiida_computer_cpus: "{{ vm_cpus }}"
       aiida_computer_scheduler: "{{ vm_scheduler }}"
+      aiida_computer_mpirun_command: "{{ vm_mpirun_command }}"
       aiida_examples_folder: "{{ vm_examples_folder }}"
       aiida_venv: "{{ aiida_venv_base }}/aiida"
       aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
