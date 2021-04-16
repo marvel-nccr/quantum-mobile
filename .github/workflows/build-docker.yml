@@ -60,7 +60,7 @@ jobs:
 
     - name: Clean build files on container
       # only roles that include "when: clean is defined and clean"
-      run: tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=docker clean=true"
+      run: tox -e ansible -- --tags cleanup --extra-vars "build_hosts=docker"
 
     - name: Archive log
       uses: actions/upload-artifact@v2
