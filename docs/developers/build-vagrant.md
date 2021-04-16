@@ -141,7 +141,7 @@ tox -e ansible -- --tags tag1,tag2 --skip-tags tag3
 First, clean unnecessary build files:
 
 ```bash
-tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "clean=true"
+tox -e ansible -- --tags cleanup
 ```
 
 Then run `playbook-package.yml` *via*:

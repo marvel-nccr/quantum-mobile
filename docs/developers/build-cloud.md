@@ -94,7 +94,7 @@ Before creating an image from the disk volume of the server you provisioned:
 1. Remove unnecessary temporary build files:
 
    ```bash
-   tox -e ansible -- --tags qm_customizations,simulationbase,ubuntu_desktop --extra-vars "build_hosts=aws clean=true"
+   tox -e ansible -- --extra-vars "build_hosts=aws" --tags cleanup
    ```
 
 2. Clear bash history:  SSH to the VM and run `cat /dev/null > ~/.bash_history && history -c && exit`

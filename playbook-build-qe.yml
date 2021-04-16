@@ -128,3 +128,40 @@
     become_user: "{{ vm_user }}"
     changed_when: false
     tags: [aiida, aiidalab, pipcheck]
+
+  # pymatgen can fail when the numpy it was compiled against is downgraded/upgraded
+  # (e.g. due to a package pinning numpy)
+  - name: test pymatgen import
+    command: "{{ aiida_venv }}/bin/python -c 'import pymatgen'"
+    become: true
+    become_user: "{{ vm_user }}"
+    changed_when: false
+    tags: [aiida, aiidalab, pymatgen]
+
+  # the following tasks should only be run after the machine is fully provisioned
+  # since these tasks break idempotence
+
+  - name: apt-get clean  # noqa 303
+    tags: [never, cleanup]
+    become: true
+    command: apt-get clean
+
+  - name: wipe apt lists
+    tags: [never, cleanup]
+    become: true
+    shell: "rm -rf /var/lib/apt/lists/*"  # noqa 302
+
+  - name: wipe user cache
+    tags: [never, cleanup]
+    become: true
+    become_user: "{{ vm_user }}"
+    file:
+      state: absent
+      path: "~/.cache"
+
+  - name: wipe root user cache
+    tags: [never, cleanup]
+    become: true
+    file:
+      state: absent
+      path: "~/.cache"
