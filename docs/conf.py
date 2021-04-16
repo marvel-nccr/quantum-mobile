@@ -21,15 +21,13 @@ release = version
 # -- General configuration ---------------------------------------------------
 
 needs_sphinx = "2.0"
-extensions = ["myst_parser", "sphinx_panels", "ablog", "sphinx.ext.intersphinx"]
+extensions = ["myst_parser", "sphinx_panels", "ablog", "sphinx.ext.intersphinx", "sphinxext.rediraffe"]
 
-myst_admonition_enable = True
-myst_deflist_enable = True
-myst_html_img_enable = True
+myst_enable_extensions = ["colon_fence", "deflist", "html_image"]
 
 blog_path = "releases/index"
 blog_title = "Releases"
-blog_post_pattern = "releases/*/*.md"
+blog_post_pattern = "releases/versions/*.md"
 post_redirect_refresh = 1
 post_auto_excerpt = 2
 fontawesome_included = True
@@ -62,3 +60,5 @@ html_theme_options = {
     "use_edit_page_button": True,
 }
 panels_add_bootstrap_css = False
+
+rediraffe_redirects = 'redirects.txt'

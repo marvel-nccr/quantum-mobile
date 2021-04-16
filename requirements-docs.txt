@@ -1,6 +1,7 @@
-myst-parser~=0.12.9
+myst-parser~=0.13.6
 sphinx-book-theme~=0.0.37
 sphinx-panels~=0.5.2
 sphinx-autobuild
+sphinxext-rediraffe~=0.2.7
 ablog
 pyyaml
