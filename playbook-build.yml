@@ -67,6 +67,7 @@
       qm_customizations_vm_author: "{{ vm_author }}"
       qm_customizations_headless: "{{ vm_headless }}"
       qm_customizations_examples_folder: "{{ vm_examples_folder }}"
+      qm_customizations_examples_readme: "{{ vm_examples_folder_reamde }}"
       qm_customizations_data_folder: "{{ vm_data_folder }}"
       qm_customizations_readme_file: "{{ vm_readme_file }}"
       qm_customizations_homepage: "https://quantum-mobile.readthedocs.io"

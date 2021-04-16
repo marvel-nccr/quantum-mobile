@@ -30,10 +30,11 @@ all:
     vm_shared_folder: "/shared"
     vm_codes_folder: "${HOME}/codes"
     vm_data_folder: "/usr/local/share"
-    vm_examples_folder: "${HOME}/examples"
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
     vm_scheduler: slurm  # 'slurm' or 'direct'
+    vm_examples_folder:       # "${HOME}/examples" we don't currently use this folder
+    vm_examples_folder_reamde:       # "${HOME}/examples/README.txt"
 
     # Python virtual environments base location
     aiida_venv_base: "${HOME}/.virtualenvs"

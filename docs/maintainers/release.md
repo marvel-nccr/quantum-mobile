@@ -43,7 +43,7 @@ is to use the [GitHub GraphQL](https://developer.github.com/v4/) query:
 After updating `requirements.yml`, be sure to run:
 
 ```bash
-tox -e ansible-galaxy
+tox -e update-ansible
 ```
 
 to force upgrade of the downloaded roles.
@@ -52,13 +52,22 @@ to force upgrade of the downloaded roles.
 
 ### Desktop Edition
 
+Ensure Vagrant is updated , and to update the base box and plugins you can run:
+
+```bash
+tox -e update-vagrant
+```
+
 Follow the [desktop build instructions](../developers/build-vagrant.md).
 
 :::{note}
 Manual modifications required, as of QM 20.03.1:
 
-* Double-click on the Desktop symbols to show the icons (see [#150](https://github.com/marvel-nccr/quantum-mobile/issues/150))
-* Delete `examples/` icon on desktop
+* Double-click on the Desktop symbols to show the icons (see [#150](https://github.com/marvel-nccr/quantum-mobile/issues/150)) or just run in the terminal:
+
+  ```bash
+  for FILE in ${HOME}/Desktop/*.desktop; do gio set "$FILE" "metadata::trusted" yes; done
+  ```
 
 :::
 
