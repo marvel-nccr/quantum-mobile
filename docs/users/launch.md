@@ -114,7 +114,7 @@ while the simulation environment has been set up for the `max` user.
 In order to log in as the `max` user using your key, do the following:
 
 ```bash
-ssh ubuntu@<IP> -i /path/to/key.pem
+ssh ubuntu@<IP> -i /path/to/key.pem  # or use putty, ...
 sudo cat ~ubuntu/.ssh/authorized_keys >> ~max/.ssh/authorized_keys
 exit
 ```
@@ -156,13 +156,18 @@ ssh max@<IP> -i /path/to/key.pem
 
 #### Linux and MacOS
 
-It's recommended for you to place the ssh key you received in a folder dedicated to your ssh configuration, to do so:
+Place the private ssh key that provides access to your server in the SSH key directory:
 
-- If not already present, create a `.ssh` directory in your home (`mkdir ~/.ssh`), and set its permissions: `chmod 700 ~/.ssh`.
-- Copy the two keys `aiida_tutorial_NUM` and `aiida_tutorial_NUM.pub` in the `~/.ssh` directory
-- Set the correct permissions on the private key: `chmod 600 ~/.ssh/key.pem`. You can check check with `ls -l` that the permissions of this file are now `-rw-------`.
+- If you don't already have a `.ssh` directory in your homefolder, create it and set its permissions:
+  ```bash
+  mkdir ~/.ssh
+  chmod 700 ~/.ssh
+  ```
+- Copy the private key (let's call it `key.pem`) into the `~/.ssh` directory
+- Set the correct permissions on the private key `chmod 600 ~/.ssh/key.pem`. 
+  The permissions shown by `ls -l` should be `-rw-------`.
 
-After that ssh key is in place, you can add the following block your `~/.ssh/config` file:
+Once the ssh key is in place, add the following block your `~/.ssh/config` file (create it if it does not exist):
 
 ```bash
 Host qmcloud
@@ -179,24 +184,10 @@ Host qmcloud
 
 replacing the IP address (`IP_ADDRESS`) with the one for the cloud VM.
 
-Afterwards you can connect to the server using this simple command:
+Afterwards you can connect to the server using:
 
 ```console
 $ ssh qmcloud
-```
-
-:::{note}
-Here's a copy-paste ready command for you to use directly with zero configuration:
-
-```console
-ssh \
-      -i ~/.ssh/key.pem \
-      -L 8888:localhost:8888 \
-      -L 8890:localhost:8890 \
-      -L 5000:localhost:5000 \
-      -o ServerAliveInterval=120 \
-      -X -C \
-      max@IP_ADDRESS
 ```
 
 :::
@@ -206,14 +197,12 @@ On MacOS you need to install [XQuartz](https://xquartz.macosforge.org/landing/) 
 :::
 
 :::{tip}
-If, while connecting to your VM, you get a warning similar to:
+If your port 8888 is already occupied (e.g. because you are running a `jupyter notebook` server locally), you may see the following warning when connecting to the server:
 
 ```
 bind [127.0.0.1]:8888: Address already in use
 channel_setup_fwd_listener_tcpip: cannot listen to port: 8888
 ```
-
-Your local port 8888 is already occupied - likely because you are running a `jupyter notebook` server locally.
 We suggest you stop any locally running jupyter notebook servers before connecting to the VM.
 If necessary, you can start them again *after* you have connected (`jupyter notebook` will then realize that port 8888 is already taken and simply serve the notebook on a different port).
 
@@ -221,7 +210,8 @@ If necessary, you can start them again *after* you have connected (`jupyter note
 
 #### Windows
 
-If you're running Windows 10, you may want to consider [installing the Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (and then follow the instructions above).
+If you're running Windows 10, consider [installing the Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (and then follow the instructions above).
+
 Alternatively:
 
 - Install the [PuTTY SSH client](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
@@ -251,4 +241,4 @@ Next time you open PuTTY, select `qmcloud` and click "Load" before clicking "Ope
 In order to enable X-forwarding:
 
 - Install the [Xming X Server for Windows](http://sourceforge.net/projects/xming/).
-- Configure PuTTy as described in the[Xming wiki](https://wiki.centos.org/HowTos/Xming).
+- Configure PuTTy as described in the [Xming wiki](https://wiki.centos.org/HowTos/Xming).
