@@ -6,20 +6,28 @@
   pre_tasks:
 
   - name: test configuration
+    tags: [init]
     debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
-    tags: [init]
   - name: testing ansible environment
+    tags: [init]
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+  - name: Install linux-headers-generic for guest-additions
     tags: [init]
+    when: "inventory_hostname.startswith('vagrant')"
+    become: true
+    apt:
+      cache_valid_time: 86400  # One day
+      name:
+      - linux-headers-generic
   - name: Make local dist folder
+    tags: [init]
     local_action:
       module: file
       state: directory
       path: "{{ local_dist_folder }}/"
     when: release_notes_locally is defined and release_notes_locally
-    tags: [init]
 
 - name: set up the VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
