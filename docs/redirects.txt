@@ -4,3 +4,8 @@ releases/desktop/20.06.1.md releases/versions/20.06.1.md
 releases/both/20.11.0a.md releases/versions/20.11.0a.md
 releases/both/20.11.2a.md releases/versions/20.11.2a.md
 releases/both/21.03.18-qe.md releases/versions/21.03.18-qe.md
+
+# alphas
+releases/versions/20.11.0a.md releases/alphas/20.11.0a.md
+releases/versions/20.11.2a.md releases/alphas/20.11.2a.md
+releases/versions/16.04.21a.md releases/alphas/16.04.21a.md
