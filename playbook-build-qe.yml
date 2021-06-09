@@ -90,6 +90,7 @@
     tags: [quantum_espresso]
     vars:
       quantum_espresso_data_folder: "{{ vm_data_folder }}"
+      quantum_espresso_version: "6.7MaX-Release"
 
   - role: geerlingguy.nodejs  # this is used by jupyterlab and aiidalab
     tags: [aiida, nodejs]
@@ -114,7 +115,7 @@
       aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
       aiida_plugins:
         aiida-quantumespresso:
-          version: "3.4.0"
+          version: "3.4.2"
           code_prefix: qe
           codes_var: "quantum_espresso_executables"
           omit_plugins: ["quantumespresso.hp", "wannier90"]

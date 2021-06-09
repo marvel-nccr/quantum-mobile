@@ -102,6 +102,7 @@
     tags: [quantum_espresso]
     vars:
       quantum_espresso_data_folder: "{{ vm_data_folder }}"
+      quantum_espresso_version: "6.7MaX-Release"
 
   - role: marvel-nccr.yambo
     tags: [yambo]
