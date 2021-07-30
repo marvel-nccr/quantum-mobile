@@ -21,30 +21,45 @@ Tools pre-installed
 Modular setup
 : with individually tested [ansible roles](https://galaxy.ansible.com/marvel-nccr). Build your own flavour tailored to your use case.
 
-```{list-table}
-* - [![abinit](_static/software_logos/abinit.svg)](https://www.abinit.org)
-  - [![bigdft](_static/software_logos/bigdft.png)](http://www.bigdft.org)
-  - [![cp2k](_static/software_logos/cp2k.png)](https://www.cp2k.org)
-  - [![fleur](_static/software_logos/fleur.png)](http://www.flapw.de/)
-  - [![quantumespresso](_static/software_logos/quantumespresso.png)](http://www.quantum-espresso.org/)
-  - [![siesta](_static/software_logos/siesta.png)](https://gitlab.com/siesta-project/siesta)
-* - [![wannier90](_static/software_logos/wannier90.png)](http://www.wannier.org)
-  - [![yambo](_static/software_logos/yambo.png)](http://www.yambo-code.org/)
-  - [![aiida](_static/software_logos/aiida.png)](http://www.aiida.net/)
-  - [![postgres](_static/software_logos/postgres.png)](https://www.postgresql.org/)
-  - [![rabbitmq](_static/software_logos/rabbitmq-text.png)](https://www.rabbitmq.com/)
-  - [![slurm](_static/software_logos/slurm.png)](https://slurm.schedmd.com/)
-```
+::::{grid} 4 6 6 6
+:gutter: 3
+:padding: 1
+
+:::{grid-item} [![abinit](_static/software_logos/abinit.svg)](https://www.abinit.org)
+:::
+:::{grid-item} [![bigdft](_static/software_logos/bigdft.png)](http://www.bigdft.org)
+:::
+:::{grid-item} [![cp2k](_static/software_logos/cp2k.png)](https://www.cp2k.org)
+:::
+:::{grid-item} [![fleur](_static/software_logos/fleur.png)](http://www.flapw.de/)
+:::
+:::{grid-item} [![quantumespresso](_static/software_logos/quantumespresso.png)](http://www.quantum-espresso.org/)
+:::
+:::{grid-item} [![siesta](_static/software_logos/siesta.png)](https://gitlab.com/siesta-project/siesta)
+:::
+:::{grid-item} [![wannier90](_static/software_logos/wannier90.png)](http://www.wannier.org)
+:::
+:::{grid-item} [![yambo](_static/software_logos/yambo.png)](http://www.yambo-code.org/)
+:::
+:::{grid-item} [![aiida](_static/software_logos/aiida.png)](http://www.aiida.net/)
+:::
+:::{grid-item} [![postgres](_static/software_logos/postgres.png)](https://www.postgresql.org/)
+:::
+:::{grid-item} [![rabbitmq](_static/software_logos/rabbitmq-text.png)](https://www.rabbitmq.com/)
+:::
+:::{grid-item} [![slurm](_static/software_logos/slurm.png)](https://slurm.schedmd.com/)
+:::
+::::
 
 ## Quantum Mobile Flavours
 
 Quantum Mobile VMs are built using a set of automated steps *via* [ansible](https://www.ansible.com/).
 You can [build a VM yourself](./developers/build-vagrant.md), or use one of the pre-built images:
 
-```{panels}
+::::{grid} 1 2 2 2
+:gutter: 1 2 2 2
 
-{fa}`desktop,mr-1` Desktop VirtualBox
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:::{grid-item-card} {fa}`desktop;sd-mr-1` Desktop VirtualBox
 
 Comes with the familiar Ubuntu Desktop and runs on your Windows, MacOS or Linux computer using the [VirtualBox](http://virtualbox.org/) software.
 
@@ -52,10 +67,9 @@ The Desktop Edition is tailored to provide students with a familiar working envi
 
 +++
 [**Download release**](releases/index.md)
----
 
-{fa}`cloud,mr-1` Cloud Image
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:::
+:::{grid-item-card} {fa}`cloud;sd-mr-1` Cloud Image
 
 Intended for use on servers using cloud services like Amazon Web Services, Google Cloud, or OpenStack.
 
@@ -63,10 +77,9 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 
 +++
 [**Download release**](releases/index.md)
----
 
-{fa}`cube,mr-1` Docker Image
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:::
+:::{grid-item-card} {fa}`cube;sd-mr-1` Docker Image
 
 Intended for testing purposes.
 
@@ -74,7 +87,8 @@ The Docker image provides a means to rapidly spawn a fully functioning Quantum M
 
 +++
 [**Download release**](https://hub.docker.com/r/marvelnccr/quantum-mobile)
-```
+
+::::
 
 <img src="_static/quantum_mobile.gif" alt="QM Desktop Screenshot" width="60%">
 
@@ -110,28 +124,45 @@ Quantum Mobile has been used, amongst others, in the following schools and cours
 - [Wannier90 v3.0 school](https://www.materialscloud.org/learn/sections/C8ad91/wannier90-v3-0-school-virtual-edition-2020), virtual edition 2020
 - [AiiDA tutorials](https://aiida-tutorials.readthedocs.io) in Switzerland, Italy, Slovenia, China, Japan, India, Norway, ...
 
-```{list-table}
----
-header-rows: 0
----
-* - [![cineca](_static/user_logos/cineca.png)](https://www.cineca.it/en)
-  - [![epfl](_static/user_logos/epfl.png)](https://www.epfl.ch/en/)
-  - [![ethz](_static/user_logos/ethz.png)](https://ethz.ch/en.html)
-  - [![uni_ghent](_static/user_logos/uni_ghent.png)](https://www.ugent.be/en)
-  - [![ictp](_static/user_logos/ictp.png)](https://www.ictp.it/)
-  - [![jsi](_static/user_logos/jsi.png)](https://www.ijs.si/ijsw/JSI)
-  - [![uni_iit-mandi](_static/user_logos/uni_iit-mandi.png)](http://www.iitmandi.ac.in/)
-  -
+::::::{grid} 4 6 6 6
+:gutter: 3
+:padding: 1
 
-* - [![sintef](_static/user_logos/sintef.png)](https://www.sintef.no/en/)
-  - [![uni_aas](_static/user_logos/uni_aas.png)](http://www.aau.edu.et/)
-  - [![uni_amsterdam](_static/user_logos/uni_amsterdam.png)](https://www.uva.nl/en)
-  - [![uni_dschang](_static/user_logos/uni_dschang.png)](https://www.univ-dschang.org/)
-  - [![uni_tokyo](_static/user_logos/uni_tokyo.png)](https://www.u-tokyo.ac.jp/en/index.html)
-  - [![uni_xiamen](_static/user_logos/uni_xiamen.png)](https://en.xmu.edu.cn/)
-  -
-  - 
-```
+:::{grid-item} [![cineca](_static/user_logos/cineca.png)](https://www.cineca.it/en)
+:::
+:::::{grid-item}
+::::{grid} 1
+:::{grid-item} [![epfl](_static/user_logos/epfl.png)](https://www.epfl.ch/en/)
+:::
+:::{grid-item} [![ethz](_static/user_logos/ethz.png)](https://ethz.ch/en.html)
+:::
+::::
+:::::
+:::::{grid-item}
+::::{grid} 1
+:::{grid-item} [![uni_xiamen](_static/user_logos/uni_xiamen.png)](https://en.xmu.edu.cn/)
+:::
+:::{grid-item} [![uni_amsterdam](_static/user_logos/uni_amsterdam.png)](https://www.uva.nl/en)
+:::
+::::
+:::::
+:::{grid-item} [![uni_ghent](_static/user_logos/uni_ghent.png)](https://www.ugent.be/en)
+:::
+:::{grid-item} [![ictp](_static/user_logos/ictp.png)](https://www.ictp.it/)
+:::
+:::{grid-item} [![jsi](_static/user_logos/jsi.png)](https://www.ijs.si/ijsw/JSI)
+:::
+:::{grid-item} [![uni_iit-mandi](_static/user_logos/uni_iit-mandi.png)](http://www.iitmandi.ac.in/)
+:::
+:::{grid-item} [![sintef](_static/user_logos/sintef.png)](https://www.sintef.no/en/)
+:::
+:::{grid-item} [![uni_aas](_static/user_logos/uni_aas.png)](http://www.aau.edu.et/)
+:::
+:::{grid-item} [![uni_dschang](_static/user_logos/uni_dschang.png)](https://www.univ-dschang.org/)
+:::
+:::{grid-item} [![uni_tokyo](_static/user_logos/uni_tokyo.png)](https://www.u-tokyo.ac.jp/en/index.html)
+:::
+::::::
 
 ## Acknowledgements
 
@@ -140,14 +171,16 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-```{list-table}
----
-header-rows: 0
----
-* - ![Marvel](_static/sponsor_logos/marvel.png)
-  - ![MaX](_static/sponsor_logos/max_large.png)
-  - ![SNF](_static/sponsor_logos/swissuniversities.png)
-```
+::::{grid} 3
+:gutter: 4
+
+:::{grid-item} ![Marvel](_static/sponsor_logos/marvel.png)
+:::
+:::{grid-item} ![MaX](_static/sponsor_logos/max_large.png)
+:::
+:::{grid-item} ![SNF](_static/sponsor_logos/swissuniversities.png)
+:::
+::::
 
 ```{toctree}
 :hidden: true

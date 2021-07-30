@@ -21,7 +21,7 @@ release = version
 # -- General configuration ---------------------------------------------------
 
 needs_sphinx = "2.0"
-extensions = ["myst_parser", "sphinx_panels", "ablog", "sphinx.ext.intersphinx", "sphinxext.rediraffe"]
+extensions = ["myst_parser", "sphinx_design", "ablog", "sphinx.ext.intersphinx", "sphinxext.rediraffe"]
 
 myst_enable_extensions = ["colon_fence", "deflist", "html_image"]
 
@@ -59,6 +59,5 @@ html_theme_options = {
     "path_to_docs": "docs",
     "use_edit_page_button": True,
 }
-panels_add_bootstrap_css = False
 
 rediraffe_redirects = 'redirects.txt'
