@@ -54,14 +54,13 @@ Vagrant.configure(2) do |config|
      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
    end
 
-  # Vagrant automatically updates the Guest Additions on 'vagrant up'
-  # (this requires 'vagrant plugin install vbguest')
-  # To disable this, uncomment the following
-  #config.vbguest.auto_update = false 
-  #config.vbguest.no_install = true
-   
-  # Uncomment to avoid remote downloads of ISO
-  #config.vbguest.no_remote = true
+  if Vagrant.has_plugin?("vagrant-vbguest") then
+    # Disable automatic update of Guest Additions on 'vagrant up'
+    config.vbguest.auto_update = false
+    # config.vbguest.no_install = true
+    # Uncomment to avoid remote downloads of ISO
+    # config.vbguest.no_remote = true
+  end
 
   config.vm.box = gconfig["vm_base_image"]
   config.vm.boot_timeout = 120

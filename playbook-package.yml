@@ -107,16 +107,16 @@
       msg: "Final vdisk size: {{ vm_vdisk_file.stat.size | filesizeformat }}"
     tags: [clean, compact]
 
-  - name: Retrieve git tag
-    shell: git describe --abbrev=0 --tags
-    register: git_tag
-    tags: [export, validate, skip_ansible_lint]
+  # - name: Retrieve git tag
+  #   shell: git describe --abbrev=0 --tags
+  #   register: git_tag
+  #   tags: [export, validate, skip_ansible_lint]
 
-  - name: "Assert git tag ({{ git_tag.stdout }}) == VM version({{ vm_version }})"
-    assert:
-      that:
-      - git_tag.stdout == vm_version
-    tags: [export, validate]
+  # - name: "Assert git tag ({{ git_tag.stdout }}) == VM version({{ vm_version }})"
+  #   assert:
+  #     that:
+  #     - git_tag.stdout == vm_version
+  #   tags: [export, validate]
 
   - name: Make dist folder
     file:

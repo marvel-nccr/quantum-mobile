@@ -3,10 +3,10 @@ blogpost: true
 author: Quantum Mobile
 date: 2021-01-01
 category: Full
-tags: desktop
+tags: desktop,docker
 ---
 
-# {{ vm_name }} ({{ vm_version }})
+# v{{ vm_version }}
 
 {{ vm_description }}
 
@@ -24,6 +24,8 @@ Get Quantum Mobile running on your computer in three simple steps:
 
 Login credentials: username: `{{ vm_user }}`, password: `{{ vm_password }}`.  
 The default configuration of `{{ vm_cpus }}` cores and `{{ vm_memory }}` MB RAM can be adjusted in the VM settings.
+
+Alternatively, this Quantum Mobile is available as a Docker image: <https://hub.docker.com/r/marvelnccr/quantum-mobile>
 
 ## Contact
 
@@ -51,8 +53,6 @@ Please direct inquiries regarding Quantum Mobile to the [AiiDA mailinglist](http
 
 ### Software Summary
 
-<!--Copy-paste here: `{{ release_notes_localhost }}` -->
-
 ```ini
-
+Copy-paste here: `{{ release_notes_localhost }}`
 ```

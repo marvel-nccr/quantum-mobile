@@ -21,26 +21,26 @@
 - src: marvel-nccr.libxc
   version: v0.1.0
 - src: marvel-nccr.abinit
-  version: v2.0.1
+  version: v2.1.1
 - src: marvel-nccr.nwchem
-  version: v0.0.3
+  version: v0.0.4
 - src: marvel-nccr.quantum_espresso
-  version: v1.1.5
+  version: v1.2.0
 - src: marvel-nccr.yambo
-  version: v1.1.1
+  version: v1.2.0
 - src: marvel-nccr.fleur
-  version: v1.0.2
+  version: v1.1.0
 - src: marvel-nccr.siesta
-  version: v2.2.0
+  version: v2.2.1
 - src: marvel-nccr.cp2k
-  version: v1.1.1
+  version: v1.2.0
 - src: marvel-nccr.bigdft
-  version: v1.3.6
+  version: v1.4.0
 - src: marvel-nccr.wannier90
-  version: v1.1.3
+  version: v1.1.4
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v4.0.1
+  version: v4.2.0
 - src: marvel-nccr.aiidalab
-  version: v2.2.0
+  version: v2.3.0
