@@ -11,7 +11,7 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "21.06.04"
+    vm_version: "22.06.20a"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
@@ -32,7 +32,7 @@ all:
     vm_data_folder: "/usr/local/share"
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
-    vm_scheduler: slurm  # 'slurm' or 'direct'
+    vm_scheduler: core.slurm  # 'core.slurm' or 'core.direct'
     vm_examples_folder:       # "${HOME}/examples" we don't currently use this folder
     vm_examples_folder_reamde:       # "${HOME}/examples/README.txt"
 

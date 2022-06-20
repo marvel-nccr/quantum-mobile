@@ -31,7 +31,7 @@
     set_fact:
       ostack_env: "{{ ostack_env | combine({'OS_USERNAME': auth_username}) }}"
 
-  # NOTE: this will return the following error isf the password was not recognised
+  # NOTE: this will return the following error if the password was not recognised
   # msg: /S:Envelope/S:Header/ecp:Response/@AssertionConsumerServiceURL should provide a single element list
   - name: create OS_TOKEN
     os_auth:

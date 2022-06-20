@@ -7,7 +7,7 @@
 - src: marvel-nccr.add_user
   version: v0.2.1
 - src: marvel-nccr.simulationbase
-  version: v1.1.0
+  version: v1.1.2
 - src: marvel-nccr.python
   version: v0.2.2
 - src: marvel-nccr.ubuntu_desktop
@@ -25,7 +25,7 @@
 - src: marvel-nccr.nwchem
   version: v0.0.4
 - src: marvel-nccr.quantum_espresso
-  version: v1.2.0
+  version: v1.3.1
 - src: marvel-nccr.yambo
   version: v1.2.0
 - src: marvel-nccr.fleur
@@ -41,6 +41,6 @@
 - src: marvel-nccr.wannier_tools
   version: v1.0.0
 - src: marvel-nccr.aiida
-  version: v4.2.0
+  version: v5.0.0
 - src: marvel-nccr.aiidalab
   version: v2.3.0

@@ -90,7 +90,7 @@
     tags: [quantum_espresso]
     vars:
       quantum_espresso_data_folder: "{{ vm_data_folder }}"
-      quantum_espresso_version: "6.7MaX-Release"
+      quantum_espresso_version: "7.0"
 
   - role: geerlingguy.nodejs  # this is used by jupyterlab and aiidalab
     tags: [aiida, nodejs]
@@ -114,21 +114,11 @@
       aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
       aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
       aiida_plugins:
-        aiida-quantumespresso:
-          version: "3.4.2"
+        aiida-quantumespresso-test:
+          version: "4.0.0a1"
           code_prefix: qe
           codes_var: "quantum_espresso_executables"
           omit_plugins: ["quantumespresso.hp", "wannier90"]
-
-  - name: aiidalab
-    role: marvel-nccr.aiidalab
-    become: true
-    become_user: "{{ vm_user }}"
-    tags: [aiidalab]
-    vars:
-      aiidalab_aiida_venv: "{{ aiida_venv_base }}/aiida"
-      aiidalab_aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
-      aiidalab_aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
 
   post_tasks:
 
