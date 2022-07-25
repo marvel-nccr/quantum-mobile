@@ -6,12 +6,14 @@ Before running `tox -e ansible -- --extra-vars "build_hosts=docker"` though, ini
 
 ```console
 $ tox -e docker
+$ tox -e ansible -- --extra-vars "build_hosts=docker
+$ tox -e ansible -- --extra-vars "build_hosts=docker --tags cleanup
 ```
 
 Once provisioned, stop the container (to wipe the `/tmp` folder), then you can create a new image from the container by:
 
 ```console
-$ docker commit -a "Author Name" -m "Container provisioned by ansible" qm_instance organisation/quantum-mobile:20.11.2a
+$ docker commit -a "Author Name" -m "Container provisioned by ansible" qminstance organisation/quantum-mobile:20.11.2a
 ```
 
 If you have a Docker Hub account then you can also upload your image:

@@ -158,7 +158,7 @@ Here are some indicative prices for hosting public images and disk pricing:
 You can either build the container locally, using the [Docker build instructions](../developers/build-docker.md), then commit the (stopped) instance:
 
 ```bash
-docker commit -a "Chris Sewell" -m "Container provisioned by ansible" qm_instance marvelnccr/quantum-mobile:20.11.2a
+docker commit -a "Chris Sewell" -m "Container provisioned by ansible" qminstance marvelnccr/quantum-mobile:20.11.2a
 ```
 
 or (recommended) first tag the release commit with a `docker-` tag, to trigger the GitHub Action (see [Testing on GH Actions](./develop.md)).

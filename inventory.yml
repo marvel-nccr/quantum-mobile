@@ -11,12 +11,12 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "22.06.20a"
+    vm_version: "22.07.25a"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
     vm_author_url: "http://nccr-marvel.ch"
-    vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
+    vm_release_notes: "${HOME}/Desktop/RELEASE_NOTES.txt"
     vm_readme_file: "${HOME}/Desktop/README.md"
 
     # VM configuration
@@ -27,27 +27,21 @@ all:
     vm_memory: 1536
     vm_cpus: 2
     vm_vram: 128
-    vm_shared_folder: "/shared"
-    vm_codes_folder: "${HOME}/codes"
     vm_data_folder: "/usr/local/share"
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
-    vm_scheduler: core.slurm  # 'core.slurm' or 'core.direct'
-    vm_examples_folder:       # "${HOME}/examples" we don't currently use this folder
-    vm_examples_folder_reamde:       # "${HOME}/examples/README.txt"
-
-    # Python virtual environments base location
-    aiida_venv_base: "${HOME}/.virtualenvs"
+    vm_timezone: "Europe/Zurich"
+    vm_create_swapfile: true
 
     # Connection Ports
-    aiida_jupyter_port: 8890
-    aiidalab_jupyter_port: 8888
+    # aiida_jupyter_port: 8890  # TODO
 
     # Release Notes (populated by roles during build)
     release_notes: true
     release_notes_vm_user: "{{ vm_user }}"
     release_notes_locally: true
     local_dist_folder: "{{ playbook_dir }}/dist"
+    release_notes_vm: "{{ vm_release_notes }}"
     release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
 
     # Vagrant Intructions (created during the package/export phase)
@@ -56,10 +50,6 @@ all:
     # Connection variables
     ansible_python_interpreter: /usr/bin/python3
     root_user: root
-
-    # Build options
-    run_tests: true
-    clean: false  # remove build files (will break idempotance, so only run before packaging/release)
 
   hosts:
     vagrant-provision:
@@ -77,11 +67,15 @@ all:
     docker:
       # see playbook-docker.yml to start container
       cloud_platform: docker
-      ansible_host: qm_instance  # the instance name
+      # important slurm does not allow `_` https://en.wikipedia.org/wiki/Hostname
+      ansible_host: qminstance  # the instance name
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
-      jupyter_ip: "0.0.0.0"
+      vm_create_swapfile: false
+      aiida_allow_mpi_on_root: true
+      vm_timezone: false
+      # jupyter_ip: "0.0.0.0"  # TODO
 
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:

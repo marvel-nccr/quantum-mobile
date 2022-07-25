@@ -9,10 +9,14 @@
     tags: [init]
     debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+
   - name: testing ansible environment
     tags: [init]
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+
+  # run `apt update` here, when `not inventory_hostname.startswith('vagrant')`
+
   - name: Install linux-headers-generic for guest-additions
     tags: [init]
     when: "inventory_hostname.startswith('vagrant')"
@@ -21,6 +25,7 @@
       cache_valid_time: 86400  # One day
       name:
       - linux-headers-generic
+
   - name: Make local dist folder
     tags: [init]
     local_action:
@@ -31,10 +36,6 @@
 
 - name: set up the VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
-
-  vars:
-    libxc_version: "4.3.4"
-    libxc_prefix: "/usr/local/libxc-{{ libxc_version }}"
 
   roles:
 
@@ -49,13 +50,14 @@
       - sudo
       add_user_passwordless_sudo: true
 
-  - role: marvel-nccr.simulationbase
-    tags: [simulationbase]
-    vars:
-      simulationbase_vm_user: "{{ vm_user }}"
-      simulationbase_hostname: "{{ vm_hostname }}"
-      simulationbase_codes_folder: "{{ vm_codes_folder }}"
-      simulationbase_tmz: Europe/Zurich
+  - name: "Set the machine hostname: {{ vm_hostname }}"
+    role: set_hostname
+    when: cloud_platform != 'docker'
+    tags: [set_hostname]
+
+  # - add aptitude
+  # - run apt upgrade
+  # - don't pip install psutil, use python3-psutil instead?
 
   - role: marvel-nccr.ubuntu_desktop
     tags: [ubuntu_desktop]
@@ -63,6 +65,7 @@
       ubuntu_desktop_browser: "{{ vm_browser }}"
       ubuntu_desktop_vm_user: "{{ vm_user }}"
     when: not vm_headless
+  # tip, use Ctrl+Alt+F3 to login via the terminal, if there is an issue
 
   - role: marvel-nccr.quantum_mobile_customizations
     tags: [qm_customizations]
@@ -74,10 +77,10 @@
       qm_customizations_vm_version: "{{ vm_version }}"
       qm_customizations_vm_author: "{{ vm_author }}"
       qm_customizations_headless: "{{ vm_headless }}"
-      qm_customizations_examples_folder: "{{ vm_examples_folder }}"
-      qm_customizations_examples_readme: "{{ vm_examples_folder_reamde }}"
       qm_customizations_data_folder: "{{ vm_data_folder }}"
       qm_customizations_readme_file: "{{ vm_readme_file }}"
+      qm_customizations_examples_folder:
+      qm_customizations_examples_readme:
       qm_customizations_homepage: "https://quantum-mobile.readthedocs.io"
       qm_customizations_urls:
         Abinit: https://www.abinit.org
@@ -98,106 +101,37 @@
   - role: marvel-nccr.slurm
     tags: [slurm]
 
-  - role: marvel-nccr.quantum_espresso
-    tags: [quantum_espresso]
-    vars:
-      quantum_espresso_data_folder: "{{ vm_data_folder }}"
-      quantum_espresso_version: "6.7MaX-Release"
-
-  - role: marvel-nccr.yambo
-    tags: [yambo]
-
-  - role: marvel-nccr.fleur
-    tags: [fleur]
-
-  - role: marvel-nccr.cp2k
-    tags: [cp2k]
-
-  - role: marvel-nccr.wannier90
-    tags: [wannier90]
-
-  - role: marvel-nccr.wannier_tools
-    tags: [wannier_tools]
-
-  - role: marvel-nccr.bigdft
-    tags: [bigdft]
-    vars:
-      bigdft_test_cpus: "{{ vm_cpus }}"
-
-  - role: marvel-nccr.nwchem
-    tags: [nwchem]
-
-  - role: marvel-nccr.libxc  # this is used by abinit and siesta
-    tags: [abinit, siesta]
-    vars:
-      libxc_build_cpus: "{{ vm_cpus }}"
-
-  - role: marvel-nccr.siesta
-    tags: [siesta]
-    vars:
-      siesta_build_cpus: "{{ vm_cpus }}"
-      siesta_libxc_root: "{{ libxc_prefix }}"
-
-  - role: marvel-nccr.abinit
-    tags: [abinit]
-    vars:
-      abinit_build_cpus: "{{ vm_cpus }}"
-      abinit_libxc_path: "{{ libxc_prefix }}"
-
-  - role: geerlingguy.nodejs  # this is used by jupyterlab and aiidalab
-    tags: [aiida, nodejs]
-    become: true
-    become_user: "{{ root_user }}"
-    vars:
-      nodejs_version: 12.x
-      nodejs_install_npm_user: "{{ root_user }}"
-
-  - role: marvel-nccr.aiida
+  - role: marvel-nccr.aiida_cws
     tags: [aiida]
     become: true
     become_user: "{{ vm_user }}"
     vars:
-      aiida_source_folder: "{{ vm_codes_folder }}"
-      aiida_data_folder: "{{ vm_data_folder }}/aiida"
-      aiida_computer_cpus: "{{ vm_cpus }}"
-      aiida_computer_scheduler: "{{ vm_scheduler }}"
-      aiida_examples_folder: "{{ vm_examples_folder }}"
-      aiida_venv: "{{ aiida_venv_base }}/aiida"
-      aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
-      aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
-
-  - name: aiidalab
-    role: marvel-nccr.aiidalab
-    become: true
-    become_user: "{{ vm_user }}"
-    tags: [aiidalab]
-    vars:
-      aiidalab_aiida_venv: "{{ aiida_venv_base }}/aiida"
-      aiidalab_aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
-      aiidalab_aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
+      aiida_release_notes: "{{ vm_release_notes }}"
+      aiida_root_user: "{{ root_user }}"
+      aiida_data_folder_temp: "{{ vm_data_folder }}/aiida"
+      aiida_timezone_name: "{{ vm_timezone }}"
+      aiida_create_swapfile: "{{ vm_create_swapfile }}"
+      aiida_computer_defaults:
+        hostname: localhost
+        run_folder: "${HOME}/.aiida_run"
+        mpi_cmd: "mpirun -np {tot_num_mpiprocs}"
+        default_mpiprocs: "{{ vm_cpus }}"
+        configure: "--safe-interval 0"
+      aiida_conda_code_computer: local_slurm_conda
 
   post_tasks:
 
-  - name: Check package version integrity in virtualenv
-    command: "{{ aiida_venv }}/bin/pip check --no-color"
-    become: true
-    become_user: "{{ vm_user }}"
-    changed_when: false
-    tags: [aiida, aiidalab, pipcheck]
-
-  # pymatgen can fail when the numpy it was compiled against is downgraded/upgraded
-  # (e.g. due to a package pinning numpy)
-  - name: test pymatgen import
-    command: "{{ aiida_venv }}/bin/python -c 'import pymatgen'"
-    become: true
-    become_user: "{{ vm_user }}"
-    changed_when: false
-    tags: [aiida, aiidalab, pymatgen]
+  # - name: Check package version integrity in virtualenv
+  #   command: "{{ aiida_venv }}/bin/pip check --no-color"
+  #   become: true
+  #   become_user: "{{ vm_user }}"
+  #   changed_when: false
+  #   tags: [aiida, pipcheck]
 
   # the following tasks should only be run after the machine is fully provisioned
   # since these tasks break idempotence
 
-  - name: apt-get clean  # noqa 303
+  - name: apt-get clean
     tags: [never, cleanup]
     become: true
     command: apt-get clean

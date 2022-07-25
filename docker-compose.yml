@@ -7,17 +7,13 @@ version: '3'
 
 services:
   quantum-mobile:
-    image: "marvelnccr/quantum-mobile:develop"
+    image: "marvelnccr/quantum-mobile:22.07.25a"
     container_name: quantum-mobile
     expose:
-    - "8888"   # AiiDa Lab
-    - "8890"   # Jupyter Lab
-      # - "5000" # REST API
+    - "8888"   # Jupyter Lab
     ports:
       # local:container
     - 8888:8888
-    - 8890:8890
-      # - 5000:5000
     # privileged mode and mounting the cgroup are required for correctly running sytsemd inside the container
     privileged: true
     volumes:

@@ -6,7 +6,7 @@
   vars:
     # see https://www.jeffgeerling.com/blog/2018/testing-your-ansible-roles-molecule
     image: marvelnccr/docker-ubuntu1804-ansible:latest
-    instance_name: qm_instance
+    instance_name: qminstance
     command: ""  # by default the container will initialise with systemd as PID1
     # privileged mode and mounting the cgroup are required for correctly running sytsemd inside the container
     privileged: true

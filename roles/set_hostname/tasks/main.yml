@@ -1,0 +1,28 @@
+- name: "get the current machine hostname"
+  become: true
+  command: "hostname"
+  register: cur_hostname_command
+  changed_when: false
+
+# This updates both the current hostname and /etc/hostname
+- name: "update machine hostname to '{{ vm_hostname }}'"
+  become: true
+  hostname:
+    name: "{{ vm_hostname }}"
+  when: cur_hostname_command.stdout != vm_hostname
+
+- name: "remove lines with 127.0.1.1, except for 127.0.1.1. localhost"
+  become: true
+  lineinfile:
+    path: "/etc/hosts"
+    regexp: '^127\.0\.1\.1 (?!localhost)'
+    state: absent
+
+- name: >-
+    set 127.0.1.1 to localhost (if it's set to the hostname,
+    pbs server complains)
+  become: true
+  lineinfile:
+    path: "/etc/hosts"
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 localhost"

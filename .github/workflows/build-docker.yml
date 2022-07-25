@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 210
 
     env:
-      instance-name: "qm_instance"
+      instance-name: "qminstance"
 
     steps:
 
