@@ -1,7 +1,7 @@
 # create an aiida profile
 
 - name: "Check if AiiDA profile '{{ name }}' has already been configured"
-  shell: "{{ verdi }} profile show {{ name }}"
+  shell: "{{ aiida_run_verdi }} profile show {{ name }}"
   failed_when: false
   changed_when: false
   register: aiida_profile_show
@@ -26,7 +26,7 @@
 
   - name: "Set up AiiDA profile '{{ name }}'"
     shell: |
-      {{ verdi }} setup \
+      {{ aiida_run_verdi }} setup \
       --non-interactive \
       --profile "{{ name }}" \
       --email "{{ parameters.email }}" \

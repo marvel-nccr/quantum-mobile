@@ -176,7 +176,7 @@
     import_tasks: tasks/aiida-profile.yml
     vars:
       name: generic
-      verdi: "~/.conda/bin/conda run -n aiida verdi"
+      aiida_run_verdi: "~/.conda/bin/conda run -n aiida verdi"
       postgres_user: postgres
       parameters:
         first_name: Max
@@ -188,6 +188,26 @@
         db_name: aiidadb
         db_username: aiida
         db_password: "ne9N_LDK-*JSS"
+
+  - name: "Create AiiDA computers"
+    tags: [aiida-computers]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: tasks/aiida-computers.yml
+    vars:
+      aiida_run_verdi: "~/.conda/bin/conda run -n aiida verdi"
+      aiida_computer_defaults:
+        transport: core.local
+        hostname: localhost
+        work_dir: "~/.aiida_run"
+        mpi_cmd: "mpirun -np {tot_num_mpiprocs}"
+        default_mpiprocs: 2
+        configure: "--safe-interval 0"
+      aiida_computers:
+      - label: local_direct
+        scheduler: core.direct
+      - label: local_slurm
+        scheduler: core.slurm
 
   # now login to the machine and run these manually:
 

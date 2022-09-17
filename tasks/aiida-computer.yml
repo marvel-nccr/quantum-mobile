@@ -1,0 +1,42 @@
+# Create an aiida computer,
+# from `aiida_computer`` and ``aiida_computer_defaults`` dict
+
+- name: "check if the AiiDA computer is already present: {{ aiida_computer.label }}"
+  shell: "{{ aiida_run_verdi }} computer show {{ aiida_computer.label }}"
+  ignore_errors: true
+  no_log: true
+  changed_when: false
+  register: aiida_check_computer
+
+- name: "create the AiiDA computer: {{ aiida_computer.label }}"
+  when: aiida_check_computer.rc != 0
+  block:
+
+  - name: Merge computer variables with defaults
+    set_fact:
+      computer_dict: "{{ aiida_computer_defaults | combine(aiida_computer) }}"
+
+  - name: Expand the work directory
+    chrisjsewell.conda.expandpath:
+      path: "{{ computer_dict.work_dir }}"
+    register: work_dir
+
+  - name: "Setup {{ computer_dict.label }} computer for AiiDA"
+    shell: >
+      {{ aiida_run_verdi }} computer setup
+      --non-interactive
+      --work-dir "{{ work_dir.path }}"
+      --label "{{ computer_dict.label }}"
+      --transport "{{ computer_dict.transport }}"
+      --scheduler "{{ computer_dict.scheduler }}"
+      --hostname "{{ computer_dict.hostname }}"
+      --mpirun-command "{{ computer_dict.mpi_cmd }}"
+      --mpiprocs-per-machine "{{ computer_dict.default_mpiprocs }}"
+
+  - name: "Configure {{ computer_dict.label }}"
+    shell: >
+      {{ aiida_run_verdi }} computer configure
+      "{{ computer_dict.transport }}"
+      --non-interactive
+      "{{ computer_dict.label }}"
+      {{ computer_dict.configure }}
