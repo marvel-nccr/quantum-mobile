@@ -1,0 +1,40 @@
+# create an aiida profile
+
+- name: "Check if AiiDA profile '{{ name }}' has already been configured"
+  shell: "{{ verdi }} profile show {{ name }}"
+  failed_when: false
+  changed_when: false
+  register: aiida_profile_show
+
+- when: aiida_profile_show.rc != 0
+  block:
+
+  - name: Setup Postgresql DB
+    become: true
+    become_user: "{{ postgres_user }}"
+    postgresql_db:
+      name: "{{ parameters.db_name }}"
+
+  - name: Setup Postgresql DB user
+    become: true
+    become_user: "{{ postgres_user }}"
+    postgresql_user:
+      db: "{{ parameters.db_name }}"
+      name: "{{ parameters.db_username }}"
+      password: "{{ parameters.db_password }}"
+      encrypted: true
+
+  - name: "Set up AiiDA profile '{{ name }}'"
+    shell: |
+      {{ verdi }} setup \
+      --non-interactive \
+      --profile "{{ name }}" \
+      --email "{{ parameters.email }}" \
+      --first-name "{{ parameters.first_name }}" \
+      --last-name "{{ parameters.last_name }}" \
+      --institution "{{ parameters.institution }}" \
+      --db-host "{{ parameters.db_host }}" \
+      --db-port "{{ parameters.db_port }}" \
+      --db-name "{{ parameters.db_name }}" \
+      --db-username "{{ parameters.db_username }}" \
+      --db-password "{{ parameters.db_password }}"

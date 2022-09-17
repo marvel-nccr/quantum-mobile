@@ -2,7 +2,7 @@
   become: true
   become_user: "{{ release_notes_vm_user }}"
   ini_file:
-    path: "{{ release_notes_vm }}"
+    path: "{{ release_notes_vm_path }}"
     section: "{{ section }}"
     option: "{{ option }}"
     value: "{{ value }}"

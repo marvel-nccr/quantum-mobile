@@ -1,4 +1,4 @@
-- name: Install ansible prerequisites
+- name: Prepare for VM build
 
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
   gather_facts: false
@@ -9,10 +9,12 @@
     tags: [init]
     debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+
   - name: testing ansible environment
     tags: [init]
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+
   - name: Install linux-headers-generic for guest-additions
     tags: [init]
     when: "inventory_hostname.startswith('vagrant')"
@@ -21,6 +23,7 @@
       cache_valid_time: 86400  # One day
       name:
       - linux-headers-generic
+
   - name: Make local dist folder
     tags: [init]
     local_action:
@@ -29,173 +32,182 @@
       path: "{{ local_dist_folder }}/"
     when: release_notes_locally is defined and release_notes_locally
 
-- name: set up the VM
+- name: Build VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
 
-  vars:
-    libxc_version: "4.3.4"
-    libxc_prefix: "/usr/local/libxc-{{ libxc_version }}"
+  tasks:
 
-  roles:
+  # Generic Tasks
+  # These tasks are run for any VM build, regardless of the software installed
+  # They setup the VM user, commandline interface, and (optionally) desktop GUI
 
-  - name: add user {{ vm_user }} with key
-    role: marvel-nccr.add_user
+  - name: Update system package managers (apt, pip)
+    tags: [init]
+    include_tasks: tasks/ensure-apt-pip.yml
+
+  - name: "Add QM user '{{ vm_user }}'"
     tags: [add_user]
-    vars:
-      add_user_name: "{{ vm_user }}"
-      add_user_password: "{{ vm_password }}"
-      add_user_groups:
-      - "{{ vm_user }}"
-      - sudo
-      add_user_passwordless_sudo: true
+    import_tasks: tasks/add-qm-user.yml
 
-  - role: marvel-nccr.simulationbase
-    tags: [simulationbase]
-    vars:
-      simulationbase_vm_user: "{{ vm_user }}"
-      simulationbase_hostname: "{{ vm_hostname }}"
-      simulationbase_codes_folder: "{{ vm_codes_folder }}"
-      simulationbase_tmz: Europe/Zurich
+  - name: "Add release notes section for the operating system"
+    tags: [release_notes]
+    import_tasks: tasks/release-notes-system.yml
 
-  - role: marvel-nccr.ubuntu_desktop
-    tags: [ubuntu_desktop]
-    vars:
-      ubuntu_desktop_browser: "{{ vm_browser }}"
-      ubuntu_desktop_vm_user: "{{ vm_user }}"
-    when: not vm_headless
+  - name: Customise bash terminal for QM
+    tags: [customise-bash]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: tasks/customise-bash.yml
 
-  - role: marvel-nccr.quantum_mobile_customizations
-    tags: [qm_customizations]
-    vars:
-      qm_customizations_browser: "{{ vm_browser }}"
-      qm_customizations_vm_user: "{{ vm_user }}"
-      qm_customizations_vm_password: "{{ vm_password }}"
-      qm_customizations_vm_name: "{{ vm_name }}"
-      qm_customizations_vm_version: "{{ vm_version }}"
-      qm_customizations_vm_author: "{{ vm_author }}"
-      qm_customizations_headless: "{{ vm_headless }}"
-      qm_customizations_examples_folder: "{{ vm_examples_folder }}"
-      qm_customizations_examples_readme: "{{ vm_examples_folder_reamde }}"
-      qm_customizations_data_folder: "{{ vm_data_folder }}"
-      qm_customizations_readme_file: "{{ vm_readme_file }}"
-      qm_customizations_homepage: "https://quantum-mobile.readthedocs.io"
-      qm_customizations_urls:
-        Abinit: https://www.abinit.org
-        BigDFT: http://www.bigdft.org
-        CP2K: https://www.cp2k.org
-        Fleur: http://www.flapw.de/
-        NWChem: https://nwchemgit.github.io/
-        Quantum ESPRESSO: http://www.quantum-espresso.org/
-        Siesta: https://gitlab.com/siesta-project/siesta
-        Wannier90: http://www.wannier.org
-        Yambo: http://www.yambo-code.org/
-
-  - role: marvel-nccr.editors
+  - name: Install common text editors
     tags: [editors]
+    import_role:
+      name: marvel-nccr.editors
     vars:
       editors_vm_user: "{{ vm_user }}"
 
-  - role: marvel-nccr.slurm
+  - name: Add desktop GUI
+    tags: [ubuntu_desktop]
+    when: not vm_headless
+    import_role:
+      name: marvel-nccr.ubuntu_desktop
+    vars:
+      ubuntu_desktop_vm_user: "{{ vm_user }}"
+      ubuntu_desktop_browser: "{{ vm_browser }}"
+
+  - name: Customise GUI for QM
+    tags: [customise-gui]
+    when: not vm_headless
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: tasks/customise-gui.yml
+
+  - name: Setup QM to run simulations
+    tags: [simsetup]
+    import_tasks: tasks/simulation-setup.yml
+
+  # Build Specific Tasks
+  # These tasks can be customised for specific VM builds,
+  # depending on the software one requires to be installed
+
+  - name: "Add user README"
+    tags: [add_readme]
+    become: true
+    become_user: "{{ vm_user }}"
+    template:
+      src: tasks/files/README.md.j2
+      dest: "{{ readme_vm_path }}"
+    vars:
+      software_urls:
+        # Abinit: https://www.abinit.org
+        # BigDFT: http://www.bigdft.org
+        # CP2K: https://www.cp2k.org
+        # Fleur: http://www.flapw.de/
+        # NWChem: https://nwchemgit.github.io/
+        Quantum ESPRESSO: http://www.quantum-espresso.org/
+        # Siesta: https://gitlab.com/siesta-project/siesta
+        # Wannier90: http://www.wannier.org
+        # Yambo: http://www.yambo-code.org/
+
+  - name: Install plotting tools (via apt)
+    # TODO we may want to eventually install these with conda
+    tags: [plotting]
+    import_tasks: tasks/plotting-apt.yml
+    vars:
+      packages: [grace, gnuplot, xcrysden, jmol, default-jre]
+
+  - name: install SLURM service
     tags: [slurm]
+    import_role:
+      name: marvel-nccr.slurm
 
-  - role: marvel-nccr.quantum_espresso
-    tags: [quantum_espresso]
-    vars:
-      quantum_espresso_data_folder: "{{ vm_data_folder }}"
-      quantum_espresso_version: "6.7MaX-Release"
-
-  - role: marvel-nccr.yambo
-    tags: [yambo]
-
-  - role: marvel-nccr.fleur
-    tags: [fleur]
-
-  - role: marvel-nccr.cp2k
-    tags: [cp2k]
-
-  - role: marvel-nccr.wannier90
-    tags: [wannier90]
-
-  - role: marvel-nccr.wannier_tools
-    tags: [wannier_tools]
-
-  - role: marvel-nccr.bigdft
-    tags: [bigdft]
-    vars:
-      bigdft_test_cpus: "{{ vm_cpus }}"
-
-  - role: marvel-nccr.nwchem
-    tags: [nwchem]
-
-  - role: marvel-nccr.libxc  # this is used by abinit and siesta
-    tags: [abinit, siesta]
-    vars:
-      libxc_build_cpus: "{{ vm_cpus }}"
-
-  - role: marvel-nccr.siesta
-    tags: [siesta]
-    vars:
-      siesta_build_cpus: "{{ vm_cpus }}"
-      siesta_libxc_root: "{{ libxc_prefix }}"
-
-  - role: marvel-nccr.abinit
-    tags: [abinit]
-    vars:
-      abinit_build_cpus: "{{ vm_cpus }}"
-      abinit_libxc_path: "{{ libxc_prefix }}"
-
-  - role: geerlingguy.nodejs  # this is used by jupyterlab and aiidalab
-    tags: [aiida, nodejs]
+  - name: install RabbitMQ server service
+    tags: [rabbitmq]
     become: true
     become_user: "{{ root_user }}"
-    vars:
-      nodejs_version: 12.x
-      nodejs_install_npm_user: "{{ root_user }}"
+    import_tasks: tasks/rabbitmq.yml
 
-  - role: marvel-nccr.aiida
+  - name: install PostrgeSQL server service
+    tags: [postgresql]
+    become: true
+    become_user: "{{ root_user }}"
+    import_tasks: tasks/postgresql.yml
+
+  - name: install mamba
+    tags: [mamba]
+    import_role:
+      name: chrisjsewell.conda.user_install
+    become: true
+    become_user: "{{ vm_user }}"
+    vars:
+      conda_folder: "~/.conda"
+      conda_installer_url: https://github.com/conda-forge/miniforge/releases/download/4.14.0-0/Mambaforge-4.14.0-0-Linux-x86_64.sh
+      conda_installer_checksum: sha256:d47b78b593e3cf5513bafbfa6a51eafcd9f0e164c41c79c790061bb583c82859
+      conda_activate_alias: workon
+
+  - name: Install AiiDA environment
     tags: [aiida]
     become: true
     become_user: "{{ vm_user }}"
-    vars:
-      aiida_source_folder: "{{ vm_codes_folder }}"
-      aiida_data_folder: "{{ vm_data_folder }}/aiida"
-      aiida_computer_cpus: "{{ vm_cpus }}"
-      aiida_computer_scheduler: "{{ vm_scheduler }}"
-      aiida_examples_folder: "{{ vm_examples_folder }}"
-      aiida_venv: "{{ aiida_venv_base }}/aiida"
-      aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
-      aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
+    chrisjsewell.conda.install_pkgs:
+      executable: "~/.conda/bin/mamba"
+      env: aiida
+      packages:
+      - python=3.9
+      - pip
+      - aiida-core=2
+      - aiida-quantumespresso=4
+      - aiida-pseudo=0.7
+      - ipykernel
+      - jupyterlab=3
 
-  - name: aiidalab
-    role: marvel-nccr.aiidalab
+  - name: "Activate verdi TAB completion"
+    tags: [aiida-autocomplete]
     become: true
     become_user: "{{ vm_user }}"
-    tags: [aiidalab]
+    ansible.builtin.copy:
+      dest: "~/.conda/envs/aiida/etc/conda/activate.d/verdi-complete.sh"
+      content: 'eval "$(_VERDI_COMPLETE=bash_source verdi)"'
+
+  - name: Create an aiida-profile
+    tags: [aiida-profile]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: tasks/aiida-profile.yml
     vars:
-      aiidalab_aiida_venv: "{{ aiida_venv_base }}/aiida"
-      aiidalab_aiida_jupyter_venv: "{{ aiida_venv_base }}/jupyter"
-      aiidalab_aiida_venv_constraints: "{{ vm_data_folder }}/aiida/constraints.txt"
+      name: generic
+      verdi: "~/.conda/bin/conda run -n aiida verdi"
+      postgres_user: postgres
+      parameters:
+        first_name: Max
+        last_name: Scientist
+        email: aiida@localhost
+        institution: Quantum Mobile
+        db_host: localhost
+        db_port: 5432
+        db_name: aiidadb
+        db_username: aiida
+        db_password: "ne9N_LDK-*JSS"
+
+  # now login to the machine and run these manually:
+
+  # TODO per code? system wide ok?
+  # echo "export OMP_NUM_THREADS=1" >> ~/.bashrc
+  # echo "export OMP_NUM_THREADS=1" >> ~/.profile
+
+  # git clone https://github.com/epfl-theos/koopmans.git
+  # cd koopmans
+  # make submodules
+  # make espresso
+  # This also removes the qe bin: make clean_espresso
+
+  # echo "export PATH=$PATH:/home/max/koopmans/bin" >> ~/.bashrc
+
+  # mamba create -n koopmans python=3.9 pip
+  # conda activate koopmans
+  # pip install -e .
 
   post_tasks:
-
-  - name: Check package version integrity in virtualenv
-    command: "{{ aiida_venv }}/bin/pip check --no-color"
-    become: true
-    become_user: "{{ vm_user }}"
-    changed_when: false
-    tags: [aiida, aiidalab, pipcheck]
-
-  # pymatgen can fail when the numpy it was compiled against is downgraded/upgraded
-  # (e.g. due to a package pinning numpy)
-  - name: test pymatgen import
-    command: "{{ aiida_venv }}/bin/python -c 'import pymatgen'"
-    become: true
-    become_user: "{{ vm_user }}"
-    changed_when: false
-    tags: [aiida, aiidalab, pymatgen]
-
-  # the following tasks should only be run after the machine is fully provisioned
-  # since these tasks break idempotence
 
   - name: apt-get clean  # noqa 303
     tags: [never, cleanup]
@@ -205,7 +217,7 @@
   - name: wipe apt lists
     tags: [never, cleanup]
     become: true
-    command: "rm -rf /var/lib/apt/lists/*"  # noqa 302
+    shell: "rm -rf /var/lib/apt/lists/*"  # noqa 302
 
   - name: wipe user cache
     tags: [never, cleanup]
@@ -221,3 +233,10 @@
     file:
       state: absent
       path: "~/.cache"
+
+  - name: clean conda cache
+    # for a discussion on using -f, see: https://github.com/jupyter/docker-stacks/issues/861
+    tags: [never, cleanup]
+    become: true
+    become_user: "{{ vm_user }}"
+    command: "~/.conda/bin/mamba clean --yes --all -f"

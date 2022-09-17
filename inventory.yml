@@ -11,13 +11,11 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "22.06.20a"
+    vm_version: "22.09.14"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
     vm_author_url: "http://nccr-marvel.ch"
-    vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
-    vm_readme_file: "${HOME}/Desktop/README.md"
 
     # VM configuration
     vm_base_image: "bento/ubuntu-18.04"
@@ -27,29 +25,21 @@ all:
     vm_memory: 1536
     vm_cpus: 2
     vm_vram: 128
-    vm_shared_folder: "/shared"
-    vm_codes_folder: "${HOME}/codes"
-    vm_data_folder: "/usr/local/share"
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
-    vm_scheduler: core.slurm  # 'core.slurm' or 'core.direct'
-    vm_examples_folder:       # "${HOME}/examples" we don't currently use this folder
-    vm_examples_folder_reamde:       # "${HOME}/examples/README.txt"
+    vm_data_folder: "/usr/local/share"  # this is used to put shared data files in
+    # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
+    vm_timezone: "Europe/Zurich"
 
-    # Python virtual environments base location
-    aiida_venv_base: "${HOME}/.virtualenvs"
-
-    # Connection Ports
-    aiida_jupyter_port: 8890
-    aiidalab_jupyter_port: 8888
-
-    # Release Notes (populated by roles during build)
+    # Readme and Release Notes (populated by roles during build)
+    qm_homepage: "https://quantum-mobile.readthedocs.io"
+    readme_vm_path: "/home/{{ vm_user }}/README.md"
     release_notes: true
     release_notes_vm_user: "{{ vm_user }}"
+    release_notes_vm_path: "/home/{{ vm_user }}/RELEASE_NOTES.txt"
     release_notes_locally: true
     local_dist_folder: "{{ playbook_dir }}/dist"
     release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
-
     # Vagrant Intructions (created during the package/export phase)
     release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
 
@@ -60,6 +50,15 @@ all:
     # Build options
     run_tests: true
     clean: false  # remove build files (will break idempotance, so only run before packaging/release)
+
+    # Python virtual environments base location
+    aiida_venv_base: "${HOME}/.virtualenvs"
+    # for aiida computers
+    vm_scheduler: core.slurm  # 'core.slurm' or 'core.direct'
+
+    # Connection Ports
+    aiida_jupyter_port: 8890
+    aiidalab_jupyter_port: 8888
 
   hosts:
     vagrant-provision:

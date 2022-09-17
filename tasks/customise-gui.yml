@@ -1,0 +1,66 @@
+# Run as user
+
+- name: Create folder for images
+  become: true
+  become_user: "{{ root_user }}"
+  file:
+    path: "{{ vm_data_folder }}/qm-customizations"
+    state: directory
+
+- name: Copy the background image
+  become: true
+  become_user: "{{ root_user }}"
+  copy:
+    src: images/quantum-mobile-bg.png
+    dest: "{{ vm_data_folder }}/qm-customizations/quantum-mobile-bg.png"
+    mode: 0755
+
+- name: set wallpaper
+  # Note: This is applied immediately, no restart needed
+  dconf:
+    key: /org/gnome/desktop/background/picture-uri
+    value: "'file://{{ vm_data_folder }}/qm-customizations/quantum-mobile-bg.png'"
+    state: present
+
+- name: copy quamtum-mobile logo
+  become: true
+  become_user: "{{ root_user }}"
+  copy:
+    src: images/quantum-mobile-logo.png
+    dest: /usr/share/icons/
+
+- name: create desktop if not exists
+  file:
+    path: "${HOME}/Desktop"
+    state: directory
+
+- name: symlink readme to Desktop
+  become: true
+  become_user: "{{ vm_user }}"
+  file:
+    src: "{{ readme_vm_path }}"
+    dest: "${HOME}/Desktop/{{ readme_vm_path | basename }}"
+    state: link
+    force: true
+
+- name: symlink release notes to Desktop
+  become: true
+  become_user: "{{ vm_user }}"
+  file:
+    src: "{{ release_notes_vm_path }}"
+    dest: "${HOME}/Desktop/{{ release_notes_vm_path | basename }}"
+    state: link
+    force: true
+
+- name: create desktop shortcut to QM homepage
+  copy:
+    dest: "${HOME}/Desktop/homepage.desktop"
+    mode: "0753"
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=Homepage
+      Comment=Quantum Mobile Homepage
+      Exec={{ vm_browser }} {{ qm_homepage }}
+      Icon=quantum-mobile-logo.png
+      Type=Application

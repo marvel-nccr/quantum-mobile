@@ -1,0 +1,40 @@
+# Customisations for bash terminal experience
+# Run as required user
+
+- name: Print bash welcome message on login
+  # Note that this is added at the end of the file, so
+  # with the default bashrc by Ubuntu, it's run only interactively
+  # moreover, login shells already print it by default
+  blockinfile:
+    path: "${HOME}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (bash welcome message)"
+    block: |
+      # Print only in non-login shells
+      shopt -q login_shell || cat << EOM
+      ##########################################################################
+      # Welcome to {{ vm_name }} version {{ vm_version }}
+      # distributed by the {{ vm_author }}
+      #
+      # Instructions:
+      # Open {{ readme_vm_path | basename }} for usage guidance,
+      # and {{ release_notes_vm_path | basename }} for installed packages.
+      ##########################################################################
+      EOM
+
+- name: Improve handling of bash history
+  lineinfile:
+    path: "${HOME}/.bashrc"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+  - regexp: HISTCONTROL=
+    line: HISTCONTROL=ignoredups
+  - regexp: HISTSIZE=
+    line: HISTSIZE=100000
+  - regexp: HISTFILESIZE=
+    line: HISTFILESIZE=100000
+
+- name: hide possible sudo message
+  file:
+    path: ~/.sudo_as_admin_successful
+    state: touch

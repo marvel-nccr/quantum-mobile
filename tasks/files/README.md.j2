@@ -1,0 +1,27 @@
+# Welcome to {{ vm_name }} version {{ vm_version }}
+
+*Quantum Mobile* is a Virtual Machine for computational materials science, distributed by the {{ vm_author }}.
+
+It comes with a collection of software packages for quantum mechanical calculations, including:
+
+{% for name, url in software_urls.items() %}
+* [{{ name }}]({{ url }})
+{% endfor %}
+
+all of which are set up and ready to be used on their own or through [AiiDA](http://www.aiida.net).
+
+# Getting started
+
+* Click the Terminal icon and type `workon aiida`
+
+* All executables have been installed in `/usr/local/bin`
+
+* Use `mpirun -np 2 executable` in order to run in parallel.
+
+* Data such as pseudopotentials can be found in `{{ vm_data_folder }}`
+
+* To share a folder with the VM, stop the VM, select
+     Machine => Settings => Shared Folders => Add Folder Icon
+   and tick "Automount". The folder will appear in "/media/sf_<folder_name>".
+
+For troubleshooting and other information, see: {{ qm_homepage }}.

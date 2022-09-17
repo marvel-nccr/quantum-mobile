@@ -3,5 +3,5 @@
 
 release_notes_locally: false
 release_notes_vm_user: ubuntu
-release_notes_vm: "/home/{{ release_notes_vm_user }}/Desktop/RELEASE_NOTES.txt"
+release_notes_vm_path: "/home/{{ release_notes_vm_user }}/RELEASE_NOTES.txt"
 release_notes_localhost: "{{ playbook_dir }}/RELEASE_NOTES.txt"
