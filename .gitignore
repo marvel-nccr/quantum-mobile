@@ -15,6 +15,7 @@ tmp.vmdk
 .tox/
 dist/
 _archive
+TODO.md
 
 # roles & dependencies
 submodules/roles/marvel-nccr*

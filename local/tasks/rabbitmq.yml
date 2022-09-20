@@ -19,3 +19,16 @@
     name: "rabbitmq-server"
     state: "started"
     enabled: true
+
+- name: get rabbitmq version
+  apt_show:
+    name: rabbitmq-server
+  register: rabbitmq_version
+
+- name: document rabbitmq version
+  include_role:
+    name: release_notes
+  vars:
+    section: "Apt packages"
+    option: "rabbitmq-server"
+    value: "{{ rabbitmq_version.data['rabbitmq-server'].version }}"

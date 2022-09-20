@@ -43,21 +43,21 @@
 
   - name: Update system package managers (apt, pip)
     tags: [init]
-    include_tasks: tasks/ensure-apt-pip.yml
+    include_tasks: local/tasks/ensure-apt-pip.yml
 
   - name: "Add QM user '{{ vm_user }}'"
     tags: [add_user]
-    import_tasks: tasks/add-qm-user.yml
+    import_tasks: local/tasks/add-qm-user.yml
 
   - name: "Add release notes section for the operating system"
     tags: [release_notes]
-    import_tasks: tasks/release-notes-system.yml
+    import_tasks: local/tasks/release-notes-system.yml
 
   - name: Customise bash terminal for QM
     tags: [customise-bash]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: tasks/customise-bash.yml
+    import_tasks: local/tasks/customise-bash.yml
 
   - name: Install common text editors
     tags: [editors]
@@ -80,11 +80,11 @@
     when: not vm_headless
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: tasks/customise-gui.yml
+    import_tasks: local/tasks/customise-gui.yml
 
   - name: Setup QM to run simulations
     tags: [simsetup]
-    import_tasks: tasks/simulation-setup.yml
+    import_tasks: local/tasks/simulation-setup.yml
 
   # Build Specific Tasks
   # These tasks can be customised for specific VM builds,
@@ -95,7 +95,7 @@
     become: true
     become_user: "{{ vm_user }}"
     template:
-      src: tasks/files/README.md.j2
+      src: local/tasks/files/README.md.j2
       dest: "{{ readme_vm_path }}"
     vars:
       software_urls:
@@ -112,7 +112,7 @@
   - name: Install plotting tools (via apt)
     # TODO we may want to eventually install these with conda
     tags: [plotting]
-    import_tasks: tasks/plotting-apt.yml
+    import_tasks: local/tasks/plotting-tools.yml
     vars:
       packages: [grace, gnuplot, xcrysden, jmol, default-jre]
 
@@ -121,19 +121,23 @@
     import_role:
       name: marvel-nccr.slurm
 
+  # TODO control version
+  # could install with conda, but how to set up the systemd service?
   - name: install RabbitMQ server service
     tags: [rabbitmq]
     become: true
     become_user: "{{ root_user }}"
-    import_tasks: tasks/rabbitmq.yml
+    import_tasks: local/tasks/rabbitmq.yml
 
+  # TODO control version
+  # could install with conda, but how to set up the systemd service?
   - name: install PostrgeSQL server service
     tags: [postgresql]
     become: true
     become_user: "{{ root_user }}"
-    import_tasks: tasks/postgresql.yml
+    import_tasks: local/tasks/postgresql.yml
 
-  - name: install mamba
+  - name: install conda+mamba
     tags: [mamba]
     import_role:
       name: chrisjsewell.conda.user_install
@@ -146,13 +150,12 @@
       conda_activate_alias: workon
 
   - name: Install AiiDA environment
-    tags: [aiida]
+    tags: [aiida-env]
     become: true
     become_user: "{{ vm_user }}"
-    chrisjsewell.conda.install_pkgs:
-      executable: "~/.conda/bin/mamba"
-      env: aiida
-      packages:
+    import_tasks: local/tasks/aiida-conda-env.yml
+    vars:
+      aiida_packages:
       - python=3.9
       - pip
       - aiida-core=2
@@ -161,19 +164,11 @@
       - ipykernel
       - jupyterlab=3
 
-  - name: "Activate verdi TAB completion"
-    tags: [aiida-autocomplete]
-    become: true
-    become_user: "{{ vm_user }}"
-    ansible.builtin.copy:
-      dest: "~/.conda/envs/aiida/etc/conda/activate.d/verdi-complete.sh"
-      content: 'eval "$(_VERDI_COMPLETE=bash_source verdi)"'
-
   - name: Create an aiida-profile
     tags: [aiida-profile]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: tasks/aiida-profile.yml
+    import_tasks: local/tasks/aiida-profile.yml
     vars:
       name: generic
       aiida_run_verdi: "~/.conda/bin/conda run -n aiida verdi"
@@ -193,70 +188,75 @@
     tags: [aiida-computers]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: tasks/aiida-computers.yml
+    verdi_computer:
+      verdi: "~/.conda/bin/conda run -n aiida verdi"
+      label: "{{ item.l }}"
+      scheduler: "{{ item.s }}"
+      transport: core.local
+      hostname: localhost
+      work_dir: "~/.aiida_run"
+      mpirun_command: "mpirun -np {tot_num_mpiprocs}"
+      mpiprocs_per_machine: 2
+      configure: "--safe-interval=0"
+    loop:
+    - {l: local_direct, s: core.direct}
+    - {l: local_slurm, s: core.slurm}
+    loop_control:
+      label: "{{ item.l }}"
+
+  - name: "Install Quantum Espresso"
+    tags: [qe]
+    import_tasks: local/tasks/install-quantum-espresso.yml
     vars:
-      aiida_run_verdi: "~/.conda/bin/conda run -n aiida verdi"
-      aiida_computer_defaults:
-        transport: core.local
-        hostname: localhost
-        work_dir: "~/.aiida_run"
-        mpi_cmd: "mpirun -np {tot_num_mpiprocs}"
-        default_mpiprocs: 2
-        configure: "--safe-interval 0"
-      aiida_computers:
-      - label: local_direct
-        scheduler: core.direct
-      - label: local_slurm
-        scheduler: core.slurm
+      quantum_espresso_version: "7.1"
+      quantum_espresso_url: "https://gitlab.com/QEF/q-e/-/archive/qe-{{ quantum_espresso_version }}/q-e-qe-{{ quantum_espresso_version }}.tar.gz"
+      quantum_espresso_builddir: "{{ build_dir }}"
+      quantum_espresso_prefix: "/usr/local"
+      quantum_espresso_executables:
+        pw: pw.x
+        cp: cp.x
+        pp: pp.x
+        ph: ph.x
+        neb: neb.x
+        hp: hp.x
+        w90: wannier90.x
+        epw: epw.x
 
-  # now login to the machine and run these manually:
-
-  # TODO per code? system wide ok?
-  # echo "export OMP_NUM_THREADS=1" >> ~/.bashrc
-  # echo "export OMP_NUM_THREADS=1" >> ~/.profile
-
-  # git clone https://github.com/epfl-theos/koopmans.git
-  # cd koopmans
-  # make submodules
-  # make espresso
-  # This also removes the qe bin: make clean_espresso
-
-  # echo "export PATH=$PATH:/home/max/koopmans/bin" >> ~/.bashrc
-
-  # mamba create -n koopmans python=3.9 pip
-  # conda activate koopmans
-  # pip install -e .
+  - name: "Add Quantum Espresso AiiDA Codes"
+    tags: [qe-codes]
+    become: true
+    become_user: "{{ vm_user }}"
+    verdi_code:
+      verdi: ~/.conda/bin/conda run -n aiida verdi
+      label: "{{ item.l }}"
+      computer: local_slurm
+      input_plugin: "{{ item.i }}"
+      remote_abs_path: "/usr/local/{{ item.e }}"
+      prepend_text: |
+        ulimit -s unlimited
+        export OMP_NUM_THREADS=1
+    loop:
+    - {l: qe.pw, e: pw.x, i: quantumespresso.pw}
+    - {l: qe.cp, e: cp.x, i: quantumespresso.cp}
+    - {l: qe.pp, e: pp.x, i: quantumespresso.pp}
+    - {l: qe.ph, e: ph.x, i: quantumespresso.ph}
+    - {l: qe.neb, e: neb.x, i: quantumespresso.neb}
+    - {l: qe.epw, e: epw.x, i: quantumespresso.epw}
+    - {l: qe.projwfc, e: projwfc.x, i: quantumespresso.projwfc}
+    - {l: qe.pw2wannier90, e: pw2wannier90.x, i: quantumespresso.pw2wannier90}
+    - {l: qe.dos, e: dos.x, i: quantumespresso.dos}
+    - {l: qe.q2r, e: q2r.x, i: quantumespresso.q2r}
+    - {l: qe.matdyn, e: matdyn.x, i: quantumespresso.matdyn}
+    loop_control:
+      label: "{{ item.l }}"
 
   post_tasks:
 
-  - name: apt-get clean  # noqa 303
+  - name: "Clean caches"
     tags: [never, cleanup]
-    become: true
-    command: apt-get clean
+    import_tasks: local/tasks/clean-caches.yml
 
-  - name: wipe apt lists
+  - name: "Remove {{ build_dir }} content"
     tags: [never, cleanup]
     become: true
-    shell: "rm -rf /var/lib/apt/lists/*"  # noqa 302
-
-  - name: wipe user cache
-    tags: [never, cleanup]
-    become: true
-    become_user: "{{ vm_user }}"
-    file:
-      state: absent
-      path: "~/.cache"
-
-  - name: wipe root user cache
-    tags: [never, cleanup]
-    become: true
-    file:
-      state: absent
-      path: "~/.cache"
-
-  - name: clean conda cache
-    # for a discussion on using -f, see: https://github.com/jupyter/docker-stacks/issues/861
-    tags: [never, cleanup]
-    become: true
-    become_user: "{{ vm_user }}"
-    command: "~/.conda/bin/mamba clean --yes --all -f"
+    command: rm -rf {{ build_dir }}/*

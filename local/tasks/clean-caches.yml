@@ -1,0 +1,26 @@
+- name: apt-get clean    # noqa 303
+  become: true
+  command: apt-get clean
+
+- name: wipe apt lists
+  become: true
+  shell: "rm -rf /var/lib/apt/lists/*"    # noqa 302
+
+- name: wipe user cache
+  become: true
+  become_user: "{{ vm_user }}"
+  file:
+    state: absent
+    path: "~/.cache"
+
+- name: wipe root user cache
+  become: true
+  file:
+    state: absent
+    path: "~/.cache"
+
+- name: clean conda cache
+    # for a discussion on using -f, see: https://github.com/jupyter/docker-stacks/issues/861
+  become: true
+  become_user: "{{ vm_user }}"
+  command: "~/.conda/bin/mamba clean --yes --all -f"

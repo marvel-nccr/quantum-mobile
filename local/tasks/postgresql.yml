@@ -15,3 +15,16 @@
     name: "postgresql"
     state: "started"
     enabled: true
+
+- name: get postgres version
+  apt_show:
+    name: postgresql-client
+  register: postgresql_version
+
+- name: document postgresql version
+  include_role:
+    name: release_notes
+  vars:
+    section: "Apt packages"
+    option: "postgresql-client"
+    value: "{{ postgresql_version.data['postgresql-client'].version }}"

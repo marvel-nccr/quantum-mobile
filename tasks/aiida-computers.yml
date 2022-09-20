@@ -1,8 +1,0 @@
-# loop through computers
-
-- name: "Create AiiDA computers"
-  include_tasks: aiida-computer.yml
-  loop: "{{ aiida_computers }}"
-  loop_control:
-    loop_var: aiida_computer
-    label: "{{ aiida_computer.label }}"

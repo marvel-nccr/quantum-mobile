@@ -1,0 +1,81 @@
+# prerequisites
+- name: Install libraries
+  become: true
+  apt:
+    name:
+    - build-essential
+    - wget    # needed for wget from https
+    - gfortran
+    - openmpi-bin
+    - libopenmpi-dev
+    - libfftw3-dev
+    - libfftw3-mpi-dev
+    - liblapack-dev
+    - libblas-dev
+
+- name: Get Quantum ESPRESSO source
+  get_url:
+    url: "{{ quantum_espresso_url }}"
+    dest: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_url | basename }}"
+  register: quantum_espresso_download
+
+- name: Extract QE source
+  unarchive:
+    src: "{{ quantum_espresso_download.dest }}"
+    dest: "{{ quantum_espresso_builddir }}"
+    remote_src: true
+  when: quantum_espresso_download.changed
+
+- set_fact:
+    quantum_espresso_source: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_url | basename | regex_replace('\\.tar\\.gz$') }}"
+
+# --fpe-summary=none removes all floating-point exceptions
+# see https://github.com/marvel-nccr/quantum-mobile/issues/52
+- name: Configure QE
+  environment:
+    FFLAGS: '-O3 -g -ffpe-summary=none'
+  command: "./configure --enable-parallel --prefix {{ quantum_espresso_prefix }}"
+  args:
+    creates: "{{ quantum_espresso_source }}/make.inc"
+    chdir: "{{ quantum_espresso_source }}"
+
+- name: Make QE executables
+  command: "make {{ item.key }}"
+  args:
+    creates: "{{ quantum_espresso_prefix }}/bin/{{ item.value }}"
+    chdir: "{{ quantum_espresso_source }}"
+  loop: "{{ quantum_espresso_executables | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  register: quantum_espresso_make
+
+- name: Install QE executables
+  when: quantum_espresso_make.changed
+  command: "make install"
+  become: true
+  args:
+    chdir: "{{ quantum_espresso_source }}"
+  changed_when: false
+
+- name: "Fix OpenMPI issue https://github.com/open-mpi/ompi/issues/1393"
+  become: true
+  lineinfile:
+    path: "/etc/profile.d/quantum_espresso.sh"
+    line: "export OMPI_MCA_btl=^openib"
+    create: true
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "Quantum ESPRESSO"
+    option: "version"
+    value: "{{ quantum_espresso_version }}"
+  when: release_notes is defined and release_notes
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "Quantum ESPRESSO"
+    option: "components"
+    value: "{{ quantum_espresso_executables.values() | join(', ') }}"
+  when: release_notes is defined and release_notes

@@ -1,4 +1,4 @@
-# This file provides variable configuration:
+# This file provides shared variable configuration:
 
 # `all/vars` provides the global configuration
 # `all/hosts/*` specifies variables that override global configuration
@@ -31,6 +31,14 @@ all:
     # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
     vm_timezone: "Europe/Zurich"
 
+    # Connection variables
+    ansible_python_interpreter: /usr/bin/python3
+    root_user: root
+
+    # Build options
+    build_dir: "/tmp"
+    run_tests: true
+
     # Readme and Release Notes (populated by roles during build)
     qm_homepage: "https://quantum-mobile.readthedocs.io"
     readme_vm_path: "/home/{{ vm_user }}/README.md"
@@ -42,23 +50,6 @@ all:
     release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
     # Vagrant Intructions (created during the package/export phase)
     release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
-
-    # Connection variables
-    ansible_python_interpreter: /usr/bin/python3
-    root_user: root
-
-    # Build options
-    run_tests: true
-    clean: false  # remove build files (will break idempotance, so only run before packaging/release)
-
-    # Python virtual environments base location
-    aiida_venv_base: "${HOME}/.virtualenvs"
-    # for aiida computers
-    vm_scheduler: core.slurm  # 'core.slurm' or 'core.direct'
-
-    # Connection Ports
-    aiida_jupyter_port: 8890
-    aiidalab_jupyter_port: 8888
 
   hosts:
     vagrant-provision:
@@ -80,7 +71,7 @@ all:
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
-      jupyter_ip: "0.0.0.0"
+      # jupyter_ip: "0.0.0.0"
 
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
