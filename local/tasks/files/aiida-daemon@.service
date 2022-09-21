@@ -1,0 +1,25 @@
+[Unit]
+Description=AiiDA daemon service for profile %i
+After=network.target postgresql.service rabbitmq-server.service
+
+[Service]
+Type=forking
+ExecStart={{ aiida_verdi }} -p "%i" daemon start
+PIDFile={{ aiida_user_home }}/.aiida/daemon/circus-%i.pid
+# 2s delay to prevent read error on PID file
+ExecStartPost=/bin/sleep 2
+
+ExecStop={{ aiida_verdi }} -p "%i" daemon stop
+ExecReload={{ aiida_verdi }} -p "%i" daemon restart
+
+User={{ aiida_user }}
+Group={{ aiida_user }}
+Restart=on-failure
+# Restart daemon after 1 min if crashes
+RestartSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=aiida-daemon-%i
+
+[Install]
+WantedBy=multi-user.target

@@ -183,6 +183,13 @@
         db_name: aiidadb
         db_username: aiida
         db_password: "ne9N_LDK-*JSS"
+      daemon_service: true
+
+  - name: Create AiiDA Jupyter service
+    tags: [aiida-jupyter]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: local/tasks/aiida-jupyter.yml
 
   - name: "Create AiiDA computers"
     tags: [aiida-computers]
@@ -221,6 +228,7 @@
         hp: hp.x
         w90: wannier90.x
         epw: epw.x
+        tddfpt: tddfpt.x
 
   - name: "Add Quantum Espresso AiiDA Codes"
     tags: [qe-codes]

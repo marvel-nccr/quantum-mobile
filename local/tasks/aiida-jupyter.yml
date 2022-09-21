@@ -1,0 +1,65 @@
+- name: "Get {{ vm_user }} home"
+  become: true
+  become_user: "{{ vm_user }}"
+  chrisjsewell.conda.expandpath:
+    path: "~"
+  register: vm_user_home
+
+- name: Write AiiDA jupyter script
+  copy:
+    dest: "{{ vm_user_home.path }}/.aiida-jupyter.sh"
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+    mode: '0755'
+    content: |
+      #!/bin/bash
+      {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n aiida jupyter-lab \
+        -y \
+        --notebook-dir={{ vm_user_home.path }} \
+        --port=8890 \
+        --ServerApp.token='7c8a1215d6768f78e8300804741bd3883d7b1510159b755e' \
+        --no-browser
+
+- name: Add AiiDA jupyterlab as systemd service
+  become: true
+  become_user: "{{ root_user }}"
+  template:
+    src: files/aiida-jupyter.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+    mode: 0644
+  vars:
+    aiida_user: "{{ vm_user }}"
+    aiida_user_home: "{{ vm_user_home.path }}"
+    aiida_jlab_script: "{{ vm_user_home.path }}/.aiida-jupyter.sh"
+
+- name: Start AiiDA jupyterlab systemd service
+  become: true
+  become_user: "{{ root_user }}"
+  systemd:
+    name: aiida-jupyter
+    enabled: true
+    masked: false
+    daemon-reload: true
+    state: started
+
+- name: Copy Jupyter logo
+  become: true
+  become_user: "{{ root_user }}"
+  copy:
+    src: images/jupyter-logo.png
+    dest: /usr/share/icons/
+
+- name: create desktop shortcut to Jupyter Lab
+  copy:
+    dest: "${HOME}/Desktop/jupyterlab.desktop"
+    mode: "0753"
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=JupyterLab
+      Comment=Launch Jupyter Lab Server
+      Exec={{ vm_browser }} http://localhost:8890/?token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e
+      Icon=jupyter-logo.png
+      Type=Application

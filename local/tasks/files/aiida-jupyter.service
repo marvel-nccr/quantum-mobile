@@ -1,0 +1,16 @@
+[Unit]
+Description=Jupyter Notebook
+
+[Service]
+Type=simple
+PIDFile={{ aiida_user_home }}/.aiida/jupyter.pid
+ExecStart={{ aiida_jlab_script }}
+User={{ aiida_user }}
+Group={{ aiida_user }}
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
