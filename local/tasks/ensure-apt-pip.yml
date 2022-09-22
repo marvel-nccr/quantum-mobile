@@ -11,6 +11,7 @@
     # for ansible temporary file writing
     # https://github.com/georchestra/ansible/issues/55#issuecomment-651043423
     - acl
+    - setfacl
     update_cache: true
     cache_valid_time: 86400  # One day
 
