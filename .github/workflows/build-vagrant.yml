@@ -31,7 +31,9 @@ jobs:
         python-version: 3.8
 
     - name: install pip requirements
-      run: pip install --upgrade pip pip install -r requirements.txt
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: install ansible requirements
       run: ansible-galaxy install -r requirements.yml
