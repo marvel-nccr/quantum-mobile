@@ -60,6 +60,6 @@
       Encoding=UTF-8
       Name=JupyterLab
       Comment=Launch Jupyter Lab Server
-      Exec={{ vm_browser }} http://localhost:8890/?token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e
-      Icon=jupyter-logo.png
+      Exec={{ vm_browser }} "http://localhost:8890/?token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e"
+      Icon=/usr/share/icons/jupyter-logo.png
       Type=Application

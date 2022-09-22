@@ -19,13 +19,13 @@
   chrisjsewell.conda.list_pkgs:
     executable: "~/.conda/bin/mamba"
     env: aiida
-    regex: "(aiida.+|python|jupyterlab)"
+    regex: "({{ aiida_packages | map('regex_search', '^[^=]+') | join('|') }})"
   register: aiida_packages_list
 
 - include_role:
     name: release_notes
   vars:
-    section: "AiiDA packages"
+    section: "Conda aiida environment"
     option: "{{ pkg.name }}"
     value: "{{ pkg.version }}-{{ pkg.build_string }}@{{ pkg.channel }}"
   loop: "{{ aiida_packages_list.list }}"

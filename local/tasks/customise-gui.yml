@@ -61,6 +61,6 @@
       Encoding=UTF-8
       Name=Homepage
       Comment=Quantum Mobile Homepage
-      Exec={{ vm_browser }} {{ qm_homepage }}
-      Icon=quantum-mobile-logo.png
+      Exec={{ vm_browser }} "{{ qm_homepage }}"
+      Icon=/usr/share/icons/quantum-mobile-logo.png
       Type=Application

@@ -163,6 +163,7 @@
       - aiida-pseudo=0.7
       - ipykernel
       - jupyterlab=3
+      - cif2cell
 
   - name: Create an aiida-profile
     tags: [aiida-profile]
@@ -259,6 +260,9 @@
       label: "{{ item.l }}"
 
   post_tasks:
+
+  # These break idempotency,
+  # so only run once all other tasks have completed
 
   - name: "Clean caches"
     tags: [never, cleanup]
