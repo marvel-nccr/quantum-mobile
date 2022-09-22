@@ -46,15 +46,15 @@
     include_tasks: local/tasks/ensure-apt-pip.yml
 
   - name: "Add QM user '{{ vm_user }}'"
-    tags: [add_user]
+    tags: [add_user, ci_test]
     import_tasks: local/tasks/add-qm-user.yml
 
   - name: "Add release notes section for the operating system"
-    tags: [release_notes]
+    tags: [release_notes, ci_test]
     import_tasks: local/tasks/release-notes-system.yml
 
   - name: Customise bash terminal for QM
-    tags: [customise-bash]
+    tags: [customise-bash, ci_test]
     become: true
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/customise-bash.yml

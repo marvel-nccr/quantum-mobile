@@ -32,7 +32,7 @@ jobs:
       run: ansible-galaxy install -r requirements.yml
 
     - name: Build Vagrant Box
-      run: ANSIBLE_ARGS="--tags init" vagrant up
+      run: ANSIBLE_ARGS="--tags init,ci_test" vagrant up
 
     - name: Archive ansible log
       uses: actions/upload-artifact@v2
