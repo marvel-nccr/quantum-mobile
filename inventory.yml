@@ -55,7 +55,7 @@ all:
     vagrant-provision:
       # this private network IP will be created by `vagrant up`
       cloud_platform: virtualbox
-      ansible_host: 192.168.111.222
+      ansible_host: 192.168.56.10
       ansible_user: vagrant
     vagrant-ssh:
       # requires first running `vagrant ssh-config > vagrant-ssh`
