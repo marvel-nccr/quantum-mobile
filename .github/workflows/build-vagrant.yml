@@ -30,11 +30,14 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: install tox
-      run: pip install tox
+    - name: install pip requirements
+      run: pip install --upgrade pip pip install -r requirements.txt
+
+    - name: install ansible requirements
+      run: ansible-galaxy install -r requirements.yml
 
     - name: Build Vagrant Box
-      run: tox -e vagrant
+      run: vagrant up
       continue-on-error: true
       id: build_1
 
@@ -52,7 +55,7 @@ jobs:
     # ansible is idempotent, so in principle we can retry as many times as needed
     - name: Provision VM (retry)
       if: failure() || steps.build_1.outcome == 'failure'
-      run: tox -e ansible
+      run: ansible-playbook playbook-build.yml
 
     - name: Archive log
       uses: actions/upload-artifact@v2
@@ -63,7 +66,7 @@ jobs:
 
     - name: Clean build files on VM
       # only roles that include "when: clean is defined and clean"
-      run: tox -e ansible -- --tags cleanup
+      run: ansible-playbook playbook-build.yml --tags cleanup
 
     - name: Archive log
       uses: actions/upload-artifact@v2
@@ -74,7 +77,7 @@ jobs:
 
     - name: Package VM
       # validate tests the git tag against the version variable
-      run: tox -e package -- --skip-tags reload,validate
+      run: ansible-playbook playbook-package.yml --skip-tags reload,validate
 
     - name: Archive log
       uses: actions/upload-artifact@v2
