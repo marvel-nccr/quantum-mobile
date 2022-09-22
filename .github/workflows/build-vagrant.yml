@@ -13,7 +13,7 @@ jobs:
 
     # Vagrant builds require Mac OSX machines,
     # see: https://github.com/actions/virtual-environments/issues/183
-    runs-on: macos-latest
+    runs-on: macos-12
 
     timeout-minutes: 210
 
