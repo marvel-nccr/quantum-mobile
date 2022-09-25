@@ -50,11 +50,11 @@
     import_tasks: local/tasks/add-qm-user.yml
 
   - name: "Add release notes section for the operating system"
-    tags: [release_notes, ci_test]
+    tags: [release_notes]
     import_tasks: local/tasks/release-notes-system.yml
 
   - name: Customise bash terminal for QM
-    tags: [customise-bash, ci_test]
+    tags: [customise-bash]
     become: true
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/customise-bash.yml
@@ -171,7 +171,7 @@
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/aiida-profile.yml
     vars:
-      name: generic
+      name: "{{ aiida_profile }}"
       aiida_run_verdi: "~/.conda/bin/conda run -n aiida verdi"
       postgres_user: postgres
       parameters:
@@ -198,6 +198,7 @@
     become_user: "{{ vm_user }}"
     verdi_computer:
       verdi: "~/.conda/bin/conda run -n aiida verdi"
+      profile: "{{ aiida_profile }}"
       label: "{{ item.l }}"
       scheduler: "{{ item.s }}"
       transport: core.local
@@ -211,6 +212,17 @@
     - {l: local_slurm, s: core.slurm}
     loop_control:
       label: "{{ item.l }}"
+
+  - name: Download and install import SSSP potentials
+    tags: [aiida-pseudo]
+    import_tasks: local/tasks/aiida-pseudo.yml
+    vars:
+      aiida_pseudo_cmd: "~/.conda/bin/conda run -n aiida aiida-pseudo"
+      aiida_pseudo_base_folder: "{{ vm_data_folder }}"
+      aiida_pseudo_functional: "PBE"
+      aiida_pseudo_protocol: "efficiency"
+      aiida_pseudo_version: "1.0"
+      aiida_pseudo_profile: "{{ aiida_profile }}"
 
   - name: "Install Quantum Espresso"
     tags: [qe]
@@ -237,6 +249,7 @@
     become_user: "{{ vm_user }}"
     verdi_code:
       verdi: ~/.conda/bin/conda run -n aiida verdi
+      profile: "{{ aiida_profile }}"
       label: "{{ item.l }}"
       computer: local_slurm
       input_plugin: "{{ item.i }}"

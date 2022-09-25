@@ -10,6 +10,9 @@ options:
     verdi:
         description: The verdi command
         required: true
+    profile:
+        description: The AiiDA profile
+        required: true
     label:
         description: The label of the code
         required: true
@@ -37,6 +40,7 @@ EXAMPLES = """
 - name: Show information about installed packages
   verdi_code:
     verdi: /path/to/verdi
+    profile: default
     label: code_name
     computer: localhost
     remote_abs_path: /path/to/code
@@ -54,6 +58,7 @@ def _main():
     module = AnsibleModule(
         argument_spec={
             "verdi": {"required": True, "type": "str"},
+            "profile": {"required": True, "type": "str"},
             "label": {"required": True, "type": "str"},
             "computer": {"required": True, "type": "str"},
             "remote_abs_path": {"required": True, "type": "path"},
@@ -63,18 +68,16 @@ def _main():
             "append_text": {"required": False, "type": "str"},
         },
     )
-
+    verdi = module.params["verdi"].split() + ["--profile", module.params["profile"]]
     # test if code is already there
     label = module.params["label"]
     computer = module.params["computer"]
-    rc, _, _ = module.run_command(
-        module.params["verdi"].split() + ["code", "show", f"{label}@{computer}"]
-    )
+    rc, _, _ = module.run_command(verdi + ["code", "show", f"{label}@{computer}"])
     if rc == 0:
         module.exit_json(changed=False)
 
     # otherwise create
-    command = module.params["verdi"].split() + ["code", "setup", "--non-interactive"]
+    command = verdi + ["code", "setup", "--non-interactive"]
 
     for option, key in [
         ("--label", "label"),

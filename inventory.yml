@@ -51,6 +51,11 @@ all:
     # Vagrant Intructions (created during the package/export phase)
     release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
 
+    aiida_profile: "generic"
+    aiida_jupyter_ip: "localhost"
+    aiida_jupyter_port: 8890
+    aiida_jupyter_token: "7c8a1215d6768f78e8300804741bd3883d7b1510159b755e"
+
   hosts:
     vagrant-provision:
       # this private network IP will be created by `vagrant up`
@@ -71,7 +76,7 @@ all:
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
-      # jupyter_ip: "0.0.0.0"
+      aiida_jupyter_ip: "0.0.0.0"
 
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:

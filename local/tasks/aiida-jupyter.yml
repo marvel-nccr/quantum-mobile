@@ -16,8 +16,8 @@
       {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n aiida jupyter-lab \
         -y \
         --notebook-dir={{ vm_user_home.path }} \
-        --port=8890 \
-        --ServerApp.token='7c8a1215d6768f78e8300804741bd3883d7b1510159b755e' \
+        --ip={{ aiida_jupyter_ip | quote }} --port={{ aiida_jupyter_port }} \
+        --ServerApp.token={{ aiida_jupyter_token | quote }} \
         --no-browser
 
 - name: Add AiiDA jupyterlab as systemd service

@@ -26,7 +26,8 @@
   stat: path=/swapfile
   register: swapfile_stat
 
-- when: (not swapfile_stat.stat.exists) and cloud_platform != 'docker'
+- name: install swapfile
+  when: (not swapfile_stat.stat.exists) and cloud_platform != 'docker'
   become: true
   become_user: "{{ root_user }}"
   block:
@@ -48,3 +49,32 @@
     lineinfile:
       path: "/etc/fstab"
       line: "/swapfile swap swap defaults 0 0"
+
+- name: setup hostname to {{ vm_hostname }}
+  when: cloud_platform != 'docker'
+  block:
+  - name: "get the machine hostname"
+    become: true
+    command: "hostname"
+    register: cur_hostname_command
+    changed_when: false
+
+  - name: "update machine hostname, if necessary"
+    become: true
+    hostname:
+      name: "{{ vm_hostname }}"
+    when: cur_hostname_command.stdout != vm_hostname
+
+  - name: "remove lines with 127.0.1.1, except for 127.0.1.1. localhost"
+    become: true
+    lineinfile:
+      path: "/etc/hosts"
+      regexp: '^127\.0\.1\.1 (?!localhost)'
+      state: absent
+
+  - name: set 127.0.1.1 to localhost
+    become: true
+    lineinfile:
+      path: "/etc/hosts"
+      regexp: '^127\.0\.1\.1'
+      line: "127.0.1.1 localhost"

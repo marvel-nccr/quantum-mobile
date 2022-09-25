@@ -15,7 +15,6 @@
       # Welcome to {{ vm_name }} version {{ vm_version }}
       # distributed by the {{ vm_author }}
       #
-      # Instructions:
       # Open {{ readme_vm_path | basename }} for usage guidance,
       # and {{ release_notes_vm_path | basename }} for installed packages.
       ##########################################################################

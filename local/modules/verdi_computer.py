@@ -10,6 +10,9 @@ options:
     verdi:
         description: The verdi command
         required: true
+    profile:
+        description: The AiiDA profile
+        required: true
     label:
         description: The label of the computer
         required: true
@@ -46,6 +49,7 @@ EXAMPLES = """
 - name: Show information about installed packages
   verdi_code:
     verdi: /path/to/verdi
+    profile: default
     label: computer_name
     work_dir: /path/to/workdir
     transport: local
@@ -65,6 +69,7 @@ def _main():
     module = AnsibleModule(
         argument_spec={
             "verdi": {"required": True, "type": "str"},
+            "profile": {"required": True, "type": "str"},
             "label": {"required": True, "type": "str"},
             "work_dir": {"required": True, "type": "path"},
             "transport": {"required": True, "type": "str"},
@@ -76,22 +81,16 @@ def _main():
             "configure": {"required": False, "type": "list", "elements": "str"},
         },
     )
-
+    verdi = module.params["verdi"].split() + ["--profile", module.params["profile"]]
     # test if computer is already there
     label = module.params["label"]
-    rc, _, _ = module.run_command(
-        module.params["verdi"].split() + ["computer", "show", label]
-    )
+    rc, _, _ = module.run_command(verdi + ["computer", "show", label])
     if rc == 0:
         # TODO ensure computers are configured
         module.exit_json(changed=False)
 
     # otherwise create
-    command = module.params["verdi"].split() + [
-        "computer",
-        "setup",
-        "--non-interactive",
-    ]
+    command = verdi + ["computer", "setup", "--non-interactive"]
 
     for option, key in [
         ("--label", "label"),
@@ -109,7 +108,7 @@ def _main():
 
     # configure
     command = (
-        module.params["verdi"].split()
+        verdi
         + [
             "computer",
             "configure",

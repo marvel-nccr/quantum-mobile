@@ -28,16 +28,16 @@
     shell: |
       {{ aiida_run_verdi }} setup \
       --non-interactive \
-      --profile "{{ name }}" \
-      --email "{{ parameters.email }}" \
-      --first-name "{{ parameters.first_name }}" \
-      --last-name "{{ parameters.last_name }}" \
-      --institution "{{ parameters.institution }}" \
-      --db-host "{{ parameters.db_host }}" \
-      --db-port "{{ parameters.db_port }}" \
-      --db-name "{{ parameters.db_name }}" \
-      --db-username "{{ parameters.db_username }}" \
-      --db-password "{{ parameters.db_password }}"
+      --profile {{ name | quote }} \
+      --email {{ parameters.email | quote }} \
+      --first-name {{ parameters.first_name | quote }} \
+      --last-name {{ parameters.last_name | quote }} \
+      --institution {{ parameters.institution | quote }} \
+      --db-host {{ parameters.db_host | quote }} \
+      --db-port {{ parameters.db_port | quote }} \
+      --db-name {{ parameters.db_name | quote }} \
+      --db-username {{ parameters.db_username | quote }} \
+      --db-password {{ parameters.db_password | quote }}
 
 - when: daemon_service is defined and daemon_service
   name: "Enable AiiDA daemon service for profile '{{ name }}'"
