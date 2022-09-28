@@ -253,7 +253,7 @@
       label: "{{ item.l }}"
       computer: local_slurm
       input_plugin: "{{ item.i }}"
-      remote_abs_path: "/usr/local/{{ item.e }}"
+      remote_abs_path: "/usr/local/bin/{{ item.e }}"
       prepend_text: |
         ulimit -s unlimited
         export OMP_NUM_THREADS=1
