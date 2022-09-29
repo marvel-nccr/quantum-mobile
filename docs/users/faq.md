@@ -26,7 +26,7 @@
 Download corresponding .deb file from [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads) and do `sudo dpkg -i <deb-file>`.
 
 :::{warning}
-If you want to run VirtualBox on Ubuntu with Secure Boot enabled, you'll have to [sign the VirtualBox kernel extensions](https://askubuntu.com/questions/914997/install-virtualbox-while-keeping-secure-boot)
+VirtualBox might fail to start on Secure Boot-enabled Linux system, you can either 1) disable Secure Boot, please consult the user manual of the hardware manufacturer for the specific configuration in the BIOS/UEFI, or 2) [sign the VirtualBox kernel extensions](https://askubuntu.com/questions/914997/install-virtualbox-while-keeping-secure-boot), note you might need to re-sign the kernel module for each kernel update.
 :::
 
 ## Icons and text are small on high-resolution screens. How do I enlarge them?
