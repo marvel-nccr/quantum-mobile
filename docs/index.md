@@ -1,5 +1,7 @@
 # Quantum Mobile
 
+![Softwares](_static/software_logos/all_codes.png)
+
 ## What is Quantum Mobile
 
 Quantum Mobile is a Virtual Machine for computational materials science.
@@ -20,36 +22,6 @@ Tools pre-installed
 
 Modular setup
 : with individually tested [ansible roles](https://galaxy.ansible.com/marvel-nccr). Build your own flavour tailored to your use case.
-
-::::{grid} 4 6 6 6
-:gutter: 3
-:padding: 1
-
-:::{grid-item} [![abinit](_static/software_logos/abinit.svg)](https://www.abinit.org)
-:::
-:::{grid-item} [![bigdft](_static/software_logos/bigdft.png)](http://www.bigdft.org)
-:::
-:::{grid-item} [![cp2k](_static/software_logos/cp2k.png)](https://www.cp2k.org)
-:::
-:::{grid-item} [![fleur](_static/software_logos/fleur.png)](http://www.flapw.de/)
-:::
-:::{grid-item} [![quantumespresso](_static/software_logos/quantumespresso.png)](http://www.quantum-espresso.org/)
-:::
-:::{grid-item} [![siesta](_static/software_logos/siesta.png)](https://gitlab.com/siesta-project/siesta)
-:::
-:::{grid-item} [![wannier90](_static/software_logos/wannier90.png)](http://www.wannier.org)
-:::
-:::{grid-item} [![yambo](_static/software_logos/yambo.png)](http://www.yambo-code.org/)
-:::
-:::{grid-item} [![aiida](_static/software_logos/aiida.png)](http://www.aiida.net/)
-:::
-:::{grid-item} [![postgres](_static/software_logos/postgres.png)](https://www.postgresql.org/)
-:::
-:::{grid-item} [![rabbitmq](_static/software_logos/rabbitmq-text.png)](https://www.rabbitmq.com/)
-:::
-:::{grid-item} [![slurm](_static/software_logos/slurm.png)](https://slurm.schedmd.com/)
-:::
-::::
 
 ## Quantum Mobile Flavours
 
@@ -162,15 +134,15 @@ funded by the [Swiss National Science Foundation](http://www.snf.ch/en),
 as well as by the [MaX European Centre of Excellence](http://www.max-centre.eu/) funded by
 the Horizon 2020 EINFRA-5 program, Grant No. 676598.
 
-::::{grid} 3
-:gutter: 4
+::::{subfigure} AAABB|AAACC
+:gap: 8px
 
-:::{grid-item} ![Marvel](_static/sponsor_logos/marvel.png)
-:::
-:::{grid-item} ![MaX](_static/sponsor_logos/max_large.png)
-:::
-:::{grid-item} ![SNF](_static/sponsor_logos/swissuniversities.png)
-:::
+![Marvel](_static/sponsor_logos/marvel.png)
+
+![SNF](_static/sponsor_logos/swissuniversities.png)
+
+![MaX](_static/sponsor_logos/max_large.png)
+
 ::::
 
 ```{toctree}
