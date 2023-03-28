@@ -10,7 +10,7 @@ jobs:
   build-init:
     # this job initialises the vagrant box
     # then just runs some initial ansible tasks
-    # for the full build, see build.yml
+    # for the full build,  see build.yml
     runs-on: macos-12
     env:
       VAGRANT_NO_GUI: true
