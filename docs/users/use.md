@@ -74,6 +74,7 @@ You can reset the resources and also change the maximum number of CPUs available
 $ slurm-resources -e restart_on_change=true -e slurm_max_cpus=2
 ```
 
+(use/conda)=
 ## Working with Conda
 
 The Quantum Mobile VM comes with the [Conda package management system](https://docs.conda.io/en/latest/) pre-installed,
