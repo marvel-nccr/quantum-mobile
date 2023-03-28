@@ -45,7 +45,7 @@ jobs:
       id: build_1
 
     - name: Archive ansible log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ansible-log
         path: ansible.log
@@ -61,7 +61,7 @@ jobs:
       run: ansible-playbook playbook-build.yml
 
     - name: Archive log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ansible-log
         path: ansible.log
@@ -72,7 +72,7 @@ jobs:
       run: ansible-playbook playbook-build.yml --tags cleanup
 
     - name: Archive log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ansible-log
         path: ansible.log
@@ -83,14 +83,14 @@ jobs:
       run: ansible-playbook playbook-package.yml --skip-tags reload,validate
 
     - name: Archive log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ansible-log
         path: ansible.log
       continue-on-error: true
 
     - name: Archive release notes
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: release-notes
         path: |
@@ -101,7 +101,7 @@ jobs:
     # This always encounters: https://github.com/actions/upload-artifact/issues/29#issuecomment-706512345
     # TODO upload directly to openstack (as dev version), or another location?
     # - name: Archive distribution
-    #   uses: actions/upload-artifact@v2
+    #   uses: actions/upload-artifact@v3
     #   with:
     #     name: distribution
     #     path: dist/
