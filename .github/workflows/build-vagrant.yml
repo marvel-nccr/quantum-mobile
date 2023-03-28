@@ -25,14 +25,15 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: set up Python 3.8
+    - name: set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
 
     - name: install pip requirements
       run: |
         pip install --upgrade pip
+        pip install wheel
         pip install -r requirements.txt
 
     - name: install ansible requirements
