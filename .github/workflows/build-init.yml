@@ -10,7 +10,7 @@ jobs:
   build-init:
     # this job initialises the vagrant box
     # then just runs some initial ansible tasks
-    # for the full build, see build.yml
+    # for the full build,  see build.yml
     runs-on: macos-12
     env:
       VAGRANT_NO_GUI: true
@@ -18,14 +18,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: set up Python 3.8
+    - name: set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: 3.9
 
     - name: install pip requirements
       run: |
         pip install --upgrade pip
+        pip install wheel
         pip install -r requirements.txt
 
     - name: install ansible requirements
