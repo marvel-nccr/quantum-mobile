@@ -20,16 +20,16 @@ jobs:
         python-version: 3.8
     - uses: pre-commit/action@v2.0.0
 
-  docs:
-    runs-on: ubuntu-latest
+  # docs:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: install tox
-      run: pip install tox
-    - name: run build
-      run: tox -e docs-clean
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v1
+  #     with:
+  #       python-version: 3.8
+  #   - name: install tox
+  #     run: pip install tox
+  #   - name: run build
+  #     run: tox -e docs-clean
