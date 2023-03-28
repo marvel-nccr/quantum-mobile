@@ -79,15 +79,6 @@ The Cloud Edition targets advanced users who are familiar with the command line 
 [**Download release**](releases/index.md)
 
 :::
-:::{grid-item-card} {fa}`cube;sd-mr-1` Docker Image
-
-Intended for testing purposes.
-
-The Docker image provides a means to rapidly spawn a fully functioning Quantum Mobile instance, ideal for CI testing.
-
-+++
-[**Download release**](https://hub.docker.com/r/marvelnccr/quantum-mobile)
-
 ::::
 
 <img src="_static/quantum_mobile.gif" alt="QM Desktop Screenshot" width="60%">
@@ -207,7 +198,6 @@ users/troubleshoot.md
 developers/customize.md
 developers/build-vagrant.md
 developers/build-cloud.md
-developers/build-docker.md
 developers/roles.md
 ```
 

@@ -27,7 +27,7 @@
   when: quantum_espresso_download.changed
 
 - set_fact:
-    quantum_espresso_source: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_url | basename | regex_replace('\\.tar\\.gz$') }}"
+    quantum_espresso_source: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_repo_folder }}"
 
 # --fpe-summary=none removes all floating-point exceptions
 # see https://github.com/marvel-nccr/quantum-mobile/issues/52

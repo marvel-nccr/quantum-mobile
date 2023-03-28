@@ -13,7 +13,7 @@
     mode: '0755'
     content: |
       #!/bin/bash
-      {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n aiida jupyter-lab \
+      {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n {{ aiida_conda_env }} jupyter-lab \
         -y \
         --notebook-dir={{ vm_user_home.path }} \
         --ip={{ aiida_jupyter_ip | quote }} --port={{ aiida_jupyter_port }} \

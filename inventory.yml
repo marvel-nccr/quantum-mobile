@@ -11,7 +11,7 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "22.09.21"
+    vm_version: "23.03.01"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
@@ -51,6 +51,7 @@ all:
     # Vagrant Intructions (created during the package/export phase)
     release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
 
+    aiida_conda_env: "aiida"
     aiida_profile: "generic"
     aiida_jupyter_ip: "localhost"
     aiida_jupyter_port: 8890

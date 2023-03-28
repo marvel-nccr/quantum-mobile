@@ -1,4 +1,5 @@
 - name: "VM release notes: Add '{{ option }}' to '{{ section }}'"
+  tags: [release_notes]
   become: true
   become_user: "{{ release_notes_vm_user }}"
   ini_file:
@@ -9,6 +10,7 @@
     create: true
 
 - name: "localhost release notes: Add '{{ option }}' to '{{ section }}'"
+  tags: [release_notes]
   delegate_to: localhost
   become: false
   ini_file:
