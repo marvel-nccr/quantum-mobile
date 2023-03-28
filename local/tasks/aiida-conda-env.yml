@@ -1,0 +1,46 @@
+- name: Install AiiDA environment
+  tags: [aiida-env]
+  become: true
+  become_user: "{{ vm_user }}"
+  chrisjsewell.conda.install_pkgs:
+    executable: "~/.conda/bin/mamba"
+    env: "{{ conda_env }}"
+    packages: "{{ aiida_packages }}"
+
+- name: "Activate verdi TAB completion (not base)"
+  tags: [aiida-autocomplete]
+  when: conda_env != "base"
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.copy:
+    dest: "~/.conda/envs/{{ conda_env }}/etc/conda/activate.d/verdi-complete.sh"
+    content: 'eval "$(_VERDI_COMPLETE=bash_source verdi)"'
+
+- name: "Activate verdi TAB completion (base)"
+  tags: [aiida-autocomplete]
+  when: conda_env == "base"
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.blockinfile:
+    path: "~/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (verdi)"
+    block: 'eval "$(_VERDI_COMPLETE=bash_source verdi)"'
+
+- name: Retrieve list of core packages in aiida env
+  chrisjsewell.conda.list_pkgs:
+    executable: "~/.conda/bin/mamba"
+    env: "{{ conda_env }}"
+    regex: "({{ aiida_packages | map('regex_search', '^[^=]+') | join('|') }})"
+  register: aiida_packages_list
+
+- include_role:
+    name: release_notes
+  vars:
+    section: "Conda '{{ conda_env }}' environment"
+    option: "{{ pkg.name }}"
+    value: "{{ pkg.version }}-{{ pkg.build_string }}@{{ pkg.channel }}"
+  loop: "{{ aiida_packages_list.list }}"
+  loop_control:
+    loop_var: pkg
+    label: "{{ pkg.name }}"
+  when: release_notes is defined and release_notes

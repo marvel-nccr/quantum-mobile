@@ -1,0 +1,22 @@
+- name: Install plotting tools, etc.
+  become: true
+  become_user: "{{ root_user }}"
+  apt:
+    name: "{{ packages }}"
+    state: present
+
+- name: "get versions"
+  apt_show:
+    name: "{{ packages | join(' ')  }}"
+  register: plot_versions
+
+- name: "document versions"
+  loop: "{{ plot_versions.data | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  include_role:
+    name: release_notes
+  vars:
+    section: "Apt packages"
+    option: "{{ item.key }}"
+    value: "{{ item.value.version }}"

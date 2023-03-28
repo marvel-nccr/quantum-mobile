@@ -15,8 +15,10 @@ tmp.vmdk
 .tox/
 dist/
 _archive
+TODO.md
 
 # roles & dependencies
-roles/marvel-nccr*
-roles/gantsign*
-roles/geerlingguy*
+submodules/roles/marvel-nccr*
+submodules/roles/gantsign*
+submodules/roles/geerlingguy*
+submodules/ansible_collections/

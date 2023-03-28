@@ -74,6 +74,36 @@ You can reset the resources and also change the maximum number of CPUs available
 $ slurm-resources -e restart_on_change=true -e slurm_max_cpus=2
 ```
 
+(use/conda)=
+## Working with Conda
+
+The Quantum Mobile VM comes with the [Conda package management system](https://docs.conda.io/en/latest/) pre-installed,
+using the [mambaforge](https://github.com/conda-forge/miniforge) distribution.
+
+To check the available environments, run:
+
+```console
+max@qmobile:/$ conda env list
+```
+
+To activate an environment, run:
+
+```console
+max@qmobile:/$ conda activate aiida
+```
+
+or
+
+```console
+max@qmobile:/$ workon aiida
+```
+
+To install packages into an environment, use the [mamba](https://mamba.readthedocs.io) installer:
+
+```console
+(aiida) max@qmobile:/$ mamba install -n <env_name> <package_name>
+```
+
 ## Working with AiiDA
 
 In the terminal, you can enable python environments using the [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io) commands.
@@ -155,61 +185,4 @@ Info: last time an entry changed state: 8s ago (at 05:12:38 on 2020-12-08)
 
 :::{seealso}
 The [aiida-core documentation](https://aiida.readthedocs.io)
-:::
-
-## Working with Jupyter and AiiDA Lab
-
-It is important to note that the Jupyter Python environment is **different** to that of the AiiDA one,
-the `aiida` environment is instead installed as a kernel for Jupyter to use.
-
-To activate the `jupyter` environment and check the kernels installed:
-
-```console
-$ workon jupyter
-(jupyter) max@qmobile:/$ jupyter kernelspec list
-Available kernels:
-  python3    /home/max/.local/share/jupyter/kernels/python3
-(jupyter) max@qmobile:/$ cat /home/max/.local/share/jupyter/kernels/python3/kernel.json
-{
- "argv": [
-  "/home/max/.virtualenvs/aiida/bin/python",
-  "-m",
-  "ipykernel_launcher",
-  "-f",
-  "{connection_file}"
- ],
- "display_name": "Python 3",
- "language": "python"
-```
-
-To check the currently running servers:
-
-```console
-(jupyter) max@qmobile:/$ jupyter notebook list
-```
-
-You can start Jupyter Lab by either running `jupyter lab` in the `jupyter` environment or running `aiida-jupyterlab` from anywhere.
-The latter is preferred, since will only ever open the same port and not create duplicate servers.
-You should also ensure that you are in the $HOME directory:
-
-```console
-$ cd $HOME
-$ aiida-jupyterlab
-```
-
-Similarly you can start AiiDA Lab using the `aiida-aiidalab` command.
-
-:::{seealso}
-The [AiiDAlab documentation](https://www.materialscloud.org/aiidalab/)
-:::
-
-If you are using the VirtualBox GUI, you can also double-click on the short-cut icons.
-
-![VM Desktop](../_static/quantum_mobile.png)
-
-:::{tip}
-If you are using cloud QM and your browser cannot connect to the jupyter notebook server, check that you have configured SSH tunneling/forwarding as described in the [VM Launch Instructions](./launch.md).
-Keep in mind that you need to start the jupyter server from the terminal connected to the VM, while opening the web browser locally on your laptop.
-
-See the [jupyter notebook documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html#browser-compatibility) for compatibility of jupyter with various web browsers.
 :::

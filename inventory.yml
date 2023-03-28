@@ -1,4 +1,4 @@
-# This file provides variable configuration:
+# This file provides shared variable configuration:
 
 # `all/vars` provides the global configuration
 # `all/hosts/*` specifies variables that override global configuration
@@ -11,61 +11,57 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "21.06.04"
+    vm_version: "23.03.01"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
     vm_author_url: "http://nccr-marvel.ch"
-    vm_release_notes_file: "${HOME}/Desktop/release_notes.txt"
-    vm_readme_file: "${HOME}/Desktop/README.md"
 
     # VM configuration
-    vm_base_image: "bento/ubuntu-18.04"
+    vm_base_image: "bento/ubuntu-20.04"
     vm_hostname: "qmobile"
     vm_user: "max"
     vm_password: "moritz"
     vm_memory: 1536
     vm_cpus: 2
     vm_vram: 128
-    vm_shared_folder: "/shared"
-    vm_codes_folder: "${HOME}/codes"
-    vm_data_folder: "/usr/local/share"
     vm_headless: false
     vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
-    vm_scheduler: slurm  # 'slurm' or 'direct'
-    vm_examples_folder:       # "${HOME}/examples" we don't currently use this folder
-    vm_examples_folder_reamde:       # "${HOME}/examples/README.txt"
-
-    # Python virtual environments base location
-    aiida_venv_base: "${HOME}/.virtualenvs"
-
-    # Connection Ports
-    aiida_jupyter_port: 8890
-    aiidalab_jupyter_port: 8888
-
-    # Release Notes (populated by roles during build)
-    release_notes: true
-    release_notes_vm_user: "{{ vm_user }}"
-    release_notes_locally: true
-    local_dist_folder: "{{ playbook_dir }}/dist"
-    release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
-
-    # Vagrant Intructions (created during the package/export phase)
-    release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
+    vm_data_folder: "/usr/local/share"  # this is used to put shared data files in
+    # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
+    vm_timezone: "Europe/Zurich"
 
     # Connection variables
     ansible_python_interpreter: /usr/bin/python3
     root_user: root
 
     # Build options
+    build_dir: "/tmp"
     run_tests: true
-    clean: false  # remove build files (will break idempotance, so only run before packaging/release)
+
+    # Readme and Release Notes (populated by roles during build)
+    qm_homepage: "https://quantum-mobile.readthedocs.io"
+    readme_vm_path: "/home/{{ vm_user }}/README.md"
+    release_notes: true
+    release_notes_vm_user: "{{ vm_user }}"
+    release_notes_vm_path: "/home/{{ vm_user }}/RELEASE_NOTES.txt"
+    release_notes_locally: true
+    local_dist_folder: "{{ playbook_dir }}/dist"
+    release_notes_localhost: "{{ local_dist_folder }}/Software-{{ vm_version }}.ini"
+    # Vagrant Intructions (created during the package/export phase)
+    release_instructions: "{{ local_dist_folder }}/Release-{{ vm_version }}.md"
+
+    aiida_conda_env: "aiida"
+    aiida_profile: "generic"
+    aiida_jupyter_ip: "localhost"
+    aiida_jupyter_port: 8890
+    aiida_jupyter_token: "7c8a1215d6768f78e8300804741bd3883d7b1510159b755e"
 
   hosts:
     vagrant-provision:
       # this private network IP will be created by `vagrant up`
       cloud_platform: virtualbox
-      ansible_host: 192.168.111.222
+      ansible_host: 192.168.56.10
       ansible_user: vagrant
     vagrant-ssh:
       # requires first running `vagrant ssh-config > vagrant-ssh`
@@ -81,7 +77,7 @@ all:
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
-      jupyter_ip: "0.0.0.0"
+      aiida_jupyter_ip: "0.0.0.0"
 
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:

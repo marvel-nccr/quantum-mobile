@@ -152,28 +152,3 @@ Here are some indicative prices for hosting public images and disk pricing:
   * magnetic: 4c/GB/month (GCP), 2.5c/GB/month (AWS)
   * SSD: 10c/GB/month (AWS)
 :::
-
-### Docker Image
-
-You can either build the container locally, using the [Docker build instructions](../developers/build-docker.md), then commit the (stopped) instance:
-
-```bash
-docker commit -a "Chris Sewell" -m "Container provisioned by ansible" qm_instance marvelnccr/quantum-mobile:20.11.2a
-```
-
-or (recommended) first tag the release commit with a `docker-` tag, to trigger the GitHub Action (see [Testing on GH Actions](./develop.md)).
-Then, once the build has successfully run and uploaded to Docker Hub, pull the created image and create the new tag:
-
-```bash
-docker pull marvelnccr/quantum-mobile:develop
-docker tag marvelnccr/quantum-mobile:develop marvelnccr/quantum-mobile:20.11.2a
-```
-
-Next use the `docker-compose.yml` in the repository base (changing the image name) to launch the container and check that you can correctly run through the commands in [Using Quantum Mobile](../users/use.md).
-
-Finally, upload the tag to Docker Hub.
-
-```bash
-docker login -u username -p password
-docker push marvelnccr/quantum-mobile:20.11.2a
-```

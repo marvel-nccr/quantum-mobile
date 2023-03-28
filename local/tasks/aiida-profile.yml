@@ -1,0 +1,74 @@
+# create an aiida profile
+
+- name: "Check if AiiDA profile '{{ name }}' has already been configured"
+  shell: "{{ aiida_run_verdi }} profile show {{ name }}"
+  failed_when: false
+  changed_when: false
+  register: aiida_profile_show
+
+- when: aiida_profile_show.rc != 0
+  block:
+
+  - name: Setup Postgresql DB
+    become: true
+    become_user: "{{ postgres_user }}"
+    postgresql_db:
+      name: "{{ parameters.db_name }}"
+
+  - name: Setup Postgresql DB user
+    become: true
+    become_user: "{{ postgres_user }}"
+    postgresql_user:
+      db: "{{ parameters.db_name }}"
+      name: "{{ parameters.db_username }}"
+      password: "{{ parameters.db_password }}"
+      encrypted: true
+
+  - name: "Set up AiiDA profile '{{ name }}'"
+    shell: |
+      {{ aiida_run_verdi }} setup \
+      --non-interactive \
+      --profile {{ name | quote }} \
+      --email {{ parameters.email | quote }} \
+      --first-name {{ parameters.first_name | quote }} \
+      --last-name {{ parameters.last_name | quote }} \
+      --institution {{ parameters.institution | quote }} \
+      --db-host {{ parameters.db_host | quote }} \
+      --db-port {{ parameters.db_port | quote }} \
+      --db-name {{ parameters.db_name | quote }} \
+      --db-username {{ parameters.db_username | quote }} \
+      --db-password {{ parameters.db_password | quote }}
+
+- when: daemon_service is defined and daemon_service
+  name: "Enable AiiDA daemon service for profile '{{ name }}'"
+  block:
+  - name: "Get {{ vm_user }} home"
+    become: true
+    become_user: "{{ vm_user }}"
+    chrisjsewell.conda.expandpath:
+      path: "~"
+    register: vm_user_home
+
+  - name: Add AiiDA Daemon as systemd service
+    become: true
+    become_user: "{{ root_user }}"
+    template:
+      src: files/aiida-daemon@.service
+      dest: /etc/systemd/system
+      owner: root
+      group: root
+      mode: 0644
+    vars:
+      aiida_user: "{{ vm_user }}"
+      aiida_user_home: "{{ vm_user_home.path }}"
+      aiida_verdi: "{{ aiida_run_verdi | replace('~', vm_user_home.path) }}"
+
+  - name: Start AiiDA Daemon systemd service
+    become: true
+    become_user: "{{ root_user }}"
+    systemd:
+      name: aiida-daemon@{{ name }}
+      enabled: true
+      masked: false
+      daemon-reload: true
+      state: started

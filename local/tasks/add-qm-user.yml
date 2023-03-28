@@ -1,0 +1,21 @@
+# Add the user for logging in with
+
+- name: "Add user {{ vm_user }} with key"
+  import_role:
+    name: marvel-nccr.add_user
+  vars:
+    add_user_name: "{{ vm_user }}"
+    add_user_password: "{{ vm_password }}"
+    add_user_groups:
+    - "{{ vm_user }}"
+    - sudo
+    add_user_passwordless_sudo: true
+
+- name: Add user to 'vboxsf' group on VirtualBox
+  # This enables sudoless access to shared folder in VirtualBox
+  when: cloud_platform == 'virtualbox'
+  become: true
+  user:
+    name: "{{ vm_user }}"
+    groups: vboxsf
+    append: true

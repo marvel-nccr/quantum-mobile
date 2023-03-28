@@ -10,7 +10,7 @@ Files are written both files both on VM and on the localhost
  * option:  option in section
  * value: value of option
 
- * release_notes_vm: path to release notes on guest VM
+ * release_notes_vm_path: path to release notes on guest VM
  * release_notes_localhost: path to release notes on host machine
 
 # usage
