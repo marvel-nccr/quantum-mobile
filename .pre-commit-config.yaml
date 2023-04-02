@@ -18,3 +18,8 @@ repos:
   hooks:
   - id: ansible-lint
     args: [--exclude, roles/]
+
+- repo: https://github.com/psf/black
+  rev: 23.1.0
+  hooks:
+  - id: black

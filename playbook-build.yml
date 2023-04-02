@@ -157,18 +157,21 @@
     vars:
       conda_env: "{{ item.name }}"
       code_packages: "{{ item.pkgs }}"
+      # TODO allow for `conda env config vars set` to be used,
+      # e.g. for export OMP_NUM_THREADS=1
     loop:
     # note here we specify exact versions of libxc/openmpi/mpich
     # this is because we want conda to re-use as many packages as possible
     # since re-used packages do not incur more disk memory usage
     - {name: abinit, pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3]}
     - {name: bigdft, pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3]}
-    - {name: cp2k, pkgs: [cp2k=9, libxc=5.2.3, openmpi=4.1.2]}
+    - {name: cp2k, pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2]}
     - {name: fleur, pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: wannier90, pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2]}
     - {name: nwchem, pkgs: [nwchem=7, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: siesta, pkgs: [siesta=4, libxc=5.2.3, openmpi=4.1.2]}
+    - {name: qespresso, pkgs: [qe=7, libxc=5.2.3, openmpi=4.1.2]}
+    - {name: siesta, pkgs: [siesta=4.*=mpi*, libxc=5.2.3, openmpi=4.1.2]}
     - {name: yambo, pkgs: [yambo=5, libxc=5.2.3, openmpi=4.1.2]}
+    - {name: wannier90, pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2]}
     - {name: visualise, pkgs: [jmol, gnuplot, cif2cell, python=3.9]}
     loop_control:
       label: "{{ item.name }}"
@@ -185,10 +188,17 @@
       - pip
       - aiida-core=2
       - aiida-core.notebook
-      - aiida-quantumespresso
-      - aiida-pseudo
+      - aiida-abinit=0.4
+      - aiida-cp2k=2
+      - aiida-quantumespresso=4
+      - aiida-nwchem=2
+      - aiida-siesta=2
+      - aiida-pseudo=1
       - ipykernel
       - jupyterlab
+      - jupyterlab-tour
+      - jupyterlab-spellchecker
+      - mamba_gator  # Provides Conda/Mamba management as a standalone application or as extension for JupyterLab.
 
   - name: Create an aiida-profile
     tags: [aiida-profile]
@@ -238,67 +248,69 @@
     loop_control:
       label: "{{ item.l }}"
 
-  - name: Download and install import SSSP potentials
-    tags: [aiida-pseudo]
-    import_tasks: local/tasks/aiida-pseudo.yml
-    vars:
-      aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
-      aiida_pseudo_base_folder: "{{ vm_data_folder }}"
-      aiida_pseudo_functional: "PBE"
-      aiida_pseudo_protocol: "efficiency"
-      aiida_pseudo_version: "1.1"
-      aiida_pseudo_profile: "{{ aiida_profile }}"
-
-  # TODO for now we install QE manually,
-  # before figuring out how to use the conda install as an aiida code
-  - name: "Install Quantum Espresso"
-    tags: [qe]
-    import_tasks: local/tasks/install-quantum-espresso.yml
-    vars:
-      quantum_espresso_version: "7.1"
-      quantum_espresso_url: "https://gitlab.com/QEF/q-e/-/archive/qe-{{ quantum_espresso_version }}/q-e-qe-{{ quantum_espresso_version }}.tar.gz"
-      quantum_espresso_builddir: "{{ build_dir }}"
-      quantum_espresso_prefix: "/usr/local"
-      quantum_espresso_repo_folder: q-e-564a7b486665e8dd0223d6e514b84195d1a96c10
-      quantum_espresso_executables:
-        pw: pw.x
-        cp: cp.x
-        pp: pp.x
-        ph: ph.x
-        neb: neb.x
-        hp: hp.x
-        w90: wannier90.x
-        epw: epw.x
-        tddfpt: tddfpt.x
-
-  - name: "Add Quantum Espresso AiiDA Codes"
-    tags: [qe-codes]
+  - name: "Add AiiDA Codes"
+    tags: [aiida-codes]
     become: true
     become_user: "{{ vm_user }}"
     verdi_code:
       verdi: ~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi
       profile: "{{ aiida_profile }}"
-      label: "{{ item.l }}"
+      label: "{{ item.label }}"
+      description: "Local code for '{{ item.exec }}' in Conda env '{{ item.env }}'"
       computer: local_slurm
-      input_plugin: "{{ item.i }}"
-      remote_abs_path: "/usr/local/bin/{{ item.e }}"
+      input_plugin: "{{ item.plugin }}"
+      remote_abs_path: "/home/max/.conda/envs/{{ item.env }}/bin/{{ item.exec }}"
       prepend_text: |
         ulimit -s unlimited
-        export OMP_NUM_THREADS=1
-    loop:
-    - {l: qe.pw, e: pw.x, i: quantumespresso.pw}
-    - {l: qe.cp, e: cp.x, i: quantumespresso.cp}
-    - {l: qe.pp, e: pp.x, i: quantumespresso.pp}
-    - {l: qe.ph, e: ph.x, i: quantumespresso.ph}
-    - {l: qe.neb, e: neb.x, i: quantumespresso.neb}
-    - {l: qe.epw, e: epw.x, i: quantumespresso.epw}
-    - {l: qe.projwfc, e: projwfc.x, i: quantumespresso.projwfc}
-    - {l: qe.pw2wannier90, e: pw2wannier90.x, i: quantumespresso.pw2wannier90}
-    - {l: qe.dos, e: dos.x, i: quantumespresso.dos}
-    - {l: qe.q2r, e: q2r.x, i: quantumespresso.q2r}
-    - {l: qe.matdyn, e: matdyn.x, i: quantumespresso.matdyn}
+        eval "$(conda shell.bash hook)"
+        conda activate {{ item.env }}
+        {{ item.prepend | default('') }}
     loop_control:
-      label: "{{ item.l }}"
+      label: "{{ item.label }}"
+    loop:
+    - {label: qe.pw, plugin: quantumespresso.pw, env: qespresso, exec: pw.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.cp, plugin: quantumespresso.cp, env: qespresso, exec: cp.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.pp, plugin: quantumespresso.pp, env: qespresso, exec: pp.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.ph, plugin: quantumespresso.ph, env: qespresso, exec: ph.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.neb, plugin: quantumespresso.neb, env: qespresso, exec: neb.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.epw, plugin: quantumespresso.epw, env: qespresso, exec: epw.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.projwfc, plugin: quantumespresso.projwfc, env: qespresso, exec: projwfc.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.pw2wannier90, plugin: quantumespresso.pw2wannier90, env: qespresso, exec: pw2wannier90.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.dos, plugin: quantumespresso.dos, env: qespresso, exec: dos.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.q2r, plugin: quantumespresso.q2r, env: qespresso, exec: q2r.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: qe.matdyn, plugin: quantumespresso.matdyn, env: qespresso, exec: matdyn.x, prepend: export OMP_NUM_THREADS=1}
+    - {label: nwchem.main, plugin: nwchem.nwchem, env: nwchem, exec: nwchem}
+    - {label: siesta.main, plugin: siesta.siesta, env: siesta, exec: siesta}
+    - {label: cp2k.main, plugin: cp2k, env: cp2k, exec: cp2k.psmp}
+    - {label: abinit.main, plugin: abinit, env: abinit, exec: abinit}
+
+  # TODO release notes for aiida computers/codes
+
+  - name: Download and install SSSP potentials
+    tags: [aiida-pseudo]
+    import_tasks: local/tasks/aiida-pseudo-sssp.yml
+    vars:
+      # for quantum mobile
+      aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
+      aiida_pseudo_base_folder: "{{ vm_data_folder }}"
+      aiida_pseudo_functional: PBE
+      aiida_pseudo_protocol: efficiency
+      aiida_pseudo_version: "1.1"
+      aiida_pseudo_profile: "{{ aiida_profile }}"
+
+  - name: Download and install DOJO potentials
+    tags: [aiida-pseudo]
+    import_tasks: local/tasks/aiida-pseudo-dojo.yml
+    vars:
+      # for sisesta
+      aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
+      aiida_pseudo_base_folder: "{{ vm_data_folder }}"
+      aiida_pseudo_functional: PBE
+      aiida_pseudo_relativistic: FR
+      aiida_pseudo_protocol: standard
+      aiida_pseudo_format: psml
+      aiida_pseudo_version: "0.4"
+      aiida_pseudo_profile: "{{ aiida_profile }}"
 
   post_tasks:
 

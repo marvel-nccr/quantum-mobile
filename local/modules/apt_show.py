@@ -54,7 +54,9 @@ def _main():
     module = AnsibleModule(argument_spec={"name": {"required": True, "type": "str"}})
     if not module.params["name"]:
         module.fail_json(msg="Package name is empty")
-    _, stdout, _ = module.run_command(["apt", "show"] + module.params["name"].split(), check_rc=True)
+    _, stdout, _ = module.run_command(
+        ["apt", "show"] + module.params["name"].split(), check_rc=True
+    )
     data = {}
     lines = stdout.splitlines()
     index = 0

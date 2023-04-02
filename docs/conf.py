@@ -20,7 +20,14 @@ release = version
 
 # -- General configuration ---------------------------------------------------
 
-extensions = ["myst_parser", "sphinx_design", "ablog", "sphinx.ext.intersphinx", "sphinxext.rediraffe", "sphinx_subfigure"]
+extensions = [
+    "myst_parser",
+    "sphinx_design",
+    "ablog",
+    "sphinx.ext.intersphinx",
+    "sphinxext.rediraffe",
+    "sphinx_subfigure",
+]
 
 myst_enable_extensions = ["colon_fence", "deflist", "html_image"]
 
@@ -30,7 +37,13 @@ blog_post_pattern = "releases/versions/*.md"
 post_redirect_refresh = 1
 post_auto_excerpt = 2
 fontawesome_included = True
-html_sidebars = {"releases/index": ['ablog/tagcloud.html', 'ablog/archives.html', 'sbt-sidebar-nav.html']}
+html_sidebars = {
+    "releases/index": [
+        "ablog/tagcloud.html",
+        "ablog/archives.html",
+        "sbt-sidebar-nav.html",
+    ]
+}
 
 # The master toctree document.
 master_doc = "index"
@@ -63,4 +76,4 @@ html_theme_options = {
     "use_edit_page_button": True,
 }
 
-rediraffe_redirects = 'redirects.txt'
+rediraffe_redirects = "redirects.txt"
