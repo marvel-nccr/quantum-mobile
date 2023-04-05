@@ -61,13 +61,17 @@ tox -e update-vagrant
 Follow the [desktop build instructions](../developers/build-vagrant.md).
 
 :::{note}
-Manual modifications required, as of QM 20.03.1:
+Manual modifications required, as of QM 23.04.01, desktop shortcuts mut be manually enabled:
 
-* Double-click on the Desktop symbols to show the icons (see [#150](https://github.com/marvel-nccr/quantum-mobile/issues/150)) or just run in the VM terminal (press F5 after to refresh):
+- First install the file with <https://manpages.ubuntu.com/manpages/focal/en/man1/desktop-file-edit.1.html>:
 
-  ```bash
-  for FILE in ${HOME}/Desktop/*.desktop; do gio set "$FILE" "metadata::trusted" yes; done
+  ```console
+  $ sudo desktop-file-install --delete-original ~/Desktop/homepage.desktop
+  $ sudo desktop-file-install --delete-original ~/Desktop/jupyterlab.desktop
   ```
+
+- Now navigate to the `/usr/share/applications` in the folder app, find the files and drag/drop them to the Desktop
+- Right click on the file on the Desktop and select `Allow Launching`
 
 :::
 
@@ -77,7 +81,7 @@ Follow the [cloud build instructions](../developers/build-cloud.md).
 
 * For the server to build the VM, choose e.g. 2 CPUs with 4GB of RAM, with at least 16GB of storage.
   * Your configuration may also be the standard configuration shown to users creating a VM using your image
-  * Currently Ubuntu Server 18.04 LTS
+  * Currently Ubuntu Server 20.04 LTS
   * Expose ports as listed in instructions
   * You won't need it for long, so price for CPU/RAM is of no concern
 * Exemplary metadata:

@@ -1,10 +1,13 @@
 # download pseudopotials and install them in aiida
 
+- set_fact:
+    pseudo_folder: "{{ aiida_pseudo_base_folder }}/pseudo_dojo_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_relativistic }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}_{{ aiida_pseudo_format }}"
+
 - name: create the folder to download
   become: true
   become_user: "{{ root_user }}"
   file:
-    path: "{{ aiida_pseudo_base_folder }}/pseudo_sssp_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}"
+    path: "{{ pseudo_folder }}"
     state: directory
     owner: "{{ vm_user }}"
     group: "{{ vm_user }}"
@@ -15,12 +18,14 @@
   become_user: "{{ vm_user }}"
   shell: |
     {{ aiida_pseudo_cmd }} \
-    install sssp --traceback --download-only \
+    install pseudo-dojo --traceback --download-only \
     --version {{ aiida_pseudo_version | quote }} \
     --functional {{ aiida_pseudo_functional | quote }} \
     --protocol {{ aiida_pseudo_protocol | quote }} \
+    --relativistic {{ aiida_pseudo_relativistic | quote }} \
+    --pseudo-format {{ aiida_pseudo_format | quote }} \
   args:
-    chdir: "{{ aiida_pseudo_base_folder }}/pseudo_sssp_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}"
+    chdir: "{{ pseudo_folder }}"
     creates: "archive.tar.gz"
 
 - name: Add the archive to the AiiDA profile
@@ -29,10 +34,12 @@
   shell: |
     {{ aiida_pseudo_cmd }} \
     --profile {{ aiida_pseudo_profile | quote }} \
-    install sssp --traceback \
+    install pseudo-dojo --traceback \
     --version {{ aiida_pseudo_version | quote }} \
     --functional {{ aiida_pseudo_functional | quote }} \
     --protocol {{ aiida_pseudo_protocol | quote }} \
+    --relativistic {{ aiida_pseudo_relativistic | quote }} \
+    --pseudo-format {{ aiida_pseudo_format | quote }} \
   register: result
   failed_when: result.rc != 0 and "already installed" not in result.stderr
   changed_when: '"already installed" not in result.stderr'
@@ -42,5 +49,5 @@
     name: release_notes
   vars:
     section: "Pseudopotentials"
-    option: "SSSP/{{ aiida_pseudo_functional }}/{{ aiida_pseudo_protocol }}/{{ aiida_pseudo_version }}"
-    value: "{{ aiida_pseudo_base_folder }}/pseudo_sssp_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}"
+    option: "DOJO/{{ aiida_pseudo_functional }}/{{ aiida_pseudo_relativistic }}/{{ aiida_pseudo_protocol }}/{{ aiida_pseudo_version }}/{{ aiida_pseudo_format }}"
+    value: "{{ pseudo_folder }}"

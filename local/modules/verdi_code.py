@@ -34,6 +34,9 @@ options:
     append_text:
         description: The append text
         required: false
+    run_test:
+        description: Whether to run verdi code test after creating the code (default: true)
+        required: false
 """
 
 EXAMPLES = """
@@ -66,6 +69,7 @@ def _main():
             "description": {"required": False, "type": "str"},
             "prepend_text": {"required": False, "type": "str"},
             "append_text": {"required": False, "type": "str"},
+            "run_test": {"required": False, "type": "bool", "default": True},
         },
     )
     verdi = module.params["verdi"].split() + ["--profile", module.params["profile"]]
@@ -92,6 +96,26 @@ def _main():
             command.extend([option, module.params[key]])
 
     _, stdout, _ = module.run_command(command, check_rc=True)
+
+    if "run_test" in module.params and not module.params["run_test"]:
+        # if not running test, then just exit
+        module.exit_json(changed=True, stdout=stdout)
+
+    # test the code actually works, e.g. that the executable exists
+    # otherwise delete
+    test_rc, test_stdout, test_stderr = module.run_command(
+        verdi + ["code", "test", module.params["label"]]
+    )
+    if test_rc != 0:
+        module.run_command(
+            verdi + ["code", "delete", "--force", module.params["label"]]
+        )
+        module.fail_json(
+            msg="verdi code test failed",
+            rc=test_rc,
+            stdout=test_stdout,
+            stderr=test_stderr,
+        )
 
     module.exit_json(changed=True, stdout=stdout)
 
