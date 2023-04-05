@@ -18,8 +18,7 @@ def h2o():
     """Return a ``StructureData`` representing a water molecule."""
     atoms = molecule("H2O", vacuum=10)
     atoms.pbc = (True, True, True)
-    structure = orm.StructureData(ase=atoms)
-    return structure
+    return orm.StructureData(ase=atoms)
 
 
 def run(args: t.List[str]) -> None:

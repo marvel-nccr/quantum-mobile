@@ -312,6 +312,16 @@
       aiida_pseudo_version: "0.4"
       aiida_pseudo_profile: "{{ aiida_profile }}"
 
+  - name: aiida-example scripts
+    tags: [aiida-examples]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: local/tasks/aiida-examples.yml
+    vars:
+      aiida_examples_folder: "~/Desktop/aiida-examples"
+      aiida_verdi_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi"
+
+
   post_tasks:
 
   # These break idempotency,

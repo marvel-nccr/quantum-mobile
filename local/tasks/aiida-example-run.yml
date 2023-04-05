@@ -1,0 +1,14 @@
+- name: "Copy aiida script: {{ aiida_script }}"
+  ansible.builtin.copy:
+    src: aiida_run_scripts/{{ aiida_script }}
+    dest: "{{ aiida_script_path }}"
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+  register: aiida_script_copy
+
+- name: "Run aiida script: {{ aiida_script }}"
+  when: aiida_script_copy.changed
+  shell: |
+    {{ aiida_verdi_cmd }} run {{ aiida_script_path }}
+
+# TODO handle failures (delete the script?)
