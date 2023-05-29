@@ -26,7 +26,7 @@ all:
     vm_cpus: 2
     vm_vram: 128
     vm_headless: false
-    vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
+    vm_browser: firefox  # 'chromium-browser' or 'firefox'
     vm_data_folder: "/usr/local/share"  # this is used to put shared data files in
     # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
     vm_timezone: "Europe/Zurich"

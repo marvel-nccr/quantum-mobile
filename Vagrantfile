@@ -12,6 +12,14 @@ launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 # Currently on GitHub Actions it fails if accelerate3d activated
 on_ci          = ENV.has_key?('VAGRANT_ON_GH') ? true : false
 
+$script = <<-SCRIPT
+echo "I am provisioningi aiidalab folder creating..."
+AIIDALAB_VOL=/var/aiidalab_volume
+mkdir -p ${AIIDALAB_VOL}
+chown 1000:100 ${AIIDALAB_VOL}
+chmod 0775 ${AIIDALAB_VOL}
+SCRIPT
+
 Vagrant.configure(2) do |config|
 
   ## VIRTUALBOX provider
@@ -79,7 +87,7 @@ Vagrant.configure(2) do |config|
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # provisioner: set up VM via ansible. To (re-)run this step:
+  # provisioner: set up VM with ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
   # Note we use a static inventory, see: https://www.vagrantup.com/docs/provisioning/ansible_intro#static-inventory
   config.vm.network :private_network, ip: gconfig["ansible_host"]
@@ -94,5 +102,16 @@ Vagrant.configure(2) do |config|
     ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
     # Ensure that public key auth is not disabled by the user's config
     ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
+  end
+  # Create a folder for AiiDAlab volume mount. To (re-)run this step:
+  #  vagrant provision --provision-with shell
+  config.vm.provision "shell", inline: $script
+  # provisioner: set up VM with docker. To (re-)run this step:
+  #   vagrant provision --provision-with docker
+  config.vm.provision "docker" do |d|
+    d.run "ghcr.io/aiidalab/qe:pr-381",
+      daemonize: true,
+      restart: "always",
+      args: "-e JUPYTER_TOKEN='easy' -p 8888:8888 -v /var/aiidalab_volume:/home/jovyan"
   end
 end
