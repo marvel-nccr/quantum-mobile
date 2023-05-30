@@ -112,6 +112,6 @@ Vagrant.configure(2) do |config|
     d.run "ghcr.io/aiidalab/qe:pr-381",
       daemonize: true,
       restart: "always",
-      args: "-e JUPYTER_TOKEN='easy' -p 8899:8888 -v /var/aiidalab_volume:/home/jovyan"
+      args: "-e JUPYTER_TOKEN='max' -p 8899:8888 -v /var/aiidalab_volume:/home/jovyan"
   end
 end

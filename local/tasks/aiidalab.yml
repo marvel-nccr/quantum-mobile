@@ -5,15 +5,15 @@
     src: images/aiidalab-qe-logo.png
     dest: /usr/share/icons/
 
-- name: create desktop shortcut to Jupyter Lab
+- name: create desktop shortcut to AiiDALab
   copy:
-    dest: "${HOME}/Desktop/jupyterlab.desktop"
+    dest: "${HOME}/Desktop/aiidalab.desktop"
     mode: "0753"
     content: |
       [Desktop Entry]
-      Encoding=UTF-8
       Name=AiiDAlab QE
       Comment=Launch AiiDAlab QE
-      Exec={{ vm_browser }} "http://localhost:8899/?token=easy"
+      Exec={{ vm_browser }} "http://localhost:8899/apps/apps/quantum-espresso/qe.ipynb?token=max"
+      Terminal=false
       Icon=/usr/share/icons/aiidalab-qe-logo.png
       Type=Application
