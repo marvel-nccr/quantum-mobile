@@ -1,0 +1,19 @@
+- name: Copy AiiDAlab logo
+  become: true
+  become_user: "{{ root_user }}"
+  copy:
+    src: images/aiidalab-qe-logo.png
+    dest: /usr/share/icons/
+
+- name: create desktop shortcut to Jupyter Lab
+  copy:
+    dest: "${HOME}/Desktop/jupyterlab.desktop"
+    mode: "0753"
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=AiiDAlab QE
+      Comment=Launch AiiDAlab QE
+      Exec={{ vm_browser }} "http://localhost:8899/?token=easy"
+      Icon=/usr/share/icons/aiidalab-qe-logo.png
+      Type=Application
