@@ -1,0 +1,111 @@
+- name: Prepare for VM build
+
+  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+  gather_facts: false
+
+  pre_tasks:
+
+  - name: test configuration
+    tags: [init]
+    debug:
+      msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
+
+  - name: testing ansible environment
+    tags: [init]
+    debug:
+      msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
+
+  - name: Install linux-headers-generic for guest-additions
+    tags: [init]
+    when: "inventory_hostname.startswith('vagrant')"
+    become: true
+    apt:
+      cache_valid_time: 86400  # One day
+      name:
+      - linux-headers-generic
+
+  - name: Make local dist folder
+    tags: [init]
+    local_action:
+      module: file
+      state: directory
+      path: "{{ local_dist_folder }}/"
+    when: release_notes_locally is defined and release_notes_locally
+
+- name: Build VM
+  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+
+  tasks:
+
+  # Generic Tasks
+  # These tasks are run for any VM build, regardless of the software installed
+  # They setup the VM user, commandline interface, and (optionally) desktop GUI
+
+  - name: Update system package managers (apt, pip)
+    tags: [init]
+    include_tasks: local/tasks/ensure-apt-pip.yml
+
+  - name: "Add QM user '{{ vm_user }}'"
+    tags: [add_user, ci_test]
+    import_tasks: local/tasks/add-qm-user.yml
+
+  - name: "Add release notes section for the operating system"
+    tags: [release_notes]
+    import_tasks: local/tasks/release-notes-system.yml
+
+  - name: Customise bash terminal for QM
+    tags: [customise-bash]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: local/tasks/customise-bash.yml
+
+  - name: Install common text editors
+    tags: [editors]
+    import_role:
+      name: marvel-nccr.editors
+    vars:
+      editors_vm_user: "{{ vm_user }}"
+
+  - name: Add desktop GUI
+    tags: [ubuntu_desktop]
+    when: not vm_headless
+    import_role:
+      name: marvel-nccr.ubuntu_desktop
+    vars:
+      ubuntu_desktop_vm_user: "{{ vm_user }}"
+      ubuntu_desktop_browser: "{{ vm_browser }}"
+
+  - name: Customise GUI for QM
+    tags: [customise-gui]
+    when: not vm_headless
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: local/tasks/customise-gui.yml
+
+  - name: Setup QM to run simulations
+    tags: [simsetup]
+    import_tasks: local/tasks/simulation-setup.yml
+
+  # Build Specific Tasks
+  # These tasks can be customised for specific VM builds,
+  # depending on the software one requires to be installed
+
+  - name: Create AiiDAlab service
+    tags: [aiidalab]
+    become: true
+    become_user: "{{ vm_user }}"
+    import_tasks: local/tasks/aiidalab.yml
+
+  post_tasks:
+
+  # These break idempotency,
+  # so only run once all other tasks have completed
+
+  - name: "Clean caches"
+    tags: [never, cleanup]
+    import_tasks: local/tasks/clean-caches.yml
+
+  - name: "Remove {{ build_dir }} content"
+    tags: [never, cleanup]
+    become: true
+    command: rm -rf {{ build_dir }}/*
