@@ -23,7 +23,7 @@
 - name: Create and run qeapp container
   become: true
   become_user: "{{ vm_user }}"
-  command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan {{ vm_qeapp_image }}"
+  command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan -e JUPYTER_TOKEN='max' --restart always {{ vm_qeapp_image }}"
   when: qe_container_stat.stdout == ""  
 
 - name: Copy AiiDAlab logo
@@ -36,7 +36,7 @@
 - name: create desktop shortcut to AiiDALab
   copy:
     dest: "${HOME}/Desktop/aiidalab.desktop"
-    mode: "0753"
+    mode: "0644"
     content: |
       [Desktop Entry]
       Name=AiiDAlab QE
@@ -45,3 +45,6 @@
       Terminal=false
       Icon=/usr/share/icons/aiidalab-qe-logo.png
       Type=Application
+
+- name: Make Chrome Launcher Trusted
+  shell: sudo -u {{ vm_user }} dbus-launch gio set /home/{{ vm_user }}/Desktop/aiidalab.desktop "metadata::trusted" true

@@ -41,7 +41,7 @@
     src: "{{ readme_vm_path }}"
     dest: "${HOME}/Desktop/{{ readme_vm_path | basename }}"
     state: link
-    force: true
+    force: false
 
 - name: symlink release notes to Desktop
   become: true
@@ -55,7 +55,7 @@
 - name: create desktop shortcut to QM homepage
   copy:
     dest: "${HOME}/Desktop/homepage.desktop"
-    mode: "0753"
+    mode: "0644"
     content: |
       [Desktop Entry]
       Encoding=UTF-8
