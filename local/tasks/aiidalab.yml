@@ -1,14 +1,30 @@
-- name: debug vm_qeapp_image
-  debug:
-    msg: "{{ vm_qeapp_image }}"
+- name: Create folder for AiiDAlab QE
+  become: true
+  become_user: "{{ vm_user }}"
+  file:
+    path: /home/{{ vm_user }}/qeapp-home
+    state: directory
+    mode: 0775
+
+- name: check if qeapp container is running
+  become: true
+  become_user: "{{ vm_user }}"
+  shell: "docker inspect -f '{{ '{{' }} .State.Running {{ '}}' }}' qeapp"
+  register: qe_container_stat
+  ignore_errors: true
 
 - name: Pull qeapp image
   command: "docker pull {{ vm_qeapp_image }}"
 
-- name: Create qeapp container
+- name: echo qe_container
+  debug:
+    var: qe_container
+
+- name: Create and run qeapp container
   become: true
   become_user: "{{ vm_user }}"
   command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan {{ vm_qeapp_image }}"
+  when: qe_container_stat.stdout == ""  
 
 - name: Copy AiiDAlab logo
   become: true
