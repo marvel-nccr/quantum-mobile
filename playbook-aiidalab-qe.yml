@@ -15,14 +15,14 @@
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
 
-  - name: Install linux-headers-generic for guest-additions
-    tags: [init]
-    when: "inventory_hostname.startswith('vagrant')"
-    become: true
-    apt:
-      cache_valid_time: 86400  # One day
-      name:
-      - linux-headers-generic
+  #- name: Install linux-headers-generic for guest-additions
+  #  tags: [init]
+  #  when: "inventory_hostname.startswith('vagrant')"
+  #  become: true
+  #  apt:
+  #    cache_valid_time: 86400  # One day
+  #    name:
+  #    - linux-headers-generic
 
   - name: Make local dist folder
     tags: [init]
@@ -59,12 +59,12 @@
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/customise-bash.yml
 
-  - name: Install common text editors
-    tags: [editors]
-    import_role:
-      name: marvel-nccr.editors
-    vars:
-      editors_vm_user: "{{ vm_user }}"
+  # - name: Install common text editors
+  #   tags: [editors]
+  #   import_role:
+  #     name: marvel-nccr.editors
+  #   vars:
+  #     editors_vm_user: "{{ vm_user }}"
 
   - name: Add desktop GUI
     tags: [ubuntu_desktop]
@@ -74,6 +74,7 @@
     vars:
       ubuntu_desktop_vm_user: "{{ vm_user }}"
       ubuntu_desktop_browser: "{{ vm_browser }}"
+      ubuntu_desktop_wm_package: "{{ vm_wm_package }}"
 
   - name: Customise GUI for QM
     tags: [customise-gui]
@@ -89,12 +90,21 @@
   # Build Specific Tasks
   # These tasks can be customised for specific VM builds,
   # depending on the software one requires to be installed
+  
+  - name: Install docker and docker-compose
+    tags: [docker]
+    import_tasks: local/tasks/docker.yml
+    become: true
+    vars:
+      vm_docker_compose_version: "1.26.0"
 
   - name: Create AiiDAlab service
     tags: [aiidalab]
     become: true
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/aiidalab.yml
+    vars:
+      vm_qeapp_image: "ghcr.io/aiidalab/qe:sha-649baf7"
 
   post_tasks:
 

@@ -1,3 +1,15 @@
+- name: debug vm_qeapp_image
+  debug:
+    msg: "{{ vm_qeapp_image }}"
+
+- name: Pull qeapp image
+  command: "docker pull {{ vm_qeapp_image }}"
+
+- name: Create qeapp container
+  become: true
+  become_user: "{{ vm_user }}"
+  command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan {{ vm_qeapp_image }}"
+
 - name: Copy AiiDAlab logo
   become: true
   become_user: "{{ root_user }}"

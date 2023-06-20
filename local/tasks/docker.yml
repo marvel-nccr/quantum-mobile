@@ -1,0 +1,15 @@
+- name: Include geerlingguy.docker role
+  include_role:
+    name: geerlingguy.docker
+  vars:
+    docker_users: "{{ vm_user }}"
+    docker_compose_version: "{{ vm_docker_compose_version }}"
+
+- name: install recent docker and docker-compose python libraries
+  become: True
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker
+    - docker-compose
