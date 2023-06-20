@@ -109,3 +109,9 @@ all:
       ansible_user: max
       vm_headless: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+    utm:
+      cloud_platform: utm
+      ansible_host: 127.0.0.1
+      ansible_port: 2200
+      ansible_user: max
+      vm_headless: false

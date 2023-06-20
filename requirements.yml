@@ -8,8 +8,8 @@ roles:
   version: v0.1.0
 - name: marvel-nccr.add_user
   version: v0.2.1
-#- name: marvel-nccr.ubuntu_desktop
-#  version: v1.1.0
+- name: marvel-nccr.ubuntu_desktop
+  version: v1.1.1
 - name: marvel-nccr.editors
   version: v1.0.2
 - name: marvel-nccr.slurm
