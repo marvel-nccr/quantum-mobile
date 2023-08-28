@@ -41,7 +41,7 @@
     src: "{{ readme_vm_path }}"
     dest: "${HOME}/Desktop/{{ readme_vm_path | basename }}"
     state: link
-    force: false
+    force: true
 
 - name: symlink release notes to Desktop
   become: true

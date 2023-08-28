@@ -103,15 +103,4 @@ Vagrant.configure(2) do |config|
     # Ensure that public key auth is not disabled by the user's config
     ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
   end
-  # # Create a folder for AiiDAlab volume mount. To (re-)run this step:
-  # #  vagrant provision --provision-with shell
-  # config.vm.provision "shell", inline: $script
-  # # provisioner: set up VM with docker. To (re-)run this step:
-  # #   vagrant provision --provision-with docker
-  # config.vm.provision "docker" do |d|
-  #   d.run "ghcr.io/aiidalab/qe:pr-381",
-  #     daemonize: true,
-  #     restart: "always",
-  #     args: "-e JUPYTER_TOKEN='max' -p 8899:8888 -v /var/aiidalab_volume:/home/jovyan"
-  # end
 end

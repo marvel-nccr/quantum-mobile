@@ -46,5 +46,3 @@
       Icon=/usr/share/icons/aiidalab-qe-logo.png
       Type=Application
 
-- name: Make Chrome Launcher Trusted
-  shell: sudo -u {{ vm_user }} dbus-launch gio set /home/{{ vm_user }}/Desktop/aiidalab.desktop "metadata::trusted" true
