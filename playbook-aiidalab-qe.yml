@@ -15,14 +15,14 @@
     debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
 
-  #- name: Install linux-headers-generic for guest-additions
-  #  tags: [init]
-  #  when: "inventory_hostname.startswith('vagrant')"
-  #  become: true
-  #  apt:
-  #    cache_valid_time: 86400  # One day
-  #    name:
-  #    - linux-headers-generic
+  - name: Install linux-headers-generic for guest-additions
+    tags: [init]
+    when: "inventory_hostname.startswith('vagrant')"
+    become: true
+    apt:
+      cache_valid_time: 86400  # One day
+      name:
+      - linux-headers-generic
 
   - name: Make local dist folder
     tags: [init]
@@ -59,13 +59,6 @@
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/customise-bash.yml
 
-  # - name: Install common text editors
-  #   tags: [editors]
-  #   import_role:
-  #     name: marvel-nccr.editors
-  #   vars:
-  #     editors_vm_user: "{{ vm_user }}"
-
   - name: Add desktop GUI
     tags: [ubuntu_desktop]
     when: not vm_headless
@@ -87,6 +80,19 @@
     tags: [simsetup]
     import_tasks: local/tasks/simulation-setup.yml
 
+  - name: "Add user README"
+    tags: [add_readme]
+    become: true
+    become_user: "{{ vm_user }}"
+    template:
+      src: local/tasks/files/README.md.j2
+      dest: "{{ readme_vm_path }}"
+    vars:
+      software_urls:
+        Quantum ESPRESSO: http://www.quantum-espresso.org/
+        Quantum ESPRESSO App: https://aiidalab-qe.readthedocs.io/
+
+
   # Build Specific Tasks
   # These tasks can be customised for specific VM builds,
   # depending on the software one requires to be installed
@@ -104,7 +110,7 @@
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/aiidalab.yml
     vars:
-      vm_qeapp_image: "ghcr.io/aiidalab/qe:sha-649baf7"
+      vm_qeapp_image: "ghcr.io/aiidalab/qe:amd64-pr-449"
 
   post_tasks:
 
