@@ -1,15 +1,29 @@
-- name: Include geerlingguy.docker role
+#- name: Include geerlingguy.docker role
+#  include_role:
+#    name: geerlingguy.docker
+#  vars:
+#    docker_users: "{{ vm_user }}"
+#    docker_compose_version: "{{ vm_docker_compose_version }}"
+#  when: ansible_architecture == 'x86_64'
+#
+#- name: install recent docker and docker-compose python libraries
+#  become: True
+#  pip:
+#    name: "{{ item }}"
+#    state: present
+#  with_items:
+#    - docker
+- name: Install docker
   include_role:
     name: geerlingguy.docker
   vars:
-    docker_users: "{{ vm_user }}"
-    docker_compose_version: "{{ vm_docker_compose_version }}"
+    docker_users:
+      - "{{ vm_user }}"
+  when: ansible_architecture == 'x86_64'
 
-- name: install recent docker and docker-compose python libraries
-  become: True
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - docker
-    - docker-compose
+- name: Install docker pip
+  include_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - docker
