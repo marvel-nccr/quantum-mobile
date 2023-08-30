@@ -13,13 +13,21 @@
 #    state: present
 #  with_items:
 #    - docker
-- name: Install docker
+- name: Install docker (amd64)
   include_role:
     name: geerlingguy.docker
   vars:
     docker_users:
       - "{{ vm_user }}"
   when: ansible_architecture == 'x86_64'
+
+- name: Install docker (arm64)
+  include_role:
+    name: geerlingguy.docker_arm
+  vars:
+    docker_users:
+      - "{{ vm_user }}"
+  when: ansible_architecture == 'aarch64'
 
 - name: Install docker pip
   include_role:
