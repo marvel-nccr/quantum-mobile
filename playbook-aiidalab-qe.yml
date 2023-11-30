@@ -112,7 +112,7 @@
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/aiidalab.yml
     vars:
-      vm_qeapp_image: "ghcr.io/aiidalab/qe:amd64-pr-449"
+      vm_qeapp_image: "ghcr.io/aiidalab/qe:v23.10.0rc0"
 
   post_tasks:
 
