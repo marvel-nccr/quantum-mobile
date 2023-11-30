@@ -75,6 +75,8 @@
     become: true
     become_user: "{{ vm_user }}"
     import_tasks: local/tasks/customise-gui.yml
+    vars:
+      bg_image: "quantum-mobile-qeapp-bg.svg"
 
   - name: Setup QM to run simulations
     tags: [simsetup]

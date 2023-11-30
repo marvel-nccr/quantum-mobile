@@ -11,7 +11,7 @@
   become: true
   become_user: "{{ root_user }}"
   copy:
-    src: images/quantum-mobile-bg.png
+    src: "images/{{ bg_image | default('quantum-mobile-bg.png')}}"
     dest: "{{ vm_data_folder }}/qm-customizations/quantum-mobile-bg.png"
     mode: 0755
 
