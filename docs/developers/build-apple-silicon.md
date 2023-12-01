@@ -11,7 +11,7 @@ The VirtualBox software is not yet available for Apple Silicon, so we need to us
 - During import and setup from ISO, select settings with: 64GB disk space (default), 4096MB RAM (default), 4 (works for 2020 macbook air so should be good for other later model) cores.
 - Remember to install OpenSSH server during setup, so we can ssh to the VM for ansible deployment.
 - Create system user `max` with password `moritz` and enable auto login. This will be used for ansible deployment.
-- Create a new network setting with type "Emulated VLAN" and forward port 22 to 2200 of localhost so you can ssh to VM from localhost.
+- Create (be careful not delete the existing one, it is used for connecting the internet) a new network setting with type "Emulated VLAN" and forward port 22 to 2200 of localhost so you can ssh to VM from localhost.
 
 <img src="images/utm_ports_mapping.png" width="350px">
 
