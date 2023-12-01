@@ -87,7 +87,7 @@
     become: true
     become_user: "{{ vm_user }}"
     template:
-      src: local/tasks/files/README.md.j2
+      src: local/tasks/files/README-qeapp.md.j2
       dest: "{{ readme_vm_path }}"
     vars:
       software_urls:
@@ -98,7 +98,6 @@
   # Build Specific Tasks
   # These tasks can be customised for specific VM builds,
   # depending on the software one requires to be installed
-  
   - name: Install docker and docker-compose
     tags: [docker]
     import_tasks: local/tasks/docker.yml

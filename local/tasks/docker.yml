@@ -18,7 +18,7 @@
     name: geerlingguy.docker
   vars:
     docker_users:
-      - "{{ vm_user }}"
+    - "{{ vm_user }}"
   when: ansible_architecture == 'x86_64'
 
 - name: Install docker (arm64)
@@ -26,7 +26,7 @@
     name: geerlingguy.docker_arm
   vars:
     docker_users:
-      - "{{ vm_user }}"
+    - "{{ vm_user }}"
   when: ansible_architecture == 'aarch64'
 
 - name: Install docker pip
@@ -34,4 +34,4 @@
     name: geerlingguy.pip
   vars:
     pip_install_packages:
-      - docker
+    - docker
