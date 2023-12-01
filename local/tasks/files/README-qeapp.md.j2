@@ -1,0 +1,23 @@
+# Welcome to {{ vm_name }} version {{ vm_version }}
+
+*Quantum Mobile* is a Virtual Machine for computational materials science, distributed by the {{ vm_author }}.
+
+It comes with a collection of software packages for quantum mechanical calculations, including:
+
+{% for name, url in software_urls.items() %}
+* [{{ name }}]({{ url }})
+{% endfor %}
+
+all of which are set up and ready to be used on their own or through [AiiDA](http://www.aiida.net).
+
+# Getting started
+
+* Start the Quantum ESPRESSO app by double-clicking on the icon on the desktop.
+
+* If the virtual machine is just started, you may need to wait a few minutes for the server to be fully ready. If you see an error message, try again after a few minutes.
+
+* The data you create over the app can be accessed from the `~/qeapp-home` folder. Vise versa, you can copy files into this folder to make them available in the app.
+
+* For more information on how to use the app, see the [Quantum ESPRESSO app documentation](https://aiidalab-quantumespresso.readthedocs.io/en/latest/).
+
+For troubleshooting and other information, see: {{ qm_homepage }}.
