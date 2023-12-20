@@ -40,6 +40,9 @@ all:
     build_dir: "/tmp"
     run_tests: true
 
+    # AiiDAlab options
+    vm_qeapp_image: "ghcr.io/aiidalab/qe:v23.10.0"
+
     # Readme and Release Notes (populated by roles during build)
     qm_homepage: "https://quantum-mobile.readthedocs.io"
     readme_vm_path: "/home/{{ vm_user }}/README.md"

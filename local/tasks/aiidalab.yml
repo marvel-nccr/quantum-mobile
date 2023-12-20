@@ -14,7 +14,7 @@
   ignore_errors: true
 
 - name: Pull qeapp image
-  command: "docker pull {{ vm_qeapp_image }}"
+  command: "docker pull {{ qeapp_image }}"
 
 - name: echo qe_container
   debug:
@@ -23,7 +23,7 @@
 - name: Create and run qeapp container
   become: true
   become_user: "{{ vm_user }}"
-  command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan -e JUPYTER_TOKEN='max' -e NB_UMASK=002 --restart always {{ vm_qeapp_image }}"
+  command: "docker run -d --name qeapp -p 8899:8888 --volume /home/{{ vm_user }}/qeapp-home:/home/jovyan -e JUPYTER_TOKEN='max' -e NB_UMASK=002 --restart always {{ qeapp_image }}"
   when: qe_container_stat.stdout == ""
 
 - name: Copy AiiDAlab logo
