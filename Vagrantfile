@@ -12,14 +12,6 @@ launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 # Currently on GitHub Actions it fails if accelerate3d activated
 on_ci          = ENV.has_key?('VAGRANT_ON_GH') ? true : false
 
-$script = <<-SCRIPT
-echo "I am provisioningi aiidalab folder creating..."
-AIIDALAB_VOL=/var/aiidalab_volume
-mkdir -p ${AIIDALAB_VOL}
-chown 1000:100 ${AIIDALAB_VOL}
-chmod 0775 ${AIIDALAB_VOL}
-SCRIPT
-
 Vagrant.configure(2) do |config|
 
   ## VIRTUALBOX provider
