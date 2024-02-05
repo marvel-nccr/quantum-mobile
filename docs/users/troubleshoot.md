@@ -2,7 +2,7 @@
 
 :::{note}
 If the following sections to not solve your issue,
-please direct further inquiries to the [AiiDA mailinglist](http://www.aiida.net/mailing-list/)
+please direct further inquiries to the [Quantum Mobile support channel](https://aiida.discourse.group/c/quantum-mobile/) in the AiiDA Discourse
 :::
 
 ## VirtualBox installation / start-up
