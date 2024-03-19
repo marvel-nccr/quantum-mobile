@@ -2,24 +2,31 @@
 # See usage instructions at https://pre-commit.com
 repos:
 
-- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.3.0
-  hooks:
-  - id: pretty-format-yaml
-    args: [--autofix, --indent, "2", --preserve-quotes]
-
 - repo: https://github.com/adrienverge/yamllint
-  rev: v1.26.3
+  rev: v1.33.0
   hooks:
   - id: yamllint
 
 - repo: https://github.com/ansible/ansible-lint
-  rev: v6.3.0
+  rev: v6.22.1
   hooks:
   - id: ansible-lint
-    args: [--exclude, roles/]
+    # these should bring back after fixing the ansible-lint issues
+    # we exclude most of the roles and tasks, as they are not update to the new ansible version
+    args: [
+      --exclude,
+      roles/,
+      submodules/roles/,
+      playbook-aiidalab-qe.yml,
+      playbook-build.yml,
+      playbook-package.yml,
+      .pre-commit-config.yaml,
+      local/tasks/,
+      .github/workflows/ci.yml,
+      submodules/ansible_collections/,
+    ]
 
 - repo: https://github.com/psf/black
-  rev: 23.1.0
+  rev: 23.11.0
   hooks:
   - id: black

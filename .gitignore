@@ -22,3 +22,5 @@ submodules/roles/marvel-nccr*
 submodules/roles/gantsign*
 submodules/roles/geerlingguy*
 submodules/ansible_collections/
+
+local/modules/__pycache__/*.pyc

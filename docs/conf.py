@@ -13,7 +13,7 @@ inventory = yaml.safe_load(Path("../inventory.yml").read_text())
 
 project = "Quantum Mobile"
 copyright = "2020, NCCR MARVEL"
-author = "Chris Sewell, Giovanni Pizzi, Leopold Talirz"
+author = "Jusong Yu, Chris Sewell, Giovanni Pizzi, Leopold Talirz"
 
 version = inventory["all"]["vars"]["vm_version"]
 release = version

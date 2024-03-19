@@ -170,6 +170,7 @@ users/troubleshoot.md
 developers/customize.md
 developers/build-vagrant.md
 developers/build-cloud.md
+developers/build-apple-silicon.md
 developers/roles.md
 ```
 

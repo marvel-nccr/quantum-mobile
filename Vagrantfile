@@ -79,7 +79,7 @@ Vagrant.configure(2) do |config|
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # provisioner: set up VM via ansible. To (re-)run this step:
+  # provisioner: set up VM with ansible. To (re-)run this step:
   #   vagrant provision --provision-with ansible
   # Note we use a static inventory, see: https://www.vagrantup.com/docs/provisioning/ansible_intro#static-inventory
   config.vm.network :private_network, ip: gconfig["ansible_host"]

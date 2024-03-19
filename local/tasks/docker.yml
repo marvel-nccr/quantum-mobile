@@ -1,0 +1,13 @@
+- name: Install docker
+  include_role:
+    name: geerlingguy.docker
+  vars:
+    docker_users:
+      - "{{ vm_user }}"
+
+- name: Install docker pip
+  include_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+    - docker

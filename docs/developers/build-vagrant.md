@@ -98,6 +98,13 @@ Building the Desktop Edition is tested on GitHub Actions on every commit to the 
 For the tested steps see the `.github/workflows/build.yml` file.
 :::
 
+### Build QeApp dedicated VM
+
+To build a VM dedicated to the QeApp, run:
+
+```bash
+BUILD_PLAYBOOK=playbook-aiidalab-qe.yml tox -e vagrant
+```
 
 ### Continuing a failed build
 

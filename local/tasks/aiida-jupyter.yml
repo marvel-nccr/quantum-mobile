@@ -54,7 +54,7 @@
 - name: create desktop shortcut to Jupyter Lab
   copy:
     dest: "${HOME}/Desktop/jupyterlab.desktop"
-    mode: "0753"
+    mode: "0644"
     content: |
       [Desktop Entry]
       Encoding=UTF-8

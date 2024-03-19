@@ -11,7 +11,7 @@ all:
   vars:
     # VM Metadata
     vm_name: "Quantum Mobile"
-    vm_version: "23.04.03"
+    vm_version: "23.10.0"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
     vm_author: "MARVEL NCCR and MaX CoE"
@@ -22,11 +22,12 @@ all:
     vm_hostname: "qmobile"
     vm_user: "max"
     vm_password: "moritz"
-    vm_memory: 1536
-    vm_cpus: 2
-    vm_vram: 128
+    vm_memory: 4096
+    vm_cpus: 4
+    vm_vram: 256
     vm_headless: false
-    vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
+    vm_browser: firefox  # 'chromium-browser' or 'firefox'
+    vm_wm_package: ubuntu-desktop-minimal  # 'lxde' or 'ubuntu-desktop-minimal'
     vm_data_folder: "/usr/local/share"  # this is used to put shared data files in
     # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
     vm_timezone: "Europe/Zurich"
@@ -38,6 +39,9 @@ all:
     # Build options
     build_dir: "/tmp"
     run_tests: true
+
+    # AiiDAlab options
+    vm_qeapp_image: "ghcr.io/aiidalab/qe:v23.10.0"
 
     # Readme and Release Notes (populated by roles during build)
     qm_homepage: "https://quantum-mobile.readthedocs.io"
@@ -108,3 +112,9 @@ all:
       ansible_user: max
       vm_headless: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
+    utm:
+      cloud_platform: utm
+      ansible_host: 127.0.0.1
+      ansible_port: 2200
+      ansible_user: max
+      vm_headless: false

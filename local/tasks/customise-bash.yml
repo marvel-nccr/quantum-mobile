@@ -33,6 +33,14 @@
   - regexp: HISTFILESIZE=
     line: HISTFILESIZE=100000
 
+- name: Set umask to 002
+  blockinfile:
+    path: "${HOME}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (umask)"
+    block: |
+      # Set umask to 002
+      umask 002
+
 - name: hide possible sudo message
   file:
     path: ~/.sudo_as_admin_successful

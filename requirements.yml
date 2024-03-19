@@ -9,8 +9,12 @@ roles:
 - name: marvel-nccr.add_user
   version: v0.2.1
 - name: marvel-nccr.ubuntu_desktop
-  version: v1.1.0
+  version: v1.1.1
 - name: marvel-nccr.editors
   version: v1.0.2
 - name: marvel-nccr.slurm
   version: v2.0.2
+- name: geerlingguy.docker
+  version: 6.2.0
+- name: geerlingguy.pip
+  version: 2.2.0
