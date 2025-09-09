@@ -15,7 +15,7 @@ tags: desktop,docker
 Get Quantum Mobile running on your computer in three simple steps:
 
  1. Download virtual machine image ({{ vm_image_file.stat.size | filesizeformat }})
-    - URL: <https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/marvel-vms/{{ image_path | basename }}>
+    - URL: <https://rgw.cscs.ch/matcloud:public-marvel-vms/{{ image_path | basename }}>
     - Filename: `{{ image_path | basename }}`
     - MD5 hash: `{{ vm_image_file.stat.checksum }}`
  2. Install Virtual Box 6.1.6 or later (see <https://www.virtualbox.org>)
