@@ -11,7 +11,7 @@
   become: true
   become_user: "{{ root_user }}"
   copy:
-    src: images/quantum-mobile-bg.png
+    src: "images/{{ bg_image | default('quantum-mobile-bg.png')}}"
     dest: "{{ vm_data_folder }}/qm-customizations/quantum-mobile-bg.png"
     mode: 0755
 
@@ -55,7 +55,7 @@
 - name: create desktop shortcut to QM homepage
   copy:
     dest: "${HOME}/Desktop/homepage.desktop"
-    mode: "0753"
+    mode: "0644"
     content: |
       [Desktop Entry]
       Encoding=UTF-8
