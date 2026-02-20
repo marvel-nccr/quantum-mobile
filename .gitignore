@@ -16,6 +16,8 @@ tmp.vmdk
 dist/
 _archive
 TODO.md
+.ansible/
+**/__pycache__/
 
 # roles & dependencies
 submodules/roles/marvel-nccr*

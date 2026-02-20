@@ -1,3 +1,4 @@
+---
 # Customisations for bash terminal experience
 # Run as required user
 
@@ -5,7 +6,7 @@
   # Note that this is added at the end of the file, so
   # with the default bashrc by Ubuntu, it's run only interactively
   # moreover, login shells already print it by default
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "${HOME}/.bashrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK (bash welcome message)"
     block: |
@@ -21,7 +22,7 @@
       EOM
 
 - name: Improve handling of bash history
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "${HOME}/.bashrc"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -33,7 +34,8 @@
   - regexp: HISTFILESIZE=
     line: HISTFILESIZE=100000
 
-- name: hide possible sudo message
-  file:
+- name: Hide possible sudo message
+  ansible.builtin.file:
     path: ~/.sudo_as_admin_successful
     state: touch
+    mode: "0644"

@@ -1,3 +1,4 @@
+---
 extends: default
 rules:
   document-start: disable
@@ -7,3 +8,12 @@ rules:
   indentation:
     spaces: 2
     indent-sequences: false
+  # These are required to be compatible with the ansible-lint defaults
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true

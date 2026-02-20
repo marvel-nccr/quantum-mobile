@@ -1,6 +1,11 @@
+---
 collections:
 - name: chrisjsewell.conda
   version: 0.0.9
+- name: community.postgresql
+  version: ">=3.0.0"
+- name: ansible.posix
+  version: ">=1.5.0"
 roles:
 - name: gantsign.default-web-browser
   version: 4.0.0

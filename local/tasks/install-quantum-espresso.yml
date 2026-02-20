@@ -1,10 +1,11 @@
+---
 # prerequisites
 - name: Install libraries
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
     - build-essential
-    - wget    # needed for wget from https
+    - wget # needed for wget from https
     - gfortran
     - openmpi-bin
     - libopenmpi-dev
@@ -14,33 +15,35 @@
     - libblas-dev
 
 - name: Get Quantum ESPRESSO source
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ quantum_espresso_url }}"
     dest: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_url | basename }}"
+    mode: "0644"
   register: quantum_espresso_download
 
-- name: Extract QE source
-  unarchive:
+- name: Extract QE source # noqa no-handler
+  ansible.builtin.unarchive:
     src: "{{ quantum_espresso_download.dest }}"
     dest: "{{ quantum_espresso_builddir }}"
     remote_src: true
   when: quantum_espresso_download.changed
 
-- set_fact:
+- name: Set Quantum ESPRESSO source path
+  ansible.builtin.set_fact:
     quantum_espresso_source: "{{ quantum_espresso_builddir }}/{{ quantum_espresso_repo_folder }}"
 
 # --fpe-summary=none removes all floating-point exceptions
 # see https://github.com/marvel-nccr/quantum-mobile/issues/52
 - name: Configure QE
   environment:
-    FFLAGS: '-O3 -g -ffpe-summary=none'
-  command: "./configure --enable-parallel --prefix {{ quantum_espresso_prefix }}"
+    FFLAGS: "-O3 -g -ffpe-summary=none"
+  ansible.builtin.command: "./configure --enable-parallel --prefix {{ quantum_espresso_prefix }}"
   args:
     creates: "{{ quantum_espresso_source }}/make.inc"
     chdir: "{{ quantum_espresso_source }}"
 
 - name: Make QE executables
-  command: "make {{ item.key }}"
+  ansible.builtin.command: "make {{ item.key }}"
   args:
     creates: "{{ quantum_espresso_prefix }}/bin/{{ item.value }}"
     chdir: "{{ quantum_espresso_source }}"
@@ -49,9 +52,9 @@
     label: "{{ item.key }}"
   register: quantum_espresso_make
 
-- name: Install QE executables
+- name: Install QE executables # noqa no-handler
   when: quantum_espresso_make.changed
-  command: "make install"
+  ansible.builtin.command: "make install"
   become: true
   args:
     chdir: "{{ quantum_espresso_source }}"
@@ -59,21 +62,26 @@
 
 - name: "Fix OpenMPI issue https://github.com/open-mpi/ompi/issues/1393"
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "/etc/profile.d/quantum_espresso.sh"
     line: "export OMPI_MCA_btl=^openib"
     create: true
+    mode: "0644"
 
-- include_role:
+- name: Document Quantum ESPRESSO version in release notes
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Quantum ESPRESSO"
     option: "version"
     value: "{{ quantum_espresso_version }}"
   when: release_notes is defined and release_notes
 
-- include_role:
+- name: Document Quantum ESPRESSO components in release notes
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Quantum ESPRESSO"
     option: "components"

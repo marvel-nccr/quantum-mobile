@@ -1,26 +1,33 @@
+---
 # add release notes section for the operating system
 
-- include_role:
+- name: Document VM version in release notes
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "{{ vm_name }}"
     option: "version"
     value: "{{ vm_version }}"
 
-- name: store Ubuntu version number
-  command: lsb_release -sd
+- name: Store Ubuntu version number
+  ansible.builtin.command: lsb_release -sd
   changed_when: false
   register: lsb_release
 
-- include_role:
+- name: Document Operating System in release notes
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "{{ vm_name }}"
     option: "Operating System"
     value: "{{ lsb_release.stdout }}"
 
-- include_role:
+- name: Document login credentials in release notes
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "{{ vm_name }}"
     option: "Login credentials"

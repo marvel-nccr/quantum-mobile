@@ -1,3 +1,4 @@
+---
 # This file provides shared variable configuration:
 
 # `all/vars` provides the global configuration
@@ -26,8 +27,8 @@ all:
     vm_cpus: 2
     vm_vram: 128
     vm_headless: false
-    vm_browser: chromium-browser  # 'chromium-browser' or 'firefox'
-    vm_data_folder: "/usr/local/share"  # this is used to put shared data files in
+    vm_browser: chromium-browser # 'chromium-browser' or 'firefox'
+    vm_data_folder: "/usr/local/share" # this is used to put shared data files in
     # vm_shared_folder: "/shared"  # this is currently inactive in Vagrant config
     vm_timezone: "Europe/Zurich"
 
@@ -73,7 +74,7 @@ all:
     docker:
       # see playbook-docker.yml to start container
       cloud_platform: docker
-      ansible_host: qm_instance  # the instance name
+      ansible_host: qm_instance # the instance name
       ansible_connection: docker
       ansible_user: root
       vm_headless: true
@@ -82,28 +83,28 @@ all:
     # To connect to VMs you should change the host IP and provide an SSH key file
     aws:
       cloud_platform: aws
-      ansible_host: 34.227.10.49  # change this
+      ansible_host: 34.227.10.49 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       vm_headless: true
       add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     hwcloud:
       cloud_platform: hwcloud
-      ansible_host: 34.250.68.129  # change this
+      ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: root
       vm_headless: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     openstack:
       cloud_platform: openstack
-      ansible_host: 34.250.68.129  # change this
+      ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: ubuntu
       vm_headless: true
       # add_user_public_key: "{{ lookup('file', './keys/user-key.pub') }}"
     gcp:
       cloud_platform: gcp
-      ansible_host: 34.250.68.129  # change this
+      ansible_host: 34.250.68.129 # change this
       ansible_ssh_common_args: -i ./keys/quantum-mobile.pem -o StrictHostKeyChecking=no
       ansible_user: max
       vm_headless: true

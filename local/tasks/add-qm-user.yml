@@ -1,7 +1,8 @@
+---
 # Add the user for logging in with
 
-- name: "Add user {{ vm_user }} with key"
-  import_role:
+- name: "Add user with key: {{ vm_user }}"
+  ansible.builtin.import_role:
     name: marvel-nccr.add_user
   vars:
     add_user_name: "{{ vm_user }}"
@@ -15,7 +16,7 @@
   # This enables sudoless access to shared folder in VirtualBox
   when: cloud_platform == 'virtualbox'
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ vm_user }}"
     groups: vboxsf
     append: true

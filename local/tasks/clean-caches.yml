@@ -1,26 +1,30 @@
-- name: apt-get clean    # noqa 303
+---
+- name: Apt-get clean # noqa command-instead-of-module
   become: true
-  command: apt-get clean
+  ansible.builtin.command: apt-get clean
+  changed_when: true
 
-- name: wipe apt lists
+- name: Wipe apt lists
   become: true
-  shell: "rm -rf /var/lib/apt/lists/*"    # noqa 302
+  ansible.builtin.shell: "rm -rf /var/lib/apt/lists/*" # noqa no-free-form
+  changed_when: true
 
-- name: wipe user cache
+- name: Wipe user cache
   become: true
   become_user: "{{ vm_user }}"
-  file:
+  ansible.builtin.file:
     state: absent
     path: "~/.cache"
 
-- name: wipe root user cache
+- name: Wipe root user cache
   become: true
-  file:
+  ansible.builtin.file:
     state: absent
     path: "~/.cache"
 
-- name: clean conda cache
-    # for a discussion on using -f, see: https://github.com/jupyter/docker-stacks/issues/861
+- name: Clean conda cache
+  # for a discussion on using -f, see: https://github.com/jupyter/docker-stacks/issues/861
   become: true
   become_user: "{{ vm_user }}"
-  command: "~/.conda/bin/mamba clean --yes --all -f"
+  ansible.builtin.command: "~/.conda/bin/mamba clean --yes --all -f"
+  changed_when: true

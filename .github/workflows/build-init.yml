@@ -1,11 +1,11 @@
+---
 name: CI-build
 
 on:
   push:
     branches: [main]
   pull_request:
-    paths-ignore: ['docs/**']
-
+    paths-ignore: ["docs/**"]
 jobs:
   build-init:
     # this job initialises the vagrant box

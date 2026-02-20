@@ -1,67 +1,63 @@
+---
 - name: Prepare for VM build
 
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
   gather_facts: false
 
   pre_tasks:
-
-  - name: test configuration
+  - name: Test configuration
     tags: [init]
-    debug:
+    ansible.builtin.debug:
       msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
 
-  - name: testing ansible environment
+  - name: Testing ansible environment
     tags: [init]
-    debug:
+    ansible.builtin.debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
 
   - name: Install linux-headers-generic for guest-additions
     tags: [init]
     when: "inventory_hostname.startswith('vagrant')"
     become: true
-    apt:
-      cache_valid_time: 86400  # One day
+    ansible.builtin.apt:
+      cache_valid_time: 86400 # One day
       name:
       - linux-headers-generic
 
   - name: Make local dist folder
     tags: [init]
-    local_action:
-      module: file
+    ansible.builtin.file:
       state: directory
       path: "{{ local_dist_folder }}/"
+      mode: "0755"
+    delegate_to: localhost
     when: release_notes_locally is defined and release_notes_locally
 
 - name: Build VM
   hosts: "{{ build_hosts | default('vagrant-ssh') }}"
 
   tasks:
-
   # Generic Tasks
   # These tasks are run for any VM build, regardless of the software installed
   # They setup the VM user, commandline interface, and (optionally) desktop GUI
 
   - name: Update system package managers (apt, pip)
     tags: [init]
-    include_tasks: local/tasks/ensure-apt-pip.yml
-
+    ansible.builtin.include_tasks: local/tasks/ensure-apt-pip.yml
   - name: "Add QM user '{{ vm_user }}'"
     tags: [add_user, ci_test]
-    import_tasks: local/tasks/add-qm-user.yml
-
+    ansible.builtin.import_tasks: local/tasks/add-qm-user.yml
   - name: "Add release notes section for the operating system"
     tags: [release_notes]
-    import_tasks: local/tasks/release-notes-system.yml
-
+    ansible.builtin.import_tasks: local/tasks/release-notes-system.yml
   - name: Customise bash terminal for QM
     tags: [customise-bash]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/customise-bash.yml
-
+    ansible.builtin.import_tasks: local/tasks/customise-bash.yml
   - name: Install common text editors
     tags: [editors]
-    import_role:
+    ansible.builtin.import_role:
       name: marvel-nccr.editors
     vars:
       editors_vm_user: "{{ vm_user }}"
@@ -69,7 +65,7 @@
   - name: Add desktop GUI
     tags: [ubuntu_desktop]
     when: not vm_headless
-    import_role:
+    ansible.builtin.import_role:
       name: marvel-nccr.ubuntu_desktop
     vars:
       ubuntu_desktop_vm_user: "{{ vm_user }}"
@@ -80,23 +76,18 @@
     when: not vm_headless
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/customise-gui.yml
-
+    ansible.builtin.import_tasks: local/tasks/customise-gui.yml
   - name: Setup QM to run simulations
     tags: [simsetup]
-    import_tasks: local/tasks/simulation-setup.yml
-
-  # Build Specific Tasks
-  # These tasks can be customised for specific VM builds,
-  # depending on the software one requires to be installed
-
+    ansible.builtin.import_tasks: local/tasks/simulation-setup.yml
   - name: "Add user README"
     tags: [add_readme]
     become: true
     become_user: "{{ vm_user }}"
-    template:
+    ansible.builtin.template:
       src: local/tasks/files/README.md.j2
       dest: "{{ readme_vm_path }}"
+      mode: "0644"
     vars:
       software_urls:
         Abinit: https://www.abinit.org
@@ -113,34 +104,30 @@
     # TODO we may want to eventually install these with conda
     # (jmol and gnuplot are already installed via conda-forge)
     tags: [plotting]
-    import_tasks: local/tasks/plotting-tools.yml
+    ansible.builtin.import_tasks: local/tasks/plotting-tools.yml
     vars:
       packages: [grace, xcrysden, default-jre]
 
-  - name: install SLURM service
+  - name: Install SLURM service
     tags: [slurm]
-    import_role:
+    ansible.builtin.import_role:
       name: marvel-nccr.slurm
 
   # TODO control version
   # could install with conda, but how to set up the systemd service?
-  - name: install RabbitMQ server service
+  - name: Install RabbitMQ server service
     tags: [rabbitmq]
     become: true
     become_user: "{{ root_user }}"
-    import_tasks: local/tasks/rabbitmq.yml
-
-  # TODO control version
-  # could install with conda, but how to set up the systemd service?
-  - name: install PostrgeSQL server service
+    ansible.builtin.import_tasks: local/tasks/rabbitmq.yml
+  - name: Install PostrgeSQL server service
     tags: [postgresql]
     become: true
     become_user: "{{ root_user }}"
-    import_tasks: local/tasks/postgresql.yml
-
-  - name: install conda+mamba
+    ansible.builtin.import_tasks: local/tasks/postgresql.yml
+  - name: Install conda+mamba
     tags: [conda]
-    import_role:
+    ansible.builtin.import_role:
       name: chrisjsewell.conda.user_install
     become: true
     become_user: "{{ vm_user }}"
@@ -152,8 +139,7 @@
 
   - name: Install code environment
     tags: [code-envs]
-    # TODO ideally this would be import_tasks, but then we can't use loop
-    include_tasks: local/tasks/conda-env-install.yml
+    ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
     vars:
       conda_env: "{{ item.name }}"
       code_packages: "{{ item.pkgs }}"
@@ -163,16 +149,16 @@
     # note here we specify exact versions of libxc/openmpi/mpich
     # this is because we want conda to re-use as many packages as possible
     # since re-used packages do not incur more disk memory usage
-    - {name: abinit, pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3]}
-    - {name: bigdft, pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3]}
-    - {name: cp2k, pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: fleur, pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: nwchem, pkgs: [nwchem=7, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: qespresso, pkgs: [qe=7, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: siesta, pkgs: [siesta=4.*=mpi*, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: yambo, pkgs: [yambo=5, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: wannier90, pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2]}
-    - {name: visualise, pkgs: [jmol, gnuplot, cif2cell, python=3.9]}
+    - { name: abinit, pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3] }
+    - { name: bigdft, pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3] }
+    - { name: cp2k, pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: fleur, pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: nwchem, pkgs: [nwchem=7, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: qespresso, pkgs: [qe=7, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: siesta, pkgs: [siesta=4.*=mpi*, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: yambo, pkgs: [yambo=5, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: wannier90, pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2] }
+    - { name: visualise, pkgs: [jmol, gnuplot, cif2cell, python=3.9] }
     loop_control:
       label: "{{ item.name }}"
 
@@ -180,7 +166,7 @@
     tags: [aiida-env]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/aiida-conda-env.yml
+    ansible.builtin.import_tasks: local/tasks/aiida-conda-env.yml
     vars:
       conda_env: "{{ aiida_conda_env }}"
       aiida_packages:
@@ -198,13 +184,13 @@
       - jupyterlab
       - jupyterlab-tour
       - jupyterlab-spellchecker
-      - mamba_gator  # Provides Conda/Mamba management as a standalone application or as extension for JupyterLab.
+      - mamba_gator # Provides Conda/Mamba management as a standalone application or as extension for JupyterLab.
 
   - name: Create an aiida-profile
     tags: [aiida-profile]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/aiida-profile.yml
+    ansible.builtin.import_tasks: local/tasks/aiida-profile.yml
     vars:
       name: "{{ aiida_profile }}"
       aiida_run_verdi: "~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi"
@@ -225,8 +211,7 @@
     tags: [aiida-jupyter]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/aiida-jupyter.yml
-
+    ansible.builtin.import_tasks: local/tasks/aiida-jupyter.yml
   - name: "Create AiiDA computers"
     tags: [aiida-computers]
     become: true
@@ -243,8 +228,8 @@
       mpiprocs_per_machine: 2
       configure: "--safe-interval=0"
     loop:
-    - {l: local_direct, s: core.direct}
-    - {l: local_slurm, s: core.slurm}
+    - { l: local_direct, s: core.direct }
+    - { l: local_slurm, s: core.slurm }
     loop_control:
       label: "{{ item.l }}"
 
@@ -268,27 +253,27 @@
     loop_control:
       label: "{{ item.label }}"
     loop:
-    - {label: qe.pw, plugin: quantumespresso.pw, env: qespresso, exec: pw.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.cp, plugin: quantumespresso.cp, env: qespresso, exec: cp.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.pp, plugin: quantumespresso.pp, env: qespresso, exec: pp.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.ph, plugin: quantumespresso.ph, env: qespresso, exec: ph.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.neb, plugin: quantumespresso.neb, env: qespresso, exec: neb.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.epw, plugin: quantumespresso.epw, env: qespresso, exec: epw.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.projwfc, plugin: quantumespresso.projwfc, env: qespresso, exec: projwfc.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.pw2wannier90, plugin: quantumespresso.pw2wannier90, env: qespresso, exec: pw2wannier90.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.dos, plugin: quantumespresso.dos, env: qespresso, exec: dos.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.q2r, plugin: quantumespresso.q2r, env: qespresso, exec: q2r.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: qe.matdyn, plugin: quantumespresso.matdyn, env: qespresso, exec: matdyn.x, prepend: export OMP_NUM_THREADS=1}
-    - {label: nwchem.main, plugin: nwchem.nwchem, env: nwchem, exec: nwchem}
-    - {label: siesta.main, plugin: siesta.siesta, env: siesta, exec: siesta}
-    - {label: cp2k.main, plugin: cp2k, env: cp2k, exec: cp2k.psmp}
-    - {label: abinit.main, plugin: abinit, env: abinit, exec: abinit}
+    - { label: qe.pw, plugin: quantumespresso.pw, env: qespresso, exec: pw.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.cp, plugin: quantumespresso.cp, env: qespresso, exec: cp.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.pp, plugin: quantumespresso.pp, env: qespresso, exec: pp.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.ph, plugin: quantumespresso.ph, env: qespresso, exec: ph.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.neb, plugin: quantumespresso.neb, env: qespresso, exec: neb.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.epw, plugin: quantumespresso.epw, env: qespresso, exec: epw.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.projwfc, plugin: quantumespresso.projwfc, env: qespresso, exec: projwfc.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.pw2wannier90, plugin: quantumespresso.pw2wannier90, env: qespresso, exec: pw2wannier90.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.dos, plugin: quantumespresso.dos, env: qespresso, exec: dos.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.q2r, plugin: quantumespresso.q2r, env: qespresso, exec: q2r.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: qe.matdyn, plugin: quantumespresso.matdyn, env: qespresso, exec: matdyn.x, prepend: export OMP_NUM_THREADS=1 }
+    - { label: nwchem.main, plugin: nwchem.nwchem, env: nwchem, exec: nwchem }
+    - { label: siesta.main, plugin: siesta.siesta, env: siesta, exec: siesta }
+    - { label: cp2k.main, plugin: cp2k, env: cp2k, exec: cp2k.psmp }
+    - { label: abinit.main, plugin: abinit, env: abinit, exec: abinit }
 
   # TODO release notes for aiida computers/codes
 
   - name: Download and install SSSP potentials
     tags: [aiida-pseudo]
-    import_tasks: local/tasks/aiida-pseudo-sssp.yml
+    ansible.builtin.import_tasks: local/tasks/aiida-pseudo-sssp.yml
     vars:
       # for quantum mobile
       aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
@@ -300,7 +285,7 @@
 
   - name: Download and install DOJO potentials
     tags: [aiida-pseudo]
-    import_tasks: local/tasks/aiida-pseudo-dojo.yml
+    ansible.builtin.import_tasks: local/tasks/aiida-pseudo-dojo.yml
     vars:
       # for sisesta
       aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
@@ -312,26 +297,24 @@
       aiida_pseudo_version: "0.4"
       aiida_pseudo_profile: "{{ aiida_profile }}"
 
-  - name: aiida-example scripts
+  - name: Aiida-example scripts
     tags: [aiida-examples]
     become: true
     become_user: "{{ vm_user }}"
-    import_tasks: local/tasks/aiida-examples.yml
+    ansible.builtin.import_tasks: local/tasks/aiida-examples.yml
     vars:
       aiida_examples_folder: "~/Desktop/aiida-examples"
       aiida_verdi_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi"
 
-
   post_tasks:
-
   # These break idempotency,
   # so only run once all other tasks have completed
 
   - name: "Clean caches"
     tags: [never, cleanup]
-    import_tasks: local/tasks/clean-caches.yml
-
-  - name: "Remove {{ build_dir }} content"
+    ansible.builtin.import_tasks: local/tasks/clean-caches.yml
+  - name: "Remove content from: {{ build_dir }}"
     tags: [never, cleanup]
     become: true
-    command: rm -rf {{ build_dir }}/*
+    ansible.builtin.command: rm -rf {{ build_dir }}/*
+    changed_when: true
