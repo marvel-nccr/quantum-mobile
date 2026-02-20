@@ -1,21 +1,23 @@
+---
 - name: Install plotting tools, etc.
   become: true
   become_user: "{{ root_user }}"
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
 
-- name: "get versions"
+- name: "Get versions"
   apt_show:
-    name: "{{ packages | join(' ')  }}"
+    name: "{{ packages | join(' ') }}"
   register: plot_versions
 
-- name: "document versions"
+- name: "Document versions"
   loop: "{{ plot_versions.data | dict2items }}"
   loop_control:
     label: "{{ item.key }}"
-  include_role:
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Apt packages"
     option: "{{ item.key }}"

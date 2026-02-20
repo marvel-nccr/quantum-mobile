@@ -1,4 +1,5 @@
-- name: "Get {{ vm_user }} home"
+---
+- name: "Get home for user: {{ vm_user }}"
   become: true
   become_user: "{{ vm_user }}"
   chrisjsewell.conda.expandpath:
@@ -6,11 +7,11 @@
   register: vm_user_home
 
 - name: Write AiiDA jupyter script
-  copy:
+  ansible.builtin.copy:
     dest: "{{ vm_user_home.path }}/.aiida-jupyter.sh"
     owner: "{{ vm_user }}"
     group: "{{ vm_user }}"
-    mode: '0755'
+    mode: "0755"
     content: |
       #!/bin/bash
       {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n {{ aiida_conda_env }} jupyter-lab \
@@ -23,12 +24,12 @@
 - name: Add AiiDA jupyterlab as systemd service
   become: true
   become_user: "{{ root_user }}"
-  template:
+  ansible.builtin.template:
     src: files/aiida-jupyter.service
     dest: /etc/systemd/system
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   vars:
     aiida_user: "{{ vm_user }}"
     aiida_user_home: "{{ vm_user_home.path }}"
@@ -37,7 +38,7 @@
 - name: Start AiiDA jupyterlab systemd service
   become: true
   become_user: "{{ root_user }}"
-  systemd:
+  ansible.builtin.systemd:
     name: aiida-jupyter
     enabled: true
     masked: false
@@ -47,12 +48,13 @@
 - name: Copy Jupyter logo
   become: true
   become_user: "{{ root_user }}"
-  copy:
+  ansible.builtin.copy:
     src: images/jupyter-logo.png
     dest: /usr/share/icons/
+    mode: "0644"
 
-- name: create desktop shortcut to Jupyter Lab
-  copy:
+- name: Create desktop shortcut to Jupyter Lab
+  ansible.builtin.copy:
     dest: "${HOME}/Desktop/jupyterlab.desktop"
     mode: "0753"
     content: |

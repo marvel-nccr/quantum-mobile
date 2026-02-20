@@ -1,80 +1,78 @@
+---
 # these are general setups needed by many simulation codes
 
 - name: Create a /scratch directory for calculations
   become: true
   become_user: "{{ root_user }}"
-  file:
+  ansible.builtin.file:
     path: "/scratch"
     state: directory
-    mode: 0777
+    mode: "0777"
 
-- name: set timezone to {{ vm_timezone }}
+- name: Set timezone to {{ vm_timezone }}
   when: cloud_platform != 'docker'
   become: true
-  timezone:
+  community.general.timezone:
     name: "{{ vm_timezone }}"
   tags: simulationbase_timezone
 
-- name: set stack size to unlimited
+- name: Set stack size to unlimited
   become: true
   become_user: "{{ vm_user }}"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "${HOME}/.profile"
     line: ulimit -s unlimited
 
 - name: "Check if swapfile exists"
-  stat: path=/swapfile
+  ansible.builtin.stat:
+    path: /swapfile
   register: swapfile_stat
 
-- name: install swapfile
+- name: Install swapfile
   when: (not swapfile_stat.stat.exists) and cloud_platform != 'docker'
   become: true
   become_user: "{{ root_user }}"
   block:
-
   # a swap file allows the system to use the hard disk as virtual memory
   # this is useful if the system has less than 4GB of RAM,
   # although it does make the system slower
 
   - name: "Create swapfile"
-    command: "dd if=/dev/zero of=/swapfile bs=1M count=1024"
-
+    ansible.builtin.command: "dd if=/dev/zero of=/swapfile bs=1M count=1024"
   - name: "Make the swapfile a valid swap"
-    command: "mkswap /swapfile"
-
+    ansible.builtin.command: "mkswap /swapfile"
   - name: "Use the swapfile"
-    command: "swapon /swapfile"
-
+    ansible.builtin.command: "swapon /swapfile"
   - name: "Put a line in fstab to ensure swap is used at boot time"
-    lineinfile:
+    ansible.builtin.lineinfile:
       path: "/etc/fstab"
       line: "/swapfile swap swap defaults 0 0"
 
-- name: setup hostname to {{ vm_hostname }}
+- name: Setup hostname to {{ vm_hostname }}
   when: cloud_platform != 'docker'
   block:
-  - name: "get the machine hostname"
+  - name: "Get the machine hostname"
     become: true
-    command: "hostname"
+    ansible.builtin.command: "hostname"
     register: cur_hostname_command
     changed_when: false
 
-  - name: "update machine hostname, if necessary"
+  - name: "Update machine hostname, if necessary"
     become: true
-    hostname:
+    ansible.builtin.hostname:
       name: "{{ vm_hostname }}"
     when: cur_hostname_command.stdout != vm_hostname
 
-  - name: "remove lines with 127.0.1.1, except for 127.0.1.1. localhost"
+  - name: "Remove lines with 127.0.1.1, except for 127.0.1.1. localhost"
     become: true
-    lineinfile:
+    ansible.builtin.lineinfile:
       path: "/etc/hosts"
-      regexp: '^127\.0\.1\.1 (?!localhost)'
+      regexp: "^127\\.0\\.1\\.1 (?!localhost)"
       state: absent
 
-  - name: set 127.0.1.1 to localhost
+  - name: Set 127.0.1.1 to localhost
     become: true
-    lineinfile:
+    ansible.builtin.lineinfile:
       path: "/etc/hosts"
-      regexp: '^127\.0\.1\.1'
+      regexp: "^127\\.0\\.1\\.1"
       line: "127.0.1.1 localhost"

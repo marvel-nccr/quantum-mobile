@@ -1,3 +1,4 @@
+---
 name: CD-vagrant
 
 # This process takes over two hours,
@@ -5,7 +6,7 @@ name: CD-vagrant
 on:
   push:
     tags:
-    - 'vagrant-*'
+    - "vagrant-*"
 
 jobs:
 
@@ -22,7 +23,6 @@ jobs:
       VAGRANT_ON_GH: true
 
     steps:
-
     - uses: actions/checkout@v3
 
     - name: set up Python

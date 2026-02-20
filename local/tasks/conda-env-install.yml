@@ -1,4 +1,5 @@
-- name: Install {{ conda_env }} environment
+---
+- name: "Install environment: {{ conda_env }}"
   tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
@@ -7,7 +8,7 @@
     env: "{{ conda_env }}"
     packages: "{{ code_packages }}"
 
-- name: Retrieve list of core packages in {{ conda_env }} env
+- name: "Retrieve list of core packages in env: {{ conda_env }}"
   tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
@@ -17,9 +18,11 @@
     regex: "({{ code_packages | map('regex_search', '^[^=]+') | join('|') }})"
   register: code_packages_list
 
-- tags: [code-envs]
-  include_role:
+- name: Document conda packages in release notes
+  tags: [code-envs]
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Conda '{{ conda_env }}' environment"
     option: "{{ pkg.name }}"

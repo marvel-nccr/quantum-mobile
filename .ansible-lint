@@ -1,6 +1,7 @@
-warn_list:  # or 'skip_list' to silence them completely
-- '208'  # File permissions unset or incorrect
-- '301'  # Commands should not change things if nothing needs doing
-- '305'  # Use shell only when shell functionality is required
-- '504'  # Do not use 'local_action', use 'delegate_to: localhost'
-- syntax-check
+---
+skip_list:
+- var-naming[no-role-prefix] # Variables passed to roles (not defined in roles)
+- no-changed-when # Needs more careful checking for each task -> To be removed
+exclude_paths:
+- submodules/
+- .ansible/

@@ -1,22 +1,24 @@
+---
 # download pseudopotials and install them in aiida
 
-- set_fact:
+- name: Set pseudo folder path for SSSP
+  ansible.builtin.set_fact:
     pseudo_folder: "{{ aiida_pseudo_base_folder }}/pseudo_sssp_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}"
 
-- name: create the folder to download
+- name: Create the folder to download
   become: true
   become_user: "{{ root_user }}"
-  file:
+  ansible.builtin.file:
     path: "{{ pseudo_folder }}"
     state: directory
     owner: "{{ vm_user }}"
     group: "{{ vm_user }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Download the archive to the download location
   become: true
   become_user: "{{ vm_user }}"
-  shell: |
+  ansible.builtin.command: |
     {{ aiida_pseudo_cmd }} \
     install sssp --traceback --download-only \
     --version {{ aiida_pseudo_version | quote }} \
@@ -29,7 +31,7 @@
 - name: Add the archive to the AiiDA profile
   become: true
   become_user: "{{ vm_user }}"
-  shell: |
+  ansible.builtin.command: |
     {{ aiida_pseudo_cmd }} \
     --profile {{ aiida_pseudo_profile | quote }} \
     install sssp --traceback \
@@ -41,8 +43,9 @@
   changed_when: '"already installed" not in result.stderr'
 
 - name: Document potential
-  include_role:
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Pseudopotentials"
     option: "SSSP/{{ aiida_pseudo_functional }}/{{ aiida_pseudo_protocol }}/{{ aiida_pseudo_version }}"

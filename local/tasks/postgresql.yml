@@ -1,3 +1,4 @@
+---
 # Install and start the postgresql service, and setup the database.
 
 # this task should be run as the root user
@@ -8,22 +9,23 @@
     - postgresql
     - postgresql-server-dev-all
     - postgresql-client
-    - python3-psycopg2  # required for postgresql_db role
+    - python3-psycopg2 # required for postgresql_db role
 
 - name: Start Postgresql service (systemd)
-  service:
+  ansible.builtin.service:
     name: "postgresql"
     state: "started"
     enabled: true
 
-- name: get postgres version
+- name: Get postgres version
   apt_show:
     name: postgresql-client
   register: postgresql_version
 
-- name: document postgresql version
-  include_role:
+- name: Document postgresql version
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Apt packages"
     option: "postgresql-client"

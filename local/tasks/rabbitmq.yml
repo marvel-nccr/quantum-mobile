@@ -1,3 +1,4 @@
+---
 # Install and start the rabbitmq service
 
 # this task should be run as the root user
@@ -9,25 +10,26 @@
 
 # see https://github.com/marvel-nccr/quantum-mobile/issues/111
 - name: Ensure correct RabbitMQ shutdown (systemd)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /lib/systemd/system/rabbitmq-server.service
     regexp: ExecStop=/usr/sbin/rabbitmqctl stop
     line: ExecStop=/usr/sbin/rabbitmqctl shutdown
 
 - name: Start RabbitMQ service (systemd)
-  service:
+  ansible.builtin.service:
     name: "rabbitmq-server"
     state: "started"
     enabled: true
 
-- name: get rabbitmq version
+- name: Get rabbitmq version
   apt_show:
     name: rabbitmq-server
   register: rabbitmq_version
 
-- name: document rabbitmq version
-  include_role:
+- name: Document rabbitmq version
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Apt packages"
     option: "rabbitmq-server"

@@ -1,3 +1,4 @@
+---
 - name: "Expand {{ aiida_examples_folder }}"
   become: true
   become_user: "{{ vm_user }}"
@@ -5,15 +6,16 @@
     path: "{{ aiida_examples_folder }}"
   register: aiida_examples_dir
 
-- name: "Create {{ aiida_examples_dir.path }} folder"
+- name: "Create folder: {{ aiida_examples_dir.path }}"
   ansible.builtin.file:
     path: "{{ aiida_examples_dir.path }}"
     state: directory
+    mode: "0755"
 
 # TODO get list of all files in aiida_run_scripts
 
 - name: "Copy and run aiida script"
-  include_tasks: aiida-example-run.yml
+  ansible.builtin.include_tasks: aiida-example-run.yml
   vars:
     aiida_script_path: "{{ aiida_examples_dir.path }}/{{ aiida_script }}"
   loop:

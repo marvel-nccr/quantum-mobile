@@ -1,22 +1,26 @@
+---
 # download pseudopotials and install them in aiida
 
-- set_fact:
-    pseudo_folder: "{{ aiida_pseudo_base_folder }}/pseudo_dojo_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_relativistic }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}_{{ aiida_pseudo_format }}"
+- name: Set pseudo folder path for dojo
+  ansible.builtin.set_fact:
+    pseudo_folder: >-
+      {{ aiida_pseudo_base_folder }}/pseudo_dojo_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_relativistic }}_{{
+      aiida_pseudo_protocol }}_{{ aiida_pseudo_version }}_{{ aiida_pseudo_format }}
 
-- name: create the folder to download
+- name: Create the folder to download
   become: true
   become_user: "{{ root_user }}"
-  file:
+  ansible.builtin.file:
     path: "{{ pseudo_folder }}"
     state: directory
     owner: "{{ vm_user }}"
     group: "{{ vm_user }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Download the archive to the download location
   become: true
   become_user: "{{ vm_user }}"
-  shell: |
+  ansible.builtin.command: |
     {{ aiida_pseudo_cmd }} \
     install pseudo-dojo --traceback --download-only \
     --version {{ aiida_pseudo_version | quote }} \
@@ -31,7 +35,7 @@
 - name: Add the archive to the AiiDA profile
   become: true
   become_user: "{{ vm_user }}"
-  shell: |
+  ansible.builtin.command: |
     {{ aiida_pseudo_cmd }} \
     --profile {{ aiida_pseudo_profile | quote }} \
     install pseudo-dojo --traceback \
@@ -45,8 +49,9 @@
   changed_when: '"already installed" not in result.stderr'
 
 - name: Document potential
-  include_role:
+  ansible.builtin.include_role:
     name: release_notes
+    public: true
   vars:
     section: "Pseudopotentials"
     option: "DOJO/{{ aiida_pseudo_functional }}/{{ aiida_pseudo_relativistic }}/{{ aiida_pseudo_protocol }}/{{ aiida_pseudo_version }}/{{ aiida_pseudo_format }}"

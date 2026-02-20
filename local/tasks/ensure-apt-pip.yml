@@ -1,10 +1,11 @@
+---
 # may roles require installing from apt or pip
 # here we ensure both are available and up-to-date
 
 - name: Update apt cache and install aptitude
   become: true
   become_user: "{{ root_user }}"
-  apt:
+  ansible.builtin.apt:
     name:
     - aptitude
     - python3-pip
@@ -12,17 +13,18 @@
     # https://github.com/georchestra/ansible/issues/55#issuecomment-651043423
     - acl
     update_cache: true
-    cache_valid_time: 86400  # One day
+    cache_valid_time: 86400 # One day
 
 - name: Create man directory
   when: cloud_platform == 'docker'
-  file:
+  ansible.builtin.file:
     path: /usr/share/man/man1
     state: directory
+    mode: "0755"
 
-- name: upgrade pip
+- name: Upgrade pip
   become: true
   become_user: "{{ root_user }}"
-  pip:
+  ansible.builtin.pip:
     name: pip
     extra_args: --upgrade
