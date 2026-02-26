@@ -22,7 +22,7 @@
     ansible.builtin.apt:
       update_cache: true
       cache_valid_time: 86400
-      name: "linux-headers-{{ ansible_kernel }}"
+      name: "linux-headers-{{ ansible_facts['kernel'] }}"
 
   - name: Make local dist folder
     tags: [init]
@@ -192,7 +192,7 @@
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/aiida-profile.yml
     vars:
-      name: "{{ aiida_profile }}"
+      profile_name: "{{ aiida_profile }}"
       aiida_run_verdi: "~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi"
       postgres_user: postgres
       parameters:

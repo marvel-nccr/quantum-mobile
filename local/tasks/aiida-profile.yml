@@ -1,8 +1,8 @@
 ---
 # create an aiida profile
 
-- name: "Check if AiiDA profile has already been configured: {{ name }}"
-  ansible.builtin.command: "{{ aiida_run_verdi }} profile show {{ name }}"
+- name: "Check if AiiDA profile has already been configured: {{ profile_name }}"
+  ansible.builtin.command: "{{ aiida_run_verdi }} profile show {{ profile_name }}"
   failed_when: false
   changed_when: false
   register: aiida_profile_show
@@ -25,11 +25,11 @@
       name: "{{ parameters.db_name }}"
       owner: "{{ parameters.db_username }}"
 
-  - name: "Set up AiiDA profile '{{ name }}'"
+  - name: "Set up AiiDA profile '{{ profile_name }}'"
     ansible.builtin.shell: |
       {{ aiida_run_verdi }} setup \
       --non-interactive \
-      --profile {{ name | quote }} \
+      --profile {{ profile_name | quote }} \
       --email {{ parameters.email | quote }} \
       --first-name {{ parameters.first_name | quote }} \
       --last-name {{ parameters.last_name | quote }} \
@@ -40,7 +40,7 @@
       --db-username {{ parameters.db_username | quote }} \
       --db-password {{ parameters.db_password | quote }}
 
-- name: "Enable AiiDA daemon service for profile '{{ name }}'"
+- name: "Enable AiiDA daemon service for profile '{{ profile_name }}'"
   when: daemon_service is defined and daemon_service
   block:
   - name: "Get home for user: {{ vm_user }}"
@@ -68,7 +68,7 @@
     become: true
     become_user: "{{ root_user }}"
     ansible.builtin.systemd:
-      name: aiida-daemon@{{ name }}
+      name: aiida-daemon@{{ profile_name }}
       enabled: true
       masked: false
       daemon-reload: true
