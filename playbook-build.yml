@@ -347,7 +347,7 @@
       aiida_pseudo_profile: "{{ aiida_profile }}"
 
   - name: Aiida-example scripts
-    tags: [aiida-examples]
+    tags: [never, aiida-examples]
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/aiida-examples.yml
