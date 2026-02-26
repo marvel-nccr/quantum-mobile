@@ -36,7 +36,7 @@ jobs:
       run: ANSIBLE_ARGS="--tags init,ci_test" vagrant up
 
     - name: Archive ansible log
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ansible-log
         path: ansible.log
