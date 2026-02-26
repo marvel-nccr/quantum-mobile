@@ -27,6 +27,9 @@
   args:
     chdir: "{{ pseudo_folder }}"
     creates: "SSSP_{{ aiida_pseudo_version }}_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_protocol }}.aiida_pseudo"
+  register: download_result
+  retries: 3
+  until: download_result.rc == 0
 
 - name: Add the archive to the AiiDA profile
   become: true
