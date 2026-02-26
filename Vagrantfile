@@ -5,8 +5,7 @@ require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
 inventory      = YAML.load_file("#{current_dir}/inventory.yml")
 # host specific variables take priority over global ones
-gconfig        = inventory['all']['vars'].merge(inventory['all']['hosts']['vagrant-provision'])
-playbook       = ENV["BUILD_PLAYBOOK"] || "playbook-build.yml"
+gconfig        = inventory['all']['vars']
 launch_gui     = ENV.has_key?('VAGRANT_NO_GUI') ? false : true
 
 # Currently on GitHub Actions it fails if accelerate3d activated
@@ -79,20 +78,6 @@ Vagrant.configure(2) do |config|
   # Disable the default shared folder of vagrant
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # provisioner: set up VM via ansible. To (re-)run this step:
-  #   vagrant provision --provision-with ansible
-  # Note we use a static inventory, see: https://www.vagrantup.com/docs/provisioning/ansible_intro#static-inventory
-  config.vm.network :private_network, ip: gconfig["ansible_host"]
-  config.vm.provision "ansible" do |ansible|
-    ansible.inventory_path = "inventory.yml"
-    ansible.limit = "vagrant-provision"
-    ansible.playbook = playbook
-    # ansible.verbose = "v"
-    ansible.extra_vars = {
-      build_hosts: "vagrant-provision",
-    }
-    ansible.raw_arguments = Shellwords.shellsplit(ENV['ANSIBLE_ARGS']) if ENV['ANSIBLE_ARGS']
-    # Ensure that public key auth is not disabled by the user's config
-    ansible.raw_ssh_args = ['-o PubKeyAuthentication=yes -o DSAAuthentication=yes']
-  end
+  # Note: provisioning is done separately via `tox -e ansible`, which first
+  # generates the vagrant-ssh config file and then runs the playbook.
 end
