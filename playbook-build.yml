@@ -1,7 +1,6 @@
 ---
 - name: Prepare for VM build
   hosts: "{{ build_hosts | default('vagrant') }}"
-  gather_facts: false
 
   pre_tasks:
   - name: Test configuration
@@ -14,14 +13,16 @@
     ansible.builtin.debug:
       msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
 
-  - name: Install linux-headers-generic for guest-additions
+  # Install headers for guest-additions. Use kernel-specific package because
+  # linux-headers-generic can be broken on ARM64 (depends on non-existent version).
+  - name: Install linux-headers for guest-additions
     tags: [init]
     when: "inventory_hostname.startswith('vagrant')"
     become: true
     ansible.builtin.apt:
-      cache_valid_time: 86400 # One day
-      name:
-      - linux-headers-generic
+      update_cache: true
+      cache_valid_time: 86400
+      name: "linux-headers-{{ ansible_kernel }}"
 
   - name: Make local dist folder
     tags: [init]
