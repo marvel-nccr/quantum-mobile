@@ -140,6 +140,7 @@
     become: true
     become_user: "{{ root_user }}"
     ansible.builtin.import_tasks: local/tasks/postgresql.yml
+
   - name: Install conda+mamba
     tags: [conda]
     ansible.builtin.import_role:
@@ -147,10 +148,15 @@
     become: true
     become_user: "{{ vm_user }}"
     vars:
+      miniforge_version: "25.11.0-1"
+      miniforge_checksums:
+        x86_64: "sha256:be1bad9d4e67a8753eb76fb4940e9a08036786675c7adf060627e55791bf110d"
+        aarch64: "sha256:43a3783f9e121088f1c92b131b4305b9ebf159424ad2543dfcfc0f1952b5e127"
       conda_folder: "~/.conda"
-      conda_installer_url: https://github.com/conda-forge/miniforge/releases/download/22.11.1-4/Mambaforge-22.11.1-4-Linux-x86_64.sh
-      conda_installer_checksum: sha256:16c7d256de783ceeb39970e675efa4a8eb830dcbb83187f1197abfea0bf07d30
+      conda_installer_url: "https://github.com/conda-forge/miniforge/releases/download/{{ miniforge_version }}/Miniforge3-{{ miniforge_version }}-Linux-{{ ansible_facts['architecture'] }}.sh"
+      conda_installer_checksum: "{{ miniforge_checksums[ansible_facts['architecture']] }}"
       conda_activate_alias: workon
+      conda_executable: conda
 
   - name: Install code environment
     tags: [code-envs]
