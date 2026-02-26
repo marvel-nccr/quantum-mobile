@@ -17,9 +17,9 @@ jobs:
       VAGRANT_ON_GH: true
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: 3.9
 
@@ -36,7 +36,7 @@ jobs:
       run: ANSIBLE_ARGS="--tags init,ci_test" vagrant up
 
     - name: Archive ansible log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ansible-log
         path: ansible.log
