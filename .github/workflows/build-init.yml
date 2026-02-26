@@ -5,38 +5,56 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore: ["docs/**"]
 jobs:
   build-init:
-    # this job initialises the vagrant box
-    # then just runs some initial ansible tasks
-    # for the full build,  see build.yml
-    runs-on: macos-latest
-    env:
-      VAGRANT_NO_GUI: true
-      VAGRANT_ON_GH: true
+    if: github.event.pull_request.draft == false
+    # this job tests ansible provisioning in Docker containers
+    # Tests on both ARM64 and AMD64 architectures using Ubuntu runners
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
 
     steps:
     - uses: actions/checkout@v4
-    - name: set up Python
+
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: 3.9
+        python-version: 3.13
 
-    - name: install pip requirements
+    - name: Install pip requirements
       run: |
         pip install --upgrade pip
         pip install wheel
         pip install -r requirements.txt
 
-    - name: install ansible requirements
+    - name: Install Ansible requirements
       run: ansible-galaxy install -r requirements.yml
 
-    - name: Build Vagrant Box
-      run: ANSIBLE_ARGS="--tags init,ci_test" vagrant up
+    - name: Install Docker collection for CI
+      run: ansible-galaxy collection install community.docker
+
+    - name: Start Ubuntu Docker container
+      run: |
+        docker run -d --name quantum-mobile \
+          -v ${{ github.workspace }}:/workspace \
+          ubuntu:24.04 \
+          sleep infinity
+
+    - name: Prepare container for Ansible
+      run: docker exec quantum-mobile bash -c "apt-get update && apt-get install -y python3 sudo"
+
+    - name: Run Ansible provisioning
+      run: ansible-playbook -v --limit docker-ci -e build_hosts=docker-ci --skip-tags ci_skip playbook-build.yml
+      env:
+        ANSIBLE_CALLBACKS_ENABLED: ansible.posix.profile_tasks
 
     - name: Archive ansible log
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: ansible-log
+        name: ansible-log-${{ matrix.os }}
         path: ansible.log

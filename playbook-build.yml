@@ -60,14 +60,14 @@
     ansible.builtin.import_tasks: local/tasks/customise-bash.yml
 
   - name: Install common text editors
-    tags: [editors]
+    tags: [editors, ci_skip]
     ansible.builtin.import_role:
       name: marvel-nccr.editors
     vars:
       editors_vm_user: "{{ vm_user }}"
 
   - name: Add desktop GUI
-    tags: [ubuntu_desktop]
+    tags: [ubuntu_desktop, ci_skip]
     when: not vm_headless
     become: true
     block:
@@ -91,7 +91,7 @@
         ubuntu_desktop_wm_package: "{{ vm_wm_package }}"
 
   - name: Customise GUI for QM
-    tags: [customise-gui]
+    tags: [customise-gui, ci_skip]
     when: not vm_headless
     become: true
     become_user: "{{ vm_user }}"
@@ -128,7 +128,7 @@
       packages: [grace, xcrysden, default-jre]
 
   - name: Install SLURM service
-    tags: [slurm]
+    tags: [slurm, ci_skip]
     ansible.builtin.import_role:
       name: marvel-nccr.slurm
 
@@ -250,10 +250,10 @@
         db_name: aiidadb
         db_username: aiida
         db_password: "ne9N_LDK-*JSS"
-      daemon_service: true
+      daemon_service: "{{ cloud_platform is not defined or cloud_platform != 'docker' }}"
 
   - name: Create AiiDA Jupyter service
-    tags: [aiida-jupyter]
+    tags: [aiida-jupyter, ci_skip]
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/aiida-jupyter.yml
