@@ -19,17 +19,3 @@ jobs:
       with:
         python-version: 3.13
     - uses: pre-commit/action@v3.0.0
-
-  # docs:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: 3.8
-  #   - name: install tox
-  #     run: pip install tox
-  #   - name: run build
-  #     run: tox -e docs-clean
