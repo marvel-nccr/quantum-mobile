@@ -31,6 +31,9 @@
   args:
     chdir: "{{ pseudo_folder }}"
     creates: "PseudoDojo_{{ aiida_pseudo_version }}_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_relativistic }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_format }}.aiida_pseudo"
+  register: download_result
+  retries: 3
+  until: download_result.rc == 0
 
 - name: Add the archive to the AiiDA profile
   become: true
