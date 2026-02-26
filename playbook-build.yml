@@ -168,7 +168,7 @@
     ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
     vars:
       conda_env: "{{ item.name }}"
-      code_packages: "{{ item.pkgs }}"
+      packages: "{{ item.pkgs }}"
       # TODO allow for `conda env config vars set` to be used,
       # e.g. for export OMP_NUM_THREADS=1
     loop:
@@ -217,10 +217,19 @@
     tags: [aiida-env]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: local/tasks/aiida-conda-env.yml
+    ansible.builtin.import_tasks: local/tasks/conda-env-install.yml
     vars:
       conda_env: "{{ aiida_conda_env }}"
-      aiida_packages: "{{ aiida_packages }}"
+      packages: "{{ aiida_packages }}"
+
+  - name: "Activate verdi TAB completion"
+    tags: [aiida-env]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.copy:
+      dest: "~/.conda/envs/aiida/etc/conda/activate.d/verdi-complete.sh"
+      content: 'eval "$(_VERDI_COMPLETE=bash_source verdi)"'
+      mode: "0644"
 
   - name: Create an aiida-profile
     tags: [aiida-profile]
