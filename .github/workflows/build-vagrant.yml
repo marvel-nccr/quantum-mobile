@@ -23,7 +23,7 @@ jobs:
       VAGRANT_ON_GH: true
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: set up Python
       uses: actions/setup-python@v5
