@@ -67,6 +67,13 @@ all:
       ansible_ssh_common_args: "-F vagrant-ssh"
       ansible_user: vagrant
 
+    docker-ci:
+      cloud_platform: docker
+      ansible_connection: community.docker.docker
+      ansible_host: quantum-mobile
+      ansible_user: root
+      ansible_python_interpreter: /usr/bin/python3
+
     docker:
       # see playbook-docker.yml to start container
       cloud_platform: docker
