@@ -12,6 +12,13 @@
     - sudo
     add_user_passwordless_sudo: true
 
+# This does not seem to be the default when building on ARM64
+- name: Set user shell to bash
+  become: true
+  ansible.builtin.user:
+    name: "{{ vm_user }}"
+    shell: /bin/bash
+
 - name: Add user to 'vboxsf' group on VirtualBox
   # This enables sudoless access to shared folder in VirtualBox
   when: cloud_platform == 'virtualbox'
