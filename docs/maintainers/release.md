@@ -60,21 +60,6 @@ tox -e update-vagrant
 
 Follow the [desktop build instructions](../developers/build-vagrant.md).
 
-:::{note}
-Manual modifications required, as of QM 23.04.01, desktop shortcuts mut be manually enabled:
-
-- First install the file with <https://manpages.ubuntu.com/manpages/focal/en/man1/desktop-file-edit.1.html>:
-
-  ```console
-  $ sudo desktop-file-install --delete-original ~/Desktop/homepage.desktop
-  $ sudo desktop-file-install --delete-original ~/Desktop/jupyterlab.desktop
-  ```
-
-- Now navigate to the `/usr/share/applications` in the folder app, find the files and drag/drop them to the Desktop
-- Right click on the file on the Desktop and select `Allow Launching`
-
-:::
-
 ### Cloud Edition
 
 Follow the [cloud build instructions](../developers/build-cloud.md).
