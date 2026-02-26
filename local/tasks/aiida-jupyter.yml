@@ -53,10 +53,12 @@
     dest: /usr/share/icons/
     mode: "0644"
 
-- name: Create desktop shortcut to Jupyter Lab
+- name: Install JupyterLab application shortcut
+  become: true
+  become_user: "{{ root_user }}"
   ansible.builtin.copy:
-    dest: "${HOME}/Desktop/jupyterlab.desktop"
-    mode: "0753"
+    dest: "/usr/share/applications/jupyterlab.desktop"
+    mode: "0644"
     content: |
       [Desktop Entry]
       Encoding=UTF-8

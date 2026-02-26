@@ -55,16 +55,3 @@
     dest: "${HOME}/Desktop/{{ release_notes_vm_path | basename }}"
     state: link
     force: true
-
-- name: Create desktop shortcut to QM homepage
-  ansible.builtin.copy:
-    dest: "${HOME}/Desktop/homepage.desktop"
-    mode: "0753"
-    content: |
-      [Desktop Entry]
-      Encoding=UTF-8
-      Name=Homepage
-      Comment=Quantum Mobile Homepage
-      Exec={{ vm_browser }} "{{ qm_homepage }}"
-      Icon=/usr/share/icons/quantum-mobile-logo.png
-      Type=Application
