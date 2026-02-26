@@ -65,11 +65,26 @@
   - name: Add desktop GUI
     tags: [ubuntu_desktop]
     when: not vm_headless
-    ansible.builtin.import_role:
-      name: marvel-nccr.ubuntu_desktop
-    vars:
-      ubuntu_desktop_vm_user: "{{ vm_user }}"
-      ubuntu_desktop_browser: "{{ vm_browser }}"
+    become: true
+    block:
+    # Installing ubuntu-desktop pulls in NetworkManager, which can cause the network
+    # interface to lose its IP mid-install. We set networkd as the renderer.
+    - name: Set netplan renderer to networkd
+      ansible.builtin.copy:
+        dest: /etc/netplan/99-stay-with-networkd.yaml
+        content: |
+          network:
+            version: 2
+            renderer: networkd
+        mode: "0600"
+
+    - name: Install Ubuntu desktop
+      ansible.builtin.import_role:
+        name: marvel-nccr.ubuntu_desktop
+      vars:
+        ubuntu_desktop_vm_user: "{{ vm_user }}"
+        ubuntu_desktop_browser: "{{ vm_browser }}"
+        ubuntu_desktop_wm_package: "{{ vm_wm_package }}"
 
   - name: Customise GUI for QM
     tags: [customise-gui]
