@@ -21,10 +21,3 @@
     path: /usr/share/man/man1
     state: directory
     mode: "0755"
-
-- name: Upgrade pip
-  become: true
-  become_user: "{{ root_user }}"
-  ansible.builtin.pip:
-    name: pip
-    extra_args: --upgrade
