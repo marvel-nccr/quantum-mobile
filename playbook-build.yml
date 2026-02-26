@@ -44,17 +44,21 @@
   - name: Update system package managers (apt, pip)
     tags: [init]
     ansible.builtin.include_tasks: local/tasks/ensure-apt-pip.yml
+
   - name: "Add QM user '{{ vm_user }}'"
-    tags: [add_user, ci_test]
+    tags: [add_user]
     ansible.builtin.import_tasks: local/tasks/add-qm-user.yml
+
   - name: "Add release notes section for the operating system"
     tags: [release_notes]
     ansible.builtin.import_tasks: local/tasks/release-notes-system.yml
+
   - name: Customise bash terminal for QM
     tags: [customise-bash]
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/customise-bash.yml
+
   - name: Install common text editors
     tags: [editors]
     ansible.builtin.import_role:
@@ -135,6 +139,7 @@
     become: true
     become_user: "{{ root_user }}"
     ansible.builtin.import_tasks: local/tasks/rabbitmq.yml
+
   - name: Install PostrgeSQL server service
     tags: [postgresql]
     become: true
@@ -243,6 +248,7 @@
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/aiida-jupyter.yml
+
   - name: "Create AiiDA computers"
     tags: [aiida-computers]
     become: true
@@ -321,7 +327,7 @@
     tags: [aiida-pseudo]
     ansible.builtin.import_tasks: local/tasks/aiida-pseudo-dojo.yml
     vars:
-      # for sisesta
+      # for siesta
       aiida_pseudo_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} aiida-pseudo"
       aiida_pseudo_base_folder: "{{ vm_data_folder }}"
       aiida_pseudo_functional: PBE
