@@ -13,7 +13,7 @@
   become_user: "{{ vm_user }}"
   ansible.builtin.shell: >
     ~/.conda/bin/mamba {{ 'install' if conda_env_stat.stat.exists else 'create' }}
-    -n {{ conda_env }} -y {{ code_packages | join(' ') }}
+    -n {{ conda_env }} -y {{ packages | join(' ') }}
   register: result
   changed_when: "'All requested packages already installed' not in result.stdout"
 
@@ -34,8 +34,8 @@
   chrisjsewell.conda.list_pkgs:
     executable: "~/.conda/bin/mamba"
     env: "{{ conda_env }}"
-    regex: "({{ code_packages | map('regex_search', '^[^=]+') | join('|') }})"
-  register: code_packages_list
+    regex: "({{ packages | map('regex_search', '^[^=]+') | join('|') }})"
+  register: packages_list
 
 - name: Document conda packages in release notes
   tags: [code-envs]
@@ -46,7 +46,7 @@
     section: "Conda '{{ conda_env }}' environment"
     option: "{{ pkg.name }}"
     value: "{{ pkg.version }}-{{ pkg.build_string }}@{{ pkg.channel }}"
-  loop: "{{ code_packages_list.list }}"
+  loop: "{{ packages_list.list }}"
   loop_control:
     loop_var: pkg
     label: "{{ pkg.name }}"
