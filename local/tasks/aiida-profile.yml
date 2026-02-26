@@ -10,20 +10,20 @@
 - name: Setup AiiDA profile when not configured
   when: aiida_profile_show.rc != 0
   block:
+  - name: Setup Postgresql DB user
+    become: true
+    become_user: "{{ postgres_user }}"
+    community.postgresql.postgresql_user:
+      name: "{{ parameters.db_username }}"
+      password: "{{ parameters.db_password }}"
+      encrypted: true
+
   - name: Setup Postgresql DB
     become: true
     become_user: "{{ postgres_user }}"
     community.postgresql.postgresql_db:
       name: "{{ parameters.db_name }}"
-
-  - name: Setup Postgresql DB user
-    become: true
-    become_user: "{{ postgres_user }}"
-    community.postgresql.postgresql_user:
-      db: "{{ parameters.db_name }}"
-      name: "{{ parameters.db_username }}"
-      password: "{{ parameters.db_password }}"
-      encrypted: true
+      owner: "{{ parameters.db_username }}"
 
   - name: "Set up AiiDA profile '{{ name }}'"
     ansible.builtin.shell: |
@@ -39,6 +39,7 @@
       --db-name {{ parameters.db_name | quote }} \
       --db-username {{ parameters.db_username | quote }} \
       --db-password {{ parameters.db_password | quote }}
+
 - name: "Enable AiiDA daemon service for profile '{{ name }}'"
   when: daemon_service is defined and daemon_service
   block:
