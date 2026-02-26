@@ -1,7 +1,6 @@
 ---
 - name: Prepare for VM build
-
-  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+  hosts: "{{ build_hosts | default('vagrant') }}"
   gather_facts: false
 
   pre_tasks:
@@ -34,7 +33,7 @@
     when: release_notes_locally is defined and release_notes_locally
 
 - name: Build VM
-  hosts: "{{ build_hosts | default('vagrant-ssh') }}"
+  hosts: "{{ build_hosts | default('vagrant') }}"
 
   tasks:
   # Generic Tasks
