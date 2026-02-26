@@ -4,7 +4,7 @@
 
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * Vagrant [vbguest plugin](https://github.com/dotless-de/vagrant-vbguest) (`vagrant plugin update`)
-* [bento/ubuntu-18.04](https://app.vagrantup.com/bento/boxes/ubuntu-18.04) Vagrant image (`vagrant box update`)
+* [bento/ubuntu-24.04](https://app.vagrantup.com/bento/boxes/ubuntu-24.04) Vagrant image (`vagrant box update`)
 * [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
 * QM codes
   * [Quantum Espresso](https://gitlab.com/QEF/q-e/tags)
@@ -66,7 +66,7 @@ Follow the [cloud build instructions](../developers/build-cloud.md).
 
 * For the server to build the VM, choose e.g. 2 CPUs with 4GB of RAM, with at least 16GB of storage.
   * Your configuration may also be the standard configuration shown to users creating a VM using your image
-  * Currently Ubuntu Server 20.04 LTS
+  * Currently Ubuntu Server 24.04 LTS
   * Expose ports as listed in instructions
   * You won't need it for long, so price for CPU/RAM is of no concern
 * Exemplary metadata:

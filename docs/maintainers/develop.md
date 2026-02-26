@@ -15,13 +15,16 @@ pre-commit run --all
 pip install tox
 # to build from scratch
 tox -e docs-clean
+# to update the build (faster, doesn't remove existing build)
+tox -e docs-update
 # to start a live server (reloads automatically on changes to documentation)
 tox -e docs-live
 ```
 
 ## Testing a build on GH Actions
 
-Pushing a commit to master or a PR on GitHub will trigger a pre-commit and initial build (only for `init` tagged tasks) tests on GH Actions.
+Pushing a commit to main or a PR on GitHub will trigger a pre-commit test and a Docker-based build test on GitHub Actions.
+The build test runs Ansible provisioning in Docker containers on both ARM64 (`ubuntu-24.04-arm`) and AMD64 (`ubuntu-latest`) architectures.
 
 You can also trigger a full build test of either the vagrant or docker builds, by pushing a git tag prefixed `vagrant-` or `docker-`.
 
