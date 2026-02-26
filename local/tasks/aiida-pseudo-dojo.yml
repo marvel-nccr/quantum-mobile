@@ -30,7 +30,7 @@
     --pseudo-format {{ aiida_pseudo_format | quote }} \
   args:
     chdir: "{{ pseudo_folder }}"
-    creates: "archive.tar.gz"
+    creates: "PseudoDojo_{{ aiida_pseudo_version }}_{{ aiida_pseudo_functional }}_{{ aiida_pseudo_relativistic }}_{{ aiida_pseudo_protocol }}_{{ aiida_pseudo_format }}.aiida_pseudo"
 
 - name: Add the archive to the AiiDA profile
   become: true
@@ -45,8 +45,8 @@
     --relativistic {{ aiida_pseudo_relativistic | quote }} \
     --pseudo-format {{ aiida_pseudo_format | quote }} \
   register: result
-  failed_when: result.rc != 0 and "already installed" not in result.stderr
-  changed_when: '"already installed" not in result.stderr'
+  failed_when: result.rc != 0 and "already installed" not in result.stdout
+  changed_when: '"already installed" not in result.stdout'
 
 - name: Document potential
   ansible.builtin.include_role:
