@@ -1,12 +1,31 @@
 ---
-- name: "Install environment: {{ conda_env }}"
+- name: "Check if conda env exists: '{{ conda_env }}'"
   tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
-  chrisjsewell.conda.install_pkgs:
-    executable: "~/.conda/bin/mamba"
-    env: "{{ conda_env }}"
-    packages: "{{ code_packages }}"
+  ansible.builtin.stat:
+    path: "/home/{{ vm_user }}/.conda/envs/{{ conda_env }}"
+  register: conda_env_stat
+
+- name: "Install environment: {{ conda_env }} "
+  tags: [code-envs]
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.shell: >
+    ~/.conda/bin/mamba {{ 'install' if conda_env_stat.stat.exists else 'create' }}
+    -n {{ conda_env }} -y {{ code_packages | join(' ') }}
+  register: result
+  changed_when: "'All requested packages already installed' not in result.stdout"
+
+- name: "Ensure conda env is on PATH via .bashrc"
+  tags: [code-envs]
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ vm_user }}/.bashrc"
+    marker: "## {mark} ANSIBLE MANAGED BLOCK ({{ conda_env }})"
+    block: |
+      export PATH="$HOME/.conda/envs/{{ conda_env }}/bin:$PATH"
 
 - name: "Retrieve list of core packages in env: {{ conda_env }}"
   tags: [code-envs]
