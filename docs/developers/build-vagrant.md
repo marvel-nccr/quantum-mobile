@@ -2,8 +2,15 @@
 
 In the following, we explain how to build your own custom Quantum Mobile VirtualBox image from scratch.
 
-Note that building the full VM can take around 15 minutes.
+:::{admonition} Architecture (AMD64 vs ARM64)
+:class: warning
+VirtualBox does not support cross-architecture virtualization, so an ARM64 (e.g. Apple Silicon) image must be built on an ARM64 host, and an AMD64 (Intel x86) image on an AMD64 host.
+:::
 
+:::{admonition} Time required
+:class: tip
+Building and packaging the full VM can take around 30 minutes to an hour, depending on your host machine.
+:::
 
 ## Prerequisites & Installation
 
@@ -47,7 +54,7 @@ Install [tox](https://tox.readthedocs.io/):
 pip install tox
 ```
 
-## Create the Virtual Machine
+## Build the Virtual Machine
 
 We use [tox](https://tox.readthedocs.io/) to set up the Python environment and run the build steps.
 
