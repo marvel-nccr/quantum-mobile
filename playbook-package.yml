@@ -129,7 +129,7 @@
 
   - name: Set output path for image
     ansible.builtin.set_fact:
-      image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}.ova"
+      image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}_{{ 'x86_64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' }}.ova"
     tags: [export, release]
 
   - name: Remove old image file
