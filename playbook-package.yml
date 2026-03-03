@@ -22,8 +22,10 @@
 
   - name: Set VM machine information
     ansible.builtin.set_fact:
-      vdisk_path: "{{ vminfo.stdout | regex_search('\"SATA Controller-0-0\"=\"(.+)\"', '\\1') | first }}"
-      vdisk_uuid: "{{ vminfo.stdout | regex_search('\"SATA Controller-ImageUUID-0-0\"=\"(.+)\"', '\\1') | first }}"
+      vdisk_path: >-
+        {{ vminfo.stdout | regex_search('"[^"]*-0-0"="([^"]+\.vmdk)"', '\1') | first }}
+      vdisk_uuid: >-
+        {{ vminfo.stdout | regex_search('"[^"]*-ImageUUID-0-0"="([^"]+)"', '\1') | first }}
     tags: [always]
 
   - name: Get stats of {{ vdisk_path }}
