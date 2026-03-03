@@ -56,10 +56,6 @@
     ansible.builtin.command: vagrant halt
     tags: [always]
 
-  - name: Disable the virtual network created by vagrant
-    ansible.builtin.command: vboxmanage modifyvm "{{ vm_id }}" --nic2 none
-    tags: [always]
-
   - name: Remove old temporary files
     ansible.builtin.file:
       path: "{{ item }}"
