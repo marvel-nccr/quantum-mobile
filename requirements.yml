@@ -9,10 +9,6 @@ collections:
 roles:
 - name: gantsign.default-web-browser
   version: 4.0.0
-- name: marvel-nccr.current_user
-  version: v0.1.0
-- name: marvel-nccr.add_user
-  version: v0.2.1
 - name: marvel-nccr.ubuntu_desktop
   version: v2.0.0
 - name: marvel-nccr.editors

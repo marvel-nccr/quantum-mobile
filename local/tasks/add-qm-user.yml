@@ -1,23 +1,33 @@
 ---
 # Add the user for logging in with
 
-- name: "Add user with key: {{ vm_user }}"
-  ansible.builtin.import_role:
-    name: marvel-nccr.add_user
-  vars:
-    add_user_name: "{{ vm_user }}"
-    add_user_password: "{{ vm_password }}"
-    add_user_groups:
-    - "{{ vm_user }}"
-    - sudo
-    add_user_passwordless_sudo: true
+- name: "Add groups"
+  become: true
+  ansible.builtin.group:
+    name: "{{ item }}"
+  loop:
+  - "{{ vm_user }}"
+  - sudo
 
-# This does not seem to be the default when building on ARM64
-- name: Set user shell to bash
+- name: "Add user with password: {{ vm_user }}"
   become: true
   ansible.builtin.user:
     name: "{{ vm_user }}"
+    groups:
+    - "{{ vm_user }}"
+    - sudo
     shell: /bin/bash
+    password: "{{ vm_password | string | password_hash('sha512', 'quantummobile') }}"
+    update_password: on_create
+
+- name: "Enable passwordless sudo for group {{ vm_user }}"
+  become: true
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%{{ vm_user }}'
+    line: '%{{ vm_user }} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
 - name: Add user to 'vboxsf' group on VirtualBox
   # This enables sudoless access to shared folder in VirtualBox
