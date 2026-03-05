@@ -60,11 +60,8 @@
     ansible.builtin.import_tasks: local/tasks/customise-bash.yml
 
   - name: Install common text editors
-    tags: [editors, ci_skip]
-    ansible.builtin.import_role:
-      name: marvel-nccr.editors
-    vars:
-      editors_vm_user: "{{ vm_user }}"
+    tags: [editors]
+    ansible.builtin.import_tasks: local/tasks/editors.yml
 
   - name: Add desktop GUI
     tags: [ubuntu_desktop, ci_skip]

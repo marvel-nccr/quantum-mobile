@@ -1,0 +1,23 @@
+---
+- name: Install common text editors
+  become: true
+  ansible.builtin.apt:
+    name:
+    - emacs
+    - vim
+    - nano
+    - evince
+
+- name: Add basic .vimrc
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.copy:
+    src: files/.vimrc
+    dest: "${HOME}"
+    mode: "0644"
+
+- name: Install imagemagick
+  become: true
+  ansible.builtin.apt:
+    name:
+    - graphicsmagick
