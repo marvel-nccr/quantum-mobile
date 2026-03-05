@@ -40,6 +40,10 @@
       --db-username {{ parameters.db_username | quote }} \
       --db-password {{ parameters.db_password | quote }}
 
+- name: "Disable RabbitMQ version warning for profile '{{ profile_name }}'"
+  ansible.builtin.command: >-
+    {{ aiida_run_verdi }} -p {{ profile_name }} config set warnings.rabbitmq_version False
+
 - name: "Enable AiiDA daemon service for profile '{{ profile_name }}'"
   when: daemon_service is defined and daemon_service
   block:

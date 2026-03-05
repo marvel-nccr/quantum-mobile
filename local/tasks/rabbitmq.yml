@@ -15,6 +15,17 @@
     regexp: ExecStop=/usr/sbin/rabbitmqctl stop
     line: ExecStop=/usr/sbin/rabbitmqctl shutdown
 
+- name: Configure RabbitMQ consumer timeout
+  ansible.builtin.copy:
+    dest: /etc/rabbitmq/advanced.config
+    content: |
+      [
+        {rabbit, [
+          {consumer_timeout, undefined}
+        ]}
+      ].
+    mode: "0644"
+
 - name: Start RabbitMQ service (systemd)
   ansible.builtin.service:
     name: "rabbitmq-server"
