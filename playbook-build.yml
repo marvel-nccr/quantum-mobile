@@ -162,10 +162,14 @@
 
   - name: Install code environment
     tags: [code-envs]
-    ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+    ansible.builtin.include_tasks:
+      file: local/tasks/conda-env-install.yml
+      apply:
+        tags: [code-envs]
     vars:
       conda_env: "{{ item.name }}"
       packages: "{{ item.pkgs }}"
+      bin_patterns: "{{ item.bin_patterns }}"
       # TODO allow for `conda env config vars set` to be used,
       # e.g. for export OMP_NUM_THREADS=1
     loop:
@@ -173,17 +177,66 @@
     # this is because we want conda to re-use as many packages as possible
     # since re-used packages do not incur more disk memory usage
     # Architecture support: x86_64 only
-    - { name: abinit, pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3], arch: [x86_64] }
-    - { name: bigdft, pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3], arch: [x86_64] }
-    - { name: cp2k, pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2], arch: [x86_64] }
-    - { name: fleur, pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2], arch: [x86_64] }
-    - { name: wannier90, pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2], arch: [x86_64] }
-    - {name: siesta, pkgs: [siesta, libxc=5.2.3, openmpi=4.1.2], arch: [x86_64]}
+    - name: abinit
+      pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3]
+      arch: [x86_64]
+      bin_patterns:
+      - abinit
+      - abitk
+      - anaddb
+      - atdep
+      - band2eps
+      - cut3d
+      - macroave
+      - mrgddb
+      - mrgdv
+      - mrggkk
+      - mrgscr
+      - multibinit
+      - optic
+    - name: bigdft
+      pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3]
+      arch: [x86_64]
+      bin_patterns: [bigdft, bigdft-tool, dftd3]
+    - name: cp2k
+      pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2]
+      arch: [x86_64]
+      bin_patterns: ["cp2k.*", sirius.scf]
+    - name: fleur
+      pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2]
+      arch: [x86_64]
+      bin_patterns: ["fleur*", inpgen]
+    - name: wannier90
+      pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2]
+      arch: [x86_64]
+      bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
+    - name: siesta
+      pkgs: [siesta, libxc=5.2.3, openmpi=4.1.2]
+      arch: [x86_64]
+      bin_patterns:
+      - siesta
+      - tbtrans
+      - vibra
+      - Eig2DOS
+      - gnubands
+      - fat
+      - denchar
+      - macroave
+      - stm
+      - optical
     # Architecture support: x86_64 and aarch64
-    - { name: nwchem, pkgs: [nwchem] }
-    - { name: qespresso, pkgs: [qe] }
-    - { name: yambo, pkgs: [yambo] }
-    - { name: visualise, pkgs: [jmol, gnuplot] }
+    - name: nwchem
+      pkgs: [nwchem]
+      bin_patterns: [nwchem]
+    - name: qespresso
+      pkgs: [qe]
+      bin_patterns: ["*.x"]
+    - name: yambo
+      pkgs: [yambo]
+      bin_patterns: ["yambo*", "ypp*", a2y, c2y, p2y]
+    - name: visualise
+      pkgs: [jmol, gnuplot]
+      bin_patterns: [jmol, gnuplot]
     when: item.arch is not defined or ansible_facts['architecture'] in item.arch
     loop_control:
       label: "{{ item.name }}"

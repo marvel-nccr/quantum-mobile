@@ -104,6 +104,30 @@ To install packages into an environment, use the [mamba](https://mamba.readthedo
 (aiida) max@qmobile:/$ mamba install -n <env_name> <package_name>
 ```
 
+## Running simulation codes directly
+
+A selection of commonly used binaries from each code's conda environment are symlinked into `~/.local/bin`, which is on `PATH` by default.
+This means you can run codes like `pw.x`, `yambo`, or `siesta` directly from the terminal without activating any environment first:
+
+```console
+max@qmobile:~$ pw.x -in scf.in
+```
+
+If a binary you need is not available, you can find the full list of executables for each code in its conda environment:
+
+```console
+max@qmobile:~$ ls ~/.conda/envs/qespresso/bin/
+```
+
+To use a binary that is not symlinked, either run it by its full path or activate the environment first:
+
+```console
+max@qmobile:~$ workon qespresso
+(qespresso) max@qmobile:~$ some_niche_tool.x
+```
+
+See the {ref}`use/conda` section for more on working with conda environments.
+
 ## Working with AiiDA
 
 In the terminal, you can enable python environments using the [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io) commands.
