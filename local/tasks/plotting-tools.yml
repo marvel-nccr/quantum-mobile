@@ -11,6 +11,31 @@
     name: "{{ packages | join(' ') }}"
   register: plot_versions
 
+- name: "Configure XCrySDen for virtual machine compatibility"
+  # XCrySDen requests an OpenGL accumulation buffer by default, which is not
+  # supported by virtual GPUs (SVGA3D, llvmpipe). Disabling it allows the togl
+  # widget to initialize successfully in a VM.
+  when: "'xcrysden' in packages"
+  become: true
+  become_user: "{{ vm_user }}"
+  block:
+  - name: "Create ~/.xcrysden directory"
+    ansible.builtin.file:
+      path: "/home/{{ vm_user }}/.xcrysden"
+      state: directory
+      mode: "0755"
+  - name: "Copy custom-definitions"
+    ansible.builtin.copy:
+      src: /usr/share/xcrysden/Tcl/custom-definitions
+      dest: "/home/{{ vm_user }}/.xcrysden/custom-definitions"
+      remote_src: true
+      mode: "0644"
+  - name: "Disable accumulation buffer"
+    ansible.builtin.lineinfile:
+      path: "/home/{{ vm_user }}/.xcrysden/custom-definitions"
+      regexp: '.*set toglOpt\(accum\).*'
+      line: "set toglOpt(accum) false"
+
 - name: "Document versions"
   loop: "{{ plot_versions.data | dict2items }}"
   loop_control:
