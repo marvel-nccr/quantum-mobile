@@ -1,6 +1,5 @@
 ---
 - name: "Check if conda env exists: '{{ conda_env }}'"
-  tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
   ansible.builtin.stat:
@@ -8,7 +7,6 @@
   register: conda_env_stat
 
 - name: "Install environment: {{ conda_env }} "
-  tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
   ansible.builtin.shell: >
@@ -17,18 +15,39 @@
   register: result
   changed_when: "'All requested packages already installed' not in result.stdout"
 
-- name: "Ensure conda env is on PATH via .bashrc"
-  tags: [code-envs]
+- name: "Symlink binaries to ~/.local/bin: {{ conda_env }}"
   become: true
   become_user: "{{ vm_user }}"
-  ansible.builtin.blockinfile:
-    path: "/home/{{ vm_user }}/.bashrc"
-    marker: "## {mark} ANSIBLE MANAGED BLOCK ({{ conda_env }})"
-    block: |
-      export PATH="$HOME/.conda/envs/{{ conda_env }}/bin:$PATH"
+  when: bin_patterns is defined and bin_patterns | length > 0
+  block:
+  - name: "Create ~/.local/bin"
+    ansible.builtin.file:
+      path: "/home/{{ vm_user }}/.local/bin"
+      state: directory
+      mode: "0755"
+  - name: "Add ~/.local/bin to PATH in .bashrc"
+    ansible.builtin.blockinfile:
+      path: "/home/{{ vm_user }}/.bashrc"
+      marker: "## {mark} ANSIBLE MANAGED BLOCK (~/.local/bin)"
+      block: |
+        export PATH="$HOME/.local/bin:$PATH"
+  - name: "Find binaries matching patterns"
+    ansible.builtin.find:
+      paths: "/home/{{ vm_user }}/.conda/envs/{{ conda_env }}/bin"
+      patterns: "{{ bin_patterns }}"
+      file_type: any
+    register: found_binaries
+  - name: "Create symlinks"
+    ansible.builtin.file:
+      src: "{{ binary.path }}"
+      dest: "/home/{{ vm_user }}/.local/bin/{{ binary.path | basename }}"
+      state: link
+    loop: "{{ found_binaries.files }}"
+    loop_control:
+      loop_var: binary
+      label: "{{ binary.path | basename }}"
 
 - name: "Retrieve list of core packages in env: {{ conda_env }}"
-  tags: [code-envs]
   become: true
   become_user: "{{ vm_user }}"
   chrisjsewell.conda.list_pkgs:
@@ -38,7 +57,6 @@
   register: packages_list
 
 - name: Document conda packages in release notes
-  tags: [code-envs]
   ansible.builtin.include_role:
     name: release_notes
     public: true
