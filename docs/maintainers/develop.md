@@ -37,3 +37,20 @@ git push --follow-tags
 ```
 
 The docker build will also push the final image to <https://hub.docker.com/r/marvelnccr/quantum-mobile>, under the tag `develop`.
+
+## Supported codes
+
+Below is a list of codes we aim to support in Quantum Mobile, with some useful links/details.
+Architecture support refers to `linux-aarch64` (ARM64) availability on conda-forge (as of March 2026).
+
+| Code | Releases | Conda-forge | aarch64 |
+|------|----------|-------------|---------|
+| [ABINIT](https://www.abinit.org/) | [GitHub](https://github.com/abinit/abinit/releases) | [abinit](https://anaconda.org/conda-forge/abinit) / [feedstock](https://github.com/conda-forge/abinit-feedstock) | ❌ |
+| [BigDFT](https://bigdft.org/) | [GitLab](https://gitlab.com/l_sim/bigdft-suite/-/releases) | [bigdft-suite](https://anaconda.org/conda-forge/bigdft-suite) / [feedstock](https://github.com/conda-forge/bigdft-suite-feedstock) | ❌ |
+| [CP2K](https://www.cp2k.org/) | [GitHub](https://github.com/cp2k/cp2k/releases) | [cp2k](https://anaconda.org/conda-forge/cp2k) / [feedstock](https://github.com/conda-forge/cp2k-feedstock) | ❌ |
+| [Fleur](https://www.flapw.de/) | [GitHub](https://github.com/judftteam/fleur/releases) | [fleur](https://anaconda.org/conda-forge/fleur) / [feedstock](https://github.com/conda-forge/fleur-feedstock) | ❌ |
+| [NWChem](https://nwchemgit.github.io/) | [GitHub](https://github.com/nwchemgit/nwchem/releases) | [nwchem](https://anaconda.org/conda-forge/nwchem) / [feedstock](https://github.com/conda-forge/nwchem-feedstock) | ✅ |
+| [Quantum ESPRESSO](https://www.quantum-espresso.org/) | [GitLab](https://gitlab.com/QEF/q-e/-/releases) | [qe](https://anaconda.org/conda-forge/qe) / [feedstock](https://github.com/conda-forge/qe-feedstock) | ✅ |
+| [Siesta](https://siesta-project.org/) | [GitLab](https://gitlab.com/siesta-project/siesta/-/releases) | [siesta](https://anaconda.org/conda-forge/siesta) / [feedstock](https://github.com/conda-forge/siesta-feedstock) | ❌ |
+| [Wannier90](http://www.wannier.org/) | [GitHub](https://github.com/wannier-developers/wannier90/releases) | [wannier90](https://anaconda.org/conda-forge/wannier90) / [feedstock](https://github.com/conda-forge/wannier90-feedstock) | ❌ |
+| [Yambo](http://www.yambo-code.eu/) | [GitHub](https://github.com/yambo-code/yambo/releases) | [yambo](https://anaconda.org/conda-forge/yambo) / [feedstock](https://github.com/conda-forge/yambo-feedstock) | ✅ |
