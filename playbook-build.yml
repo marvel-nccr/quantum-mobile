@@ -249,7 +249,7 @@
       - pip
       - aiida-core~=2.7
       - aiida-quantumespresso=4
-      - aiida-nwchem=2
+      - aiida-nwchem=3
       - aiida-pseudo=1
       - ipykernel
       - jupyterlab
