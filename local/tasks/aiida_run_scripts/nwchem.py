@@ -17,7 +17,7 @@ DEFAULT_CALC_LABEL = "nwchem.main.mpi.h20"
 def h2o():
     """Return a ``StructureData`` representing a water molecule."""
     atoms = molecule("H2O", vacuum=10)
-    atoms.pbc = (True, True, True)
+    atoms.pbc = (False, False, False)
     return orm.StructureData(ase=atoms)
 
 
@@ -39,7 +39,6 @@ def run(args: t.List[str]) -> None:
     builder.parameters = orm.Dict(
         dict=dict(task="dft", basis={"H": "library sto-3g", "O": "library sto-3g"})
     )
-    builder.add_cell = orm.Bool(True)
 
     _, node = engine.run_get_node(builder)
     node.label = label
