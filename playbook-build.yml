@@ -132,7 +132,7 @@
   # TODO control version
   # could install with conda, but how to set up the systemd service?
   - name: Install RabbitMQ server service
-    tags: [rabbitmq]
+    tags: [rabbitmq, ci_skip]
     become: true
     become_user: "{{ root_user }}"
     ansible.builtin.import_tasks: local/tasks/rabbitmq.yml
