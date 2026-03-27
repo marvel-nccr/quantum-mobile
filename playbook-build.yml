@@ -176,7 +176,6 @@
     # note here we specify exact versions of libxc/openmpi/mpich
     # this is because we want conda to re-use as many packages as possible
     # since re-used packages do not incur more disk memory usage
-    # Architecture support: x86_64 only
     - name: abinit
       pkgs: [abinit=10.0.3, libxc=4.3.4, mpich=4.3.2]
       arch: [x86_64]
@@ -206,10 +205,12 @@
       pkgs: [fleur=8.0, openmpi=5.0.8]
       arch: [x86_64]
       bin_patterns: ["fleur*", inpgen]
-    - name: wannier90
-      pkgs: [wannier90=3.1.0]
-      arch: [x86_64]
-      bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
+    - name: nwchem
+      pkgs: [nwchem=7.3.1, libxc=7.0.0, openmpi=5.0.8]
+      bin_patterns: [nwchem]
+    - name: qespresso
+      pkgs: [qe=7.5, openmpi=5.0.8]
+      bin_patterns: ["*.x"]
     - name: siesta
       pkgs: [siesta=5.4.2, libxc=7.0.0, openmpi=5.0.8]
       arch: [x86_64]
@@ -224,19 +225,16 @@
       - macroave
       - stm
       - optical
-    # Architecture support: x86_64 and aarch64
-    - name: nwchem
-      pkgs: [nwchem=7.3.1, libxc=7.0.0, openmpi=5.0.8]
-      bin_patterns: [nwchem]
-    - name: qespresso
-      pkgs: [qe=7.5, openmpi=5.0.8]
-      bin_patterns: ["*.x"]
-    - name: yambo
-      pkgs: [yambo=5.3.0, libxc=6.2.2, openmpi=4.1.6]
-      bin_patterns: ["yambo*", "ypp*", a2y, c2y, p2y]
     - name: visualise
       pkgs: [jmol, gnuplot]
       bin_patterns: [jmol, gnuplot]
+    - name: wannier90
+      pkgs: [wannier90=3.1.0]
+      arch: [x86_64]
+      bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
+    - name: yambo
+      pkgs: [yambo=5.3.0, libxc=6.2.2, openmpi=4.1.6]
+      bin_patterns: ["yambo*", "ypp*", a2y, c2y, p2y]
     when: item.arch is not defined or ansible_facts['architecture'] in item.arch
     loop_control:
       label: "{{ item.name }}"
