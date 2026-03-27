@@ -178,7 +178,7 @@
     # since re-used packages do not incur more disk memory usage
     # Architecture support: x86_64 only
     - name: abinit
-      pkgs: [abinit=9, libxc=4.3.4, mpich=4.0.3]
+      pkgs: [abinit=10.0.3, libxc=4.3.4, mpich=4.3.2]
       arch: [x86_64]
       bin_patterns:
       - abinit
@@ -195,23 +195,23 @@
       - multibinit
       - optic
     - name: bigdft
-      pkgs: [bigdft-suite=1.9, libxc=4.3.4, mpich=4.0.3]
+      pkgs: [bigdft-suite=1.9.5, libxc=4.3.4, mpich=4.3.2]
       arch: [x86_64]
       bin_patterns: [bigdft, bigdft-tool, dftd3]
     - name: cp2k
-      pkgs: [cp2k=9.*=*openmpi*, libxc=5.2.3, openmpi=4.1.2]
+      pkgs: [cp2k=2024.2=*openmpi*, libxc=6.2.2, openmpi=4.1.6]
       arch: [x86_64]
       bin_patterns: ["cp2k.*", sirius.scf]
     - name: fleur
-      pkgs: [fleur=6, libxc=5.2.3, openmpi=4.1.2]
+      pkgs: [fleur=8.0, openmpi=5.0.8]
       arch: [x86_64]
       bin_patterns: ["fleur*", inpgen]
     - name: wannier90
-      pkgs: [wannier90=3, libxc=5.2.3, openmpi=4.1.2]
+      pkgs: [wannier90=3.1.0]
       arch: [x86_64]
       bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
     - name: siesta
-      pkgs: [siesta, libxc=5.2.3, openmpi=4.1.2]
+      pkgs: [siesta=5.4.2, libxc=7.0.0, openmpi=5.0.8]
       arch: [x86_64]
       bin_patterns:
       - siesta
@@ -226,13 +226,13 @@
       - optical
     # Architecture support: x86_64 and aarch64
     - name: nwchem
-      pkgs: [nwchem]
+      pkgs: [nwchem=7.3.1, libxc=7.0.0, openmpi=5.0.8]
       bin_patterns: [nwchem]
     - name: qespresso
-      pkgs: [qe]
+      pkgs: [qe=7.5, openmpi=5.0.8]
       bin_patterns: ["*.x"]
     - name: yambo
-      pkgs: [yambo]
+      pkgs: [yambo=5.3.0, libxc=6.2.2, openmpi=4.1.6]
       bin_patterns: ["yambo*", "ypp*", a2y, c2y, p2y]
     - name: visualise
       pkgs: [jmol, gnuplot]
