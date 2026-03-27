@@ -213,7 +213,6 @@
       bin_patterns: ["*.x"]
     - name: siesta
       pkgs: [siesta=5.4.2, libxc=7.0.0, openmpi=5.0.8]
-      arch: [x86_64]
       bin_patterns:
       - siesta
       - tbtrans
@@ -230,7 +229,6 @@
       bin_patterns: [jmol, gnuplot]
     - name: wannier90
       pkgs: [wannier90=3.1.0]
-      arch: [x86_64]
       bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
     - name: yambo
       pkgs: [yambo=5.3.0, libxc=6.2.2, openmpi=4.1.6]
