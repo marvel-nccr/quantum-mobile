@@ -37,21 +37,3 @@
     path: "${HOME}/Desktop"
     state: directory
     mode: "0755"
-
-- name: Symlink readme to Desktop
-  become: true
-  become_user: "{{ vm_user }}"
-  ansible.builtin.file:
-    src: "{{ readme_vm_path }}"
-    dest: "${HOME}/Desktop/{{ readme_vm_path | basename }}"
-    state: link
-    force: true
-
-- name: Symlink release notes to Desktop
-  become: true
-  become_user: "{{ vm_user }}"
-  ansible.builtin.file:
-    src: "{{ release_notes_vm_path }}"
-    dest: "${HOME}/Desktop/{{ release_notes_vm_path | basename }}"
-    state: link
-    force: true

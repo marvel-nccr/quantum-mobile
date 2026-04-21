@@ -1,101 +1,14 @@
 ---
-- name: Prepare for VM build
+- name: Build base Quantum Mobile layer
+  ansible.builtin.import_playbook: playbook-build-dev.yml
+
+- name: Build VM (full layer)
   hosts: "{{ build_hosts | default('vagrant') }}"
 
-  pre_tasks:
-  - name: Test configuration
-    tags: [init]
-    ansible.builtin.debug:
-      msg: RUNNING PLAYBOOK FOR '{{ vm_name }}' VERSION '{{ vm_version }}'
-
-  - name: Testing ansible environment
-    tags: [init]
-    ansible.builtin.debug:
-      msg: Connecting to host '{{ inventory_hostname }}' as user '{{ ansible_user }}'
-
-  # Install headers for guest-additions. Use kernel-specific package because
-  # linux-headers-generic can be broken on ARM64 (depends on non-existent version).
-  - name: Install linux-headers for guest-additions
-    tags: [init]
-    when: "inventory_hostname.startswith('vagrant')"
-    become: true
-    ansible.builtin.apt:
-      update_cache: true
-      cache_valid_time: 86400
-      name: "linux-headers-{{ ansible_facts['kernel'] }}"
-
-  - name: Make local dist folder
-    tags: [init]
-    ansible.builtin.file:
-      state: directory
-      path: "{{ local_dist_folder }}/"
-      mode: "0755"
-    delegate_to: localhost
-    when: release_notes_locally is defined and release_notes_locally
-
-- name: Build VM
-  hosts: "{{ build_hosts | default('vagrant') }}"
+  vars:
+    vm_name_suffix: ""
 
   tasks:
-  # Generic Tasks
-  # These tasks are run for any VM build, regardless of the software installed
-  # They setup the VM user, commandline interface, and (optionally) desktop GUI
-
-  - name: Update system package managers (apt, pip)
-    tags: [init]
-    ansible.builtin.include_tasks: local/tasks/ensure-apt-pip.yml
-
-  - name: "Add QM user '{{ vm_user }}'"
-    tags: [add_user]
-    ansible.builtin.import_tasks: local/tasks/add-qm-user.yml
-
-  - name: "Add release notes section for the operating system"
-    tags: [release_notes]
-    ansible.builtin.import_tasks: local/tasks/release-notes-system.yml
-
-  - name: Customise bash terminal for QM
-    tags: [customise-bash]
-    become: true
-    become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: local/tasks/customise-bash.yml
-
-  - name: Install common text editors
-    tags: [editors]
-    ansible.builtin.import_tasks: local/tasks/editors.yml
-
-  - name: Add desktop GUI
-    tags: [ubuntu_desktop, ci_skip]
-    when: not vm_headless
-    become: true
-    block:
-    # Installing ubuntu-desktop pulls in NetworkManager, which can cause the network
-    # interface to lose its IP mid-install. We set networkd as the renderer.
-    - name: Set netplan renderer to networkd
-      ansible.builtin.copy:
-        dest: /etc/netplan/99-stay-with-networkd.yaml
-        content: |
-          network:
-            version: 2
-            renderer: networkd
-        mode: "0600"
-
-    - name: Install Ubuntu desktop
-      ansible.builtin.import_role:
-        name: marvel-nccr.ubuntu_desktop
-      vars:
-        ubuntu_desktop_vm_user: "{{ vm_user }}"
-        ubuntu_desktop_browser: "{{ vm_browser }}"
-        ubuntu_desktop_wm_package: "{{ vm_wm_package }}"
-
-  - name: Customise GUI for QM
-    tags: [customise-gui, ci_skip]
-    when: not vm_headless
-    become: true
-    become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: local/tasks/customise-gui.yml
-  - name: Setup QM to run simulations
-    tags: [simsetup]
-    ansible.builtin.import_tasks: local/tasks/simulation-setup.yml
   - name: "Add user README"
     tags: [add_readme]
     become: true
@@ -116,49 +29,21 @@
         Wannier90: http://www.wannier.org
         Yambo: http://www.yambo-code.org/
 
-  - name: Install plotting tools (via apt)
-    # TODO we may want to eventually install these with conda
-    # (jmol and gnuplot are already installed via conda-forge)
-    tags: [plotting]
-    ansible.builtin.import_tasks: local/tasks/plotting-tools.yml
-    vars:
-      packages: [grace, xcrysden, default-jre]
-
-  - name: Install SLURM service
-    tags: [slurm, ci_skip]
-    ansible.builtin.import_role:
-      name: marvel-nccr.slurm
-
-  # TODO control version
-  # could install with conda, but how to set up the systemd service?
-  - name: Install RabbitMQ server service
-    tags: [rabbitmq, ci_skip]
-    become: true
-    become_user: "{{ root_user }}"
-    ansible.builtin.import_tasks: local/tasks/rabbitmq.yml
-
-  - name: Install PostrgeSQL server service
-    tags: [postgresql]
-    become: true
-    become_user: "{{ root_user }}"
-    ansible.builtin.import_tasks: local/tasks/postgresql.yml
-
-  - name: Install conda+mamba
-    tags: [conda]
-    ansible.builtin.import_role:
-      name: chrisjsewell.conda.user_install
+  - name: Symlink README and release notes to Desktop
+    tags: [add_readme, customise-gui, ci_skip]
+    when: not vm_headless
     become: true
     become_user: "{{ vm_user }}"
-    vars:
-      miniforge_version: "25.11.0-1"
-      miniforge_checksums:
-        x86_64: "sha256:be1bad9d4e67a8753eb76fb4940e9a08036786675c7adf060627e55791bf110d"
-        aarch64: "sha256:43a3783f9e121088f1c92b131b4305b9ebf159424ad2543dfcfc0f1952b5e127"
-      conda_folder: "~/.conda"
-      conda_installer_url: "https://github.com/conda-forge/miniforge/releases/download/{{ miniforge_version }}/Miniforge3-{{ miniforge_version }}-Linux-{{ ansible_facts['architecture'] }}.sh"
-      conda_installer_checksum: "{{ miniforge_checksums[ansible_facts['architecture']] }}"
-      conda_activate_alias: workon
-      conda_executable: conda
+    ansible.builtin.file:
+      src: "{{ item }}"
+      dest: "${HOME}/Desktop/{{ item | basename }}"
+      state: link
+      force: true
+    loop:
+    - "{{ readme_vm_path }}"
+    - "{{ release_notes_vm_path }}"
+    loop_control:
+      label: "{{ item | basename }}"
 
   - name: Install code environment
     tags: [code-envs]
@@ -224,9 +109,6 @@
       - macroave
       - stm
       - optical
-    - name: visualise
-      pkgs: [jmol, gnuplot]
-      bin_patterns: [jmol, gnuplot]
     - name: wannier90
       pkgs: [wannier90=3.1.0]
       bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
@@ -236,6 +118,20 @@
     when: item.arch is not defined or ansible_facts['architecture'] in item.arch
     loop_control:
       label: "{{ item.name }}"
+
+  # TODO control version
+  # could install with conda, but how to set up the systemd service?
+  - name: Install RabbitMQ server service
+    tags: [rabbitmq, ci_skip]
+    become: true
+    become_user: "{{ root_user }}"
+    ansible.builtin.import_tasks: local/tasks/rabbitmq.yml
+
+  - name: Install PostrgeSQL server service
+    tags: [postgresql]
+    become: true
+    become_user: "{{ root_user }}"
+    ansible.builtin.import_tasks: local/tasks/postgresql.yml
 
   - name: Build AiiDA package list with architecture-specific plugins
     tags: [aiida-env]
@@ -400,16 +296,3 @@
     vars:
       aiida_examples_folder: "~/Desktop/aiida-examples"
       aiida_verdi_cmd: "~/.conda/bin/conda run -n {{ aiida_conda_env }} verdi"
-
-  post_tasks:
-  # These break idempotency,
-  # so only run once all other tasks have completed
-
-  - name: "Clean caches"
-    tags: [never, cleanup]
-    ansible.builtin.import_tasks: local/tasks/clean-caches.yml
-  - name: "Remove content from: {{ build_dir }}"
-    tags: [never, cleanup]
-    become: true
-    ansible.builtin.command: rm -rf {{ build_dir }}/*
-    changed_when: true

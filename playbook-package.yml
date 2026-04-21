@@ -7,6 +7,7 @@
   vars:
     tmp_vdisk_vdi: "tmp.vdi"
     tmp_vdisk_vmdk: "tmp.vmdk"
+    vm_name_suffix: "{{ '-dev' if build_variant | default('full') == 'dev' else '' }}"
 
   tasks:
   - name: Set VM ID
@@ -129,7 +130,7 @@
 
   - name: Set output path for image
     ansible.builtin.set_fact:
-      image_path: "{{ local_dist_folder }}/quantum_mobile_{{ vm_version }}_{{ 'x86_64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' }}.ova"
+      image_path: "{{ local_dist_folder }}/quantum_mobile{{ vm_name_suffix }}_{{ vm_version }}_{{ 'x86_64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' }}.ova"
     tags: [export, release]
 
   - name: Remove old image file
@@ -143,7 +144,7 @@
       vboxmanage export "{{ vm_id }}"  \
         -o {{ image_path }} \
         --vsys 0 \
-        --product "{{ vm_name }}" \
+        --product "{{ vm_name }}{{ vm_name_suffix }}" \
         --version "{{ vm_version }}" \
         --producturl "{{ vm_url }}" \
         --vendor "{{ vm_author }}" \
