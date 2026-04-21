@@ -30,6 +30,12 @@
     value: "'top-left'"
     state: present
 
+- name: Increase desktop font scaling
+  community.general.dconf:
+    key: /org/gnome/desktop/interface/text-scaling-factor
+    value: "1.25"
+    state: present
+
 - name: Copy quamtum-mobile logo
   become: true
   become_user: "{{ root_user }}"
