@@ -43,3 +43,11 @@
     path: "${HOME}/Desktop"
     state: directory
     mode: "0755"
+
+- name: Remove update-notifier
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.apt:
+    name: update-notifier
+    state: absent
+    purge: true
