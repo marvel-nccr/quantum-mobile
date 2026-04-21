@@ -1,0 +1,13 @@
+---
+- name: Install development packages with apt
+  become: true
+  ansible.builtin.apt:
+    name:
+    - gfortran
+    - libblas-dev
+    - liblapack-dev
+    - libfftw3-dev
+    - libfftw3-doc
+    - openmpi-bin
+    - libopenmpi-dev
+    - cmake
