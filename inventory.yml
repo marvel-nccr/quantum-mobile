@@ -11,11 +11,11 @@ all:
 
   vars:
     # VM Metadata
-    vm_name: "Quantum Mobile"
-    vm_version: "26.03"
+    vm_name: "Quantum Mobile MARVEL-ICTP College"
+    vm_version: "2026"
     vm_description: "A Virtual Machine for Computational Materials Science"
     vm_url: "https://github.com/marvel-nccr/marvel-virtualmachine"
-    vm_author: "MARVEL NCCR and MaX CoE"
+    vm_author: "MARVEL NCCR"
     vm_author_url: "http://nccr-marvel.ch"
 
     # VM configuration

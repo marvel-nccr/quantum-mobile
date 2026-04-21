@@ -1,0 +1,23 @@
+---
+# QE School packaging entrypoint. Runs workshop-specific cleanup first
+# (remove the koopmans build tree) and the generic cache cleanup, then hands
+# off to the standard packaging playbook that exports the .ova. The packaged
+# artifact is named after the workshop rather than the generic Quantum Mobile
+# version so both variants can sit side-by-side in `dist/`.
+
+- name: Clean up QE School build artifacts
+  hosts: "{{ build_hosts | default('vagrant') }}"
+
+  tasks:
+  - name: Remove koopmans build tree
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.file:
+      path: "/home/{{ vm_user }}/tmp/koopmans"
+      state: absent
+
+  - name: Run generic cache cleanup
+    ansible.builtin.import_tasks: local/tasks/clean-caches.yml
+
+- name: Package VM
+  ansible.builtin.import_playbook: playbook-package.yml
