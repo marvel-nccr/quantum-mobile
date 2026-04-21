@@ -50,6 +50,20 @@
     state: directory
     mode: "0755"
 
+- name: Copy Firefox .desktop to Desktop
+  ansible.builtin.copy:
+    src: /var/lib/snapd/desktop/applications/firefox_firefox.desktop
+    dest: "/home/{{ vm_user }}/Desktop/firefox_firefox.desktop"
+    remote_src: true
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+    mode: "0755"
+
+- name: Mark Firefox shortcut as trusted
+  ansible.builtin.command:
+    cmd: dbus-run-session -- gio set /home/{{ vm_user }}/Desktop/firefox_firefox.desktop metadata::trusted true
+  changed_when: true
+
 - name: Remove update-notifier
   become: true
   become_user: "{{ root_user }}"
