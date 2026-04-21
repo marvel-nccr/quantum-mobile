@@ -1,0 +1,13 @@
+---
+- name: Build base Quantum Mobile layer
+  ansible.builtin.import_playbook: playbook-build-dev.yml
+
+- name: Install QE School workshop software
+  hosts: "{{ build_hosts | default('vagrant') }}"
+
+  tasks:
+  - name: Install Koopmans toolchain
+    tags: [koopmans]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: local/qe-school/tasks/koopmans.yml

@@ -1,0 +1,76 @@
+---
+
+- name: Clone koopmans repository
+  # TODO pin `version` to a release tag once the workshop target is locked.
+  ansible.builtin.git:
+    repo: https://github.com/epfl-theos/koopmans.git
+    dest: "/home/{{ vm_user }}/tmp/koopmans"
+    version: master
+    recursive: true
+    update: false
+
+- name: Build KCP
+  ansible.builtin.shell: |
+    ./configure MPIF90=mpif90 CC=gcc
+    make all -j
+  args:
+    chdir: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/kcp"
+    creates: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/kcp/CPV/kcp.x"
+
+- name: Build Quantum ESPRESSO (pw, pp, kcw)
+  ansible.builtin.shell: |
+    mkdir -p build
+    cd build
+    cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=mpif90 ..
+    make pw pp kcw -j
+  args:
+    chdir: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/q-e"
+    creates: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/q-e/build/bin/kcw.x"
+
+- name: Build koopmans utils
+  ansible.builtin.shell: |
+    mkdir -p build
+    cd build
+    cmake .. -DQE_ROOT=/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/q-e
+    make all
+  args:
+    chdir: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/utils"
+    creates: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/utils/build/bin/wann2kcp.x"
+
+- name: Install koopmans conda environment
+  tags: [koopmans-env]
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: koopmans
+    packages: [pip]
+
+- name: Install kcp.x into conda env
+  ansible.builtin.copy:
+    src: "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/kcp/CPV/kcp.x"
+    dest: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/kcp.x"
+    remote_src: true
+    mode: "0755"
+
+- name: Find all *.x binaries produced by QE and utils builds
+  ansible.builtin.find:
+    paths:
+    - "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/q-e/build/bin"
+    - "/home/{{ vm_user }}/tmp/koopmans/quantum_espresso/utils/build/bin"
+    patterns: "*.x"
+  register: koopmans_binaries
+
+- name: Install QE and utils binaries into conda env
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/{{ item.path | basename }}"
+    remote_src: true
+    mode: "0755"
+  loop: "{{ koopmans_binaries.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+
+- name: Install koopmans workflow (make workflow)
+  ansible.builtin.command:
+    cmd: ~/.conda/bin/conda run -n koopmans make workflow
+    chdir: "/home/{{ vm_user }}/tmp/koopmans"
+    creates: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/koopmans"
