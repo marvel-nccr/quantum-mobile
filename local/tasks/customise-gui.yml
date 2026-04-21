@@ -24,6 +24,12 @@
     value: "'file://{{ vm_data_folder }}/qm-customizations/quantum-mobile-bg.png'"
     state: present
 
+- name: Place new desktop icons in the top-left corner
+  community.general.dconf:
+    key: /org/gnome/shell/extensions/ding/start-corner
+    value: "'top-left'"
+    state: present
+
 - name: Copy quamtum-mobile logo
   become: true
   become_user: "{{ root_user }}"
