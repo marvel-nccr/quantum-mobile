@@ -11,6 +11,16 @@
     name: "{{ packages | join(' ') }}"
   register: plot_versions
 
+- name: "Force Qt applications to use the xcb platform plugin"
+  when: "'gnuplot' in packages"
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ vm_user }}/.bashrc"
+    marker: '## {mark} ANSIBLE MANAGED BLOCK (QT)'
+    block: |
+      export QT_QPA_PLATFORM=xcb
+
 - name: "Configure XCrySDen for virtual machine compatibility"
   # XCrySDen requests an OpenGL accumulation buffer by default, which is not
   # supported by virtual GPUs (SVGA3D, llvmpipe). Disabling it allows the togl
