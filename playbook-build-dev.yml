@@ -109,12 +109,13 @@
     ansible.builtin.import_tasks: local/tasks/simulation-setup.yml
 
   - name: Install plotting tools (via apt)
-    # TODO we may want to eventually install these with conda
-    # (jmol and gnuplot are already installed via conda-forge)
+    # gnuplot is installed here rather than via conda-forge because the
+    # conda build ships a qt driver that fails to launch inside the VM
+    # (see https://github.com/marvel-nccr/quantum-mobile/issues/247).
     tags: [plotting]
     ansible.builtin.import_tasks: local/tasks/plotting-tools.yml
     vars:
-      packages: [grace, xcrysden, default-jre]
+      packages: [grace, xcrysden, default-jre, gnuplot]
 
   - name: Install SLURM service
     tags: [slurm, ci_skip]
@@ -146,8 +147,8 @@
         tags: [visualise-env, code-envs]
     vars:
       conda_env: visualise
-      packages: [jmol, gnuplot]
-      bin_patterns: [jmol, gnuplot]
+      packages: [jmol]
+      bin_patterns: [jmol]
 
   post_tasks:
   # These break idempotency,
