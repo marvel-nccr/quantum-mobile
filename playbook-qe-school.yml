@@ -11,3 +11,30 @@
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/qe-school/tasks/koopmans.yml
+
+  - name: Install code environments
+    tags: [code-envs]
+    ansible.builtin.include_tasks:
+      file: local/tasks/conda-env-install.yml
+      apply:
+        tags: [code-envs]
+    vars:
+      conda_env: "{{ item.name }}"
+      packages: "{{ item.pkgs }}"
+      bin_patterns: "{{ item.bin_patterns }}"
+    loop:
+    # note here we specify exact versions of libxc/openmpi/mpich
+    # this is because we want conda to re-use as many packages as possible
+    # since re-used packages do not incur more disk memory usage
+    - name: qespresso
+      pkgs: [qe=7.5, openmpi=5.0.8]
+      bin_patterns: ["*.x"]
+    - name: wannier90
+      pkgs: [wannier90=3.1.0]
+      bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
+    - name: yambo
+      pkgs: [yambo=5.3.0, libxc=6.2.2, openmpi=4.1.6]
+      bin_patterns: ["yambo*", "ypp*", a2y, c2y, p2y]
+    when: item.arch is not defined or ansible_facts['architecture'] in item.arch
+    loop_control:
+      label: "{{ item.name }}"
