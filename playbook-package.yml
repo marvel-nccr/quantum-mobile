@@ -47,6 +47,10 @@
     ansible.builtin.shell: vagrant ssh-config > vagrant-ssh
     tags: [clean]
 
+  - name: Remove update-notifier
+    ansible.builtin.command: ssh -F vagrant-ssh default "sudo apt-get purge -y update-notifier"
+    tags: [clean]
+
   - name: Clear bash history
     ansible.builtin.shell: ssh -F vagrant-ssh default "cat /dev/null > ~/.bash_history && history -c"
     tags: [clean]
