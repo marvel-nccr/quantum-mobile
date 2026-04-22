@@ -10,7 +10,7 @@
     tags: [koopmans]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: local/qe-school/tasks/koopmans.yml
+    ansible.builtin.import_tasks: qe-school/tasks/koopmans.yml
 
   - name: Install code environments
     tags: [code-envs]
