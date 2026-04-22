@@ -63,11 +63,3 @@
   ansible.builtin.command:
     cmd: dbus-run-session -- gio set /home/{{ vm_user }}/Desktop/firefox_firefox.desktop metadata::trusted true
   changed_when: true
-
-- name: Remove update-notifier
-  become: true
-  become_user: "{{ root_user }}"
-  ansible.builtin.apt:
-    name: update-notifier
-    state: absent
-    purge: true
