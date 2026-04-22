@@ -1,0 +1,23 @@
+---
+# Create ~/.local/bin and prepend it to PATH in .bashrc.
+# The export is inserted at BOF so conda init (appended later by the miniforge
+# installer) ends up AFTER it in .bashrc, letting conda env activation prepend
+# its own bin/ and win on PATH resolution.
+
+- name: "Create ~/.local/bin"
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ vm_user }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: "Add ~/.local/bin to PATH in .bashrc"
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ vm_user }}/.bashrc"
+    marker: "## {mark} ANSIBLE MANAGED BLOCK (~/.local/bin)"
+    insertbefore: BOF
+    block: |
+      export PATH="$HOME/.local/bin:$PATH"

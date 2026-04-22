@@ -20,17 +20,6 @@
   become_user: "{{ vm_user }}"
   when: bin_patterns is defined and bin_patterns | length > 0
   block:
-  - name: "Create ~/.local/bin"
-    ansible.builtin.file:
-      path: "/home/{{ vm_user }}/.local/bin"
-      state: directory
-      mode: "0755"
-  - name: "Add ~/.local/bin to PATH in .bashrc"
-    ansible.builtin.blockinfile:
-      path: "/home/{{ vm_user }}/.bashrc"
-      marker: "## {mark} ANSIBLE MANAGED BLOCK (~/.local/bin)"
-      block: |
-        export PATH="$HOME/.local/bin:$PATH"
   - name: "Find binaries matching patterns"
     ansible.builtin.find:
       paths: "/home/{{ vm_user }}/.conda/envs/{{ conda_env }}/bin"

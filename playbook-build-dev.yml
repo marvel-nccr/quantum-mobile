@@ -122,6 +122,10 @@
     ansible.builtin.import_role:
       name: marvel-nccr.slurm
 
+  - name: "Setup ~/.local/bin on PATH"
+    tags: [local-bin]
+    ansible.builtin.import_tasks: local/tasks/setup-local-bin.yml
+
   - name: Install conda+mamba
     tags: [conda]
     ansible.builtin.import_role:
