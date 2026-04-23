@@ -69,8 +69,8 @@
   loop_control:
     label: "{{ item.path | basename }}"
 
-- name: Install koopmans workflow (make workflow)
+- name: Install koopmans package
   ansible.builtin.command:
-    cmd: ~/.conda/bin/conda run -n koopmans make workflow
+    cmd: ~/.conda/envs/koopmans/bin/pip install -e .
     chdir: "/home/{{ vm_user }}/tmp/koopmans"
     creates: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/koopmans"
