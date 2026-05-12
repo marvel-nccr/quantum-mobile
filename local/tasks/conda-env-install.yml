@@ -11,7 +11,9 @@
   become_user: "{{ vm_user }}"
   ansible.builtin.shell: >
     ~/.conda/bin/mamba {{ 'install' if conda_env_stat.stat.exists else 'create' }}
-    -n {{ conda_env }} -y {{ packages | join(' ') }}
+    -n {{ conda_env }} -y
+    {{ channels | default([]) | map('regex_replace', '^', '-c ') | join(' ') }}
+    {{ packages | join(' ') }}
   register: result
   changed_when: "'All requested packages already installed' not in result.stdout"
 

@@ -1,0 +1,62 @@
+---
+
+- name: Install metatomic conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: metatomic
+    channels:
+    - pytorch
+    - conda-forge
+    - metatensor
+    packages:
+    - python=3.12
+    - cpuonly
+    - lammps-metatomic=2025.09.10.mta3=cpu_*_mpi_openmpi_*
+    - gromacs-metatomic=2026.0.mta2=mpi_openmpi_h*
+    - jupyter=1.1.1
+    - chemiscope=1.0.2
+    - i-pi=3.2.0
+    - notebook
+    - ipykernel
+    - ipython
+    - numpy
+    - pandas
+    - matplotlib
+    - py3Dmol
+    - pip
+
+- name: Install metatomic pip packages
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/metatomic/bin/pip install
+      --extra-index-url https://download.pytorch.org/whl/cpu
+      flashmd==0.2.8 metatrain==2026.2 upet==0.2.3
+    creates: "/home/{{ vm_user }}/.conda/envs/metatomic/lib/python3.12/site-packages/flashmd/__init__.py"
+
+- name: Register metatomic env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/metatomic/bin/python -m ipykernel install --user
+      --name metatomic --display-name "Python (metatomic)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/metatomic/kernel.json"
+
+- name: Smoke test metatomic Python imports
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/metatomic/bin/python -c
+      "import numpy, pandas, matplotlib, py3Dmol, IPython,
+      torch, flashmd, metatrain, chemiscope, ipi"
+  changed_when: false
+
+- name: Smoke test LAMMPS
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      ~/.conda/envs/metatomic/bin/lmp -h | grep -q "Large-scale Atomic/Molecular Massively Parallel Simulator"
+    executable: /bin/bash
+  changed_when: false
+
+- name: Smoke test GROMACS
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/metatomic/bin/gmx_mpi --version
+  changed_when: false
