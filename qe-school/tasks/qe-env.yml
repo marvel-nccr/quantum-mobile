@@ -1,0 +1,19 @@
+---
+
+- name: Install qe conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: qe
+    packages:
+    - qe=7.5
+    - openmpi=5.0.8
+    - ase
+    - numpy
+    - matplotlib
+    - spglib
+    bin_patterns: ["*.x"]
+
+- name: Smoke test qe env imports
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/qe/bin/python -c "import ase, numpy, matplotlib, spglib"
+  changed_when: false
