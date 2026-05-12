@@ -1,0 +1,9 @@
+---
+
+- name: Install jupyter conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: jupyter
+    packages:
+    - jupyterlab=4.5.7
+    bin_patterns: ["jupyter", "jupyter-lab"]

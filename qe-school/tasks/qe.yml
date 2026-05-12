@@ -11,7 +11,15 @@
     - numpy
     - matplotlib
     - spglib
+    - ipykernel
     bin_patterns: ["*.x"]
+
+- name: Register qe env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/qe/bin/python -m ipykernel install --user
+      --name qe --display-name "Python (qe)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/qe/kernel.json"
 
 - name: Smoke test qe env imports
   ansible.builtin.command:
