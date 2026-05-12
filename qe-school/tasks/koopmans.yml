@@ -42,7 +42,7 @@
   ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
   vars:
     conda_env: koopmans
-    packages: [pip]
+    packages: [pip, ipykernel]
 
 - name: Install kcp.x into conda env
   ansible.builtin.copy:
@@ -74,3 +74,10 @@
     cmd: ~/.conda/envs/koopmans/bin/pip install .
     chdir: "/home/{{ vm_user }}/tmp/koopmans"
     creates: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/koopmans"
+
+- name: Register koopmans env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/koopmans/bin/python -m ipykernel install --user
+      --name koopmans --display-name "Python (koopmans)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/koopmans/kernel.json"

@@ -8,6 +8,7 @@
     - wannier90=3.1.0
     - python=3.13
     - pythtb=2.0.1
+    - ipykernel
     - pip
     bin_patterns: ["wannier90.*", "w90*", "postw90.*"]
 
@@ -15,6 +16,13 @@
   ansible.builtin.command:
     cmd: ~/.conda/envs/wannier/bin/pip install 'tbmodels>=1.4,<1.5'
     creates: "/home/{{ vm_user }}/.conda/envs/wannier/lib/python3.13/site-packages/tbmodels/__init__.py"
+
+- name: Register wannier env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/wannier/bin/python -m ipykernel install --user
+      --name wannier --display-name "Python (wannier)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/wannier/kernel.json"
 
 - name: Smoke test wannier90.x is reachable
   ansible.builtin.stat:

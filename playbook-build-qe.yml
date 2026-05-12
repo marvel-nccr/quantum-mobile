@@ -6,6 +6,12 @@
   hosts: "{{ build_hosts | default('vagrant') }}"
 
   tasks:
+  - name: Install jupyter conda environment
+    tags: [jupyter]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: qe-school/tasks/jupyter.yml
+
   - name: Install Koopmans toolchain
     tags: [koopmans]
     become: true
