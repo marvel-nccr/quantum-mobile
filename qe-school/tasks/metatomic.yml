@@ -52,7 +52,7 @@
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
-      ~/.conda/envs/metatomic/bin/lmp -h | grep -q "Large-scale Atomic/Molecular Massively Parallel Simulator"
+      ~/.conda/envs/metatomic/bin/lmp -h 2>&1 | grep "Large-scale Atomic/Molecular Massively Parallel Simulator"
     executable: /bin/bash
   changed_when: false
 
