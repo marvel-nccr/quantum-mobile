@@ -1,0 +1,40 @@
+---
+
+- name: Install yambo conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: yambo
+    packages:
+    - yambo=5.3.0
+    - libxc=6.2.2
+    - openmpi=4.1.6
+    - python=3.13
+    - numpy
+    - scipy
+    - matplotlib
+    - netCDF4
+    - h5py
+    - pyyaml
+    - lxml
+    - monty
+    - scikit-learn
+    - tqdm
+    - spglib
+    - numba
+    - pykdtree
+    - pip
+
+- name: Install yambopy via pip
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/yambo/bin/pip install yambopy
+    creates: "/home/{{ vm_user }}/.conda/envs/yambo/lib/python3.13/site-packages/yambopy/__init__.py"
+
+- name: Smoke test yambo binary
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/yambo/bin/yambo -h
+  changed_when: false
+
+- name: Smoke test yambopy import
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/yambo/bin/python -c "import yambopy"
+  changed_when: false
