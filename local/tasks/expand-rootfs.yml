@@ -1,0 +1,17 @@
+---
+# Bento Ubuntu boxes ship with a 64 GB physical disk but only ~30 GB allocated
+# to the root LV. Extend ubuntu-lv to use all free VG space, then grow the FS.
+
+- name: Extend root LV to fill VG
+  become: true
+  ansible.builtin.command: lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+  register: lvextend_result
+  changed_when: "'Size of logical volume' in lvextend_result.stdout"
+  failed_when:
+  - lvextend_result.rc != 0
+  - "'matches existing size' not in lvextend_result.stderr"
+
+- name: Resize ext4 filesystem on root LV
+  become: true
+  ansible.builtin.command: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+  when: lvextend_result.changed  # noqa: no-handler

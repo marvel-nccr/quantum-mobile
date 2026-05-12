@@ -27,6 +27,11 @@
       cache_valid_time: 86400
       name: "linux-headers-{{ ansible_facts['kernel'] }}"
 
+  - name: Expand root filesystem to use full disk
+    tags: [init]
+    when: "inventory_hostname.startswith('vagrant')"
+    ansible.builtin.import_tasks: local/tasks/expand-rootfs.yml
+
   - name: Make local dist folder
     tags: [init]
     ansible.builtin.file:
