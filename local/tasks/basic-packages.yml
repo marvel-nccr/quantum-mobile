@@ -1,5 +1,5 @@
 ---
-- name: Install common text editors
+- name: Install basic packages
   become: true
   ansible.builtin.apt:
     name:
@@ -7,6 +7,7 @@
     - vim
     - nano
     - evince
+    - tree
 
 - name: Add basic .vimrc
   become: true

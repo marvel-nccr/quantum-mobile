@@ -65,9 +65,9 @@
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: local/tasks/customise-bash.yml
 
-  - name: Install common text editors
-    tags: [editors]
-    ansible.builtin.import_tasks: local/tasks/editors.yml
+  - name: Install basic packages
+    tags: [basic]
+    ansible.builtin.import_tasks: local/tasks/basic-packages.yml
 
   - name: Install dev packages
     tags: [dev]
