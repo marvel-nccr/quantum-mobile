@@ -39,3 +39,16 @@
     path: ~/.sudo_as_admin_successful
     state: touch
     mode: "0644"
+
+- name: Set default environment variables
+  ansible.builtin.blockinfile:
+    path: "${HOME}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (env vars)"
+    block: |
+      # OpenMP threading on top of MPI degrades performance for codes like QE,
+      # so pin to a single thread by default — users can override per shell.
+      export OMP_NUM_THREADS=1
+      # Restrict OpenMPI's TCP BTL to the loopback interface, otherwise
+      # `mpirun ... < input > output` fails on multi-NIC VMs with
+      # "Unable to find reachable pairing between local and remote interfaces".
+      export OMPI_MCA_btl_tcp_if_include=lo
