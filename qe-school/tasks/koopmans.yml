@@ -71,6 +71,6 @@
 
 - name: Install koopmans package
   ansible.builtin.command:
-    cmd: ~/.conda/envs/koopmans/bin/pip install -e .
+    cmd: ~/.conda/envs/koopmans/bin/pip install .
     chdir: "/home/{{ vm_user }}/tmp/koopmans"
     creates: "/home/{{ vm_user }}/.conda/envs/koopmans/bin/koopmans"
