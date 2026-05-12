@@ -8,6 +8,7 @@
     - nano
     - evince
     - tree
+    - git
 
 - name: Add basic .vimrc
   become: true
