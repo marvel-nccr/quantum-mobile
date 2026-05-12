@@ -22,12 +22,20 @@
     - spglib
     - numba
     - pykdtree
+    - ipykernel
     - pip
 
 - name: Install yambopy via pip
   ansible.builtin.command:
     cmd: ~/.conda/envs/yambo/bin/pip install yambopy
     creates: "/home/{{ vm_user }}/.conda/envs/yambo/lib/python3.13/site-packages/yambopy/__init__.py"
+
+- name: Register yambo env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/yambo/bin/python -m ipykernel install --user
+      --name yambo --display-name "Python (yambo)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/yambo/kernel.json"
 
 - name: Smoke test yambo binary
   ansible.builtin.command:
