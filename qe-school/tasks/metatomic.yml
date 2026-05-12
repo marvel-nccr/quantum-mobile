@@ -11,6 +11,8 @@
     packages:
     - python=3.12
     - cpuonly
+    - libtorch=*=cpu_*
+    - libopenblas
     - lammps-metatomic=2025.09.10.mta3=cpu_*_mpi_openmpi_*
     - gromacs-metatomic=2026.0.mta2=mpi_openmpi_h*
     - chemiscope=1.0.2
