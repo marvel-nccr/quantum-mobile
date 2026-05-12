@@ -32,7 +32,7 @@
     # note here we specify exact versions of libxc/openmpi/mpich
     # this is because we want conda to re-use as many packages as possible
     # since re-used packages do not incur more disk memory usage
-    - name: qespresso
+    - name: qe
       pkgs: [qe=7.5, openmpi=5.0.8]
       bin_patterns: ["*.x"]
     - name: wannier90
