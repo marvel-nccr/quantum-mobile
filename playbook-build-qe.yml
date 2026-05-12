@@ -12,6 +12,12 @@
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: qe-school/tasks/koopmans.yml
 
+  - name: Install metatomic conda environment
+    tags: [metatomic]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: qe-school/tasks/metatomic-env.yml
+
   - name: Install code environments
     tags: [code-envs]
     ansible.builtin.include_tasks:
