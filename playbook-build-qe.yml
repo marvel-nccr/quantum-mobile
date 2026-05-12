@@ -16,22 +16,22 @@
     tags: [metatomic]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/metatomic-env.yml
+    ansible.builtin.import_tasks: qe-school/tasks/metatomic.yml
 
   - name: Install qe conda environment
-    tags: [qe-env]
+    tags: [qe]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/qe-env.yml
+    ansible.builtin.import_tasks: qe-school/tasks/qe.yml
 
   - name: Install wannier conda environment
-    tags: [wannier-env]
+    tags: [wannier]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/wannier-env.yml
+    ansible.builtin.import_tasks: qe-school/tasks/wannier.yml
 
   - name: Install yambo conda environment
-    tags: [yambo-env]
+    tags: [yambo]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/yambo-env.yml
+    ansible.builtin.import_tasks: qe-school/tasks/yambo.yml
