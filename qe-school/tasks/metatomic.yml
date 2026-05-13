@@ -14,8 +14,7 @@
     - libtorch=*=cpu_*
     - libopenblas
     - lammps-metatomic=2025.09.10.mta3=cpu_*_mpi_openmpi_*
-    - gromacs-metatomic=2026.0.mta2=mpi_openmpi_h*
-    - chemiscope=1.0.2
+    - chemiscope=1.0.3
     - i-pi=3.2.0
     - ipykernel
     - ipython
@@ -54,9 +53,4 @@
       set -o pipefail
       ~/.conda/envs/metatomic/bin/lmp -h 2>&1 | grep "Large-scale Atomic/Molecular Massively Parallel Simulator"
     executable: /bin/bash
-  changed_when: false
-
-- name: Smoke test GROMACS
-  ansible.builtin.command:
-    cmd: ~/.conda/envs/metatomic/bin/gmx_mpi --version
   changed_when: false
