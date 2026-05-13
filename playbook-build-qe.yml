@@ -41,3 +41,9 @@
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: qe-school/tasks/yambo.yml
+
+  - name: Install sscha conda environment
+    tags: [sscha]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: qe-school/tasks/sscha.yml
