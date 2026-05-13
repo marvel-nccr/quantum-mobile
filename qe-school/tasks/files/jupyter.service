@@ -1,0 +1,15 @@
+[Unit]
+Description=Jupyter Lab (qe-school)
+
+[Service]
+Type=simple
+ExecStart={{ jupyter_script }}
+User={{ jupyter_user }}
+Group={{ jupyter_user }}
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
