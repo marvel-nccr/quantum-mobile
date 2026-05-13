@@ -35,6 +35,10 @@
     dest: /opt/
     remote_src: true
     creates: /opt/julia-1.12.5/bin/julia
+  register: julia_download
+  until: julia_download is success
+  retries: 3
+  delay: 10
 
 - name: Symlink julia binary to ~/.local/bin
   ansible.builtin.file:
