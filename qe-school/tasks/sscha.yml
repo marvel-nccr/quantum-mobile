@@ -1,0 +1,101 @@
+---
+
+- name: Install sscha conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: sscha
+    packages:
+    - python=3.13
+    - gfortran
+    - libblas
+    - lapack
+    # openblas explicit because conda-forge `lapack` on linux-aarch64 does not
+    # ship pkg-config files; this metapackage provides openblas.pc which
+    # meson-built `cellconstructor` finds and links against.
+    - openblas
+    - openmpi
+    - openmpi-mpicc
+    - numpy
+    - scipy
+    - spglib
+    - pkgconfig
+    - ipykernel
+    - pip
+
+# Julia is not available on conda-forge for linux-aarch64, so install from the
+# official tarball for both arches to keep a single code path.
+- name: Install Julia from official tarball
+  become: true
+  become_user: "{{ root_user }}"
+  vars:
+    julia_url_arch: "{{ 'aarch64' if ansible_facts['architecture'] == 'aarch64' else 'x64' }}"
+    julia_file_arch: "{{ 'aarch64' if ansible_facts['architecture'] == 'aarch64' else 'x86_64' }}"
+  ansible.builtin.unarchive:
+    src: "https://julialang-s3.julialang.org/bin/linux/{{ julia_url_arch }}/1.12/julia-1.12.5-linux-{{ julia_file_arch }}.tar.gz"
+    dest: /opt/
+    remote_src: true
+    creates: /opt/julia-1.12.5/bin/julia
+
+- name: Symlink julia binary to ~/.local/bin
+  ansible.builtin.file:
+    src: /opt/julia-1.12.5/bin/julia
+    dest: "/home/{{ vm_user }}/.local/bin/julia"
+    state: link
+
+- name: Install sscha pip build tools
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/sscha/bin/pip install meson meson-python ninja
+    creates: "/home/{{ vm_user }}/.conda/envs/sscha/bin/meson"
+
+- name: Install sscha pip runtime deps
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/sscha/bin/pip install ase julia mpi4py
+    creates: "/home/{{ vm_user }}/.conda/envs/sscha/lib/python3.13/site-packages/mpi4py/__init__.py"
+
+# cellconstructor's meson.build requires `lapack.pc` and `blas.pc` files even
+# when openblas (which provides both symbol sets) is already present.
+# conda-forge does not ship these .pc files on linux-aarch64, so drop in small
+# alias .pc shims that point the `lapack` and `blas` names at openblas.
+- name: Provide lapack.pc and blas.pc shims aliased to openblas
+  ansible.builtin.copy:
+    dest: "/home/{{ vm_user }}/.conda/envs/sscha/lib/pkgconfig/{{ item.name }}.pc"
+    mode: "0644"
+    content: |
+      prefix=/home/{{ vm_user }}/.conda/envs/sscha
+      exec_prefix=${prefix}
+      libdir=${prefix}/lib
+      includedir=${prefix}/include
+
+      Name: {{ item.upper }}
+      Description: {{ item.upper }} aliased to OpenBLAS
+      Version: 3.12.0
+      Libs: -L${libdir} -lopenblas
+      Cflags: -I${includedir}
+  loop:
+  - { name: lapack, upper: LAPACK }
+  - { name: blas, upper: BLAS }
+
+- name: Install sscha packages
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/sscha/bin/pip install --no-build-isolation cellconstructor python-sscha tdscha
+    creates: "/home/{{ vm_user }}/.conda/envs/sscha/lib/python3.13/site-packages/sscha/__init__.py"
+  environment:
+    PATH: "/home/{{ vm_user }}/.conda/envs/sscha/bin:{{ ansible_env.PATH }}"
+    PKG_CONFIG_PATH: "/home/{{ vm_user }}/.conda/envs/sscha/lib/pkgconfig"
+
+- name: Initialise pyjulia bridge (PyCall.jl)
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/sscha/bin/python -c "import julia; julia.install(julia='/opt/julia-1.12.5/bin/julia')"
+  changed_when: false
+
+- name: Register sscha env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/sscha/bin/python -m ipykernel install --user
+      --name sscha --display-name "Python (sscha)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/sscha/kernel.json"
+
+- name: Smoke test sscha env imports
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/sscha/bin/python -c "import cellconstructor, sscha, tdscha, julia"
+  changed_when: false
