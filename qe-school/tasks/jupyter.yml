@@ -6,6 +6,7 @@
     conda_env: jupyter
     packages:
     - jupyterlab=4.5.7
+    - chemiscope=1.0.3
     bin_patterns: ["jupyter", "jupyter-lab"]
 
 - name: "Get home for user: {{ vm_user }}"
@@ -25,36 +26,10 @@
     mode: "0755"
     content: |
       #!/bin/bash
-      {{ vm_user_home.path }}/.conda/bin/conda run --no-capture-output -n jupyter jupyter-lab \
-        -y \
-        --notebook-dir={{ vm_user_home.path }} \
+      exec {{ vm_user_home.path }}/.conda/envs/jupyter/bin/jupyter-lab \
+        -y --notebook-dir={{ vm_user_home.path }} \
         --ip=localhost --port=8891 \
-        --ServerApp.token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e \
-        --no-browser
-
-- name: Add Jupyter lab as systemd service
-  become: true
-  become_user: "{{ root_user }}"
-  ansible.builtin.template:
-    src: files/jupyter.service
-    dest: /etc/systemd/system
-    owner: root
-    group: root
-    mode: "0644"
-  vars:
-    jupyter_user: "{{ vm_user }}"
-    jupyter_script: "{{ vm_user_home.path }}/.jupyter-lab.sh"
-
-- name: Start Jupyter lab systemd service
-  tags: [ci_skip]
-  become: true
-  become_user: "{{ root_user }}"
-  ansible.builtin.systemd:
-    name: jupyter
-    enabled: true
-    masked: false
-    daemon-reload: true
-    state: started
+        --ServerApp.token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e
 
 - name: Copy Jupyter logo
   become: true
@@ -75,7 +50,8 @@
       Encoding=UTF-8
       Name=JupyterLab
       Comment=Launch Jupyter Lab Server
-      Exec={{ vm_browser }} "http://localhost:8891/?token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e"
+      Exec={{ vm_user_home.path }}/.jupyter-lab.sh
+      Terminal=true
       Icon=/usr/share/icons/jupyter-logo.png
       Type=Application
 
