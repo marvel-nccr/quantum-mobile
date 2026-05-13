@@ -1,0 +1,57 @@
+---
+
+- name: "Get home for user: {{ vm_user }}"
+  become: true
+  become_user: "{{ vm_user }}"
+  chrisjsewell.conda.expandpath:
+    path: "~"
+  register: vm_user_home
+
+- name: Write Jupyter lab launcher script
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.copy:
+    dest: "{{ vm_user_home.path }}/.jupyter-lab.sh"
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      exec {{ vm_user_home.path }}/.conda/envs/asesma/bin/jupyter-lab \
+        -y --notebook-dir={{ vm_user_home.path }} \
+        --ip=localhost --port=8891 \
+        --ServerApp.token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e
+
+- name: Copy Jupyter logo
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/local/tasks/images/jupyter-logo.png"
+    dest: /usr/share/icons/
+    mode: "0644"
+
+- name: Install JupyterLab application shortcut
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.copy:
+    dest: "/usr/share/applications/jupyterlab.desktop"
+    mode: "0644"
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=JupyterLab
+      Comment=Launch Jupyter Lab Server
+      Exec={{ vm_user_home.path }}/.jupyter-lab.sh
+      Terminal=true
+      Icon=/usr/share/icons/jupyter-logo.png
+      Type=Application
+
+- name: Copy JupyterLab shortcut to Desktop
+  tags: [ci_skip]
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.copy:
+    src: /usr/share/applications/jupyterlab.desktop
+    dest: "/home/{{ vm_user }}/Desktop/jupyterlab.desktop"
+    remote_src: true
+    mode: "0755"

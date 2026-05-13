@@ -1,0 +1,53 @@
+---
+- name: Build base Quantum Mobile layer
+  ansible.builtin.import_playbook: playbook-build-dev.yml
+
+- name: Install Mini-ASESMA School workshop software
+  hosts: "{{ build_hosts | default('vagrant') }}"
+
+  tasks:
+  - name: Install qe conda environment
+    tags: [qe]
+    ansible.builtin.include_tasks:
+      file: local/tasks/conda-env-install.yml
+      apply:
+        become: true
+        become_user: "{{ vm_user }}"
+        tags: [qe]
+    vars:
+      conda_env: qe
+      packages: [qe=7.5]
+      bin_patterns: ["*.x"]
+
+  - name: Install siesta conda environment
+    tags: [siesta]
+    ansible.builtin.include_tasks:
+      file: local/tasks/conda-env-install.yml
+      apply:
+        become: true
+        become_user: "{{ vm_user }}"
+        tags: [siesta]
+    vars:
+      conda_env: siesta
+      packages: [siesta=5.4.2]
+      bin_patterns:
+      - siesta
+      - tbtrans
+      - vibra
+      - Eig2DOS
+      - gnubands
+      - fat
+      - denchar
+      - macroave
+      - stm
+      - optical
+
+  - name: Install asesma Python conda environment
+    tags: [asesma]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: asesma/tasks/asesma.yml
+
+  - name: Install JupyterLab launcher and desktop shortcut
+    tags: [jupyter]
+    ansible.builtin.import_tasks: asesma/tasks/jupyter.yml

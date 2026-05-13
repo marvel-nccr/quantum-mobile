@@ -1,0 +1,35 @@
+---
+
+- name: Install asesma conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: asesma
+    packages:
+    - python=3.12
+    - numpy
+    - scipy
+    - matplotlib
+    - ase
+    - jupyterlab=4.5.7
+    - ipykernel
+    - pip
+    bin_patterns: ["jupyter", "jupyter-lab"]
+
+- name: Install asesma pip packages (dftpy)
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/asesma/bin/pip install dftpy==2.2.0
+    creates: "/home/{{ vm_user }}/.conda/envs/asesma/lib/python3.12/site-packages/dftpy/__init__.py"
+
+- name: Register asesma env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/asesma/bin/python -m ipykernel install --user
+      --name asesma --display-name "Python (asesma)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/asesma/kernel.json"
+
+- name: Smoke test asesma Python imports
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/asesma/bin/python -c
+      "import numpy, scipy, matplotlib, ase, dftpy"
+  changed_when: false
