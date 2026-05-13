@@ -59,7 +59,29 @@
     group: "{{ vm_user }}"
     mode: "0755"
 
-- name: Mark Firefox shortcut as trusted
-  ansible.builtin.command:
-    cmd: dbus-run-session -- gio set /home/{{ vm_user }}/Desktop/firefox_firefox.desktop metadata::trusted true
-  changed_when: true
+- name: Create autostart directory
+  ansible.builtin.file:
+    path: "/home/{{ vm_user }}/.config/autostart"
+    state: directory
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+    mode: "0755"
+
+- name: Register trust-desktop-shortcuts autostart entry
+  # The metadata::trusted GVFS xattr that GNOME's ding extension requires before
+  # it will launch a desktop shortcut does not survive packaging the VM — the
+  # imported OVA loses the per-machine GVFS metadata DB on first login, so any
+  # trust set during the build is gone by the time the user sees the desktop.
+  # Re-apply it on every login via an autostart entry so shortcuts always work.
+  ansible.builtin.copy:
+    dest: "/home/{{ vm_user }}/.config/autostart/trust-desktop-shortcuts.desktop"
+    owner: "{{ vm_user }}"
+    group: "{{ vm_user }}"
+    mode: "0644"
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Trust desktop shortcuts
+      Exec=bash -c 'for f in "$HOME/Desktop/"*.desktop; do [ -e "$f" ] && gio set "$f" metadata::trusted true; done'
+      X-GNOME-Autostart-enabled=true
+      NoDisplay=true
