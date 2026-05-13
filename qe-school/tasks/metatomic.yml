@@ -9,7 +9,7 @@
     - conda-forge
     - metatensor
     packages:
-    - python=3.12
+    - python=3.13
     - cpuonly
     - libtorch=*=cpu_*
     - libopenblas
@@ -31,7 +31,7 @@
       ~/.conda/envs/metatomic/bin/pip install
       --extra-index-url https://download.pytorch.org/whl/cpu
       flashmd==0.2.8 metatrain==2026.2 upet==0.2.3
-    creates: "/home/{{ vm_user }}/.conda/envs/metatomic/lib/python3.12/site-packages/flashmd/__init__.py"
+    creates: "/home/{{ vm_user }}/.conda/envs/metatomic/lib/python3.13/site-packages/flashmd/__init__.py"
 
 - name: Register metatomic env as Jupyter kernel
   ansible.builtin.command:

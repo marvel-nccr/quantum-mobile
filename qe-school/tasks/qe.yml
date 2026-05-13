@@ -6,7 +6,8 @@
     conda_env: qe
     packages:
     - qe=7.5
-    - openmpi=5.0.8
+    - openmpi=4.1.6
+    - python=3.13
     - ase
     - numpy
     - matplotlib
