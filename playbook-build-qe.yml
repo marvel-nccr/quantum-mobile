@@ -47,3 +47,16 @@
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: qe-school/tasks/sscha.yml
+
+  - name: Add bash completion for the workon alias
+    tags: [workon-completion]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.blockinfile:
+      path: "/home/{{ vm_user }}/.bashrc"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK (workon completion)"
+      block: |
+        _workon() {
+          COMPREPLY=( $(compgen -W "koopmans metatomic qe sscha wannier yambo" -- "${COMP_WORDS[COMP_CWORD]}") )
+        }
+        complete -F _workon workon
