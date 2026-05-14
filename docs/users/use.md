@@ -21,7 +21,7 @@ To check the running service, open a terminal and run:
 max@qmobile:/$ systemctl --type=service
 UNIT                               LOAD   ACTIVE SUB     DESCRIPTION
 aiida-daemon@generic.service       loaded active running AiiDA daemon service for pro
-postgresql@10-main.service         loaded active running PostgreSQL Cluster 10-main
+postgresql@16-main.service         loaded active running PostgreSQL Cluster 16-main
 rabbitmq-server.service            loaded active running RabbitMQ Messaging Server  
 slurmctld.service                  loaded active running Slurm controller daemon
 slurmd.service                     loaded active running Slurm node daemon
@@ -78,7 +78,7 @@ $ slurm-resources -e restart_on_change=true -e slurm_max_cpus=2
 ## Working with Conda
 
 The Quantum Mobile VM comes with the [Conda package management system](https://docs.conda.io/en/latest/) pre-installed,
-using the [mambaforge](https://github.com/conda-forge/miniforge) distribution.
+using the [Miniforge](https://github.com/conda-forge/miniforge) distribution.
 
 To check the available environments, run:
 

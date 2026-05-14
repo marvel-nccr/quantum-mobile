@@ -14,13 +14,13 @@ If your network connection is unstable or very slow and you are unable to downlo
 ### Importing the VM results in an error: `NS_ERROR_INVALID_ARG (0x80070057)`
 
 This [may indicate that your hard disk is full](https://www.virtualbox.org/ticket/18343).
-Do you have enough disk space to accommodate both the Quantum Mobile image *and* the extracted image (sizes reported in the [installation instructions of the release](https://github.com/marvel-nccr/quantum-mobile/releases)?
+Do you have enough disk space to accommodate both the Quantum Mobile image *and* the extracted image (sizes reported in the [installation instructions of the release](https://quantum-mobile.readthedocs.io/en/latest/releases/index.html)?
 
 ### Running the VM yields an error: `VMDK: Compressed image is corrupted`
 
 Your image file is corrupted - try downloading it again.
 
-You can verify the integrity of the image by computing its md5 hash (`md5sum <filename>`) and comparing the result to the hash provided on the [release page](https://github.com/marvel-nccr/quantum-mobile/releases).
+You can verify the integrity of the image by computing its md5 hash (`md5sum <filename>`) and comparing the result to the hash provided on the [release page](https://quantum-mobile.readthedocs.io/en/latest/releases/index.html).
 
 ### Running the VM yields: `VT-x is disabled in the BIOS for all CPU modes (VERR_VMX_MSR_ALL_VMX_DISABLED)`
 
@@ -28,7 +28,7 @@ Enable Virtualization Technology (VTx) and Virtualization Technology Directed I/
 
 ### I start the Quantum Mobile, but I only get a black screen
 
-You probably have VirtualBox version 5. You need VirtualBox 6.x to run Quantum Mobile. Upgrade your VirtualBox and try again.
+You might have an outdated VirtualBox. You need VirtualBox 7.2.6 or later to run Quantum Mobile. Upgrade your VirtualBox and try again.
 
 ### Running the VM used to work fine, but recently you start getting errors `RTR3InitEx failed`
 
@@ -73,8 +73,6 @@ See this page for the fix: <https://techsupportwhale.com/not-in-a-hypervisor-par
 
 ## VirtualBox Runtime (performance, graphics, ...)
 
-**IMPORTANT** Preliminary tests indicate that VirtualBox 6.1 (released Dec 10th, 2019) addresses at least one of the long-standing graphics issues. Please upgrade.
-
 ### In xcrysden (and other software using OpenGL), menus are hidden behind the 3d canvas
 
 Unfortunately, this is an [open VirtualBox issue](https://www.virtualbox.org/ticket/11596#comment:4). Workaround is to disable 3d acceleration:
@@ -85,11 +83,6 @@ Unfortunately, this is an [open VirtualBox issue](https://www.virtualbox.org/tic
 ### On macOS hosts, the content of the VirtualBox window stays in place when dragging it using the window bar
 
 Minimize the window and maximize it again.
-
-### On VirtualBox 6, [graphics becomes super slow after a few minutes](https://jsephler.co.uk/slow-laggy-poor-graphics-performance-linux-guest-virtualbox-6-0/)
-
-1. stop VM
-2. Machine => Settings => Display => Graphics Controller => Select "VMSVGA"
 
 ### VM interrupts WiFi connection and asks for password of `vagrant` user
 
@@ -105,5 +98,4 @@ Password is `vagrant`.
 ## Python / Jupyter Issues
 
 - If you get errors `ImportError: No module named aiida` or `No command ’verdi’ found`,
-  double check that you have loaded the virtual environment with `workon aiida` before using `python` or `verdi`,
-  or use `workon jupyter` before launching a `jupyter` notebook server.
+  double check that you have loaded the virtual environment with `workon aiida` before using `python` or `verdi`.

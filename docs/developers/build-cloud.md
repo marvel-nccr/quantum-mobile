@@ -14,7 +14,7 @@ in that we are provisioning an existing VM, rather than creating one from scratc
 
 ### Server
 
-- A server running Ubuntu 18.04 LTS
+- A server running Ubuntu 24.04 LTS
   Can be hardware or virtual machine (tested on OpenStack, Amazon Web Services and Huawei Cloud).
 - At least 12GB disk size (including Ubuntu); better 15GB or more.
   Note: After cleaning temporary files, QM occupies ~6GB of disk space.

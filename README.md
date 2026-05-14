@@ -11,13 +11,15 @@
 It comes with a collection of software packages for quantum
 mechanical calculations, including
 
-- [Quantum ESPRESSO](http://www.quantum-espresso.org/)
-- [Yambo](http://www.yambo-code.org/)
-- [fleur](http://www.flapw.de/)
-- [Siesta](https://gitlab.com/siesta-project/siesta)
-- [CP2K](https://www.cp2k.org)
-- [Wannier90](http://www.wannier.org)
+- [Abinit](https://www.abinit.org)
 - [BigDFT](http://www.bigdft.org)
+- [CP2K](https://www.cp2k.org)
+- [Fleur](http://www.flapw.de/)
+- [NWChem](https://nwchemgit.github.io/)
+- [Quantum ESPRESSO](http://www.quantum-espresso.org/)
+- [Siesta](https://gitlab.com/siesta-project/siesta)
+- [Wannier90](http://www.wannier.org)
+- [Yambo](https://www.yambo-code.eu/)
 
 all of which are set up and ready to be used on their own or through the
 [AiiDA](http://www.aiida.net) python framework for automated workflows and

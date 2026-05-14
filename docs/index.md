@@ -9,13 +9,13 @@ Quantum Mobile is a Virtual Machine for computational materials science.
 Quantum Mobile provides a uniform environment for quantum mechanical materials simulations. Simulation codes are set up and ready to be used either directly or through the [AiiDA](http://www.aiida.net) python framework for automated workflows and provenance tracking.
 
 Open source throughout
-: Based on [Ubuntu Linux](http://releases.ubuntu.com/18.04/)
+: Based on [Ubuntu Linux](http://releases.ubuntu.com/24.04/)
 
 Pre-built images
 : Available for Linux, MacOS or Windows computers, using VirtualBox. Or deploy on cloud services like OpenStack or Amazon Elastic Compute Cloud using [ansible](https://www.ansible.com/).
 
 Simulation codes pre-installed
-: [Abinit](https://www.abinit.org), [BigDFT](http://www.bigdft.org), [CP2K](https://www.cp2k.org), [Fleur](http://www.flapw.de/), [Quantum ESPRESSO](http://www.quantum-espresso.org/), [Siesta](https://gitlab.com/siesta-project/siesta), [Wannier90](http://www.wannier.org), [Yambo](http://www.yambo-code.org/), together with [AiiDA](http://www.aiida.net/), [JupyterLab](https://jupyterlab.readthedocs.io), and the [AiiDAlab](https://www.materialscloud.org/aiidalab/) Jupyter environment.
+: [Abinit](https://www.abinit.org), [BigDFT](http://www.bigdft.org), [CP2K](https://www.cp2k.org), [Fleur](http://www.flapw.de/), [NWChem](https://nwchemgit.github.io/), [Quantum ESPRESSO](http://www.quantum-espresso.org/), [Siesta](https://gitlab.com/siesta-project/siesta), [Wannier90](http://www.wannier.org), [Yambo](https://www.yambo-code.eu/), together with [AiiDA](http://www.aiida.net/), [JupyterLab](https://jupyterlab.readthedocs.io), and the [AiiDAlab](https://www.materialscloud.org/aiidalab/) Jupyter environment.
 
 Tools pre-installed
 : atomistic (xcrysden, jmol, cif2cell, ase, pymatgen, seekpath, spglib, pycifrw), visualization (grace, gnuplot, matplotlib, bokeh, jupyter), simulation environment (slurm, OpenMPI, FFT/BLAS/LAPACK, gcc, gfortran, singularity).
@@ -66,7 +66,7 @@ Compared to [courses of] previous years, the overhead due to technical problems 
 ```{epigraph}
 Quantum Mobile is really a fantastic tool! I do think that it really gives a gigantic help for the organisation of Schools focusing on simulation codes.
 
--- Andrea Marini, founder of the [Yambo code](http://www.yambo-code.org/)
+-- Andrea Marini, founder of the [Yambo code](https://www.yambo-code.eu/)
 ```
 
 ```{epigraph}
