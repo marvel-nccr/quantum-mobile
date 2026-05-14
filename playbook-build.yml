@@ -1,6 +1,6 @@
 ---
 - name: Build base Quantum Mobile layer
-  ansible.builtin.import_playbook: playbook-build-dev.yml
+  ansible.builtin.import_playbook: playbook-build-base.yml
 
 - name: Build VM (full layer)
   hosts: "{{ build_hosts | default('vagrant') }}"

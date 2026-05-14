@@ -7,7 +7,7 @@
   vars:
     tmp_vdisk_vdi: "tmp.vdi"
     tmp_vdisk_vmdk: "tmp.vmdk"
-    vm_name_suffix: "{{ '-dev' if build_variant | default('full') == 'dev' else '' }}"
+    vm_name_suffix: "{{ '-base' if build_variant | default('full') == 'base' else '' }}"
 
   tasks:
   - name: Set VM ID

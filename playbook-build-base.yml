@@ -3,7 +3,7 @@
   hosts: "{{ build_hosts | default('vagrant') }}"
 
   vars:
-    vm_name_suffix: "{{ '-dev' if build_variant | default('full') == 'dev' else '' }}"
+    vm_name_suffix: "{{ '-base' if build_variant | default('full') == 'base' else '' }}"
 
   pre_tasks:
   - name: Test configuration
@@ -45,7 +45,7 @@
   hosts: "{{ build_hosts | default('vagrant') }}"
 
   vars:
-    vm_name_suffix: "{{ '-dev' if build_variant | default('full') == 'dev' else '' }}"
+    vm_name_suffix: "{{ '-base' if build_variant | default('full') == 'base' else '' }}"
 
   tasks:
   # Generic Tasks
