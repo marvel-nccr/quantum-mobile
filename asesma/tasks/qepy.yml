@@ -1,0 +1,83 @@
+---
+# Build QEpy 7.2.0 from source. QEpy ships PyPI wheels for x86_64 only, so we
+# compile QE 7.2 with -fPIC and link qepy against it for aarch64.
+#
+# Recipe gotchas (Ubuntu 24.04 / aarch64):
+#  - gfortran 14+ rejects QE 7.2's mp.f90 type-mismatched MPI calls; pass
+#    `-fallow-argument-mismatch` to FFLAGS to downgrade to a warning.
+#  - qepy links against QE submodules (PP, NEB, PHonon, GWW, PWCOND, KCW,
+#    TDDFPT, EPW, XSpectra, HP); `make all` does NOT build all of them, so we
+#    explicitly request the ones qepy's Makefile expects.
+#  - f90wrap 0.3.0 generates broken wrappers for QE 7.2's cell_base module
+#    (missing IMPLICIT type declarations). Pin to 0.2.16.
+#  - qepy's setup.py shells out to `make` which invokes `meson` then `ninja`;
+#    needs both in PATH and a clean MAKEFLAGS so ninja doesn't inherit the
+#    parent jobserver pipe (causes "Could not initialize jobserver" failures).
+
+- name: "Get home for user: {{ vm_user }}"
+  chrisjsewell.conda.expandpath:
+    path: "~"
+  register: vm_user_home
+
+- name: Create QEpy build directory
+  ansible.builtin.file:
+    path: "{{ vm_user_home.path }}/tmp/qepy"
+    state: directory
+    mode: "0755"
+
+- name: Download QE 7.2 source
+  ansible.builtin.get_url:
+    url: https://gitlab.com/QEF/q-e/-/archive/qe-7.2/q-e-qe-7.2.tar.gz
+    dest: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2.tar.gz"
+    mode: "0644"
+
+- name: Extract QE 7.2 source
+  ansible.builtin.unarchive:
+    src: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2.tar.gz"
+    dest: "{{ vm_user_home.path }}/tmp/qepy/"
+    remote_src: true
+    creates: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2/configure"
+
+- name: Configure QE 7.2 with -fPIC and -fallow-argument-mismatch
+  # No `creates:` guard: configure regenerates `make.inc` from current FFLAGS,
+  # so flag changes in this task propagate to the next `make` step.
+  ansible.builtin.command:
+    cmd: ./configure CFLAGS=-fPIC FFLAGS="-fPIC -fallow-argument-mismatch" try_foxflags=-fPIC
+    chdir: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2"
+  changed_when: false
+
+- name: Build QE 7.2 modules required by QEpy
+  # `make all` covers pw/cp/pp/ph/atomic/etc. but not gwl/pwcond/kcw, which
+  # qepy's Makefile also links against — request them explicitly.
+  ansible.builtin.command:
+    cmd: make -j{{ ansible_facts['processor_vcpus'] | default(2) }} all gwl pwcond kcw
+    chdir: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2"
+    creates: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2/bin/pw.x"
+
+- name: Install QEpy build tools into asesma env
+  # f90wrap 0.3.0 generates broken cell_base wrappers; pin to 0.2.16.
+  # meson/ninja/meson-python needed for qepy's per-module library builds.
+  ansible.builtin.command:
+    cmd: "{{ vm_user_home.path }}/.conda/envs/asesma/bin/pip install f90wrap==0.2.16 meson ninja meson-python"
+    creates: "{{ vm_user_home.path }}/.conda/envs/asesma/bin/meson"
+
+- name: Clone QEpy repository
+  ansible.builtin.git:
+    repo: https://gitlab.com/shaoxc/qepy.git
+    dest: "{{ vm_user_home.path }}/tmp/qepy/qepy"
+    version: v7.2.0
+    depth: 1
+
+- name: Install QEpy via pip (links against QE 7.2 build)
+  # MAKEFLAGS unset so ninja doesn't inherit the parent make's jobserver pipe.
+  # PATH must include asesma/bin so the qepy Makefile finds meson and ninja.
+  # --no-build-isolation so pip uses the f90wrap 0.2.16 we just installed
+  # (otherwise pip resolves f90wrap fresh in an isolated build env).
+  ansible.builtin.command:
+    cmd: "{{ vm_user_home.path }}/.conda/envs/asesma/bin/pip install --no-build-isolation ."
+    chdir: "{{ vm_user_home.path }}/tmp/qepy/qepy"
+    creates: "{{ vm_user_home.path }}/.conda/envs/asesma/lib/python3.12/site-packages/qepy/__init__.py"
+  environment:
+    qedir: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2"
+    PATH: "{{ vm_user_home.path }}/.conda/envs/asesma/bin:{{ ansible_env.PATH }}"
+    MAKEFLAGS: ""
