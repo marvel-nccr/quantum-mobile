@@ -1,8 +1,8 @@
 ---
-name: MARVEL ICTP School
-about: Any issue/request related to the MARVEL ICTP School
-title: 'QE School: '
-labels: qe-school
+name: mini-ASESMA school
+about: Any issue/request related to the mini-ASESMA school
+title: 'ASESMA: '
+labels: asesma
 assignees: mbercx
 
 ---
