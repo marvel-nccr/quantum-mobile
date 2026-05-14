@@ -48,7 +48,7 @@ jobs:
       run: docker exec quantum-mobile bash -c "apt-get update && apt-get install -y python3 sudo"
 
     - name: Run Ansible provisioning
-      run: ansible-playbook -v --limit docker-ci -e build_hosts=docker-ci --skip-tags ci_skip playbook-build-qe.yml
+      run: ansible-playbook -v --limit docker-ci -e build_hosts=docker-ci --skip-tags ci_skip playbook-build-custom.yml
       env:
         ANSIBLE_CALLBACKS_ENABLED: ansible.posix.profile_tasks
 

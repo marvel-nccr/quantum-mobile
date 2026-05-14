@@ -10,43 +10,43 @@
     tags: [jupyter]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/jupyter.yml
+    ansible.builtin.import_tasks: custom/tasks/jupyter.yml
 
   - name: Install Koopmans toolchain
     tags: [koopmans]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/koopmans.yml
+    ansible.builtin.import_tasks: custom/tasks/koopmans.yml
 
   - name: Install metatomic conda environment
     tags: [metatomic]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/metatomic.yml
+    ansible.builtin.import_tasks: custom/tasks/metatomic.yml
 
   - name: Install qe conda environment
     tags: [qe]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/qe.yml
+    ansible.builtin.import_tasks: custom/tasks/qe.yml
 
   - name: Install wannier conda environment
     tags: [wannier]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/wannier.yml
+    ansible.builtin.import_tasks: custom/tasks/wannier.yml
 
   - name: Install yambo conda environment
     tags: [yambo]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/yambo.yml
+    ansible.builtin.import_tasks: custom/tasks/yambo.yml
 
   - name: Install sscha conda environment
     tags: [sscha]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: qe-school/tasks/sscha.yml
+    ansible.builtin.import_tasks: custom/tasks/sscha.yml
 
   - name: Add bash completion for the workon alias
     tags: [workon-completion]
