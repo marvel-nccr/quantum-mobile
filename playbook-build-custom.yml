@@ -46,15 +46,15 @@
     tags: [asesma]
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: asesma/tasks/asesma.yml
+    ansible.builtin.import_tasks: custom/tasks/asesma.yml
 
   - name: Build and install QEpy from source (aarch64 only — no PyPI wheel)
     tags: [qepy]
     when: ansible_facts['architecture'] == 'aarch64'
     become: true
     become_user: "{{ vm_user }}"
-    ansible.builtin.import_tasks: asesma/tasks/qepy.yml
+    ansible.builtin.import_tasks: custom/tasks/qepy.yml
 
   - name: Install JupyterLab launcher and desktop shortcut
     tags: [jupyter]
-    ansible.builtin.import_tasks: asesma/tasks/jupyter.yml
+    ansible.builtin.import_tasks: custom/tasks/jupyter.yml
