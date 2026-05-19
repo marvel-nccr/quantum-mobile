@@ -52,3 +52,7 @@
       # `mpirun ... < input > output` fails on multi-NIC VMs with
       # "Unable to find reachable pairing between local and remote interfaces".
       export OMPI_MCA_btl_tcp_if_include=lo
+      # PMIx probes its `psec` security plugins at startup and warns when the
+      # `munge` plugin's libs are missing. Munge is for Slurm/cluster auth,
+      # irrelevant on a single-node VM — exclude it to silence the warning.
+      export PMIX_MCA_psec=^munge
