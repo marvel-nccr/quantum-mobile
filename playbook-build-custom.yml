@@ -60,3 +60,9 @@
           COMPREPLY=( $(compgen -W "koopmans metatomic qe sscha wannier yambo" -- "${COMP_WORDS[COMP_CWORD]}") )
         }
         complete -F _workon workon
+
+  - name: Clone materials repo and install cdd/update helpers
+    tags: [materials]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: custom/tasks/materials.yml
