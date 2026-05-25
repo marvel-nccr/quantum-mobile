@@ -44,12 +44,15 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK (materials helpers)"
     block: |
       # day-NN → conda env mapping for the ICTP MARVEL College
+      # (day 00 = preliminary exercises in before/preliminary-exercises)
       declare -A _qm_day_env=(
+        [00]=qe
         [01]=qe [02]=qe [03]=yambo [04]=wannier [05]=koopmans
         [06]=metatomic [07]=metatomic [08]=metatomic [09]=metatomic [10]=metatomic
       )
 
       # `cdd N` — cd into ~/materials/day-NN-* and activate the matching env.
+      # `cdd 0` jumps to the pre-school preliminary exercises instead.
       cdd() {
         if [[ -z "$1" ]]; then
           echo "usage: cdd <day-number>" >&2
@@ -60,9 +63,13 @@
         printf -v num '%02d' "$1"
 
         local dir
-        dir=$(ls -d "$HOME/materials/day-${num}"*/ 2>/dev/null | head -n1)
+        if [[ "$num" == "00" ]]; then
+          dir=$(ls -d "$HOME/materials/before/preliminary-"*/ 2>/dev/null | head -n1)
+        else
+          dir=$(ls -d "$HOME/materials/day-${num}"*/ 2>/dev/null | head -n1)
+        fi
 
-        if [[ -z "$dir" ]]; then
+        if [[ -z "$dir" || ! -d "$dir" ]]; then
           echo "❌ No day-${num}* directory under ~/materials" >&2
           return 1
         fi
