@@ -13,7 +13,13 @@
     - matplotlib
     - spglib
     - ipykernel
+    - pip
     bin_patterns: ["*.x"]
+
+- name: Install qe-tools via pip
+  ansible.builtin.pip:
+    name: qe-tools==3.0.0a3
+    executable: ~/.conda/envs/qe/bin/pip
 
 - name: Register qe env as Jupyter kernel
   ansible.builtin.command:
@@ -24,5 +30,5 @@
 
 - name: Smoke test qe env imports
   ansible.builtin.command:
-    cmd: ~/.conda/envs/qe/bin/python -c "import ase, numpy, matplotlib, spglib"
+    cmd: ~/.conda/envs/qe/bin/python -c "import ase, numpy, matplotlib, spglib, qe_tools"
   changed_when: false
