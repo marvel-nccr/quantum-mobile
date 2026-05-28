@@ -1,0 +1,46 @@
+---
+
+- name: Install pyece conda environment
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: pyece
+    channels:
+    - pytorch
+    - conda-forge
+    packages:
+    - python=3.13
+    - pytorch
+    - cpuonly
+    - libtorch=*=cpu_*
+    - pyyaml
+    - ipykernel
+    - pip
+
+- name: Ensure ~/tmp exists for pyece wheel staging
+  ansible.builtin.file:
+    path: "/home/{{ vm_user }}/tmp"
+    state: directory
+    mode: '0755'
+
+- name: Copy pyece wheel to ~/tmp
+  ansible.builtin.copy:
+    src: files/pyece-0.1.0-py3-none-any.whl
+    dest: "/home/{{ vm_user }}/tmp/pyece-0.1.0-py3-none-any.whl"
+    mode: '0644'
+
+- name: Install pyece wheel into pyece env
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/pyece/bin/pip install ~/tmp/pyece-0.1.0-py3-none-any.whl
+    creates: "/home/{{ vm_user }}/.conda/envs/pyece/lib/python3.13/site-packages/pyece/__init__.py"
+
+- name: Register pyece env as Jupyter kernel
+  ansible.builtin.command:
+    cmd: >
+      ~/.conda/envs/pyece/bin/python -m ipykernel install --user
+      --name pyece --display-name "Python (pyece)"
+    creates: "/home/{{ vm_user }}/.local/share/jupyter/kernels/pyece/kernel.json"
+
+- name: Smoke test pyece import
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/pyece/bin/python -c "import pyece, torch"
+  changed_when: false

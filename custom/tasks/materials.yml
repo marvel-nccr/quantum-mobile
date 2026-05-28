@@ -48,7 +48,7 @@
       declare -A _qm_day_env=(
         [00]=qe
         [01]=qe [02]=qe [03]=yambo [04]=wannier [05]=koopmans
-        [06]=metatomic [07]=metatomic [08]=metatomic [09]=metatomic [10]=metatomic
+        [06]=metatomic [07]=metatomic [08]=metatomic [09]=metatomic [10]=pyece
       )
 
       # `cdd N` — cd into ~/materials/day-NN-* and activate the matching env.
