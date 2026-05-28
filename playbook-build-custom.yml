@@ -48,6 +48,12 @@
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: custom/tasks/sscha.yml
 
+  - name: Install pyece conda environment
+    tags: [pyece]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: custom/tasks/pyece.yml
+
   - name: Add bash completion for the workon alias
     tags: [workon-completion]
     become: true
@@ -57,7 +63,7 @@
       marker: "# {mark} ANSIBLE MANAGED BLOCK (workon completion)"
       block: |
         _workon() {
-          COMPREPLY=( $(compgen -W "koopmans metatomic qe sscha wannier yambo" -- "${COMP_WORDS[COMP_CWORD]}") )
+          COMPREPLY=( $(compgen -W "koopmans metatomic pyece qe sscha wannier yambo" -- "${COMP_WORDS[COMP_CWORD]}") )
         }
         complete -F _workon workon
 
