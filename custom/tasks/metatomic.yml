@@ -29,7 +29,7 @@
     cmd: >
       ~/.conda/envs/metatomic/bin/pip install
       --extra-index-url https://download.pytorch.org/whl/cpu
-      flashmd==0.2.8 metatrain==2026.2 upet==0.2.3
+      flashmd==0.2.8 metatrain==2026.2 upet==0.2.3 'vesin>=0.5.8'
     creates: "/home/{{ vm_user }}/.conda/envs/metatomic/lib/python3.13/site-packages/flashmd/__init__.py"
 
 - name: Register metatomic env as Jupyter kernel
