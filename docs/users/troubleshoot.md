@@ -1,8 +1,13 @@
 # Troubleshooting
 
-:::{note}
+:::{warning}
+These notes are added over time, and some may be outdated.
+If you notice anything incorrect, please open [an issue](https://github.com/marvel-nccr/quantum-mobile/issues/new?template=BLANK_ISSUE).
+:::
+
+:::{admonition} More trouble?
 If the following sections to not solve your issue,
-please direct further inquiries to the [Quantum Mobile support channel](https://aiida.discourse.group/c/quantum-mobile/) in the AiiDA Discourse
+please direct further inquiries to the [Quantum Mobile support channel](https://aiida.discourse.group/c/quantum-mobile/) in the AiiDA Discourse.
 :::
 
 ## VirtualBox installation / start-up
