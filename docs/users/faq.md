@@ -1,5 +1,15 @@
 # VirtualBox FAQ
 
+:::{warning}
+These notes are added over time, and some may be outdated.
+If you notice anything incorrect, please open [an issue](https://github.com/marvel-nccr/quantum-mobile/issues/new?template=BLANK_ISSUE).
+:::
+
+:::{admonition} More questions?
+If the following sections to not answer your question,
+please direct further inquiries to the [Quantum Mobile support channel](https://aiida.discourse.group/c/quantum-mobile/) in the AiiDA Discourse.
+:::
+
 ## How do I set up a shared folder between the VM and my host?
 
 1. Stop the VM
@@ -12,14 +22,10 @@
 
 ## How do I change the keyboard layout from the default (US English keyboard)?
 
- 1. In the top right corner of your desktop, click on the down arrow to show the settings menu, and then click on the bottom-right icon showing a wrench and a screwdriver. This will open the Ubuntu "Settings" panel.
- 2. On the left list, select "Region & Language"
- 3. On the right, under "Input Sources", click on the "+" button.
- 4. Click on the three vertical dots to see more choices for the keyboard layout.
- 5. Start typing your language or layout name (e.g. "Spanish", "French", ...)
- 6. If the keyboard layout still does not show up, click on "Other". Now you should see a full list of layouts that match what you wrote.
- 7. Select the layout you want (often there are various variants depending on how you want to manage special symbols, accented letters, etc.). Then click on the green button "Add" that will appear at the top-right of the "Add an Input Source" window.
- 8. Now you can choose the layout via the small menu on the top right of your desktop (it should show 'en' currently, for the default English US layout). If you prefer, you can remove any other input source from the list and only keep the one you want to use.
+1. open the ubuntu settings within the VM (click on the ubuntu logo in the lower left corner, search for ``Settings``, and then click on it to launch)
+2. go to ``Keyboard`` ➔ ``Input sources`` ➔ ``Add Input Source``
+3. click on the ``⋮`` and add the desired language
+4. Once added there you should be able to select the desired keyboard profile in a drop-down menu on the upper right corner of the screen.
 
 ## How do I install a recent version of VirtualBox on Ubuntu?
 
@@ -31,7 +37,7 @@ VirtualBox might fail to start on Secure Boot-enabled Linux system, you can eith
 
 ## Icons and text are small on high-resolution screens. How do I enlarge them?
 
-Increase the scale factor in Machine => Settings => Display => Scale Factor
+Increase the scale factor in Machine => Settings => Display => Scale
 
 ## How to enable Audio?
 
@@ -39,10 +45,3 @@ Increase the scale factor in Machine => Settings => Display => Scale Factor
 2. Go to Machine => Settings => Audio
 3. Tick "Enable Audio" and select your desired Audio driver.
 4. Start the VM.
-
-## How do I manage VirtualBox from the command line (e.g. when running Quantum Mobile on a remote computer)?
-
-1. Start VM: ``VBoxManage startvm "Quantum Mobile 20.03.1" --type headless``
-2. Enter VM: ``ssh -p 2222 max@127.0.0.1``  
- Note: 2222 is the standard port. Use ``VBoxManage showvminfo "Quantum Mobile 20.03.1" | grep 'Rule'`` to check the port for your VM.
-3. Stop VM: ``VBoxManage controlvm "Quantum Mobile 20.03.1" acpipowerbutton``
