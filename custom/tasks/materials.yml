@@ -121,10 +121,15 @@
               break  # other conflict type we can't auto-resolve
             fi
 
-            [[ -n "$_qm_ud" ]] && echo "$_qm_ud" | xargs git rm --quiet
+            # UD: student deleted, upstream modified → reinstate upstream's version
+            # DU: student modified, upstream deleted → keep student's modified file
+            if [[ -n "$_qm_ud" ]]; then
+              echo "$_qm_ud" | xargs git checkout --ours --
+              echo "$_qm_ud" | xargs git add
+            fi
             [[ -n "$_qm_du" ]] && echo "$_qm_du" | xargs git add
 
-            git rebase --continue --quiet || true  # may pause on next conflict
+            git rebase --continue || true  # may pause on next conflict
           done
           # Rebase is truly done only when no rebase state dir remains.
           [[ ! -d .git/rebase-merge && ! -d .git/rebase-apply ]] && _qm_rebase_ok=1
