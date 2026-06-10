@@ -64,3 +64,19 @@
     become: true
     become_user: "{{ vm_user }}"
     ansible.builtin.import_tasks: custom/tasks/materials.yml
+
+  - name: Override bash welcome message for the mini-ASESMA School
+    tags: [welcome]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.blockinfile:
+      path: "/home/{{ vm_user }}/.bashrc"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK (bash welcome message)"
+      block: |
+        # Print only in non-login shells
+        shopt -q login_shell || cat << EOM
+        ##############################################################
+        # Welcome to Quantum Mobile for the mini-ASESMA School 2026!
+        # Distributed by the MARVEL NCCR.
+        ##############################################################
+        EOM
