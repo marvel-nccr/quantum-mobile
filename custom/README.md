@@ -37,6 +37,19 @@ You can also start the environment from the terminal:
 workon asesma
 ```
 
+## Course materials
+
+Materials live in `~/materials/` (cloned from `asesma-org/miniASESMA2026`).
+Pull fresh upstream material at any time:
+
+```console
+update
+```
+
+Your local edits are preserved; the command rebases upstream changes on top.
+If the `.ansible/` playbook bundled in the repo changed, `update` also replays
+it to apply system-level fixes (new packages, file tweaks) to the running VM.
+
 ## Known limits
 
 - QEpy on Apple Silicon (arm64 image): built from source against QE 7.2 (separate from the system QE 7.5). Slower to provision but _should_ work the same: **test carefully!**

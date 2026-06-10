@@ -1,0 +1,139 @@
+---
+# Clone the school materials repo and install shell `update` script so students
+# can pull fresh upstream material without ever losing their local changes.
+#
+# `update` also replays an ansible playbook bundled in the materials repo at
+# `.ansible/playbook.yml`, so tutors can ship system-level fixes (new conda
+# envs, apt packages, file tweaks) after the VM has been distributed.
+
+- name: Clone miniASESMA2026 to ~/materials
+  ansible.builtin.git:
+    repo: https://github.com/asesma-org/miniASESMA2026.git
+    dest: "/home/{{ vm_user }}/materials"
+    version: main
+    accept_hostkey: true
+    update: false  # re-provisions are no-op; refresh via `update` from inside the VM
+
+- name: Install ansible conda env (used by `update` to replay the bundled playbook)
+  ansible.builtin.include_tasks: local/tasks/conda-env-install.yml
+  vars:
+    conda_env: ansible
+    packages:
+    - python=3.13
+    - ansible-core
+    bin_patterns: []
+
+- name: Install community.general collection (for the `unixy` stdout callback)
+  ansible.builtin.command:
+    cmd: ~/.conda/envs/ansible/bin/ansible-galaxy collection install community.general
+    creates: ~/.ansible/collections/ansible_collections/community/general
+
+- name: Set default git identity (so `update`'s wip commit works out of the box)
+  community.general.git_config:
+    scope: global
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+  - { key: user.name, value: "{{ vm_user }}" }
+  - { key: user.email, value: "{{ vm_user }}@qmobile.local" }
+
+- name: Install `update` shell helper
+  ansible.builtin.blockinfile:
+    path: "/home/{{ vm_user }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (materials helpers)"
+    block: |
+      # `update` — pull fresh material from upstream and, if the bundled
+      # ansible playbook changed, replay it to apply system updates.
+      update() {
+        local _qm_origcwd=$PWD
+        cd "$HOME/materials" || return 1
+
+        if [[ -d .git/rebase-merge || -d .git/rebase-apply ]]; then
+          echo "🔄 Cleaning up stale rebase state from a previous interrupted update..."
+          git rebase --abort 2>/dev/null
+        fi
+
+        if ! git fetch origin; then
+          echo "❌ Update failed to connect to GitHub. Are you offline?" >&2
+          cd "$_qm_origcwd" 2>/dev/null
+          return 1
+        fi
+
+        git add -A
+        git commit -m "qm-update wip $(date -Iseconds)" --allow-empty --quiet
+
+        local _qm_rebase_ok=1
+
+        if ! git rebase -X theirs origin/main; then
+          _qm_rebase_ok=0
+          while [[ -d .git/rebase-merge || -d .git/rebase-apply ]]; do
+            local _qm_ud _qm_du
+            _qm_ud=$(git status --porcelain | awk '/^UD /{print $2}')
+            _qm_du=$(git status --porcelain | awk '/^DU /{print $2}')
+
+            if [[ -z "$_qm_ud" && -z "$_qm_du" ]]; then
+              break  # other conflict type we can't auto-resolve
+            fi
+
+            # UD: student deleted, upstream modified → reinstate upstream's version
+            # DU: student modified, upstream deleted → keep student's modified file
+            if [[ -n "$_qm_ud" ]]; then
+              echo "$_qm_ud" | xargs git checkout --ours --
+              echo "$_qm_ud" | xargs git add
+            fi
+            [[ -n "$_qm_du" ]] && echo "$_qm_du" | xargs git add
+
+            git rebase --continue || true  # may pause on next conflict
+          done
+          # Rebase is truly done only when no rebase state dir remains AND
+          # the working tree + index are clean. "No rebase dir" alone is
+          # ambiguous: it also means rebase never started (e.g. rejected
+          # upfront due to unstaged changes injected after the wip commit).
+          if [[ ! -d .git/rebase-merge && ! -d .git/rebase-apply ]] \
+             && git diff --quiet && git diff --cached --quiet; then
+            _qm_rebase_ok=1
+          fi
+        fi
+        if [[ $_qm_rebase_ok -eq 0 ]]; then
+          git rebase --abort 2>/dev/null
+          git reset --soft HEAD~1 --quiet
+          git reset --quiet
+          echo "❌ Update failed to rebase! Skipped but your work is intact." >&2
+          cd "$_qm_origcwd" 2>/dev/null
+          return 1
+        fi
+        git reset --soft HEAD~1 --quiet
+        git reset --quiet  # unstage so the working tree looks unchanged
+
+        # Replay bundled playbook if it changed since the last successful run.
+        local playbook=$HOME/materials/.ansible/playbook.yml
+        if [[ -f "$playbook" ]]; then
+          local current_sha
+          current_sha=$(git rev-parse HEAD:.ansible 2>/dev/null) || current_sha=""
+          local applied_sha=""
+
+          [[ -f $HOME/.qm-update-state ]] && applied_sha=$(<"$HOME/.qm-update-state")
+
+          if [[ -n "$current_sha" && "$current_sha" != "$applied_sha" ]]; then
+            echo "🚀 Applying system updates (this may take a moment)..."
+            local _qm_ansible_log
+            _qm_ansible_log=$(mktemp)
+
+            if (cd "$HOME/materials/.ansible" && \
+                ~/.conda/envs/ansible/bin/ansible-playbook \
+                -i "localhost," -c local playbook.yml) >"$_qm_ansible_log" 2>&1; then
+              echo "✅ System updates applied"
+              echo "$current_sha" > "$HOME/.qm-update-state"
+              rm -f "$_qm_ansible_log"
+            else
+              cat "$_qm_ansible_log"
+              rm -f "$_qm_ansible_log"
+              echo "❌ Playbook failed! Please retry on next update." >&2
+              cd "$_qm_origcwd" 2>/dev/null
+              return 1
+            fi
+          fi
+        fi
+        cd "$_qm_origcwd" 2>/dev/null
+        echo "✅ Success! All updates complete."
+      }

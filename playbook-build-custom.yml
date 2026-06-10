@@ -58,3 +58,9 @@
   - name: Install JupyterLab launcher and desktop shortcut
     tags: [jupyter]
     ansible.builtin.import_tasks: custom/tasks/jupyter.yml
+
+  - name: Clone materials repo and install `update` helper
+    tags: [materials]
+    become: true
+    become_user: "{{ vm_user }}"
+    ansible.builtin.import_tasks: custom/tasks/materials.yml
