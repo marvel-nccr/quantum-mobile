@@ -46,6 +46,15 @@
     chdir: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2"
   changed_when: false
 
+# Build the wannier90 plugin serially first: under parallel make, the
+# plugins_makefile races `configure-w90` against `uncompress-w90` (the W90
+# symlink may not exist yet when configure tries to cd into it).
+- name: Build wannier90 plugin serially
+  ansible.builtin.command:
+    cmd: make w90
+    chdir: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2"
+    creates: "{{ vm_user_home.path }}/tmp/qepy/q-e-qe-7.2/W90"
+
 - name: Build QE 7.2 modules required by QEpy
   # `make all` covers pw/cp/pp/ph/atomic/etc. but not gwl/pwcond/kcw, which
   # qepy's Makefile also links against — request them explicitly.
