@@ -1,10 +1,5 @@
 # mini-ASESMA school 2026
 
-> [!IMPORTANT]
-> If something you need is missing, or you encounter any bugs, raise an issue via the following link:
-> 
-> https://github.com/marvel-nccr/quantum-mobile/issues/new?template=mini-asesma.md
-
 ## Installation
 
 Download the OVA matching your architecture from Google drive:
@@ -41,7 +36,7 @@ workon asesma
 
 ## Course materials
 
-Materials live in `~/materials/` (cloned from `asesma-org/miniASESMA2026`).
+Materials live in `~/materials/` (cloned from [`asesma-org/miniASESMA2026`](https://github.com/asesma-org/miniASESMA2026#)).
 Pull fresh upstream material at any time:
 
 ```console
@@ -51,10 +46,34 @@ update
 Your local edits are preserved; the command rebases them on top of the upstream changes.
 If the `.ansible/` playbook bundled in the repo changed, `update` also replays it to apply system-level fixes (new packages, file tweaks) to the running VM.
 
+## Getting help
+
+- [**Quantum Mobile FAQ**](https://quantum-mobile.readthedocs.io/en/latest/users/faq.html)
+- [**Troubleshooting**](https://quantum-mobile.readthedocs.io/en/latest/users/troubleshoot.html)
+
+## Connecting to the VM via SSH
+
+In case you are having graphical issues or the VM is slow, a workaround may be to connect to the VM Jupyterlab server via SSH. When the VM is running, connect to it from your host machine:
+
+```
+ssh -o PreferredAuthentications=password -L 8891:localhost:8891 -p 2222 max@127.0.0.1
+```
+
+The password is `moritz`. Once connected you can start the Jupyterlab server in the VM terminal:
+
+```
+bash ~/.jupyter-lab.sh
+```
+
+Then, connect to the Jupyterlab server via the browser on your host machine:
+
+http://127.0.0.1:8891/lab?token=7c8a1215d6768f78e8300804741bd3883d7b1510159b755e
+
 ## Known limits
 
-- QEpy on Apple Silicon (arm64 image): built from source against QE 7.2 (separate from the system QE 7.5). Slower to provision but _should_ work the same: **test carefully!**
-- VirtualBox graphics: if the desktop looks distorted, set Display → Graphics Controller to VBoxSVGA in the VM settings.
+- Apple Silicon users have reported issues with Firefox in the VM. Try uninstalling Firefox if you have trouble.
+- QEpy on Apple Silicon (ARM64 image): built from source against QE 7.2 (separate from the system QE 7.5). Slower to provision but _should_ work the same: **test carefully!**
+- VESTA dependencies needed to be patched for it to run. It's the first time we support VESTA, so support is still "experimental".
 
 ## Resources
 
