@@ -29,6 +29,8 @@ Codes (on `PATH`, run from any terminal):
 - Quantum ESPRESSO 7.5: `pw.x`, `ph.x`, `pp.x`, ...
 - Siesta 5.4.2: `siesta`, `tbtrans`, `vibra`, ...
 
+VESTA for structure visualisation — desktop icon, or `VESTA` from any terminal.
+
 Python notebook environment — double-click the JupyterLab icon on the desktop. A terminal opens, JupyterLab starts, browser launches automatically. The `Python (asesma)` kernel includes `numpy`, `scipy`, `matplotlib`, `ase`, `dftpy`, and `qepy`.
 
 You can also start the environment from the terminal:
@@ -46,9 +48,8 @@ Pull fresh upstream material at any time:
 update
 ```
 
-Your local edits are preserved; the command rebases upstream changes on top.
-If the `.ansible/` playbook bundled in the repo changed, `update` also replays
-it to apply system-level fixes (new packages, file tweaks) to the running VM.
+Your local edits are preserved; the command rebases them on top of the upstream changes.
+If the `.ansible/` playbook bundled in the repo changed, `update` also replays it to apply system-level fixes (new packages, file tweaks) to the running VM.
 
 ## Known limits
 
