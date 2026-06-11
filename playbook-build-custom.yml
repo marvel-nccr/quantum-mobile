@@ -59,6 +59,10 @@
     tags: [jupyter]
     ansible.builtin.import_tasks: custom/tasks/jupyter.yml
 
+  - name: Install VESTA from the official tarball
+    tags: [vesta]
+    ansible.builtin.import_tasks: custom/tasks/vesta.yml
+
   - name: Clone materials repo and install `update` helper
     tags: [materials]
     become: true

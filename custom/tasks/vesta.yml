@@ -1,0 +1,77 @@
+---
+
+- name: Download and extract VESTA to /opt
+  become: true
+  become_user: "{{ root_user }}"
+  vars:
+    vesta_arch: "{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'x86_64' }}"
+  ansible.builtin.unarchive:
+    src: "https://jp-minerals.org/vesta/archives/testing/VESTA-gtk3-{{ vesta_arch }}.tar.bz2"
+    dest: /opt/
+    remote_src: true
+    creates: "/opt/VESTA-gtk3-{{ vesta_arch }}/VESTA"
+  register: vesta_download
+  until: vesta_download is success
+  retries: 3
+  delay: 10
+
+- name: Ensure webkit2gtk 4.1 is installed
+  become: true
+  become_user: "{{ root_user }}"
+  ansible.builtin.apt:
+    name: libwebkit2gtk-4.1-0
+    state: present
+
+# Ubuntu 24.04 dropped webkit2gtk-4.0 (libsoup2); VESTA's prebuilt links
+# against it. Pointing the 4.0 sonames at the 4.1 libs loads fine and VESTA
+# runs — only the embedded Help browser risks a libsoup2/3 clash.
+- name: Symlink webkit2gtk 4.0 sonames to the 4.1 libraries
+  become: true
+  become_user: "{{ root_user }}"
+  vars:
+    lib_dir: "/usr/lib/{{ ansible_facts['architecture'] }}-linux-gnu"
+  ansible.builtin.file:
+    src: "{{ lib_dir }}/lib{{ item.new }}"
+    dest: "{{ lib_dir }}/lib{{ item.old }}"
+    state: link
+  loop:
+  - { old: webkit2gtk-4.0.so.37, new: webkit2gtk-4.1.so.0 }
+  - { old: javascriptcoregtk-4.0.so.18, new: javascriptcoregtk-4.1.so.0 }
+
+- name: Symlink VESTA into ~/.local/bin
+  become: true
+  become_user: "{{ vm_user }}"
+  vars:
+    vesta_arch: "{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'x86_64' }}"
+  ansible.builtin.file:
+    src: "/opt/VESTA-gtk3-{{ vesta_arch }}/VESTA"
+    dest: "/home/{{ vm_user }}/.local/bin/VESTA"
+    state: link
+
+- name: Install VESTA desktop entry
+  become: true
+  become_user: "{{ root_user }}"
+  vars:
+    vesta_arch: "{{ 'arm64' if ansible_facts['architecture'] == 'aarch64' else 'x86_64' }}"
+  ansible.builtin.copy:
+    dest: /usr/share/applications/vesta.desktop
+    mode: "0644"
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=VESTA
+      Comment=Visualisation for Electronic and STructural Analysis
+      Exec=/opt/VESTA-gtk3-{{ vesta_arch }}/VESTA
+      Terminal=false
+      Icon=/opt/VESTA-gtk3-{{ vesta_arch }}/img/logo.png
+      Type=Application
+
+- name: Copy VESTA shortcut to Desktop
+  tags: [ci_skip]
+  become: true
+  become_user: "{{ vm_user }}"
+  ansible.builtin.copy:
+    src: /usr/share/applications/vesta.desktop
+    dest: "/home/{{ vm_user }}/Desktop/vesta.desktop"
+    remote_src: true
+    mode: "0755"
